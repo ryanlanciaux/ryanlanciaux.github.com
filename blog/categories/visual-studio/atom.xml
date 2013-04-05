@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Visual Studio | Ryan Lanciaux]]></title>
+  <link href="http://ryanlanciaux.github.com/blog/categories/visual-studio/atom.xml" rel="self"/>
+  <link href="http://ryanlanciaux.github.com/"/>
+  <updated>2013-04-04T23:43:41-04:00</updated>
+  <id>http://ryanlanciaux.github.com/</id>
+  <author>
+    <name><![CDATA[Ryan Lanciaux]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Quick Tip - Visual Studio Keybindings]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/06/05/quick-tip-visual-studio-keybindings/"/>
+    <updated>2008-06-05T13:08:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/06/05/quick-tip-visual-studio-keybindings</id>
+    <content type="html"><![CDATA[<p>
+This may be common knowledge but it was new to me. If you&#39;re ever hand mangling control position in a winforms designer you can setup keybindings for Bring to Front Send to Back options that are normally available on the controls context menu. This is really useful if you have layers of controls and you can&#39;t always get to the Context.
+</p>
+
+
+<ol>
+    <li>Click on Tools -&gt; Options<br />
+    </li>
+    <li>Under Environment, Select the Keyboard menu</li>
+    <li>Type &quot;Format.BringtoFront&quot; (or &quot;Format.SendtoBack&quot;) in the &quot;Show Commands Containing&quot; box</li>
+    <li>Choose your shortcut keys <br />
+    </li>
+    <li>Press Assign</li>
+</ol>
+
+
+<p>
+<br />
+<img src="http://ryanlanciaux.github.com/files/BringToFront.gif" alt="" />
+<br />
+<br />
+Thanks to my friend Ross for pointing this out.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: theme generator | Ryan Lanciaux]]></title>
+  <link href="http://ryanlanciaux.github.com/blog/categories/theme-generator/atom.xml" rel="self"/>
+  <link href="http://ryanlanciaux.github.com/"/>
+  <updated>2013-04-04T23:43:41-04:00</updated>
+  <id>http://ryanlanciaux.github.com/</id>
+  <author>
+    <name><![CDATA[Ryan Lanciaux]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Theme Generator on Channel9!]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/08/18/theme-generator-on-channel9/"/>
+    <updated>2008-08-18T12:36:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/08/18/theme-generator-on-channel9</id>
+    <content type="html"><![CDATA[<p>
+Wow, the <a href="http://www.frickinsweet.com/tools" target="_blank">theme generator</a> that my <a href="http://www.frickinsweet.com/joelroxor" target="_blank">brother</a> and I made is on <a href="http://channel9.msdn.com/shows/This+Week+On+Channel+9/This-Week-on-C9-Christian-LittleGuru-Liensberger-VS-2008-and-NET-Framework-35-SP1/" target="_blank">Channel 9</a>.<br />
+</p>
+
+
+<div>
+<a style="text-decoration: none" href="http://go.microsoft.com/fwlink/?LinkID=124807">
+<img style="border-style: none" src="http://go.microsoft.com/fwlink/?LinkId=108181" alt="Get Microsoft Silverlight" />
+</a>
+</div>
+
+
+<p>
+It&#39;s in the video at about 11:30. Thanks to <a href="http://blogs.msdn.com/danielfe/" target="_blank">Dan</a> and team for mentioning it! <a href="http://channel9.msdn.com/shows/This+Week+On+Channel+9/This-Week-on-C9-Christian-LittleGuru-Liensberger-VS-2008-and-NET-Framework-35-SP1/" target="_blank">View the channel 9 site here</a>.
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Visual Studio Theme Generator]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/08/07/visual-studio-theme-generator/"/>
+    <updated>2008-08-07T08:36:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/08/07/visual-studio-theme-generator</id>
+    <content type="html"><![CDATA[<p>
+This is a really short post but I wanted to pass the word along. I just finished a fun little ASP.NET MVC Application to generate Visual Studio
+themes based off of 3 given colors. I have always felt that selecting
+every color to make a coherent theme is way too repetitive. This web
+application automatically chooses complements / contrasts based off
+your initial color selections (and uses jQuery to let you preview your
+theme before creating). I will be making another, more detailed post later that will explain how it all works but for now, <a href="http://www.frickinsweet.com/tools">check it out</a> and let me know what you think.
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+
+<p>
+<a href="http://www.frickinsweet.com/tools">View the application </a>
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

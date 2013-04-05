@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>RhinoCommons, NHibernate and ASP.NET MVC Part 1 - Setup - Ryan Lanciaux</title>
+  <meta name="author" content="Ryan Lanciaux">
+
+  
+  <meta name="description" content="After my last post about the unit of work with NHibernate, Chad Myers mentioned that I should take a look at Ayende&#39;s Rhino Commons (because the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ryanlanciaux.github.com/blog/2008/05/19/rhinocommons-nhibernate-and-asp-net-mvc-part-1-setup">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Ryan Lanciaux" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Ryan Lanciaux</a></h1>
+  
+    <h2>Random programming blog.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ryanlanciaux.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">RhinoCommons, NHibernate and ASP.NET MVC Part 1 - Setup</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-19T17:29:00-04:00" pubdate data-updated="true">May 19<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>
+After my last post about the unit of work with NHibernate, <a href="http://www.lostechies.com/blogs/chad%5Fmyers/" target="_blank">Chad Myers</a> mentioned that I should take a look at Ayende&#39;s Rhino Commons (because the Unit of Work stuff is already being handled). Since I am not a big fan of reinventing the wheel I decided I would give it a shot. There&#39;s going to be another post in the near future about how to get Rhino Commons, Castle ActiveRecord and ASP.NET MVC working together but for now, it would be good to make sure all the necessary components are installed on your machine.
+</p>
+
+
+<ol>
+    <li>Make sure you have a subversion client &#8211; <a href="http://tortoisesvn.tigris.org/" target="_blank">Tortoise SVN</a> or the command prompt is what I use but any subversion client should be fine. </li>
+    <li>If you don&#39;t already have <a href="http://nant.sourceforge.net/" target="_blank">Nant</a> installed on your machine download and install that</li>
+    <li>Download and build the following (<a href="http://www.ayende.com/blog" target="_blank">Ayende </a>mentions, the <a href="http://www.ayende.com/Blog/archive/2007/08/06/Running-on-the-trunk-Building-Rhino-Commons.aspx" target="_blank">trick is not opening in Visual Studio</a>):
+    <ul>
+        <li>Castle Project &#8211; (<a href="http://svn.castleproject.org:8080/svn/castle/trunk" target="_blank">http://svn.castleproject.org:8080/svn/castle/trunk</a>)</li>
+        <li> NHibernate &#8211; (<a href="https://nhibernate.svn.sourceforge.net/svnroot/nhibernate/trunk" target="_blank">https://nhibernate.svn.sourceforge.net/svnroot/nhibernate/trunk</a>)</li>
+        <li> Rhino-Tools (<a href="https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/trunk" target="_blank">https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/trunk</a>) </li>
+    </ul>
+    </li>
+    <li>Next you&#39;re going to want to setup the NHibernate Query Generator (we&#39;re going to use Linq to NHibernate in a later example but for now get this installed). This should be a part of the Rhino-tools package but if you want you can <a href="http://www.ayende.com/projects/nhibernate-query-analyzer/downloads.aspx" target="_blank">download the binaries</a>. Then setup the application as an external tool in Visual Studio (my settings are posted below). <a href="http://jhollingworth.wordpress.com/2008/03/28/subsonic-like-nhibernate-query-generator-button-in-visual-studio/%20target=">see James Hollingworth&#39;s post for more info</a>
+    <br />
+    <img src="/ryanlanciaux.com/image.axd?picture=nhibernateqg.gif" alt="" />
+    <ul>
+        <li>Command: C:\program files\nhqg\NHQG.exe</li>
+        <li>Arguments: /Lang:cs /InputFilePattern:$(BinDir)/ProductModelActiveRecord.dll /OutputDirectory:$(ProjectDir)/Queries /BaseNamespace:Queries</li>
+        <li>Initial Directory: $(TargetDir)</li>
+    </ul>
+    </li>
+    <li>Finally make sure you&#39;re running the preview 3 drop of the ASP.NET MVC Framework &#8211; you can <a href="http://www.codeplex.com/aspnet/Release/ProjectReleases.aspx?ReleaseId=12640" target="_blank">get that here from CodePlex</a> </li>
+</ol>
+
+
+<p>You should now have everything setup. It may be good to take a look at the Exesto application in the rhino-tools\SampleApplications directory to get an introduction to the Rhino-tools / binsor / castle settings that we&#39;ll be looking at later on. Finally, if you are not familiar with the ASP.NET MVC Framework take a look <a href="http://weblogs.asp.net/fredriknormen/archive/2008/04/17/asp-net-mvc-framework-pre-preview-3-a-step-by-step-guide-to-create-a-simple-web-app.aspx" target="_blank">Fredrik Normen&#39;s step by step guide</a>. In the next couple of days, I will be posting how to wire these tools together for quick web application development. Stay Tuned.<br /></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ryan Lanciaux</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-19T17:29:00-04:00" pubdate data-updated="true">May 19<span>th</span>, 2008</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/c-number/'>C#</a>, <a class='category' href='/blog/categories/nhibernate/'>nhibernate</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ryanlanciaux.github.com/blog/2008/05/19/rhinocommons-nhibernate-and-asp-net-mvc-part-1-setup/" data-via="ryanlanciaux" data-counturl="http://ryanlanciaux.github.com/blog/2008/05/19/rhinocommons-nhibernate-and-asp-net-mvc-part-1-setup/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2008/05/11/nhibernate-session-per-request/" title="Previous Post: NHibernate Session Per Request">&laquo; NHibernate Session Per Request</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2008/05/20/rhinocommons-nhibernate-and-asp-net-mvc-part-2-configuration/" title="Next Post: RhinoCommons, NHibernate and ASP.NET MVC Part 2 - Configuration">RhinoCommons, NHibernate and ASP.NET MVC Part 2 - Configuration &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/08/14/gherkin-style-bdd-testing-in-net/">Gherkin style BDD testing in .NET</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2009/08/07/beginning-asp-net-mvc-1-0-available-on-amazon/">Beginning ASP.NET MVC 1.0 available on Amazon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2009/03/24/are-you-a-control-freak/">Are you a Control Freak?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2008/12/12/what-constitutes-ethical-seo/">What Constitutes Ethical SEO?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2008/09/21/what-is-your-strategy-for-becoming-a-better-developer/">What is your strategy for becoming a better developer?</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ryanlanciaux">@ryanlanciaux</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ryanlanciaux',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Ryan Lanciaux -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

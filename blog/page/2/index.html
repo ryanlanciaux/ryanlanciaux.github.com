@@ -1,825 +1,101 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Ryan Lanciaux]]></title>
-  <link href="http://ryanlanciaux.github.com/atom.xml" rel="self"/>
-  <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2013-04-04T23:43:41-04:00</updated>
-  <id>http://ryanlanciaux.github.com/</id>
-  <author>
-    <name><![CDATA[Ryan Lanciaux]]></name>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ryan Lanciaux</title>
+  <meta name="author" content="Ryan Lanciaux">
+
+  
+  <meta name="description" content="Finally we&#39;re to the point where we can see all our hard work come together. We have most of the hard work done but we still have a lot of &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ryanlanciaux.github.com/blog/page/2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Ryan Lanciaux" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Ryan Lanciaux</a></h1>
+  
+    <h2>Random programming blog.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ryanlanciaux.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
     
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+      <h1 class="entry-title"><a href="/blog/2008/05/26/rhinocommons-nhibernate-and-asp-net-mvc-part-4-the-mvc-application/">RhinoCommons, NHibernate and ASP.NET MVC Part 4 - the MVC Application</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
 
   
-  <entry>
-    <title type="html"><![CDATA[Gherkin style BDD testing in .NET]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2011/08/14/gherkin-style-bdd-testing-in-net/"/>
-    <updated>2011-08-14T18:03:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2011/08/14/gherkin-style-bdd-testing-in-net</id>
-    <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development" target="_blank">Behavior Driven Development</a> is something that has interested me forquite awhile. I have constantly tried to write my tests as clear andconcise as possible but once I saw <a href="http://cukes.info/" target="_blank">Cucumber for Ruby</a> that became thenew standard for what I was trying to achieve in .NET. This is where<a href="http://specflow.org/" target="_blank">SpecFlow </a>comes in.<p>&nbsp;</p><p>SpecFlow is a BDD library for .NET that aimsto add testing capabilities that are similar to  <a href="http://cukes.info/" target="_blank">Cucumber</a> &#8211; that is,specifications are written in human readable Gherkin Format. From the<a href="http://specflow.org/" target="_blank">project site</a>:&nbsp;</p><blockquote>   <a href="http://specflow.org/" target="_blank">SpecFlow </a>aims at bridging the communication gap between domain experts   and developers by binding business readable behavior specifications to  the underlying implementation. <br /></blockquote><p>In theory, I really like that domain experts could write the specifications but I would be interested in seeing how that works out. </p><p><strong>So what exactly is this Gherkin format?</strong> </p><p>According to the <a href="http://wiki.github.com/aslakhellesoy/cucumber/gherkin" target="_blank">Gherkin project</a> on github, &#39;Gherkin is the language that Cucumber understands. It is a <a href="http://martinfowler.com/bliki/BusinessReadableDSL.html">Business Readable, Domain Specific Language</a> that lets you describe software&rsquo;s behaviour without detailing how that behaviour is implemented.&#39; In other words, its a common DSL for describing the required functionality for a given system.&nbsp;</p><p>This functionality is typically broken down by feature and each feature has a number of scenarios. A scenario is made up of 3 steps: GIVEN, WHEN and THEN (which seems to somewhat loosely correspond to Arrange, Act, Assert) and in a simplistic world, looks a little like this:</p><blockquote> GIVEN an admin user<br />   WHEN user requests top secret data<br />    THEN return the list of data <br /></blockquote>If you want to learn more about the Gherkin format check out <a href="http://www.engineyard.com/blog/2009/cucumber-introduction/" target="_blank">Engine Yard&#39;s Introduction to BDD with Cucumber by Dave Astels</a>  or <a href="http://wiki.github.com/aslakhellesoy/cucumber/given-when-then" target="_blank">Given-When-Then by Aslak Helles&oslash;y</a><p><strong>Quick Synopsis</strong></p><p>I&#39;ve recently started to move my blog over to a new server and a new root domain name; this could have an adverse affect on inbound links. In order to make sure this move was successful, I wanted to write an app to perform 301 redirects from the old URL to the new one. </p><p>There are a number of <a href="http://www.singingeels.com/Blogs/Nullable/2007/09/14/URL_ReWriting_The_Right_Way_Its_Easy.aspx" target="_blank">examples out there already for performing 301s</a> but I wanted to make sure I was testing the code &#8211; It seemed like a great opportunity to get a little more use out of SpecFlow. </p><p><strong>Initial Setup</strong></p><ol> <li><a href="http://specflow.org/getdoc/b647f699-ff30-48db-9bd5-db6dc45016e8/SpecFlowSetup_v1-1-0.aspx" target="_blank">Download and run the SpecFlow installer </a></li>   <li>Create a new Project and add a reference to SpecFlow and NUnit Framework</li>   <li>Add references to your mocking framework (this example is using <a href="http://code.google.com/p/moq/" target="_blank">Moq</a>)</li></ol><p><strong>On with the code!</strong> </p><p>After all the references are sorted out add a SpecFlow feature. <br /><br /><img src="http://ryanlanciaux.github.com/files/templates.gif" alt="" /><br /><br />The feature file is where we&#39;re going to define our specifications. I want to make sure that when a request is made to the old root it will get redirect to the new root url. So here is what the feature looks like initially:</p><blockquote style="width: 550px">    Feature: Redirection <br /> &nbsp;&nbsp;&nbsp; In order to not upset the google<br />   &nbsp;&nbsp;&nbsp; As a blogger who almost never has the time to blog<br /> &nbsp;&nbsp;&nbsp; I want to redirect my old url to my new one <br />   <br />  Scenario: Redirect root request<br />   &nbsp;&nbsp;&nbsp; Given I have entered a request to http://www.frickinsweet.com/ryanlanciaux.com<br /> &nbsp;&nbsp;&nbsp; And the old url is frickinsweet.com/ryanlanciaux.com<br />   &nbsp;&nbsp;&nbsp; And my new url is ryanlanciaux.com<br /> &nbsp;&nbsp;&nbsp; When the request is made<br />   &nbsp;&nbsp;&nbsp; Then the response url is http://www.ryanlanciaux.com<br />   &nbsp;&nbsp;&nbsp; And the response has a 301 in the status </blockquote><p>Notice that over in the Solution Explorer window you can expand the feature to reveal a .cs file. <br /><img src="http://ryanlanciaux.github.com/files/solution_explorer.gif" alt="" /><br />The class is an auto-generated file that updates when the .feature file is changed. We can run this through our test runner to watch it fail and get some extra information as to why it failed. </p><p>&nbsp;</p><p><img src="http://ryanlanciaux.github.com/files/test_runner.gif" alt="" /><br /><br />The tests are failing because there is no real definition to the scenario steps. We can almost directly copy and paste the output from the test runner dialog to a new class and fill in the code for the methods with standard unit testing code. Like I said before, I treat everything that is a GIVEN statement like an arrange section of a standard test; WHEN and THEN like act and assert respectively. </p><p>We could hardcode these tests to be specifically run against the urls specified in the scenario but this approach feels brittle and does not encourage code reuse. In order to use these these same steps in our future scenarios we can add wildcard mappings rather than specifying a single url in the attribute definition. The wildcard mapping is the familiar .<em> surrounded by parenthesis.<br /><br /></p><div class="code"><div style="background-image: none; background-repeat: repeat; background-attachment: scroll; -webkit-background-clip: initial; -webkit-background-origin: initial; background-color: white; font-family: 'Courier New'; font-size: 10pt; color: black; background-position: 0% 0%"><pre style="margin: 0px"><span style="color: #2b91af">&nbsp;&nbsp;&nbsp;24</span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Given</span>(<span style="color: #a31515">@&quot;I have entered a request to (.</em>)&quot;</span>)]</pre></div><div style="background-image: none; background-repeat: repeat; background-attachment: scroll; -webkit-background-clip: initial; -webkit-background-origin: initial; background-color: white; font-family: 'Courier New'; font-size: 10pt; color: black; background-position: 0% 0%">&nbsp;</div></div><p>Also note now that when we have a wildcard mapping, we can pass in a parameter to that ScenarioStepDefinition</p><br /><div class="code"><div style="background-image: none; background-repeat: repeat; background-attachment: scroll; -webkit-background-clip: initial; -webkit-background-origin: initial; background-color: white; font-family: 'Courier New'; font-size: 10pt; color: black; background-position: 0% 0%"><pre style="margin: 0px"><span style="color: blue">public</span> <span style="color: blue">void</span> GivenIHaveEnteredARequestToHttpWww_Frickinsweet_ComRyanlanciaux_ComPage2(<span style="color: blue">string</span> url)</pre></div></div><br />The final result is a lot of code but it is broken down into small, reusable sections. <div class="code"><div style="background-image: none; background-repeat: repeat; background-attachment: scroll; -webkit-background-clip: initial; -webkit-background-origin: initial; background-color: white; font-family: 'Courier New'; font-size: 9pt; color: black; background-position: 0% 0%"><pre style="margin: 0px">[<span style="color: #2b91af">TestFixture</span>]</pre><pre style="margin: 0px">[<span style="color: #2b91af">Binding</span>]</pre><pre style="margin: 0px"><span style="color: blue">public</span> <span style="color: blue">class</span> <span style="color: #2b91af">RedirectTest</span></pre><pre style="margin: 0px">{</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: blue">string</span> oldUrl;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: blue">string</span> newUrl;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: blue">string</span> requestedUrl;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: blue">string</span> finalUrl;</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: #2b91af">RedirectHandler</span> <em>handler;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: #2b91af">Mock</span>&lt;<span style="color: #2b91af">HttpContextBase</span>&gt; mockContext;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: #2b91af">Mock</span>&lt;<span style="color: #2b91af">HttpResponseBase</span>&gt; mockResponse;</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Given</span>(<span style="color: #a31515">@&quot;I have entered a request to (.<em>)&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> GivenIHaveEnteredARequestToHttpWww_Frickinsweet_ComRyanlanciaux_ComPage2(<span style="color: blue">string</span> url)</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: blue">var</span> uri = <span style="color: blue">new</span> <span style="color: #2b91af">Uri</span>(url);</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; requestedUrl = url;</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mockContext = <span style="color: blue">new</span> <span style="color: #2b91af">Mock</span>&lt;<span style="color: #2b91af">HttpContextBase</span>&gt;();</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mockContext.Setup(x =&gt; x.Request.Url).Returns(uri);</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Given</span>(<span style="color: #a31515">@&quot;the old url is (.</em>)&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> GivenTheOldUrlIsFrickinsweet_ComRyanlanciaux_Com(<span style="color: blue">string</span> url)</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; oldUrl = url;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Given</span>(<span style="color: #a31515">@&quot;my new url is (.*)&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> GivenMyNewUrlIsRyanlanciaux_Com(<span style="color: blue">string</span> url)</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; newUrl = url;</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: green">//now that we know both old and new url do a replace on httpcontexts&#39; url</span></pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: green">//setup what we expect the called url to be and throw a callback on the mock so we can verify later</span></pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mockResponse = <span style="color: blue">new</span> <span style="color: #2b91af">Mock</span>&lt;<span style="color: #2b91af">HttpResponseBase</span>&gt;();</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mockResponse.SetupProperty(x =&gt; x.Status);</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mockResponse.Setup(x =&gt; x.AddHeader(<span style="color: #a31515">&quot;Location&quot;</span>, requestedUrl.Replace(oldUrl, newUrl)))</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; .Callback(() =&gt; finalUrl = requestedUrl.Replace(oldUrl, newUrl));</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mockContext.Setup(x =&gt; x.Response).Returns(mockResponse.Object);</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">When</span>(<span style="color: #a31515">@&quot;the request is made&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> WhenTheRequestIsMade()</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </em>handler = <span style="color: blue">new</span> <span style="color: #2b91af">RedirectHandler</span>();</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; _handler.ProcessRequest(mockContext.Object, oldUrl, newUrl);</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Then</span>(<span style="color: #a31515">@&quot;the response has a 301 in the status&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> ThenTheResponseHasA301InTheStatus()</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #2b91af">Assert</span>.That(mockContext.Object.Response.Status == <span style="color: #a31515">&quot;301 Moved Permanently&quot;</span>);</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Then</span>(<span style="color: #a31515">@&quot;the response url is (.*)&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> ThenTheResponseUrlIsTheNewUrl(<span style="color: blue">string</span> expectedUrl)</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #2b91af">Assert</span>.AreEqual(expectedUrl, finalUrl);</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Then</span>(<span style="color: #a31515">@&quot;301 is not in the headers&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> Then_301IsNotInTheHeaders()</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #2b91af">Assert</span>.IsNull(mockResponse.Object.Status);</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">}</pre></div></div><p>Since we are using wildcards instead of raw urls in the step definitions we can easily write other tests that will just work with out adding any extra code.</p><blockquote style="width: 550px">  <p> Scenario: Redirect to correct path on new url<br /> &nbsp;&nbsp;&nbsp; Given I have entered a request to http://www.frickinsweet.com/ryanlanciaux.com/page2<br />   &nbsp;&nbsp;&nbsp; And the old url is frickinsweet.com/ryanlanciaux.com<br />   &nbsp;&nbsp;&nbsp; And my new url is ryanlanciaux.com<br /> &nbsp;&nbsp;&nbsp; When the request is made<br />   &nbsp;&nbsp;&nbsp; Then the response url is http://www.ryanlanciaux.com/page2<br /> &nbsp;&nbsp;&nbsp; And the response has a 301 in the status     </p></blockquote><p>This project, in its entirety, is <a href="http://github.com/ryanlanciaux/Redirect" target="_blank">hosted on GitHub</a>. Check it out if you are interested in seeing SpecFlow in the context of the whole (tiny) application. Make sure that you add all the files from the lib dir into your references the first time you run it or you will receive all kinds of errors &#8211; additionally, I wrote this quickly for myself so there is no real warranty / guarantee that the code is free from defects &#8211; use at your own risk. :) </p><p><a href="http://github.com/ryanlanciaux/Redirect" target="_blank">Download Project from GitHub</a> </p><p><a href="http://specflow.org/" target="_blank">Visit the SpecFlow homepage</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Beginning ASP.NET MVC 1.0 available on Amazon]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2009/08/07/beginning-asp-net-mvc-1-0-available-on-amazon/"/>
-    <updated>2009-08-07T07:37:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2009/08/07/beginning-asp-net-mvc-1-0-available-on-amazon</id>
-    <content type="html"><![CDATA[<p>
-I know I&#39;ve been quiet for a little bit here but wanted to point out some great news. Simone Chiaretta and Keyvan Nayyeri&#39;s book <a href="http://www.amazon.com/gp/product/047043399X/105-8603807-8434027?ie=UTF8&amp;tag=keyvannayyeri-20&amp;linkCode=xm2&amp;camp=1789&amp;creativeASIN=047043399X" target="_blank">Beginning ASP.NET MVC 1.0 </a>is available for purchase in the US on Amazon. Both Simone and Keyvan have a wealth of knowledge about the framework, so I&#39;m really looking forward to the book. For more information check out
-</p>
 
 
-<ul>
-    <li><a href="http://codeclimber.net.nz/archive/2009/08/05/beginning-asp.net-mvc-1.0-available-on-amazon.aspx" target="_blank">Simone&#39;s site&nbsp;</a></li>
-    <li><a href="http://nayyeri.net/blog/beginning-asp-net-mvc-1-0-ndash-finally-available/" target="_blank">Keyvan&#39;s site</a><br />
-    </li>
-</ul>
+<time datetime="2008-05-26T20:26:00-04:00" pubdate data-updated="true">May 26<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Are you a Control Freak?]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2009/03/24/are-you-a-control-freak/"/>
-    <updated>2009-03-24T21:04:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2009/03/24/are-you-a-control-freak</id>
-    <content type="html"><![CDATA[<p><strong>No Controls?</strong>
-Since the very early ASP.NET MVC previews, the
-most common argument I&#8217;ve heard against using the framework is the lack
-of user controls. In my opinion, this is a mixed blessing, however, for
-some, this is a show stopper. What can you do to provide a rich user
-interface with the MVC framework, while not reinventing the wheel?</p>
 
-<p><strong>jQuery</strong>
-Now
-you could go ahead and program a full fledged data grid or WYSIWYG
-editor, however, unless you have a bit of time to spare this is not the
-ideal solution. As most may realize, jQuery fits very nicely to fill in
-the gaps left by the absence of user controls. For the most part, the
-controls are not going to let you just drag-and-drop, type in a dataset
-and profit but a lot of the pain is kept to a minimum.</p>
-
-<p><strong>Examples</strong>
-<a id="k9ve" title="Ingrid" href="http://www.reconstrukt.com/ingrid/">Ingrid</a>
-<img src="http://ryanlanciaux.github.com/files/ingrid.gif" alt="" />
-If
-you&#8217;re looking for a data grid there are a number of options available
-pictured above is Ingrid. <strong>Flexigrid </strong>is another good one that people
-have <a id="zc7x" title="used with the MVC framework" href="http://www.codeproject.com/KB/aspnet/MVCFlexigrid.aspx">used with the MVC framework</a>, however, <em>their site appears to be down</em> at the moment.
-<a href="http://bassistance.de/jquery-plugins/jquery-plugin-treeview/" target="_blank">Treeviews</a> are available</p>
-
-<p><img src="http://ryanlanciaux.github.com/files/treeview.gif" alt="" /></p>
-
-<p><a href="http://code.google.com/p/jquery-checkbox/" target="_blank">Radio Buttons / Check Boxes
-</a></p>
-
-<p><img src="http://ryanlanciaux.github.com/files/check_box.gif" alt="" /></p>
-
-<p><a href="http://plugins.jquery.com/" target="_blank">Check out the jQuery plugin database</a>.</p>
-
-<p><strong>Getting Started
-</strong>So,
-if you&#8217;ve decided you want to look more into using jQuery plugins &#8211; a
-couple of tips that may make the transition a little easier:</p>
-
-<ul>
-    <li>Obviously,
-familiarize yourself with jQuery. Some of the plugins will work with
-almost 0 configuration but it&#8217;s much better to actually know what&#8217;s
-going on. <a href="http://www.smashingmagazine.com/2008/09/16/jquery-examples-and-best-practices/" target="_blank">View more info on getting started with jQuery</a></li>
-</ul>
-
-
-<ul>
-    <li>The <a href="http://nayyeri.net/blog/using-jsonresult-in-asp-net-mvc-ajax/" target="_blank">JsonResult</a> is your friend &#8211; <a href="http://www.dev102.com/2008/08/19/jquery-and-the-aspnet-mvc-framework/" target="_blank">learn it well</a>.</li>
-</ul>
-
-
-<ul>
-    <li>Read up on what people using different languages are doing. I&#8217;m
-not saying that you should necessarily go out and learn Rails or
-CakePHP/CodeIgniter (although, it is beneficial). but at least look at the
-techniques that programmers from that realm of things are doing &#8211; see how they are implementing their controls.</li>
-</ul>
-
-
-<p>What tips do you have for creating robust user interfaces with the MVC framework?</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[What Constitutes Ethical SEO?]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/12/12/what-constitutes-ethical-seo/"/>
-    <updated>2008-12-12T00:45:00-05:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/12/12/what-constitutes-ethical-seo</id>
-    <content type="html"><![CDATA[<blockquote>
-    <em>&quot;nice post!!thanks for the info..that&#39;s great and cool&quot;<br />
-    &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Random Spammer</em>
-</blockquote>
-
-
-<br />
-
-
-<p>As
-a web developer / someone who has a blog, I understand dealing with
-spam is one of the necessary evils of having a comments enabled on my
-site. For the most part, my site has remained far enough under the
-radar that most spammers do not waste their time. More recently,
-however, there has been a gradual influx of comment spam with a title
-something along the lines of &quot;[Company Name] SEO Test.&quot; There is worse
-spam for sure but it was definitely annoying. <br /></p>
-
-<br />
-
-
-<p>A quick Google
-search pointed me to a Web Development and Search Engine Optimization
-company hosting an SEO competition. I checked the rules and sure enough,
-there was a rule stating that only Ethical SEO Techniques would be
-permitted. Quickly, I emailed the organization one of the comments
-(with url, ip, email, etc) exepecting the offending parties would be
-removed from the competition, eliminating additional garbage comments.
-I was shocked to receive their reply.<br /></p>
-
-<blockquote>
-    <em>Unfortunately
-    this is not against the rules of the competition &ndash; I would encourage
-    you to remove the spamming links for your website to discourage this
-    behaviour but as I said I can&rsquo;t actually penalise this person
-    for making posts on other peoples websites.</em><br />
-    <br />
-    <em>Sorry about the spam.</em><br />
-</blockquote>
-
-
-<p><strong>Gaming the System</strong><br />
-In
-my opinion, Search Engine Optimization should be about perfecting a
-website and the website&#39;s content; not tricking google into thinking
-more people find your content useful than actuality. <a href="http://www.youngentrepreneur.com/blog/2008/12/11/seo-advice-josh-can-help/" target="_blank">Optimizing tags
-and titles</a> is one thing but gaming the system to garner search ranking is wrong
-and is detrimental to the web as a whole. Just because commenting is
-legal and allowable does not make it ethical. Unfortunately, this
-practice will continue to exist as long as it gets results and
-organizations act as enablers to those who would use these tactics for
-financial gain (not to mention increased search engine ranking for the
-enabling organizations). <br /></p>
-
-<br />
-
-
-<p><strong>Link Spam is Digital Graffiti</strong><br /></p>
-
-<div style="float: right">
-<img src="http://ryanlanciaux.github.com/files/spra-paint.jpg" alt="" />
-</div>
-
-
-<p>Imagine
-for a second if companies condoned this practice outside of the Web &#8211;
-what if McDonalds or Nike paid for their logos to be spray painted on
-other&#39;s property? To make matters worse what if after receiving
-numerous complaints they held a press conference and said &quot;soap and
-water removes the paint&quot; or &quot;just hire some guards and the problem will
-go away.&quot;? I think it&#39;s safe to assume that practice would not be
-received so kindly (h/t <a href="http://www.codehinting.com" target="_blank">Matt Braun</a> on the graffiti analogy)!
-Fortunately a link is not as hard to remove as paint but the concept is
-similar. <br /></p>
-
-<br />
-
-
-<p><strong>Solutions anyone?</strong><br />
-Social networks such as
-<a href="http://www.digg.com" target="_blank">Digg</a>, <a href="http://www.dotnetkicks.com" target="_blank">DotNetKicks </a>and <a href="http://www.dzone.com" target="_blank">DZone </a>have always been plagued by those who would
-try to circumvent the rules for personal gain. Where honeypots and
-captcha systems would traditionally help against
-bots, an increasing number of spammers seem to be actual people. The
-administrators of these social networks are constantly coming up with
-more sophisticated ways to combat spam but what should small blogs and
-websites do?<br /></p>
-
-<br />
-
-
-<p>Currently,
-there are a number of methodologies for preventing blog spam that work
-with varying degrees of effectiveness but none are ideal. Obviously,
-you can moderate comments &#8211; this works okay but is painful if you are
-getting a lot of spam or a lot of comments. Also, make sure your
-comment links have a rel=&quot;nofollow&quot; attribute (h/t <a href="http://codeclimber.net.nz" target="_blank">Simone Chiaretta</a>). Google
-does not take nofollow links into account when calculating page rank.
-Although this does not reward the spammer, it does not prevent spam. <br /></p>
-
-<br />
-
-
-<p>What I would like to see is a centralized comment system like Disqus or
-IntenseDebate that lets a user login with OpenID, Google Friend
-Connect, Microsoft LiveID, Facebook Connect (whichever the user wants).
-There would be a standard vote up / down vote for every comment a user
-makes where the overall votes across all sites would determine the
-users rating. Casting a down vote would remove a minimal amount of
-points from the voter to prevent someone from going on a down vote
-rampage (exactly how <a href="http://www.stackoverflow.com" target="_blank">StackOverflow </a>works). Site owners could set
-restrictions that would prevent users with a rating less than a
-specified number from posting on their site. This may be idealistic and
-introduce a new realm of privacy concerns but if done properly, I think it
-would help eliminate a great deal of spam.<br /></p>
-
-<br />
-
-
-<p><strong>Wrapping things up<br />
-</strong>Although there are many less-than ethical tactics to increasing a
-site&#39;s ranking, site structure and site content are the best methods of
-SEO. I would love to hear your thoughts, ideas and any suggestions you
-have in eliminating link spam.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[What is your strategy for becoming a better developer?]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/09/21/what-is-your-strategy-for-becoming-a-better-developer/"/>
-    <updated>2008-09-21T11:59:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/09/21/what-is-your-strategy-for-becoming-a-better-developer</id>
-    <content type="html"><![CDATA[<p>
-<a href="http://www.codethinked.com">Justin Etheredge</a> recently posted <a href="http://www.codethinked.com/post/2008/09/20/What-is-your-strategy-for-becoming-a-better-developer.aspx" target="_blank">a question</a> for the community on <a href="http://www.codethinked.com" target="_blank">his site</a>. I think this is a good thing to think about because my definition of a good developer is one who continually tries to be better at their craft. My suggestions may be very similar to others but I would love to hear feedback.
-</p>
-
-
-<p>
-<strong>Read</strong> : the first suggestion I have is a bit obvious. I like to read books and blogs on programming &#8211; especially methodologies and architecture. Its hard to find good books becuase there seems to be an over saturation, many of which are not good. That being said, there are quite a few that I would still recommend : <a href="http://www.amazon.com/Head-First-Design-Patterns/dp/0596007124" target="_blank">Head First Design Patterns</a>, <a href="http://www.amazon.com/Dont-Make-Me-Think-Usability/dp/0321344758/ref=pd_bbs_sr_1?ie=UTF8&amp;s=books&amp;qid=1222029313&amp;sr=8-1" target="_blank">Don&#39;t Make Me Think</a> (not really a programming book but important for anyone that writes applications with end-users) and <a href="http://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670/" target="_blank">Code Complete</a>. Additionally I&#39;m really looking foward to <a href="http://www.amazon.com/gp/product/047043399X/" target="_blank">Beginning ASP.NET MVC</a> by <a href="http://codeclimber.net.nz/" target="_blank">Simone </a>and <a href="http://nayyeri.net/" target="_blank">Keyvan</a>. As for blogs, there are tons I subscribe to but a few I&#39;ll mention are <a href="http://www.codethinked.com" target="_blank">Justin</a>&#39;s, <a href="http://www.noop.nl" target="_blank">Jurgen Appelo</a>&#39;s and <a href="http://www.diditwith.net" target="_blank">Dustin Campbell</a>&#39;s.
-</p>
-
-
-<p>
-<strong>Share </strong>:&nbsp; I first started my site to help myself and hopefully others with programming topics. As I chose a subject to write about, I realized I did a lot more research than I would if it was just something I wanted to learn. Additionally, there was a lot of experience that I gained from the comments on the articles. Sharing information with a high level of transparency helps you become a better developer because you will get feedback on your work. 
-</p>
-
-
-<p>
-<strong>Set Goals</strong> : Set goals to learn new languages / techniques. I start off by reading blogs/books/articles then think of achievable pet project to use these new techniques on. The progress on the project can be used as the baseline for determining your progress. This is not saying you would be an expert in the new area but, in my opinion, is one of the best ways to learn.
-</p>
-
-
-<p>
-There are tons of additional ways to become a better developer and I would love to hear your suggestions! 
-</p>
-
-
-<p>
-&nbsp;
-</p>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Theme Generator on Channel9!]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/08/18/theme-generator-on-channel9/"/>
-    <updated>2008-08-18T12:36:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/08/18/theme-generator-on-channel9</id>
-    <content type="html"><![CDATA[<p>
-Wow, the <a href="http://www.frickinsweet.com/tools" target="_blank">theme generator</a> that my <a href="http://www.frickinsweet.com/joelroxor" target="_blank">brother</a> and I made is on <a href="http://channel9.msdn.com/shows/This+Week+On+Channel+9/This-Week-on-C9-Christian-LittleGuru-Liensberger-VS-2008-and-NET-Framework-35-SP1/" target="_blank">Channel 9</a>.<br />
-</p>
-
-
-<div>
-<a style="text-decoration: none" href="http://go.microsoft.com/fwlink/?LinkID=124807">
-<img style="border-style: none" src="http://go.microsoft.com/fwlink/?LinkId=108181" alt="Get Microsoft Silverlight" />
-</a>
-</div>
-
-
-<p>
-It&#39;s in the video at about 11:30. Thanks to <a href="http://blogs.msdn.com/danielfe/" target="_blank">Dan</a> and team for mentioning it! <a href="http://channel9.msdn.com/shows/This+Week+On+Channel+9/This-Week-on-C9-Christian-LittleGuru-Liensberger-VS-2008-and-NET-Framework-35-SP1/" target="_blank">View the channel 9 site here</a>.
-</p>
-
-
-<p>
-&nbsp;
-</p>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Visual Studio Theme Generator]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/08/07/visual-studio-theme-generator/"/>
-    <updated>2008-08-07T08:36:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/08/07/visual-studio-theme-generator</id>
-    <content type="html"><![CDATA[<p>
-This is a really short post but I wanted to pass the word along. I just finished a fun little ASP.NET MVC Application to generate Visual Studio
-themes based off of 3 given colors. I have always felt that selecting
-every color to make a coherent theme is way too repetitive. This web
-application automatically chooses complements / contrasts based off
-your initial color selections (and uses jQuery to let you preview your
-theme before creating). I will be making another, more detailed post later that will explain how it all works but for now, <a href="http://www.frickinsweet.com/tools">check it out</a> and let me know what you think.
-</p>
-
-
-<p>
-&nbsp;
-</p>
-
-
-<p>
-<a href="http://www.frickinsweet.com/tools">View the application </a>
-</p>
-
-
-<p>
-&nbsp;
-</p>
-
-
-<p>
-&nbsp;
-</p>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How did I get started in software development?]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/07/08/how-did-i-get-started-in-software-development/"/>
-    <updated>2008-07-08T20:16:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/07/08/how-did-i-get-started-in-software-development</id>
-    <content type="html"><![CDATA[<p>
-<a href="http://www.codethinked.com" target="_blank">
-Justin Etheredge</a> recently tagged me to write up how I got started in software development (you are probably familiar with the meme started by <a href="http://www.michaeleatonconsulting.com/blog/archive/2008/06/04/how-did-you-get-started-in-software-development.aspx" target="_blank">Michael Eaton</a>). Without any further explanation, here goes:
-</p>
-
-
-<p>
-<strong>How old were you when you first started programming?</strong>
-</p>
-
-
-<p>
-I first started programming when I was 10 or 11 (I don&#39;t remember exactly). 
-</p>
-
-
-<p>
-<strong>How did you get started in programming?</strong> 
-</p>
-
-
-<p>
-My interest in programming initially began as a general interest in computer games. My dad showed me how to get around in DOS and pulled up some games in QBasic. It wasn&#39;t long after that I started messing with the code to see what would happen if I changed things. From there, I tried writing some stuff on my own spending a lot of time in the syntax help.&nbsp;
-</p>
-
-
-<p>
-<strong>What was your first language?</strong>
-</p>
-
-
-<p>
-BASIC
-</p>
-
-
-<p>
-<strong>What was the first real program you wrote?</strong> 
-</p>
-
-
-<p>
-Depending on the definition, the first real program I wrote was a game that worked in an AOL chat room. When I was 13, one of my friends showed me this thing called a scrambler. The scrambler would let you enter a word, send the scrambled word to the chat and keep score of who got the word right first, etc. I don&#39;t know why but I thought it would be an interesting thing to try and replicate. About a month later, I had finished writing one using the VB and the Windows API. It was not very useful but I learned a lot that way I guess.
-</p>
-
-
-<p>
-<strong>What languages have you used since you started programming?</strong>
-</p>
-
-
-<p>
-C#, VB.NET, Java, JavaScript, Ruby, Perl, PHP, BASIC, C, C++, F# (and others)
-</p>
-
-
-<p>
-<strong>What was your first professional programming gig?</strong>
-</p>
-
-
-<p>
-When I was in Highschool/College I did some freelance websites/applications mainly for construction and contracting companies. After college my first full-time programming job was working at Franklin University on the development team (websites / web applications).
-</p>
-
-
-<p>
-<strong>If you knew then what you know now, would you have started programming?</strong>
-</p>
-
-
-<p>
-Absolutely.
-</p>
-
-
-<p>
-<strong>If there is one thing you learned along the way that you would tell new developers, what would it be?</strong>
-</p>
-
-
-<p>
-Be continuously learning. 
-</p>
-
-
-<p>
-<strong>What&#39;s the most fun you&#39;ve ever had programming?</strong>&nbsp;
-</p>
-
-
-<p>
-I honestly couldn&#39;t tell you &#8211; there are a lot of projects that have been really fun. I especially like when there&#39;s some new kind of challenge I haven&#39;t encountered before.
-</p>
-
-
-<p>
-<strong>Who are you calling out?</strong>&nbsp;
-</p>
-
-
-<p>
-<a href="http://www.codehinting.com" target="_blank">Matt Braun</a>
-</p>
-
-
-<p>
-<a href="http://blog.sanzenbacher.com" target="_blank">Scott Sanzenbacher&nbsp;</a>
-</p>
-
-
-<p>
-<a href="http://blog.wekeroad.com" target="_blank">Rob Conery</a> 
-</p>
-
-
-<p>
-<a href="http://www.noop.nl/" target="_blank">Jurgen Appelo </a>
-</p>
-
-
-<p>
-<a href="http://www.dannydouglass.com/" target="_blank">Danny Douglass</a>
-</p>
-
-
-<p>
-<a href="http://www.ayende.com/Blog/" target="_blank">Oren Eini</a> 
-</p>
-
-
-<p>
-&nbsp;
-</p>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Quick Tip - Visual Studio Keybindings]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/06/05/quick-tip-visual-studio-keybindings/"/>
-    <updated>2008-06-05T13:08:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/06/05/quick-tip-visual-studio-keybindings</id>
-    <content type="html"><![CDATA[<p>
-This may be common knowledge but it was new to me. If you&#39;re ever hand mangling control position in a winforms designer you can setup keybindings for Bring to Front Send to Back options that are normally available on the controls context menu. This is really useful if you have layers of controls and you can&#39;t always get to the Context.
-</p>
-
-
-<ol>
-    <li>Click on Tools -&gt; Options<br />
-    </li>
-    <li>Under Environment, Select the Keyboard menu</li>
-    <li>Type &quot;Format.BringtoFront&quot; (or &quot;Format.SendtoBack&quot;) in the &quot;Show Commands Containing&quot; box</li>
-    <li>Choose your shortcut keys <br />
-    </li>
-    <li>Press Assign</li>
-</ol>
-
-
-<p>
-<br />
-<img src="http://ryanlanciaux.github.com/files/BringToFront.gif" alt="" />
-<br />
-<br />
-Thanks to my friend Ross for pointing this out.
-</p>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 5 - LINQ to NHibernate]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/06/03/rhinocommons-nhibernate-and-asp-net-mvc-part-5-linq-to-nhibernate/"/>
-    <updated>2008-06-03T21:15:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/06/03/rhinocommons-nhibernate-and-asp-net-mvc-part-5-linq-to-nhibernate</id>
-    <content type="html"><![CDATA[<p>
-<strong>Settings</strong>&nbsp;
-</p>
-
-
-<p>
-Up until now, we&#39;ve been using&nbsp; NHibernate Query Generator for all of our data access. Although this is a great way to retrieve our data, there is another option we can play around with &#8211; LINQ for NHibernate. To set this up in our existing application (see <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">Part 1</a>, <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Part 2</a>, <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-3-the-model.aspx" target="_blank">Part 3</a> and <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-4---The-MVC-Application.aspx" target="_blank">Part 4</a> on creating the ASP.NET MVC Application) we&#39;ll first need to grab the code out of subversion <a href="https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/experiments/NHibernate.Linq/" target="_blank">https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/experiments/NHibernate.Linq/</a> and build it using MSBuild or Visual Studio. After that we want to add a reference to it in our application. 
-</p>
-
-
-<p>
-<strong>Simple Code</strong>&nbsp;
-</p>
-
-
-<p>
-Next we&#39;ll want to update our controller to use Linq for NHibernate instead of NHQG (Service layer would be better place for this type of code but since this is a demo it&#39;ll be okay &#8211; for more on using a service layer to handle all the repository code check out <a href="http://michaelhanney.com/blog/" target="_blank">Michael Hanney</a>&#39;s post on <a href="http://michaelhanney.com/blog/2008/05/27/systemwebmvc-rhino-commons-caslte-active-record-nhibernate-part-2/" target="_blank">ActiveRecord, NHibernate and ASP.NET MVC</a>). The initial NHGQ code is:
-</p>
-
-
-<!--code-->
-
-
-<div class="code">
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-<span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = <span style="color: #47b3d1">Repository</span>&lt;<span style="color: #47b3d1">Product</span>&gt;.<span style="color: #a5a3a3">FindOne</span>(<span style="color: #47b3d1">Where</span>.<span style="color: #a5a3a3">Product</span>.<span style="color: #a5a3a3">Title</span> == <span style="color: #a5a3a3">ID</span>);
-</p>
-</div>
-</div>
-
-
-<!--end code-->
-
-
-<br />
-
-
-<p>Our LINQ for NHibernate query will look like this:<br /></p>
-
-<!--code-->
-
-
-<div class="code">
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = (<span style="color: #23b4eb">from</span> <span style="color: #a5a3a3">item</span> <span style="color: #23b4eb">in</span> <span style="color: #47b3d1">UnitOfWork</span>.<span style="color: #a5a3a3">CurrentSession</span>.<span style="color: #a5a3a3">Linq</span>&lt;<span style="color: #47b3d1">Product</span>&gt;()
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  <span style="color: #23b4eb">where</span> <span style="color: #a5a3a3">item</span>.<span style="color: #a5a3a3">Title</span> == <span style="color: #a5a3a3">ID</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  <span style="color: #23b4eb">select</span> <span style="color: #a5a3a3">item</span>).<span style="color: #a5a3a3">First</span>();
-</p>
-</div>
-</div>
-
-
-<p>
-<!--end code-->
-It&#39;s pretty obvious that the Linq code is a bit longer than the NHQG code. Although that in itself is not a bad thing, it may turn some people away. Momentarily, we&#39;ll see some scenarios where Linq for NH is very useful.
-</p>
-
-
-<p>
-<strong>Paging and Sorting</strong>&nbsp;
-</p>
-
-
-<p>
-One nice thing we can easily do with Linq for NHibernate is page and sort our data. If we simply want to get a list of all products it would look like this. &nbsp;
-</p>
-
-
-<!--code-->
-
-
-<div class="code">
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = (<span style="color: #23b4eb">from</span> <span style="color: #a5a3a3">item</span> <span style="color: #23b4eb">in</span> <span style="color: #47b3d1">UnitOfWork</span>.<span style="color: #a5a3a3">CurrentSession</span>.<span style="color: #a5a3a3">Linq</span>&lt;<span style="color: #47b3d1">Product</span>&gt;()
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  <span style="color: #23b4eb">select</span> <span style="color: #a5a3a3">item</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ).<span style="color: #a5a3a3">ToList</span>()
-</p>
-</div>
-</div>
-
-
-<p>
-<!--end code--> To page/sort the data it&#39;s just a slight addition to the list all code.
-<!--code-->
-</p>
-
-
-<div class="code">
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">int</span> <span style="color: #a5a3a3">itemsPerPage</span> = <span style="color: lime">5</span>;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">int</span> <span style="color: #a5a3a3">startIndex</span> = (<span style="color: #a5a3a3">ID</span>.<span style="color: #a5a3a3">Value</span> - <span style="color: lime">1</span>)* <span style="color: #a5a3a3">itemsPerPage</span>;
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = (<span style="color: #23b4eb">from</span> <span style="color: #a5a3a3">item</span> <span style="color: #23b4eb">in</span> <span style="color: #47b3d1">UnitOfWork</span>.<span style="color: #a5a3a3">CurrentSession</span>.<span style="color: #a5a3a3">Linq</span>&lt;<span style="color: #47b3d1">Product</span>&gt;()
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  <span style="color: #23b4eb">orderby</span> <span style="color: #a5a3a3">item</span>.<span style="color: #a5a3a3">Title</span> <span style="color: #23b4eb">ascending</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  <span style="color: #23b4eb">select</span> <span style="color: #a5a3a3">item</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ).<strong><span style="color: #a5a3a3">Skip</span></strong>(<span style="color: #a5a3a3">startIndex</span>).<strong><span style="color: #a5a3a3">Take</span></strong>(<span style="color: #a5a3a3">itemsPerPage</span>).<span style="color: #a5a3a3">ToList</span>();
-</p>
-</div>
-</div>
-
-
-<p>
-<!--endcode-->
-<br />
-<strong>More Advanced Usage</strong>
-</p>
-
-
-<p>
-<a href="http://codebetter.com/blogs/kyle.baley/" target="_blank">Kyle Baley</a>&#39;s <a href="http://codebetter.com/blogs/kyle.baley/archive/2008/04/07/trying-out-linq-for-nhibernate.aspx" target="_blank">article on Linq for Nhibernate</a> shows a more interesting use for Linq for NHibernate; we can create a generic method that adds query criteria on the fly. This would make our code much more reusable so we&#39;re going to go ahead and make a <em>demo </em>class heavily based on these concepts.
-</p>
-
-
-<!--code-->
-
-
-<div class="code">
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">QueryHandler</span>&lt;<span style="color: #a5a3a3">T</span>&gt;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #a5a3a3">linqExpression</span>.<span style="color: #47b3d1">Expression</span>&lt;<span style="color: #2b91af">Func</span>&lt;<span style="color: #a5a3a3">T</span>, <span style="color: #23b4eb">bool</span>&gt;&gt;&gt;&nbsp; <span style="color: #a5a3a3">_criteria</span>;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #a5a3a3">QueryHandler</span>()
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_criteria</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">List</span>&lt;<span style="color: #a5a3a3">linqExpression</span>.<span style="color: #47b3d1">Expression</span>&lt;<span style="color: #2b91af">Func</span>&lt;<span style="color: #a5a3a3">T</span>, <span style="color: #23b4eb">bool</span>&gt;&gt;&gt;();
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">void</span> <span style="color: #a5a3a3">AddCriteria</span>(<span style="color: #a5a3a3">linqExpression</span>.<span style="color: #47b3d1">Expression</span>&lt;<span style="color: #2b91af">Func</span>&lt;<span style="color: #a5a3a3">T</span>, <span style="color: #23b4eb">bool</span>&gt;&gt; <span style="color: #a5a3a3">LambdaFunc</span>)
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_criteria</span>.<span style="color: #a5a3a3">Add</span>(<span style="color: #a5a3a3">LambdaFunc</span>);
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #a5a3a3">T</span>&gt; <span style="color: #a5a3a3">GetList</span>()
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">query</span> = <span style="color: #23b4eb">from</span> <span style="color: #a5a3a3">item</span> <span style="color: #23b4eb">in</span> <span style="color: #47b3d1">UnitOfWork</span>.<span style="color: #a5a3a3">CurrentSession</span>.<span style="color: #a5a3a3">Linq</span>&lt;<span style="color: #a5a3a3">T</span>&gt;()
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">select</span> <span style="color: #a5a3a3">item</span>;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #d200d5">//Tack on our query Criteria</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">foreach</span> (<span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">criterion</span> <span style="color: #23b4eb">in</span> <span style="color: #a5a3a3">_criteria</span>)
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  <span style="color: #a5a3a3">query</span> = <span style="color: #a5a3a3">query</span>.<span style="color: #a5a3a3">Where</span>&lt;<span style="color: #a5a3a3">T</span>&gt;(<span style="color: #a5a3a3">criterion</span>);
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">query</span>.<span style="color: #a5a3a3">ToList</span>();
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; }
-</p>
-</div>
-</div>
-
-
-<p>
-<!--endcode-->
-Here, we&#39;ve created a class that has a private list of criteria, a method to add criteria to the list and a method to get the list based on the given criteria. I realize it may be a little intimidating but we can perfom most of our select queries through this method due to the use of Generics.&nbsp; 
-</p>
-
-
-<p>
-Updating the controllers to use this functionality is not too difficult. For pages that simply retrieve lists we call the GetList method without specifying any criteria: 
-</p>
-
-
-<!--code-->
-
-
-<div class="code">
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">queryHandler</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">QueryHandler</span>&lt;<span style="color: #47b3d1">Product</span>&gt;();
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = <span style="color: #a5a3a3">queryHandler</span>.<span style="color: #a5a3a3">GetList</span>().<span style="color: #a5a3a3">Skip</span>(<span style="color: #a5a3a3">startIndex</span>).<span style="color: #a5a3a3">Take</span>(<span style="color: #a5a3a3">itemsPerPage</span>).<span style="color: #a5a3a3">ToList</span>();
-</p>
-</div>
-</div>
-
-
-<p>
-&nbsp;Pass in new lambda expressions to add query criteria 
-</p>
-
-
-<div class="code">
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">queryHandler</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">QueryHandler</span>&lt;<span style="color: #47b3d1">Product</span>&gt;();
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">queryHandler</span>.<span style="color: #a5a3a3">AddCriteria</span>(<span style="color: #a5a3a3">item</span> =&gt; <span style="color: #a5a3a3">item</span>.<span style="color: #a5a3a3">Title</span> == <span style="color: #a5a3a3">ID</span>);
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = <span style="color: #a5a3a3">queryHandler</span>.<span style="color: #a5a3a3">GetList</span>().<span style="color: #a5a3a3">First</span>();
-</p>
-</div>
-</div>
-
-
-<p>
-<!--endcode-->
-<br />
-Now we see there are multiple options for interacting with our ActiveRecord Repository. Please let me know of any changes that you would make. I&#39;ve updated the demo code in Assembla &#8211; <a href="http://svn2.assembla.com/svn/NHibernateTest" target="_blank">http://svn2.assembla.com/svn/NHibernateTest</a> - Standard disclaimer does apply (some of the code is less than ideal but for learning it should be okay).
-</p>
-
-
-<p></div></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 4 - The MVC Application]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/05/26/rhinocommons-nhibernate-and-asp-net-mvc-part-4-the-mvc-application/"/>
-    <updated>2008-05-26T20:26:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/05/26/rhinocommons-nhibernate-and-asp-net-mvc-part-4-the-mvc-application</id>
-    <content type="html"><![CDATA[<p>
-Finally we&#39;re to the point where we can see all our hard work come together. We have most of the hard work done but we still have a lot of ground to cover. If you haven&#39;t been following along, please check out <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">Setting Up The Assemblies</a>, <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Configuring the Application</a> and <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Developing the Model</a>.
+  <div class="entry-content"><p>
+Finally we&#39;re to the point where we can see all our hard work come together. We have most of the hard work done but we still have a lot of ground to cover. If you haven&#39;t been following along, please check out <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">Setting Up The Assemblies</a>, <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Configuring the Application</a> and <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Developing the Model</a>.
 </p>
 
 
@@ -942,7 +218,7 @@ One further thing, the UnitOfWorkApplication supports both short and long conver
 
 <p>
 <strong>NHibernate Query Generator</strong><br />
-In the <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">first post of this series</a> we looked at what it takes to setup NHibernate Query Generator (NHQG from here out). Now we get to use it to make some really nice looking code (in a later post, however, we&#39;ll be using LINQ to NHibernate). If we&#39;ve set up the tool as mentioned in the first post (listed earlier), all we have to do is run the tool and make sure the generated code is added to the project. 
+In the <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">first post of this series</a> we looked at what it takes to setup NHibernate Query Generator (NHQG from here out). Now we get to use it to make some really nice looking code (in a later post, however, we&#39;ll be using LINQ to NHibernate). If we&#39;ve set up the tool as mentioned in the first post (listed earlier), all we have to do is run the tool and make sure the generated code is added to the project. 
 </p>
 
 
@@ -994,21 +270,48 @@ NHQG lets us use a fluent interface to set filters on our Hibernate queries; thi
 <!--endCode-->
 The <em>Where.Product.Title == ID</em> is all from the NHQG autogenerated code. Now we actually have something to show for all our configuration and setup work. Soon, we&#39;re going to take a look at using LINQ to NHibernate instead of NHQG.</p>
 
-]]></content>
-  </entry>
+</div>
   
-  <entry>
-    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 3 - The Model]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/05/22/rhinocommons-nhibernate-and-asp-net-mvc-part-3-the-model/"/>
-    <updated>2008-05-22T10:00:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/05/22/rhinocommons-nhibernate-and-asp-net-mvc-part-3-the-model</id>
-    <content type="html"><![CDATA[<p>
-We&#39;re going to keep moving now that everything is setup (<a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">see part one for setup</a>) and configured (<a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">see part two for configuration</a>). 
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/05/22/rhinocommons-nhibernate-and-asp-net-mvc-part-3-the-model/">RhinoCommons, NHibernate and ASP.NET MVC Part 3 - the Model</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-22T10:00:00-04:00" pubdate data-updated="true">May 22<span>nd</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
+We&#39;re going to keep moving now that everything is setup (<a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">see part one for setup</a>) and configured (<a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">see part two for configuration</a>). 
 </p>
 
 
 <p>
-First off we are going to create our classes. The original classes and SQL tables are posted below (these may look familiar &#8211; they are from <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/Using-NHibernate.aspx" target="_blank">my initial NHibernate post</a>)
+First off we are going to create our classes. The original classes and SQL tables are posted below (these may look familiar &#8211; they are from <a href="/ryanlanciaux.com/post/Using-NHibernate.aspx" target="_blank">my initial NHibernate post</a>)
 </p>
 
 
@@ -1219,7 +522,7 @@ First off we are going to create our classes. The original classes and SQL table
 <p>
 <!--end code--><br />
 <strong>ActiveRecord Classes</strong><br />
-In a traditional NHibernate application, we would write usually our mapping files at this time<a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/Using-NHibernate.aspx" target="_blank">(see my other NHibernate post</a> for more on that). Since we&#39;re using the ActiveRecord pattern, however, we can specify all our mappings inline with the classes. It is important to note that this would not be a pure domain because we&#39;re placing our mappings inside the model. Warning if you&#39;re sensitive to using Attributes this may not be the code for you&#8230;
+In a traditional NHibernate application, we would write usually our mapping files at this time<a href="/ryanlanciaux.com/post/Using-NHibernate.aspx" target="_blank">(see my other NHibernate post</a> for more on that). Since we&#39;re using the ActiveRecord pattern, however, we can specify all our mappings inline with the classes. It is important to note that this would not be a pure domain because we&#39;re placing our mappings inside the model. Warning if you&#39;re sensitive to using Attributes this may not be the code for you&#8230;
 </p>
 
 
@@ -1433,21 +736,48 @@ Saving / Updating <br />
 
 <p>
 <br />
-The repository is pretty nice &#8211; we can save all of our objects outside of the domain, which makes for a much cleaner design. Next time, we&#39;ll be looking at the extremely simple MVC application powered by this model and NHibernate Query Generator. <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-4---The-MVC-Application.aspx" target="_blank">Continue to Part 4</a>
+The repository is pretty nice &#8211; we can save all of our objects outside of the domain, which makes for a much cleaner design. Next time, we&#39;ll be looking at the extremely simple MVC application powered by this model and NHibernate Query Generator. <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-4---The-MVC-Application.aspx" target="_blank">Continue to Part 4</a>
 </p>
 
 
 
-]]></content>
-  </entry>
+</div>
   
-  <entry>
-    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 2 - Configuration]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/05/20/rhinocommons-nhibernate-and-asp-net-mvc-part-2-configuration/"/>
-    <updated>2008-05-20T22:23:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/05/20/rhinocommons-nhibernate-and-asp-net-mvc-part-2-configuration</id>
-    <content type="html"><![CDATA[<p>
-Following up on <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">my last post</a>, we&#39;re going to setup a project and get everything ready for the code (we&#39;ll be doing the coding very soon &#8211; I promise).&nbsp; First off, create a new MVC application (make sure you&#39;re using the latest preview from codeplex) and a new Class library. From here, you&#39;d normally want to want to do some TDD to create your model but that&#39;s a little outside the scope of this example.
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/05/20/rhinocommons-nhibernate-and-asp-net-mvc-part-2-configuration/">RhinoCommons, NHibernate and ASP.NET MVC Part 2 - Configuration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-20T22:23:00-04:00" pubdate data-updated="true">May 20<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
+Following up on <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">my last post</a>, we&#39;re going to setup a project and get everything ready for the code (we&#39;ll be doing the coding very soon &#8211; I promise).&nbsp; First off, create a new MVC application (make sure you&#39;re using the latest preview from codeplex) and a new Class library. From here, you&#39;d normally want to want to do some TDD to create your model but that&#39;s a little outside the scope of this example.
 </p>
 
 
@@ -1645,21 +975,48 @@ Component(&quot;active_record_unit_of_work&quot;,
 
 
 <p>
-<!--end code-->Check out <a href="http://ayende.com/blog/" target="_blank">Ayende&#39;s</a> <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx#comment">comment </a>for a more succinct way to register these components.
-As you might have noticed, I still have to set up the colors for boo files in Visual Studio :) What this file is doing is loading the assemblies and setting up the repository / unit of work (we&#39;ll see those in action in the next parts of this series). Your project configuration should be all set. Next time we will actually be writing some code so stick around for that. <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-3-the-model.aspx">View Part Three - The Model</a> 
+<!--end code-->Check out <a href="http://ayende.com/blog/" target="_blank">Ayende&#39;s</a> <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx#comment">comment </a>for a more succinct way to register these components.
+As you might have noticed, I still have to set up the colors for boo files in Visual Studio :) What this file is doing is loading the assemblies and setting up the repository / unit of work (we&#39;ll see those in action in the next parts of this series). Your project configuration should be all set. Next time we will actually be writing some code so stick around for that. <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-3-the-model.aspx">View Part Three - The Model</a> 
 </p>
 
 
 
-]]></content>
-  </entry>
+</div>
   
-  <entry>
-    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 1 - Setup]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/05/19/rhinocommons-nhibernate-and-asp-net-mvc-part-1-setup/"/>
-    <updated>2008-05-19T17:29:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/05/19/rhinocommons-nhibernate-and-asp-net-mvc-part-1-setup</id>
-    <content type="html"><![CDATA[<p>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/05/19/rhinocommons-nhibernate-and-asp-net-mvc-part-1-setup/">RhinoCommons, NHibernate and ASP.NET MVC Part 1 - Setup</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-19T17:29:00-04:00" pubdate data-updated="true">May 19<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
 After my last post about the unit of work with NHibernate, <a href="http://www.lostechies.com/blogs/chad%5Fmyers/" target="_blank">Chad Myers</a> mentioned that I should take a look at Ayende&#39;s Rhino Commons (because the Unit of Work stuff is already being handled). Since I am not a big fan of reinventing the wheel I decided I would give it a shot. There&#39;s going to be another post in the near future about how to get Rhino Commons, Castle ActiveRecord and ASP.NET MVC working together but for now, it would be good to make sure all the necessary components are installed on your machine.
 </p>
 
@@ -1676,7 +1033,7 @@ After my last post about the unit of work with NHibernate, <a href="http://www.l
     </li>
     <li>Next you&#39;re going to want to setup the NHibernate Query Generator (we&#39;re going to use Linq to NHibernate in a later example but for now get this installed). This should be a part of the Rhino-tools package but if you want you can <a href="http://www.ayende.com/projects/nhibernate-query-analyzer/downloads.aspx" target="_blank">download the binaries</a>. Then setup the application as an external tool in Visual Studio (my settings are posted below). <a href="http://jhollingworth.wordpress.com/2008/03/28/subsonic-like-nhibernate-query-generator-button-in-visual-studio/%20target=">see James Hollingworth&#39;s post for more info</a>
     <br />
-    <img src="http://ryanlanciaux.github.com/ryanlanciaux.com/image.axd?picture=nhibernateqg.gif" alt="" />
+    <img src="/ryanlanciaux.com/image.axd?picture=nhibernateqg.gif" alt="" />
     <ul>
         <li>Command: C:\program files\nhqg\NHQG.exe</li>
         <li>Arguments: /Lang:cs /InputFilePattern:$(BinDir)/ProductModelActiveRecord.dll /OutputDirectory:$(ProjectDir)/Queries /BaseNamespace:Queries</li>
@@ -1688,16 +1045,43 @@ After my last post about the unit of work with NHibernate, <a href="http://www.l
 
 
 <p>You should now have everything setup. It may be good to take a look at the Exesto application in the rhino-tools\SampleApplications directory to get an introduction to the Rhino-tools / binsor / castle settings that we&#39;ll be looking at later on. Finally, if you are not familiar with the ASP.NET MVC Framework take a look <a href="http://weblogs.asp.net/fredriknormen/archive/2008/04/17/asp-net-mvc-framework-pre-preview-3-a-step-by-step-guide-to-create-a-simple-web-app.aspx" target="_blank">Fredrik Normen&#39;s step by step guide</a>. In the next couple of days, I will be posting how to wire these tools together for quick web application development. Stay Tuned.<br /></p>
-]]></content>
-  </entry>
+</div>
   
-  <entry>
-    <title type="html"><![CDATA[NHibernate Session Per Request]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/05/11/nhibernate-session-per-request/"/>
-    <updated>2008-05-11T23:47:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/05/11/nhibernate-session-per-request</id>
-    <content type="html"><![CDATA[<p>
-A little earlier on, I had posted a simple example of <a href="http://svn2.assembla.com/svn/NHibernateTest/" target="_blank">NHibernate in an MVC application</a> as well as some <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/NHibernate-in-an-ASPNET-MVC-application.aspx" target="_blank">initial questions</a> I had about NHibernate Session management. In response to my question, <a href="http://mhinze.com/" target="_blank">Matt Hinze</a> mentioned that the session should be transparent to the controller and posted some links to various articles explaining how to achieve this. I finally had a chance to play around with this type of session management and spent most of my time looking through <a href="http://devlicio.us/blogs/billy_mccafferty/" target="_blank">Billy McCafferty</a>&#39;s <a href="http://www.codeproject.com/KB/architecture/NHibernateBestPractices.aspx" target="_blank">NHibernate Best practices</a> on CodeProject. As I&#39;ve mentioned before, I&#39;m very new to NHibernate so some of the things I&#39;m doing may not be ideal. 
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/05/11/nhibernate-session-per-request/">NHibernate Session Per Request</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-11T23:47:00-04:00" pubdate data-updated="true">May 11<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
+A little earlier on, I had posted a simple example of <a href="http://svn2.assembla.com/svn/NHibernateTest/" target="_blank">NHibernate in an MVC application</a> as well as some <a href="/ryanlanciaux.com/post/NHibernate-in-an-ASPNET-MVC-application.aspx" target="_blank">initial questions</a> I had about NHibernate Session management. In response to my question, <a href="http://mhinze.com/" target="_blank">Matt Hinze</a> mentioned that the session should be transparent to the controller and posted some links to various articles explaining how to achieve this. I finally had a chance to play around with this type of session management and spent most of my time looking through <a href="http://devlicio.us/blogs/billy_mccafferty/" target="_blank">Billy McCafferty</a>&#39;s <a href="http://www.codeproject.com/KB/architecture/NHibernateBestPractices.aspx" target="_blank">NHibernate Best practices</a> on CodeProject. As I&#39;ve mentioned before, I&#39;m very new to NHibernate so some of the things I&#39;m doing may not be ideal. 
 </p>
 
 
@@ -1864,15 +1248,42 @@ There&#39;s still a bit more I want to explore with this method of Session Manag
 
 
 
-]]></content>
-  </entry>
+</div>
   
-  <entry>
-    <title type="html"><![CDATA[Using NHibernate (years after I should have been)]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/04/30/using-nhibernate-years-after-i-should-have-been/"/>
-    <updated>2008-04-30T06:52:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/04/30/using-nhibernate-years-after-i-should-have-been</id>
-    <content type="html"><![CDATA[<p>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/30/using-nhibernate-years-after-i-should-have-been/">Using NHibernate (Years After I Should Have Been)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-30T06:52:00-04:00" pubdate data-updated="true">Apr 30<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
 As mentioned in my last post, I&#39;ve been starting to use <a href="http://www.hibernate.org/343.html" target="_blank">NHibernate </a>in some of my more recent projects. I checked it out years ago and I completely hated it (maybe becuase I was a newer developer &#8211; not totally sure). More recently, however, I&#39;ve realized some of the benefits of <a href="http://www.domaindrivendesign.org/" target="_blank">Domain Driven Design</a> and thought its about time to give Hibernate another shot. I&#39;m admittedly pretty new to Hibernate so any feedback would be appreciated! 
 </p>
 
@@ -2322,7 +1733,7 @@ In the other methods of the class, we first need to define what type of object w
 
 
 <p>
-I&#39;ve created a quick demo application using MVC and NHibernate. As I said, I&#39;m still very new to hibernate so there&#39;s a lot I&#39;m trying to learn (for instance<a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/NHibernate-in-an-ASPNET-MVC-application.aspx" target="_blank"> where the ISession should initially be created and closed in an MVC application</a>). Please let me know of any way that this could be better &#8211; generally I&#39;m writing this to help solidfy my thoughts on the technology, help others (hopefully) and also improve from others feedback.&nbsp;
+I&#39;ve created a quick demo application using MVC and NHibernate. As I said, I&#39;m still very new to hibernate so there&#39;s a lot I&#39;m trying to learn (for instance<a href="/ryanlanciaux.com/post/NHibernate-in-an-ASPNET-MVC-application.aspx" target="_blank"> where the ISession should initially be created and closed in an MVC application</a>). Please let me know of any way that this could be better &#8211; generally I&#39;m writing this to help solidfy my thoughts on the technology, help others (hopefully) and also improve from others feedback.&nbsp;
 </p>
 
 
@@ -2332,15 +1743,42 @@ Disclaimer: Use this code at your own risk.&nbsp;
 
 
 
-]]></content>
-  </entry>
+</div>
   
-  <entry>
-    <title type="html"><![CDATA[NHibernate in an ASP.NET MVC application]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/04/29/nhibernate-in-an-asp-net-mvc-application/"/>
-    <updated>2008-04-29T22:45:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/04/29/nhibernate-in-an-asp-net-mvc-application</id>
-    <content type="html"><![CDATA[<p>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/29/nhibernate-in-an-asp-net-mvc-application/">NHibernate in an ASP.NET MVC Application</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-29T22:45:00-04:00" pubdate data-updated="true">Apr 29<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
 I&#39;ve recently become interested in using <a href="http://www.hibernate.org/343.html" target="_blank">NHibernate </a>for some of my data access. For the past year or
 so I have been using <a href="http://subsonicproject.com/" target="_blank">SubSonic </a>for that, however, I&#39;m trying to take a bit
 more of a domain driven approach on the project I&#39;m currently messing around on. Although I&#39;ve only been looking at it for a couple of days, one thing I&#39;m having a little bit of trouble figuring out is where my ISession should be opened / closed in an ASP.NET MVC application. Currently, I&#39;m doing this in the Controller but I&#39;m not totally sure that is the right way to go&#8230;
@@ -2385,15 +1823,42 @@ more of a domain driven approach on the project I&#39;m currently messing around
 
 
 <p>What is the best way to go about this? Also, should I be looking more at using a <a href="http://blogs.hibernatingrhinos.com/nhibernate/archive/2008/04/10/nhibernate-and-the-unit-of-work-pattern.aspx" target="_blank">Unit of Work</a> pattern to achieve this?</p>
-]]></content>
-  </entry>
+</div>
   
-  <entry>
-    <title type="html"><![CDATA[IE8 vs Firefox 3.0b5 JavaScript Part 1]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/04/12/ie8-vs-firefox-3-0b5-javascript-part-1/"/>
-    <updated>2008-04-12T23:24:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/04/12/ie8-vs-firefox-3-0b5-javascript-part-1</id>
-    <content type="html"><![CDATA[<p>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/12/ie8-vs-firefox-3-0b5-javascript-part-1/">IE8 vs Firefox 3.0b5 JavaScript Part 1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-12T23:24:00-04:00" pubdate data-updated="true">Apr 12<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
 Last time I posted on the latest browser from Microsoft vs. Mozilla&#39;s latest I had compared page download times between the two browsers. This time, I would like to take a brief look at how they stack up in regard to JavaScript. 
 </p>
 
@@ -2468,15 +1933,42 @@ I ran the tests in groups because there were certain ones that were not finishin
 The initial results look like Firefox is performing the more advanced Javascript operations faster than Internet Explorer. That being said, Dromaeo, IE8 and Firefox 3.0b5 are still being developed so a lot could change before the release. For more metrics <a href="http://dromaeo.com/?id=250,246,251,256" target="_blank">view a comparison</a> on the Dromaeo site of Safari 3.1, Firefox 3.0b5, Opera 9.5 and IE8b1. Let me know what you think or if you&#39;ve encountered different results.
 </p>
 
-]]></content>
-  </entry>
+</div>
   
-  <entry>
-    <title type="html"><![CDATA[Browser Beta Battle - IE8 vs Firefox 3.0b5]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/04/02/browser-beta-battle-ie8-vs-firefox-3-0b5/"/>
-    <updated>2008-04-02T22:38:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/04/02/browser-beta-battle-ie8-vs-firefox-3-0b5</id>
-    <content type="html"><![CDATA[<p>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/04/02/browser-beta-battle-ie8-vs-firefox-3-0b5/">Browser Beta Battle - IE8 vs Firefox 3.0b5</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-02T22:38:00-04:00" pubdate data-updated="true">Apr 2<span>nd</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
 After reading <a href="http://www.stevesouders.com/" target="_blank">Steve Souders&#39;</a> article on <a href="http://www.stevesouders.com/blog/2008/03/10/ie8-speeds-things-up/" target="_blank">IE8 speed enhancements</a>, I became curious about how page download times in <a href="http://www.microsoft.com/windows/products/winfamily/ie/ie8/default.mspx" target="_blank">IE8</a> stacked up against the latest beta of <a href="http://www.mozilla.com/en-US/firefox/all-beta.html" target="_blank">Firefox (3.0b5)</a>. I realize that both of these browsers are in beta so the release product may be signficantly different. Also, please keep in mind these results are not very scientific (obviously). To obtain download times, I used <a href="http://www.fiddlertool.com/fiddler/" target="_blank">Fiddler</a> for <a href="http://www.microsoft.com/windows/products/winfamily/ie/ie8/default.mspx" target="_blank">Internet Explorer</a> and <a href="https://addons.mozilla.org/en-US/firefox/addon/1843" target="_blank">Firebug </a>for <a href="http://www.mozilla.com/en-US/firefox/all-beta.html" target="_blank">Firefox</a>.
 </p>
 
@@ -2604,7 +2096,7 @@ Finally, I ran <a href="http://stevesouders.com/hpws/parallel-downloads.php" tar
             <td bgcolor="#ededed"><strong>Firefox</strong></td>
         </tr>
         <tr>
-            <td><img src="http://ryanlanciaux.github.com/files/firefox.gif" alt="" /></td>
+            <td><img src="/files/firefox.gif" alt="" /></td>
         </tr>
     </tbody>
 </table>
@@ -2619,7 +2111,7 @@ Finally, I ran <a href="http://stevesouders.com/hpws/parallel-downloads.php" tar
             <td bgcolor="#ededed"><strong>Internet Explorer</strong></td>
         </tr>
         <tr>
-            <td><img src="http://ryanlanciaux.github.com/files/ie8.gif" alt="" /></td>
+            <td><img src="/files/ie8.gif" alt="" /></td>
         </tr>
     </tbody>
 </table>
@@ -2637,16 +2129,43 @@ It was really odd to me that Google News loaded almost two times as fast on Fire
 
 
 
-]]></content>
-  </entry>
+</div>
   
-  <entry>
-    <title type="html"><![CDATA[Real Ultimate Power Dependency Injection with Ninject]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/03/26/real-ultimate-power-dependency-injection-with-ninject/"/>
-    <updated>2008-03-26T23:02:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/03/26/real-ultimate-power-dependency-injection-with-ninject</id>
-    <content type="html"><![CDATA[<div style="padding: 10px; float: right">
-<img src="http://ryanlanciaux.github.com/files/ninja.jpg" alt="Ninja" />
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/03/26/real-ultimate-power-dependency-injection-with-ninject/">Real Ultimate Power Dependency Injection With Ninject</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-26T23:02:00-04:00" pubdate data-updated="true">Mar 26<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div style="padding: 10px; float: right">
+<img src="/files/ninja.jpg" alt="Ninja" />
 </div>
 
 
@@ -3119,7 +2638,7 @@ project type you&#39;d like). A lot of thought went into the naming of the form.
 <br />
 
 
-<p><img src="http://ryanlanciaux.github.com/files/rx-8+working.gif" alt="" /><br /></p>
+<p><img src="/files/rx-8+working.gif" alt="" /><br /></p>
 
 <br />
 
@@ -3344,12 +2863,12 @@ see we&#39;re getting the expected results!<br /></p>
 <table border="0">
     <tbody>
         <tr>
-            <td><img src="http://ryanlanciaux.github.com/files/screen.gif" alt="" /></td>
-            <td><img src="http://ryanlanciaux.github.com/files/rx-8+working.gif" alt="" /></td>
+            <td><img src="/files/screen.gif" alt="" /></td>
+            <td><img src="/files/rx-8+working.gif" alt="" /></td>
         </tr>
         <tr>
-            <td><img src="http://ryanlanciaux.github.com/files/jetta.gif" alt="" /></td>
-            <td><img src="http://ryanlanciaux.github.com/files/wrx.gif" alt="" /></td>
+            <td><img src="/files/jetta.gif" alt="" /></td>
+            <td><img src="/files/wrx.gif" alt="" /></td>
         </tr>
     </tbody>
 </table>
@@ -3374,7 +2893,134 @@ More info on Ninject:
     <li><a href="http://www.jaltiere.com/?p=23" target="_blank">Jack Altiere on Learning Dependency Injection</a></li>
 </ul>
 
-]]></content>
-  </entry>
+</div>
   
-</feed>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/08/14/gherkin-style-bdd-testing-in-net/">Gherkin style BDD testing in .NET</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2009/08/07/beginning-asp-net-mvc-1-0-available-on-amazon/">Beginning ASP.NET MVC 1.0 available on Amazon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2009/03/24/are-you-a-control-freak/">Are you a Control Freak?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2008/12/12/what-constitutes-ethical-seo/">What Constitutes Ethical SEO?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2008/09/21/what-is-your-strategy-for-becoming-a-better-developer/">What is your strategy for becoming a better developer?</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/ryanlanciaux">@ryanlanciaux</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ryanlanciaux',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Ryan Lanciaux -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

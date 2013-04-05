@@ -1,0 +1,868 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ryan Lanciaux</title>
+  <meta name="author" content="Ryan Lanciaux">
+
+  
+  <meta name="description" content="There are a lot of resources on the web about dependency injection and using StructureMap, however, I wanted to write something that was an &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ryanlanciaux.github.com/blog/page/3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Ryan Lanciaux" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Ryan Lanciaux</a></h1>
+  
+    <h2>Random programming blog.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ryanlanciaux.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/02/26/very-quick-and-simple-dependency-injection-with-structuremap/">Very Quick and Simple Dependency Injection With StructureMap</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-26T22:51:00-05:00" pubdate data-updated="true">Feb 26<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
+There are a lot of resources on the web about <a href="http://www.martinfowler.com/articles/injection.html" target="_blank">dependency injection</a> and using <a href="http://structuremap.sourceforge.net/Default.htm" target="_blank">StructureMap</a>, however, I wanted to write something that was an extremely simple example. This is basically the tip of the iceberg but hopefully it will help someone.&nbsp; 
+</p>
+
+
+<table border="0">
+    <tbody>
+        <tr>
+            <td valign="top">
+            We want to make our application very loosely coupled &#8211; to achieve this &#39;<a href="http://en.wikipedia.org/wiki/Loose_coupling" target="_blank">loose coupling</a>&#39; we&#39;re going to have several projects in the solution. What this means if we need to change any part of this application later on (we wouldn&#39;t want to in this case since its a demo and all), we could do so without impacting everything else. Anyways, we&#39;re going to create three class libraries and a WinForms application. 
+            </td>
+            <td><img src="/ryanlanciaux.com/image.axd?picture=SolutionExplorer.gif" alt="" /> <br />
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<p>
+Next we want to create our main inteface &#8211; this will be under the DisplayMessage Project: 
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+<span style="color: #23b4eb">namespace</span> <span style="color: #a5a3a3">DisplayMessage</span>
+</p>
+<p style="margin: 0px">
+{
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">interface</span> <span style="color: #2b91af">IDisplayMessage</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">message</span>();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+}
+</p>
+</div>
+
+
+<p>
+The interface defines just one method that, when implemented, will return a string stating what class its coming from. Next, we want to create our two implementation classes (one under Implementation1, the other under Implementation2). Please keep in mind I&#39;m not suggesting to have every class in it&#39;s own library &#8211; it&#39;s just for the sake of example :) 
+</p>
+
+
+<p>
+Implementation1:
+</p>
+
+
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">MessageOne</span> : <span style="color: #2b91af">IDisplayMessage</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">message</span>()
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">return</span> <span style="color: #80ff00">&quot;This is a message from Implementation1&quot;</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; }
+</p>
+</div>
+
+
+<p>
+&nbsp;Implementation2:
+</p>
+
+
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">MessageTwo</span> : <span style="color: #2b91af">IDisplayMessage</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">message</span>()
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">return</span> <span style="color: #80ff00">&quot;This is a message from Implementation2&quot;</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; }
+</p>
+</div>
+
+
+<p>
+Okay that was easy enough, now on to the Forms App.&nbsp; We&#39;re first going to add a reference to StructureMap and the project DisplayMessage and create a file called StructureMap.config &#8211; this config file is going to define all of our assemblies. We want to make sure we edit the properties of this file and set the <em>Copy to Output Directory</em> option to &quot;<em>Copy Always</em>.&quot; StructureMap will use this file at runtime to get our object references. The config file looks like this:&nbsp;
+</p>
+
+
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+<span style="color: #88d0e8">&lt;?</span><span style="color: lime">xml</span><span style="color: #88d0e8"> </span><span style="color: #cecece">version</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">1.0</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> </span><span style="color: #cecece">encoding</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">utf-8</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> ?&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&lt;</span><span style="color: lime">StructureMap</span><span style="color: #88d0e8">&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &lt;</span><span style="color: lime">Assembly</span><span style="color: #88d0e8"> </span><span style="color: #cecece">Name</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">DisplayMessage</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> /&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &lt;</span><span style="color: lime">Assembly</span><span style="color: #88d0e8"> </span><span style="color: #cecece">Name</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">Implementation1</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> /&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &lt;</span><span style="color: lime">Assembly</span><span style="color: #88d0e8"> </span><span style="color: #cecece">Name</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">Implementation2</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> /&gt;</span>
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &lt;</span><span style="color: lime">PluginFamily</span><span style="color: #88d0e8"> </span><span style="color: #cecece">Type</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">DisplayMessage.IDisplayMessage</span><span style="color: fuchsia">&quot;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: #cecece">Assembly</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">DisplayMessage</span><span style="color: fuchsia">&quot;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: #cecece">DefaultKey</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">MessageOne</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8">&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &nbsp; &lt;</span><span style="color: lime">Plugin</span><span style="color: #88d0e8"> </span><span style="color: #cecece">Type</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">Implementation1.MessageOne</span><span style="color: fuchsia">&quot;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: #cecece">Assembly</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">Implementation1</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: #cecece">ConcreteKey</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">MessageOne</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> /&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &nbsp; &lt;</span><span style="color: lime">Plugin</span><span style="color: #88d0e8"> </span><span style="color: #cecece">Type</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">Implementation2.MessageTwo</span><span style="color: fuchsia">&quot;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: #cecece">Assembly</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">Implementation2</span><span style="color: fuchsia">&quot;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: #cecece">ConcreteKey</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">MessageTwo</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> /&gt;&nbsp; &nbsp; </span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp; &lt;/</span><span style="color: lime">PluginFamily</span><span style="color: #88d0e8">&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&lt;/</span><span style="color: lime">StructureMap</span><span style="color: #88d0e8">&gt;</span>
+</p>
+</div>
+
+
+<p>
+Notice we define a PluginFamily for the IDisplayMessage interface and set the default implementation to be MessageOne (the DefaultKey of PluginFamily references the ConcreteKey of the Plugin). Other than that, this should be pretty straight-forward but if you have any confusion, please <a href="http://structuremap.sourceforge.net/Default.htm" target="_blank">check out the StructureMap documentation</a>. Only a couple more things to do before we can run this&#8230; 
+</p>
+
+
+<table border="0">
+    <tbody>
+        <tr>
+            <td>
+            <img src="/ryanlanciaux.com/image.axd?picture=window2.gif" alt="" />
+            </td>
+            <td valign="top">Ok, we&#39;re going to add 3 buttons to our form &#8211; one for the default IDisplayMessage and one for each implementation.</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<p>
+&nbsp;Now to add the code&#8230; 
+</p>
+
+
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #d200d5">//Default IDisplayMessage&nbsp;</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #23b4eb">void</span> <span style="color: #a5a3a3">btnDefault_Click</span>(<span style="color: #23b4eb">object</span> <span style="color: #a5a3a3">sender</span>, <span style="color: #47b3d1">EventArgs</span> <span style="color: #a5a3a3">e</span>)
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #2b91af">IDisplayMessage</span> <span style="color: #a5a3a3">msg</span> = <span style="color: #a5a3a3">StructureMap</span>.<span style="color: #47b3d1">ObjectFactory</span>.<span style="color: #a5a3a3">GetInstance</span>&lt;<span style="color: #2b91af">IDisplayMessage</span>&gt;();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">System</span>.<span style="color: #a5a3a3">Windows</span>.<span style="color: #a5a3a3">Forms</span>.<span style="color: #47b3d1">MessageBox</span>.<span style="color: #a5a3a3">Show</span>(<span style="color: #a5a3a3">msg</span>.<span style="color: #a5a3a3">message</span>());
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #d200d5">//Implementation1</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #23b4eb">void</span> <span style="color: #a5a3a3">btnOne_Click</span>(<span style="color: #23b4eb">object</span> <span style="color: #a5a3a3">sender</span>, <span style="color: #47b3d1">EventArgs</span> <span style="color: #a5a3a3">e</span>)
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #2b91af">IDisplayMessage</span> <span style="color: #a5a3a3">msg</span> = <span style="color: #a5a3a3">StructureMap</span>.<span style="color: #47b3d1">ObjectFactory</span>.<span style="color: #a5a3a3">GetNamedInstance</span>&lt;<span style="color: #2b91af">IDisplayMessage</span>&gt;(<span style="color: #80ff00">&quot;MessageOne&quot;</span>);
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">System</span>.<span style="color: #a5a3a3">Windows</span>.<span style="color: #a5a3a3">Forms</span>.<span style="color: #47b3d1">MessageBox</span>.<span style="color: #a5a3a3">Show</span>(<span style="color: #a5a3a3">msg</span>.<span style="color: #a5a3a3">message</span>());
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #d200d5">//Implementation2</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #23b4eb">void</span> <span style="color: #a5a3a3">btnTwo_Click</span>(<span style="color: #23b4eb">object</span> <span style="color: #a5a3a3">sender</span>, <span style="color: #47b3d1">EventArgs</span> <span style="color: #a5a3a3">e</span>)
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #2b91af">IDisplayMessage</span> <span style="color: #a5a3a3">msg</span> = <span style="color: #a5a3a3">StructureMap</span>.<span style="color: #47b3d1">ObjectFactory</span>.<span style="color: #a5a3a3">GetNamedInstance</span>&lt;<span style="color: #2b91af">IDisplayMessage</span>&gt;(<span style="color: #80ff00">&quot;MessageTwo&quot;</span>);
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">System</span>.<span style="color: #a5a3a3">Windows</span>.<span style="color: #a5a3a3">Forms</span>.<span style="color: #47b3d1">MessageBox</span>.<span style="color: #a5a3a3">Show</span>(<span style="color: #a5a3a3">msg</span>.<span style="color: #a5a3a3">message</span>());
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }&nbsp;
+</p>
+</div>
+
+
+<p>
+Lets parse this up a little bit&#8230;
+</p>
+
+
+<ul>
+    <li><span style="color: #2b91af"></span>
+    <div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+    <p style="margin: 0px">
+    <span style="color: #2b91af">IDisplayMessage</span> <span style="color: #a5a3a3">msg</span> = <span style="color: #a5a3a3">StructureMap</span>.<span style="color: #47b3d1">ObjectFactory</span>.<span style="color: #a5a3a3">GetInstance</span>&lt;<span style="color: #2b91af">IDisplayMessage</span>&gt;();
+    </p>
+    </div>
+    This statement gets the default IDisplayMessage object in the StructureMap.config file. Currently, it will get the same object as getting a named instance of &quot;MessageOne&quot;</li>
+    <li>
+    <div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+    <p style="margin: 0px">
+    <span style="color: #2b91af">IDisplayMessage</span> <span style="color: #a5a3a3">msg</span> = <span style="color: #a5a3a3">StructureMap</span>.<span style="color: #47b3d1">ObjectFactory</span>.<span style="color: #a5a3a3">GetNamedInstance</span>&lt;<span style="color: #2b91af">IDisplayMessage</span>&gt;(<span style="color: #80ff00">&quot;MessageOne&quot;</span>);
+    </p>
+    </div>
+    This statement gets the object associated with the ConcreteKey &quot;MessageOne&quot;
+    </li>
+    <li>
+    <div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+    <p style="margin: 0px">
+    <span style="color: #2b91af">IDisplayMessage</span> <span style="color: #a5a3a3">msg</span> = <span style="color: #a5a3a3">StructureMap</span>.<span style="color: #47b3d1">ObjectFactory</span>.<span style="color: #a5a3a3">GetNamedInstance</span>&lt;<span style="color: #2b91af">IDisplayMessage</span>&gt;(<span style="color: #80ff00">&quot;MessageTwo&quot;</span>);
+    </p>
+    </div>
+    This statement gets the object associated with the ConcreteKey &quot;MessageTwo&quot;</li>
+</ul>
+
+
+<p>
+Instead of simply hitting F5, we will need to build the application &#8211; we want to copy the DLL files from Implementation1 and Implementation2 to the bin directory of the forms app and run the executable there.&nbsp; For testing, however, we can add a reference to both projects (this completely defeats the purpose of dependency injection so be sure to remove the references later on) or adjust the output directory of the implementation class libraries to be the same as the Form application&#39;s bin directory. Running the application shows that everything is working as expected.
+</p>
+
+
+<p>
+For more information please check out the following links:
+</p>
+
+
+<ul>
+    <li>&nbsp;<a href="http://structuremap.sourceforge.net/Default.htm" target="_blank">StructureMap Homepage (SourceForge)</a></li>
+    <li><a href="http://codebetter.com/blogs/jeremy.miller/archive/2005/11/18/134816.aspx" target="_blank">Introduction to using StructureMap for DependencyInjection</a></li>
+    <li><a href="http://dotnetslackers.com/articles/designpatterns/IntroducingDependencyInjectionFrameworks.aspx" target="_blank">Introducing Dependency Injection Frameworks</a> by <a href="http://codebetter.com/blogs/karlseguin/default.aspx" target="_blank">Karl Seguin <br />
+    </a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/02/24/learning-a-new-language/">Learning a New Language</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-24T23:42:00-05:00" pubdate data-updated="true">Feb 24<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
+I&#39;m currently in the process of getting to be more comfortable with Ruby on Rails and really just starting to learn F#. In both cases, simply reading a book or tutorials and following along has not been enough to really get my head around it.
+</p>
+
+
+<p>
+First off, I&#39;ve decided I have to have a project or something to work against. For RoR, there&#39;s a little site I&#39;m working on (more on that some other time) &#8211; For F#, I&#39;m currently working thru the <a href="https://prof.ti.bfh.ch/hew1/informatik3/prolog/p-99/" target="_blank">99 Problems</a> with <a href="http://www.joellanciaux.com" target="_blank">my brother</a> (<a href="/99problems" target="_blank">you can see our solutions here</a>).&nbsp; When simply reading a book or tutorials you don&#39;t generally come accrossed the same kind of road blocks that you would find in a project. I think overcoming the road blocks is what helps me better understand a language. 
+</p>
+
+
+<p>
+All that being said, I think it&#39;s truly important to read as many books, tutorials and source code as you can. <a href="http://www.associatedcontent.com/article/13482/reading_to_become_a_better_writer.html" target="_blank">Authors read to become better writers</a> &#8230; as developers we should too (<a href="http://graysmatter.codivation.com/HowIAmBecomingABetterDeveloperPart1OfInfinity.aspx" target="_blank">See Justice Gray&#39;s blog</a> for more on this). I have this bad habit of thinking in C#/Java/C++; this is pretty much as bad as it would be for me to try and speak Japanese using a English to Japanese dictionary. Seeing how other people code helps me stay away from that.&nbsp;
+</p>
+
+
+<p>
+What are some steps that you take when you start learning a new language?&nbsp;
+</p>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/02/06/diving-into-ruby-on-rails/">Diving Into Ruby on Rails</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-06T19:09:00-05:00" pubdate data-updated="true">Feb 6<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
+This past weekend I started really digging into <a href="http://www.rubyonrails.org/" target="_blank">Ruby on Rails</a>.&nbsp;&nbsp;For&nbsp;a
+while now, I have&nbsp;known a little bit of ruby (by reading <a href="http://poignantguide.net/ruby/" target="_blank">Why&#39;s Poignant
+Guide</a> and messing around a little with Rails), however,&nbsp;I wanted to
+have a much stronger understanding in it &#8211; even if it&#39;s only for the
+concepts.&nbsp;
+</p>
+
+
+<p>
+&nbsp;
+<br />
+<strong>Why Rails &#8211; Why Now?</strong>
+</p>
+
+
+<p>
+Rails has been publicly available since July 2004; some may ask why
+I am just now becoming interested in the framework. There are actually
+several main reasons&#8230; 
+</p>
+
+
+<ol>
+    <li>It is a good educational
+    resource in the <a href="http://en.wikipedia.org/wiki/Model-view-controller" target="_blank">MVC Pattern</a>. This applies to many implementations such
+    as <a href="http://weblogs.asp.net/scottgu/archive/2007/10/14/asp-net-mvc-framework.aspx" target="_blank">Microsoft MVC</a>, <a href="http://www.symfony-project.org/" target="_blank">Symfony </a>and <a href="http://www.cakephp.org/" target="_blank">Cake </a>on PHP and a whole slew of <a href="http://merbivore.com/" target="_blank">other</a>
+    frameworks.</li>
+    <li>Rails is becoming a more viable option with <a href="http://jruby.codehaus.org/" target="_blank">JRuby </a>and the forthcoming releases of <a href="http://www.ironruby.net/" target="_blank">IronRuby</a>.</li>
+    <li>The concept of <a href="http://glu.ttono.us/articles/2005/10/27/the-joy-of-migrations" target="_blank">DB Migrations</a> is very nice &#8211; especially when you
+    have encountered the difficulty involved in placing your <a href="http://www.codinghorror.com/blog/archives/001050.html" target="_blank">database under source control</a>.</li>
+</ol>
+
+
+<p>
+&nbsp;
+</p>
+
+
+<p>
+<strong>Setting up the environment</strong>
+</p>
+
+
+<ol>
+    <li>
+    <div>
+    I needed to configure my computer to run the rails apps. <a href="http://www.netbeans.org/" target="_blank">NetBeans
+    </a>seemed like a good idea to me because of the simple JRuby integration
+    (other options <a href="http://www.aptana.com/" target="_blank">Aptana Studio</a>, <a href="http://www.eclipse.org/" target="_blank">Eclipse</a>, your favorite text editor w/ <a href="http://instantrails.rubyforge.org/wiki/wiki.pl" target="_blank">Instant rails</a>).&nbsp;
+    </div>
+    </li>
+    <li>
+    <div>
+    I already had <a href="http://www.mysql.com/" target="_blank">MySql </a>installed on my computer so there was no need
+    to set up a database server (<a href="http://www.sqlite.org/" target="_blank">Sqlite </a>was a tempting option as well). 
+    </div>
+    </li>
+    <li>
+    <div>
+    Created a series of databases (as needed)&nbsp;for the various test&nbsp;rails apps to write to.
+    </div>
+    </li>
+    <li>
+    <div>
+    Downloaded and installed <a href="http://webyog.com/en/" target="_blank">MySqlYog </a>Community edition. I knew I was
+    going to be handling most of my database stuff with the Rails
+    ActiveRecord implementation and db migrations BUT I still wanted to see
+    what was going on inside the db.
+    </div>
+    </li>
+</ol>
+
+
+<p>
+&nbsp;
+</p>
+
+
+<p>
+<strong>Initial Impressions</strong>
+</p>
+
+
+<p>After the initial hour or so of
+setting up my environment, I wrote some quick test applications
+(following some tutorials, at first obviously). I really liked the
+principle of Convention over Configuration.&nbsp; This was apparent in many
+areas of the framework such as the <a href="http://wiki.rubyonrails.org/rails/pages/UnderstandingGenerators" target="_blank">generator</a> / <a href="http://rake.rubyforge.org/" target="_blank">rake </a>tools and the easy
+application configuration in the <a href="http://railscasts.com/episodes/85" target="_blank">.yam</a>l files. I can see how this may
+not be the best choice for certain applications but for a lot of web
+applications, it seems like it will be a good fit.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/01/27/6-tips-for-better-web-project-quoting/">6 Tips for Better Web Project Quoting</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-01-27T10:37:00-05:00" pubdate data-updated="true">Jan 27<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>
+<font face="arial,helvetica,sans-serif" size="2">An often overlooked area of Web Projects is quoting.&nbsp; Many developers
+continually hone their programming and design abilities, however, few
+value quoting ability as a necessary tool.&nbsp; Quotes that are inaccurate
+can cost you; if you are too high, you are either ripping off your
+client (apart from the ethical reasons it is also bad for you because
+it may eliminate any future business and referrals) or you will not be
+awarded the job.&nbsp; Here are some steps for better quoting.&nbsp; </font>
+</p>
+
+
+<h2>
+<br />
+</h2>
+
+
+<h2><span style="font-weight: bold">#1 KNOW YOUR CUSTOMERS</span></h2>
+
+
+<p>
+<font face="arial,helvetica,sans-serif" size="2">You
+will not sell anything that does not meet the customers needs &#8211; no
+matter how good the price is.&nbsp; Knowing your customer is the single most
+important aspect of quoting.&nbsp; Sometimes clients will ask for something
+that they don&#39;t really need.&nbsp; Instead of simply recognizing what they
+are asking for, it is important to understand what they would like to
+achieve.&nbsp; As developers or designers it is our job to educate the
+client; to show them a more efficient way to accomplish their goal or
+maybe even point out some things that were overlooked.</font><br />
+<br />
+</p>
+
+
+<h2><span style="font-weight: bold">#2 KNOW YOUR ABILITIE</span>S</h2>
+
+
+<p>
+<font face="arial,helvetica,sans-serif" size="2">Know
+exactly what you are capable of.&nbsp; Do not propose something that you can
+not deliver.&nbsp; I realize that it is the nature of technology that it
+will always be evolving and we will always be learning new things;
+every project brings about new challenges.&nbsp; That being said, it is a
+disservice to both you and your client if there is a lot you need to
+learn before you can accomplish your proposed solution.</font><br />
+<br />
+</p>
+
+
+<h2><span style="font-weight: bold">#3 BE THOROUGH</span></h2>
+
+
+<p>
+<font face="arial,helvetica,sans-serif" size="2">Your
+proposal must be thorough.&nbsp; Obviously, being thorough does not mean
+using technical jargon that would be above the clients head (remember
+you want to educate, not confuse).&nbsp; Clearly present what you intend to
+do and why it would benefit your prospective client.&nbsp; All the bases
+must be covered all assumptions must be stated; do not leave any wiggle
+room for assumptions because that can lead to a mess later (I know its
+somewhat repetitive but I can&#39;t state it enough).&nbsp;&nbsp; </font><br />
+<br />
+</p>
+
+
+<h2><span style="font-weight: bold">#4 PRESENT YOUR PROPOSAL PROFESSIONALLY (alliteration not intended)</span></h2>
+
+
+<p>
+<font face="arial,helvetica,sans-serif" size="2">Your
+proposal will be seen as a reflection of your work.&nbsp; Make sure you
+place the same kind of time and effort in to the flow and layout of the
+proposal as you would any other design piece.&nbsp;</font> <br />
+<br />
+</p>
+
+
+<h2><span style="font-weight: bold">#5 ACCOUNT FOR ROAD BUMPS</span></h2>
+
+
+<p>
+<font face="arial,helvetica,sans-serif" size="2">According
+to Murphy&#39;s Law, anything that can possibly go wrong, will go wrong.&nbsp;
+Account for this in your time estimates.&nbsp; Take note of the areas where
+there could be problems.&nbsp; Take some extra time while quoting to
+research more about what the possible outcomes could be and create a
+plan of action.&nbsp; This plan will give you a better idea of what
+time-frame you&#39;re looking at.</font><br />
+<br />
+</p>
+
+
+<h2><span style="font-weight: bold">#6 PRACTICE, PRACTICE, PRACTICE</span></h2>
+
+
+<p>
+<font face="arial,helvetica,sans-serif" size="2">Sometimes,
+good quoting simply comes down to experience.&nbsp; The more jobs you have
+quoted, the more data you have to work with to determine where you were
+off and what areas you should focus more on.&nbsp; This may be common sense
+but make sure you keep track of how many hours you quoted for a project
+and how many actual hours it came out to be.&nbsp; Additionally, break down
+the project into different sections.&nbsp; A more module approach will help
+you determine where things went wrong.</font><br />
+<br />
+<br />
+Hopefully this will
+be helpful to you no matter how experienced at quoting projects you
+are.&nbsp; Please post your thoughts or any other quoting suggestions that
+you may have.&nbsp; (originally written 3/17/2007)
+</p>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/2/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/08/14/gherkin-style-bdd-testing-in-net/">Gherkin style BDD testing in .NET</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2009/08/07/beginning-asp-net-mvc-1-0-available-on-amazon/">Beginning ASP.NET MVC 1.0 available on Amazon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2009/03/24/are-you-a-control-freak/">Are you a Control Freak?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2008/12/12/what-constitutes-ethical-seo/">What Constitutes Ethical SEO?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2008/09/21/what-is-your-strategy-for-becoming-a-better-developer/">What is your strategy for becoming a better developer?</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/ryanlanciaux">@ryanlanciaux</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ryanlanciaux',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Ryan Lanciaux -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

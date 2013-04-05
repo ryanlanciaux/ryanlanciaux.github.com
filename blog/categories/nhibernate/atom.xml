@@ -1,0 +1,1177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: nhibernate | Ryan Lanciaux]]></title>
+  <link href="http://ryanlanciaux.github.com/blog/categories/nhibernate/atom.xml" rel="self"/>
+  <link href="http://ryanlanciaux.github.com/"/>
+  <updated>2013-04-04T23:43:41-04:00</updated>
+  <id>http://ryanlanciaux.github.com/</id>
+  <author>
+    <name><![CDATA[Ryan Lanciaux]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 5 - LINQ to NHibernate]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/06/03/rhinocommons-nhibernate-and-asp-net-mvc-part-5-linq-to-nhibernate/"/>
+    <updated>2008-06-03T21:15:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/06/03/rhinocommons-nhibernate-and-asp-net-mvc-part-5-linq-to-nhibernate</id>
+    <content type="html"><![CDATA[<p>
+<strong>Settings</strong>&nbsp;
+</p>
+
+
+<p>
+Up until now, we&#39;ve been using&nbsp; NHibernate Query Generator for all of our data access. Although this is a great way to retrieve our data, there is another option we can play around with -- LINQ for NHibernate. To set this up in our existing application (see <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">Part 1</a>, <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Part 2</a>, <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-3-the-model.aspx" target="_blank">Part 3</a> and <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-4---The-MVC-Application.aspx" target="_blank">Part 4</a> on creating the ASP.NET MVC Application) we&#39;ll first need to grab the code out of subversion <a href="https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/experiments/NHibernate.Linq/" target="_blank">https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/experiments/NHibernate.Linq/</a> and build it using MSBuild or Visual Studio. After that we want to add a reference to it in our application. 
+</p>
+
+
+<p>
+<strong>Simple Code</strong>&nbsp;
+</p>
+
+
+<p>
+Next we&#39;ll want to update our controller to use Linq for NHibernate instead of NHQG (Service layer would be better place for this type of code but since this is a demo it&#39;ll be okay -- for more on using a service layer to handle all the repository code check out <a href="http://michaelhanney.com/blog/" target="_blank">Michael Hanney</a>&#39;s post on <a href="http://michaelhanney.com/blog/2008/05/27/systemwebmvc-rhino-commons-caslte-active-record-nhibernate-part-2/" target="_blank">ActiveRecord, NHibernate and ASP.NET MVC</a>). The initial NHGQ code is:
+</p>
+
+
+<!--code-->
+
+
+<div class="code">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+<span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = <span style="color: #47b3d1">Repository</span>&lt;<span style="color: #47b3d1">Product</span>&gt;.<span style="color: #a5a3a3">FindOne</span>(<span style="color: #47b3d1">Where</span>.<span style="color: #a5a3a3">Product</span>.<span style="color: #a5a3a3">Title</span> == <span style="color: #a5a3a3">ID</span>);
+</p>
+</div>
+</div>
+
+
+<!--end code-->
+
+
+<br />
+
+
+<p>Our LINQ for NHibernate query will look like this:<br /></p>
+
+<!--code-->
+
+
+<div class="code">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = (<span style="color: #23b4eb">from</span> <span style="color: #a5a3a3">item</span> <span style="color: #23b4eb">in</span> <span style="color: #47b3d1">UnitOfWork</span>.<span style="color: #a5a3a3">CurrentSession</span>.<span style="color: #a5a3a3">Linq</span>&lt;<span style="color: #47b3d1">Product</span>&gt;()
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  <span style="color: #23b4eb">where</span> <span style="color: #a5a3a3">item</span>.<span style="color: #a5a3a3">Title</span> == <span style="color: #a5a3a3">ID</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  <span style="color: #23b4eb">select</span> <span style="color: #a5a3a3">item</span>).<span style="color: #a5a3a3">First</span>();
+</p>
+</div>
+</div>
+
+
+<p>
+<!--end code-->
+It&#39;s pretty obvious that the Linq code is a bit longer than the NHQG code. Although that in itself is not a bad thing, it may turn some people away. Momentarily, we&#39;ll see some scenarios where Linq for NH is very useful.
+</p>
+
+
+<p>
+<strong>Paging and Sorting</strong>&nbsp;
+</p>
+
+
+<p>
+One nice thing we can easily do with Linq for NHibernate is page and sort our data. If we simply want to get a list of all products it would look like this. &nbsp;
+</p>
+
+
+<!--code-->
+
+
+<div class="code">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = (<span style="color: #23b4eb">from</span> <span style="color: #a5a3a3">item</span> <span style="color: #23b4eb">in</span> <span style="color: #47b3d1">UnitOfWork</span>.<span style="color: #a5a3a3">CurrentSession</span>.<span style="color: #a5a3a3">Linq</span>&lt;<span style="color: #47b3d1">Product</span>&gt;()
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  <span style="color: #23b4eb">select</span> <span style="color: #a5a3a3">item</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ).<span style="color: #a5a3a3">ToList</span>()
+</p>
+</div>
+</div>
+
+
+<p>
+<!--end code--> To page/sort the data it&#39;s just a slight addition to the list all code.
+<!--code-->
+</p>
+
+
+<div class="code">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">int</span> <span style="color: #a5a3a3">itemsPerPage</span> = <span style="color: lime">5</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">int</span> <span style="color: #a5a3a3">startIndex</span> = (<span style="color: #a5a3a3">ID</span>.<span style="color: #a5a3a3">Value</span> - <span style="color: lime">1</span>)* <span style="color: #a5a3a3">itemsPerPage</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = (<span style="color: #23b4eb">from</span> <span style="color: #a5a3a3">item</span> <span style="color: #23b4eb">in</span> <span style="color: #47b3d1">UnitOfWork</span>.<span style="color: #a5a3a3">CurrentSession</span>.<span style="color: #a5a3a3">Linq</span>&lt;<span style="color: #47b3d1">Product</span>&gt;()
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  <span style="color: #23b4eb">orderby</span> <span style="color: #a5a3a3">item</span>.<span style="color: #a5a3a3">Title</span> <span style="color: #23b4eb">ascending</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  <span style="color: #23b4eb">select</span> <span style="color: #a5a3a3">item</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ).<strong><span style="color: #a5a3a3">Skip</span></strong>(<span style="color: #a5a3a3">startIndex</span>).<strong><span style="color: #a5a3a3">Take</span></strong>(<span style="color: #a5a3a3">itemsPerPage</span>).<span style="color: #a5a3a3">ToList</span>();
+</p>
+</div>
+</div>
+
+
+<p>
+<!--endcode-->
+<br />
+<strong>More Advanced Usage</strong>
+</p>
+
+
+<p>
+<a href="http://codebetter.com/blogs/kyle.baley/" target="_blank">Kyle Baley</a>&#39;s <a href="http://codebetter.com/blogs/kyle.baley/archive/2008/04/07/trying-out-linq-for-nhibernate.aspx" target="_blank">article on Linq for Nhibernate</a> shows a more interesting use for Linq for NHibernate; we can create a generic method that adds query criteria on the fly. This would make our code much more reusable so we&#39;re going to go ahead and make a <em>demo </em>class heavily based on these concepts.
+</p>
+
+
+<!--code-->
+
+
+<div class="code">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">QueryHandler</span>&lt;<span style="color: #a5a3a3">T</span>&gt;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #a5a3a3">linqExpression</span>.<span style="color: #47b3d1">Expression</span>&lt;<span style="color: #2b91af">Func</span>&lt;<span style="color: #a5a3a3">T</span>, <span style="color: #23b4eb">bool</span>&gt;&gt;&gt;&nbsp; <span style="color: #a5a3a3">_criteria</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #a5a3a3">QueryHandler</span>()
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_criteria</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">List</span>&lt;<span style="color: #a5a3a3">linqExpression</span>.<span style="color: #47b3d1">Expression</span>&lt;<span style="color: #2b91af">Func</span>&lt;<span style="color: #a5a3a3">T</span>, <span style="color: #23b4eb">bool</span>&gt;&gt;&gt;();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">void</span> <span style="color: #a5a3a3">AddCriteria</span>(<span style="color: #a5a3a3">linqExpression</span>.<span style="color: #47b3d1">Expression</span>&lt;<span style="color: #2b91af">Func</span>&lt;<span style="color: #a5a3a3">T</span>, <span style="color: #23b4eb">bool</span>&gt;&gt; <span style="color: #a5a3a3">LambdaFunc</span>)
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_criteria</span>.<span style="color: #a5a3a3">Add</span>(<span style="color: #a5a3a3">LambdaFunc</span>);
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #a5a3a3">T</span>&gt; <span style="color: #a5a3a3">GetList</span>()
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">query</span> = <span style="color: #23b4eb">from</span> <span style="color: #a5a3a3">item</span> <span style="color: #23b4eb">in</span> <span style="color: #47b3d1">UnitOfWork</span>.<span style="color: #a5a3a3">CurrentSession</span>.<span style="color: #a5a3a3">Linq</span>&lt;<span style="color: #a5a3a3">T</span>&gt;()
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">select</span> <span style="color: #a5a3a3">item</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #d200d5">//Tack on our query Criteria</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">foreach</span> (<span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">criterion</span> <span style="color: #23b4eb">in</span> <span style="color: #a5a3a3">_criteria</span>)
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  <span style="color: #a5a3a3">query</span> = <span style="color: #a5a3a3">query</span>.<span style="color: #a5a3a3">Where</span>&lt;<span style="color: #a5a3a3">T</span>&gt;(<span style="color: #a5a3a3">criterion</span>);
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">query</span>.<span style="color: #a5a3a3">ToList</span>();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; }
+</p>
+</div>
+</div>
+
+
+<p>
+<!--endcode-->
+Here, we&#39;ve created a class that has a private list of criteria, a method to add criteria to the list and a method to get the list based on the given criteria. I realize it may be a little intimidating but we can perfom most of our select queries through this method due to the use of Generics.&nbsp; 
+</p>
+
+
+<p>
+Updating the controllers to use this functionality is not too difficult. For pages that simply retrieve lists we call the GetList method without specifying any criteria: 
+</p>
+
+
+<!--code-->
+
+
+<div class="code">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">queryHandler</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">QueryHandler</span>&lt;<span style="color: #47b3d1">Product</span>&gt;();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = <span style="color: #a5a3a3">queryHandler</span>.<span style="color: #a5a3a3">GetList</span>().<span style="color: #a5a3a3">Skip</span>(<span style="color: #a5a3a3">startIndex</span>).<span style="color: #a5a3a3">Take</span>(<span style="color: #a5a3a3">itemsPerPage</span>).<span style="color: #a5a3a3">ToList</span>();
+</p>
+</div>
+</div>
+
+
+<p>
+&nbsp;Pass in new lambda expressions to add query criteria 
+</p>
+
+
+<div class="code">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">queryHandler</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">QueryHandler</span>&lt;<span style="color: #47b3d1">Product</span>&gt;();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">queryHandler</span>.<span style="color: #a5a3a3">AddCriteria</span>(<span style="color: #a5a3a3">item</span> =&gt; <span style="color: #a5a3a3">item</span>.<span style="color: #a5a3a3">Title</span> == <span style="color: #a5a3a3">ID</span>);
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = <span style="color: #a5a3a3">queryHandler</span>.<span style="color: #a5a3a3">GetList</span>().<span style="color: #a5a3a3">First</span>();
+</p>
+</div>
+</div>
+
+
+<p>
+<!--endcode-->
+<br />
+Now we see there are multiple options for interacting with our ActiveRecord Repository. Please let me know of any changes that you would make. I&#39;ve updated the demo code in Assembla -- <a href="http://svn2.assembla.com/svn/NHibernateTest" target="_blank">http://svn2.assembla.com/svn/NHibernateTest</a> - Standard disclaimer does apply (some of the code is less than ideal but for learning it should be okay).
+</p>
+
+
+<p></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 4 - The MVC Application]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/05/26/rhinocommons-nhibernate-and-asp-net-mvc-part-4-the-mvc-application/"/>
+    <updated>2008-05-26T20:26:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/05/26/rhinocommons-nhibernate-and-asp-net-mvc-part-4-the-mvc-application</id>
+    <content type="html"><![CDATA[<p>
+Finally we&#39;re to the point where we can see all our hard work come together. We have most of the hard work done but we still have a lot of ground to cover. If you haven&#39;t been following along, please check out <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">Setting Up The Assemblies</a>, <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Configuring the Application</a> and <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Developing the Model</a>.
+</p>
+
+
+<p>
+<strong>Unit of Work</strong>
+</p>
+
+
+<p>
+In some of my initial tests with NHibernate and ASP.NET MVC Pattern I kept seeing the benefits of having a Unit of Work or Session Per Request (that is opening and closing the NHibernate session at the begining and end of the http request respectively). To Recap a little, I started to write my own Session Per Request, however, <a href="http://www.lostechies.com/blogs/chad_myers/" target="_blank">Chad Myers</a> pointed me to the Rhino Commons project which already implemented this. I think it&#39;s worthwhile becuase I don&#39;t really like putting NHibernate session code in my controller plus as <a href="http://martinfowler.com/eaaCatalog/unitOfWork.html" target="_blank">Martin Fowler writes</a>
+<br />
+</p>
+
+
+<blockquote>
+    A Unit of Work keeps track of everything you do during a business transaction that can affect the database. When you&#39;re done, it figures out everything that needs to be done to alter the database as a result of your work.
+</blockquote>
+
+
+<p>
+Luckily, with RhinoCommons, it&#39;s pretty easy to implement this pattern (<a href="http://www.ayende.com/Blog/archive/2007/06/08/Rhino-Commons-RepositoryltTgt-and-Unit-Of-Work.aspx" target="_blank">check out Ayende&#39;s post on this</a>). In a standard web forms application, we would normally create a Global.aspx that inherits UnitOfWorkApplication. Since we&#39;re using ASP.NET MVC, however, we don&#39;t necessarily want to go that route. As <a href="http://michaelhanney.com/blog/" target="_blank">Michael Hanney</a> notes on <a href="http://michaelhanney.com/blog/2008/04/27/beginning-systemwebmvc-with-rhino-tools-caslte-active-record-and-nhibernate/" target="_blank">his post on MVC and Castle</a> we can have our Global.asax inherit from UnitOfWorkApplication. 
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+
+<!--code-->
+
+
+<div class="code">
+<div style="background: #1b1b1b none repeat scroll 0% 0%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">GlobalApplication</span> : <span style="color: #47b3d1">UnitOfWorkApplication</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">override</span> <span style="color: #23b4eb">void</span> <span style="color: #a5a3a3">Application_Start</span>(<span style="color: #23b4eb">object</span> <span style="color: #a5a3a3">sender</span>, <span style="color: #47b3d1">EventArgs</span> <span style="color: #a5a3a3">e</span>)&nbsp; 
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {&nbsp; 
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">base</span>.<span style="color: #a5a3a3">Application_Start</span>(<span style="color: #a5a3a3">sender</span>, <span style="color: #a5a3a3">e</span>);&nbsp; 
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">RegisterRoutes</span>(<span style="color: #47b3d1">RouteTable</span>.<span style="color: #a5a3a3">Routes</span>);&nbsp; 
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } 
+</p>
+<p style="margin: 0px">
+... 
+</p>
+<p style="margin: 0px">
+&nbsp; &nbsp;&nbsp; } 
+</p>
+</div>
+</div>
+
+
+<p>
+<!--endCode-->If you know of another way to do this, please be sure to let me know. Also, the routing still works as it normally would -- we&#39;re just running this code first to instantiate the UnitOfWork. 
+</p>
+
+
+<p>
+In our controllers we can call our reference our Hibernate repositories and classes without specifying an ISession.
+<br />
+<!--code-->
+</p>
+
+
+<div class="code">
+<div style="background: #1b1b1b none repeat scroll 0% 0%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #47b3d1">ActionResult</span> <span style="color: #a5a3a3">InsertProductGroup</span>(<span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span>)
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #47b3d1">ProductGroup</span> <span style="color: #a5a3a3">pg</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">ProductGroup</span>();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">pg</span>.<span style="color: #a5a3a3">Title</span> = <span style="color: #a5a3a3">Title</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #47b3d1">Repository</span>&lt;<span style="color: #47b3d1">ProductGroup</span>&gt;.<span style="color: #a5a3a3">Save</span>(<span style="color: #a5a3a3">pg</span>);
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #47b3d1">UnitOfWork</span>.<span style="color: #a5a3a3">Current</span>.<span style="color: #a5a3a3">Flush</span>();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">RenderView</span>(<span style="color: #80ff00">&quot;AddProductGroup&quot;</span>);
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } 
+</p>
+</div>
+</div>
+
+
+<p>
+<!--endCode--> Notice we&#39;re still flushing our data -- but it makes the controllers a LOT cleaner. Imagine if we had to instantiate and clean up our session in each controller. 
+</p>
+
+
+<p>
+One further thing, the UnitOfWorkApplication supports both short and long conversations. I&#39;m not going to go too much into that but if your application requires keeping objects around for a couple HTTP Requests before saving to the database Long Conversation may be the way to go. <a href="http://www.ayende.com/Wiki/HttpModules.ashx" target="_blank">See Ayende&#39;s Wiki for more on this</a> 
+</p>
+
+
+<p>
+<strong>NHibernate Query Generator</strong><br />
+In the <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">first post of this series</a> we looked at what it takes to setup NHibernate Query Generator (NHQG from here out). Now we get to use it to make some really nice looking code (in a later post, however, we&#39;ll be using LINQ to NHibernate). If we&#39;ve set up the tool as mentioned in the first post (listed earlier), all we have to do is run the tool and make sure the generated code is added to the project. 
+</p>
+
+
+<p>
+NHQG lets us use a fluent interface to set filters on our Hibernate queries; this results in code that, in my opinion, is very easy to write and understand later on. If we wanted to Find one Product with a specific title, our code would look something like this: 
+</p>
+
+
+<!--code-->
+
+
+<div class="code">
+<div style="background: #1b1b1b none repeat scroll 0% 0%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #47b3d1">ActionResult</span> <span style="color: #a5a3a3">ViewProduct</span>(<span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ID</span>)
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = <span style="color: #47b3d1">Repository</span>&lt;<span style="color: #47b3d1">Product</span>&gt;.<span style="color: #a5a3a3">FindOne</span>(<span style="color: #47b3d1">Where</span>.<span style="color: #a5a3a3">Product</span>.<span style="color: #a5a3a3">Title</span> == <span style="color: #a5a3a3">ID</span>);
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">if</span> (<span style="color: #a5a3a3">p</span> != <span style="color: #23b4eb">null</span>)
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">RenderView</span>(<span style="color: #80ff00">&quot;DisplayProduct&quot;</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; <span style="color: #a5a3a3">p</span>);&nbsp; 
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">RenderView</span>(<span style="color: #80ff00">&quot;DisplayProduct&quot;</span>);
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+</div>
+</div>
+
+
+<p>
+<!--endCode-->
+The <em>Where.Product.Title == ID</em> is all from the NHQG autogenerated code. Now we actually have something to show for all our configuration and setup work. Soon, we&#39;re going to take a look at using LINQ to NHibernate instead of NHQG.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 3 - The Model]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/05/22/rhinocommons-nhibernate-and-asp-net-mvc-part-3-the-model/"/>
+    <updated>2008-05-22T10:00:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/05/22/rhinocommons-nhibernate-and-asp-net-mvc-part-3-the-model</id>
+    <content type="html"><![CDATA[<p>
+We&#39;re going to keep moving now that everything is setup (<a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">see part one for setup</a>) and configured (<a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">see part two for configuration</a>). 
+</p>
+
+
+<p>
+First off we are going to create our classes. The original classes and SQL tables are posted below (these may look familiar -- they are from <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/Using-NHibernate.aspx" target="_blank">my initial NHibernate post</a>)
+</p>
+
+
+<br />
+
+
+<p>Initial Product<!--code --></p>
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">Product</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #a5a3a3">IList</span>&lt;<span style="color: #a5a3a3">Product</span>&gt; <span style="color: #a5a3a3">_RelatedProducts</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #a5a3a3">IList</span>&lt;<span style="color: #a5a3a3">ProductGroup</span>&gt; <span style="color: #a5a3a3">_ProductGroups</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #a5a3a3">Product</span>()
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_RelatedProducts</span> = <span style="color: #23b4eb">new</span> <span style="color: #a5a3a3">List</span>&lt;<span style="color: #a5a3a3">Product</span>&gt;();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_ProductGroups</span> = <span style="color: #23b4eb">new</span> <span style="color: #a5a3a3">List</span>&lt;<span style="color: #a5a3a3">ProductGroup</span>&gt;();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ID</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">private</span> <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ImagePath</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Description</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #a5a3a3">IList</span>&lt;<span style="color: #a5a3a3">Product</span>&gt; <span style="color: #a5a3a3">RelatedProducts</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span> { <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_RelatedProducts</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">set</span> { <span style="color: #a5a3a3">_RelatedProducts</span> = <span style="color: #23b4eb">value</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #a5a3a3">IList</span>&lt;<span style="color: #a5a3a3">ProductGroup</span>&gt; <span style="color: #a5a3a3">ProductGroups</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span> { <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_ProductGroups</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">set</span> { <span style="color: #a5a3a3">_ProductGroups</span> = <span style="color: #23b4eb">value</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; }
+</p>
+</div>
+</div>
+
+
+<br />
+
+
+<!--end code-->
+
+
+<p>Initial ProductGroup<br /></p>
+
+<!--code-->
+
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">ProductGroup</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ProductGroupID</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #a5a3a3">Product</span>&gt; <span style="color: #a5a3a3">Products</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; }
+</p>
+</div>
+</div>
+
+
+<!--end code-->
+
+
+<br />
+
+
+<p>SQL Tables</p>
+
+<!--code-->
+
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+<span style="color: #a5a3a3">CREATE</span> <span style="color: #a5a3a3">TABLE</span> [<span style="color: #a5a3a3">dbo</span>].[<span style="color: #a5a3a3">SimpleProducts</span>](
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">Title</span>] [<span style="color: #a5a3a3">nvarchar</span>](<span style="color: lime">50</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ImagePath</span>] [<span style="color: #a5a3a3">nvarchar</span>](<span style="color: lime">300</span>) <span style="color: #a5a3a3">NULL</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">Description</span>] [<span style="color: #a5a3a3">nvarchar</span>](<span style="color: lime">500</span>) <span style="color: #a5a3a3">NULL</span>
+</p>
+<p style="margin: 0px">
+)
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+<span style="color: #a5a3a3">CREATE</span> <span style="color: #a5a3a3">TABLE</span> [<span style="color: #a5a3a3">dbo</span>].[<span style="color: #a5a3a3">RelatedProductsLookup</span>](
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">RelatedProductID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>
+</p>
+<p style="margin: 0px">
+)
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+<span style="color: #a5a3a3">CREATE</span> <span style="color: #a5a3a3">TABLE</span> [<span style="color: #a5a3a3">dbo</span>].[<span style="color: #a5a3a3">ProductsProductGroupsLookup</span>](
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductGroupID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NULL</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NULL</span>
+</p>
+<p style="margin: 0px">
+)
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+<span style="color: #a5a3a3">CREATE</span> <span style="color: #a5a3a3">TABLE</span> [<span style="color: #a5a3a3">dbo</span>].[<span style="color: #a5a3a3">ProductGroups</span>](
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductGroupID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">Title</span>] [<span style="color: #a5a3a3">nvarchar</span>](<span style="color: lime">50</span>) <span style="color: #a5a3a3">NULL</span>
+</p>
+</div>
+</div>
+
+
+<p>
+<!--end code--><br />
+<strong>ActiveRecord Classes</strong><br />
+In a traditional NHibernate application, we would write usually our mapping files at this time<a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/Using-NHibernate.aspx" target="_blank">(see my other NHibernate post</a> for more on that). Since we&#39;re using the ActiveRecord pattern, however, we can specify all our mappings inline with the classes. It is important to note that this would not be a pure domain because we&#39;re placing our mappings inside the model. Warning if you&#39;re sensitive to using Attributes this may not be the code for you...
+</p>
+
+
+<p>
+Our classes will now begin with an ActiveRecord attribute over the class; our properties will begin with Property/HasAndBelongsToMany/etc. Please note, for the sake of the example, I&#39;m being extremely verbose with my attributes. If your table/column names match the class/property names, some of the additional info in the attribute is not necessary.
+<br />
+<!--code-->
+</p>
+
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">ActiveRecord</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;SimpleProducts&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">Product</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">Product</span>&gt; <span style="color: #a5a3a3">_RelatedProducts</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">ProductGroup</span>&gt; <span style="color: #a5a3a3">_ProductGroups</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #a5a3a3">Product</span>()
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_RelatedProducts</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">List</span>&lt;<span style="color: #47b3d1">Product</span>&gt;();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_ProductGroups</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">List</span>&lt;<span style="color: #47b3d1">ProductGroup</span>&gt;();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">PrimaryKey</span>(<span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;ProductID&quot;</span>, <span style="color: #a5a3a3">Generator</span>=<span style="color: #a5a3a3">Castle</span>.<span style="color: #a5a3a3">ActiveRecord</span>.<span style="color: #2b91af">PrimaryKeyType</span>.<span style="color: #a5a3a3">UuidHex</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ID</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">private</span> <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">Property</span>(<span style="color: #a5a3a3">NotNull</span>=<span style="color: #23b4eb">true</span>, <span style="color: #a5a3a3">Length</span>=<span style="color: lime">50</span>, <span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;Title&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span> {<span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">Property</span>(<span style="color: #a5a3a3">Length</span>=<span style="color: lime">300</span>, <span style="color: #a5a3a3">NotNull</span>=<span style="color: #23b4eb">false</span>, <span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;ImagePath&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ImagePath</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">Property</span>(<span style="color: #a5a3a3">NotNull</span> = <span style="color: #23b4eb">false</span>, <span style="color: #a5a3a3">Length</span> = <span style="color: lime">500</span>, <span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;Description&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Description</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">HasAndBelongsToMany</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;RelatedProductsLookup&quot;</span>, <span style="color: #a5a3a3">ColumnKey</span>=<span style="color: #80ff00">&quot;ProductID&quot;</span>, <span style="color: #a5a3a3">ColumnRef</span>=<span style="color: #80ff00">&quot;RelatedProductID&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">Product</span>&gt; <span style="color: #a5a3a3">RelatedProducts</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span> { <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_RelatedProducts</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">set</span> { <span style="color: #a5a3a3">_RelatedProducts</span> = <span style="color: #23b4eb">value</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">HasAndBelongsToMany</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;ProductsProductGroupsLookup&quot;</span>, <span style="color: #a5a3a3">ColumnKey</span>=<span style="color: #80ff00">&quot;ProductID&quot;</span>, <span style="color: #a5a3a3">ColumnRef</span>=<span style="color: #80ff00">&quot;ProductGroupID&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">ProductGroup</span>&gt; <span style="color: #a5a3a3">ProductGroups</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span> { <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_ProductGroups</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">set</span> { <span style="color: #a5a3a3">_ProductGroups</span> = <span style="color: #23b4eb">value</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; }
+</p>
+</div>
+</div>
+
+
+<br />
+
+
+<!--code-->
+
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">ActiveRecord</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;ProductGroups&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">ProductGroup</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">PrimaryKey</span>(<span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;ProductGroupID&quot;</span>, <span style="color: #a5a3a3">Generator</span>=<span style="color: #a5a3a3">Castle</span>.<span style="color: #a5a3a3">ActiveRecord</span>.<span style="color: #2b91af">PrimaryKeyType</span>.<span style="color: #a5a3a3">UuidHex</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ProductGroupID</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">Property</span>(<span style="color: #a5a3a3">NotNull</span>=<span style="color: #23b4eb">true</span>, <span style="color: #a5a3a3">Length</span>=<span style="color: lime">50</span>, <span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;Title&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">HasAndBelongsToMany</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;ProductsProductGroupsLookup&quot;</span>, <span style="color: #a5a3a3">ColumnKey</span>=<span style="color: #80ff00">&quot;ProductGroupID&quot;</span>, <span style="color: #a5a3a3">ColumnRef</span>=<span style="color: #80ff00">&quot;ProductID&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">Product</span>&gt; <span style="color: #a5a3a3">Products</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; }
+</p>
+</div>
+</div>
+
+
+<p>
+<br />
+<strong>Repository Object</strong><br />
+Another added benefit of using the Castle Active Record library is that we can use the Repository&lt;T&gt; for all of our object persistence. Instead of creating our own implementation of IRepository, we can write code like this to save / retrieve / update objects.
+</p>
+
+
+<div class="code">
+Selecting an object (our product IDs are HEX UUID&#39;s so this is not exactly accurate)
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+<span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = <span style="color: #47b3d1">Repository</span>&lt;<span style="color: #47b3d1">Product</span>&gt;.<span style="color: #a5a3a3">Get</span>(<span style="color: lime">23</span>);&nbsp;
+</p>
+</div>
+</div>
+
+
+<br />
+
+
+<div class="code">
+Saving / Updating <br />
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+<span style="color: #47b3d1">Repository</span>&lt;<span style="color: #47b3d1">Product</span>&gt;.<span style="color: #a5a3a3">Save</span>(<span style="color: #a5a3a3">p</span>);
+</p>
+</div>
+</div>
+
+
+<p>
+<br />
+The repository is pretty nice -- we can save all of our objects outside of the domain, which makes for a much cleaner design. Next time, we&#39;ll be looking at the extremely simple MVC application powered by this model and NHibernate Query Generator. <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-4---The-MVC-Application.aspx" target="_blank">Continue to Part 4</a>
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 2 - Configuration]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/05/20/rhinocommons-nhibernate-and-asp-net-mvc-part-2-configuration/"/>
+    <updated>2008-05-20T22:23:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/05/20/rhinocommons-nhibernate-and-asp-net-mvc-part-2-configuration</id>
+    <content type="html"><![CDATA[<p>
+Following up on <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">my last post</a>, we&#39;re going to setup a project and get everything ready for the code (we&#39;ll be doing the coding very soon -- I promise).&nbsp; First off, create a new MVC application (make sure you&#39;re using the latest preview from codeplex) and a new Class library. From here, you&#39;d normally want to want to do some TDD to create your model but that&#39;s a little outside the scope of this example.
+</p>
+
+
+<p>
+Add the references to Boo, Castle, NHibernate, RhinoCommons and Log4Net to the MVC application. In the class library, add Castle.ActiveRecord, Iesi.Collections, NHibernate, Rhino.Commons and Rhino.Commons.NHibernate. Switch over to your web.config file and Underneath the ConfigSections node add the following custom tags:
+</p>
+
+
+<!--code-->
+
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">section</span><span style="color: #88d0e8"> </span><span style="color: #cecece">name</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">activerecord</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> </span><span style="color: #cecece">type</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">Castle.ActiveRecord.Framework.Config.ActiveRecordSectionHandler, Castle.ActiveRecord</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> /&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">sectionGroup</span><span style="color: #88d0e8"> </span><span style="color: #cecece">name</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">applicationSettings</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> </span><span style="color: #cecece">type</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> &gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">section</span><span style="color: #88d0e8"> </span><span style="color: #cecece">name</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">Rhino.Commons.Properties.Settings</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> </span><span style="color: #cecece">type</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8">/&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;/</span><span style="color: lime">sectionGroup</span><span style="color: #88d0e8">&gt;&nbsp;&nbsp;&nbsp;  </span>
+</p>
+</div>
+</div>
+
+
+<p>
+Next add the specific custom tag properties somewhere after the &lt;/ConfigSections&gt; :&nbsp;
+</p>
+
+
+<!--code-->
+
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">activerecord</span><span style="color: #88d0e8"> </span><span style="color: #cecece">isWeb</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">true</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8">&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">config</span><span style="color: #88d0e8">&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">add</span><span style="color: #88d0e8"> </span><span style="color: #cecece">key</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">hibernate.connection.driver_class</span><span style="color: fuchsia">&quot;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  </span><span style="color: #cecece">value</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">NHibernate.Driver.SqlClientDriver</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> /&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">add</span><span style="color: #88d0e8"> </span><span style="color: #cecece">key</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">dialect</span><span style="color: fuchsia">&quot;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  </span><span style="color: #cecece">value</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">NHibernate.Dialect.MsSql2005Dialect</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> /&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">add</span><span style="color: #88d0e8"> </span><span style="color: #cecece">key</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">hibernate.connection.provider</span><span style="color: fuchsia">&quot;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  </span><span style="color: #cecece">value</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">NHibernate.Connection.DriverConnectionProvider</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> /&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">add</span><span style="color: #88d0e8"> </span><span style="color: #cecece">key</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">hibernate.show_sql</span><span style="color: fuchsia">&quot;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  </span><span style="color: #cecece">value</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">false</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> /&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">add</span><span style="color: #88d0e8"> </span><span style="color: #cecece">key</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">connection.connection_string</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> </span><span style="color: #cecece">value</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">Data Source=___________;Initial Catalog=NHibernateTest;Integrated Security=True</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8"> /&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;/</span><span style="color: lime">config</span><span style="color: #88d0e8">&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &lt;/</span><span style="color: lime">activerecord</span><span style="color: #88d0e8">&gt;</span>
+</p>
+</div>
+</div>
+
+
+<!--end code-->
+
+
+<p>These active record settings should be pretty straight-forward but for more information on specific dialects or other properties check out the <a href="http://using.castleproject.org/display/AR/Configuration+Reference" target="_blank">Castle&#39;s Configuration Reference</a>. Be sure to swap out my Data Source and Initial Catalog settings with yours.<br /></p>
+
+<br />
+
+
+<!--code-->
+
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">applicationSettings</span><span style="color: #88d0e8">&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">Rhino.Commons.Properties.Settings</span><span style="color: #88d0e8">&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">setting</span><span style="color: #88d0e8"> </span><span style="color: #cecece">name</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">WindsorConfig</span><span style="color: fuchsia">&quot;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  </span><span style="color: #cecece">serializeAs</span><span style="color: #88d0e8">=</span><span style="color: fuchsia">&quot;</span><span style="color: #cecece">String</span><span style="color: fuchsia">&quot;</span><span style="color: #88d0e8">&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;</span><span style="color: lime">value</span><span style="color: #88d0e8">&gt;</span><span style="color: #47b3d1">windsor.boo</span><span style="color: #88d0e8">&lt;/</span><span style="color: lime">value</span><span style="color: #88d0e8">&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;/</span><span style="color: lime">setting</span><span style="color: #88d0e8">&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;/</span><span style="color: lime">Rhino.Commons.Properties.Settings</span><span style="color: #88d0e8">&gt;</span>
+</p>
+<p style="margin: 0px">
+<span style="color: #88d0e8">&nbsp;&nbsp;&nbsp; &lt;/</span><span style="color: lime">applicationSettings</span><span style="color: #88d0e8">&gt;</span>
+</p>
+</div>
+</div>
+
+
+<!--end code-->
+
+
+<p>With this tag, we&#39;re telling Castle that we&#39;re going to configure Windsor with a boo file instead of an xml document. <a href="http://ayende.com/blog/" target="_blank">Ayende Rahien</a> pointed out in the comments that this tag is no longer necessary as long as the file is named windsor.boo</p>
+
+<p>
+<strong>Windsor Configuration With Boo</strong>&nbsp;
+</p>
+
+
+<p>
+Up until this point, we&#39;ve been dealing with the web.config to configure our application -- now we want to configure Windsor but instead of using another xml file, we&#39;re going to use a boo file. What is Boo you might ask? According to <a href="http://en.wikipedia.org/wiki/Boo_(programming_language)" target="_blank">wiki</a>...
+</p>
+
+
+<blockquote>
+    Boo is an object oriented, statically typed programming language developed starting in 2003, which seeks to make use of the Common Language Infrastructure support for Unicode, internationalization and web style applications, while using a Python-inspired syntax and a special focus on language and compiler extensibility.&nbsp;
+</blockquote>
+
+
+<p>
+The mere fact that you can use a programming language instead of an XML file to configure Windsor is pretty sweet. I would be lying if I claimed to know boo very well, however, the Exesto and Hibernating-Forums samples (from the Rhino-Tools project) have enough information to get you up and running. I plan on learning boo well enought to create my own config files from scratch but in the mean time, here&#39;s what my boo file looks like (heavily influenced by the sample applications mentioned above)... 
+</p>
+
+
+<!--begin code-->
+
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+import Rhino.Commons
+</p>
+<p style="margin: 0px">
+import System.Reflection
+</p>
+<p style="margin: 0px">
+import Castle.Core
+</p>
+<p style="margin: 0px">
+import Castle.Services.Transaction
+</p>
+<p style="margin: 0px">
+import Castle.Facilities.AutomaticTransactionManagement
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+activeRecordAssemblies = ( Assembly.Load(&quot;ProductModelActiveRecord&quot;), )
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+Component(&quot;active_record_repository&quot;, IRepository, ARRepository)
+</p>
+<p style="margin: 0px">
+Component(&quot;active_record_unit_of_work&quot;, 
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; IUnitOfWorkFactory, 
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; ActiveRecordUnitOfWorkFactory,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; assemblies: activeRecordAssemblies )
+</p>
+</div>
+</div>
+
+
+<p>
+<!--end code-->Check out <a href="http://ayende.com/blog/" target="_blank">Ayende&#39;s</a> <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx#comment">comment </a>for a more succinct way to register these components.
+As you might have noticed, I still have to set up the colors for boo files in Visual Studio :) What this file is doing is loading the assemblies and setting up the repository / unit of work (we&#39;ll see those in action in the next parts of this series). Your project configuration should be all set. Next time we will actually be writing some code so stick around for that. <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-3-the-model.aspx">View Part Three - The Model</a> 
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 1 - Setup]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/05/19/rhinocommons-nhibernate-and-asp-net-mvc-part-1-setup/"/>
+    <updated>2008-05-19T17:29:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/05/19/rhinocommons-nhibernate-and-asp-net-mvc-part-1-setup</id>
+    <content type="html"><![CDATA[<p>
+After my last post about the unit of work with NHibernate, <a href="http://www.lostechies.com/blogs/chad%5Fmyers/" target="_blank">Chad Myers</a> mentioned that I should take a look at Ayende&#39;s Rhino Commons (because the Unit of Work stuff is already being handled). Since I am not a big fan of reinventing the wheel I decided I would give it a shot. There&#39;s going to be another post in the near future about how to get Rhino Commons, Castle ActiveRecord and ASP.NET MVC working together but for now, it would be good to make sure all the necessary components are installed on your machine.
+</p>
+
+
+<ol>
+    <li>Make sure you have a subversion client -- <a href="http://tortoisesvn.tigris.org/" target="_blank">Tortoise SVN</a> or the command prompt is what I use but any subversion client should be fine. </li>
+    <li>If you don&#39;t already have <a href="http://nant.sourceforge.net/" target="_blank">Nant</a> installed on your machine download and install that</li>
+    <li>Download and build the following (<a href="http://www.ayende.com/blog" target="_blank">Ayende </a>mentions, the <a href="http://www.ayende.com/Blog/archive/2007/08/06/Running-on-the-trunk-Building-Rhino-Commons.aspx" target="_blank">trick is not opening in Visual Studio</a>):
+    <ul>
+        <li>Castle Project -- (<a href="http://svn.castleproject.org:8080/svn/castle/trunk" target="_blank">http://svn.castleproject.org:8080/svn/castle/trunk</a>)</li>
+        <li> NHibernate -- (<a href="https://nhibernate.svn.sourceforge.net/svnroot/nhibernate/trunk" target="_blank">https://nhibernate.svn.sourceforge.net/svnroot/nhibernate/trunk</a>)</li>
+        <li> Rhino-Tools (<a href="https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/trunk" target="_blank">https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/trunk</a>) </li>
+    </ul>
+    </li>
+    <li>Next you&#39;re going to want to setup the NHibernate Query Generator (we&#39;re going to use Linq to NHibernate in a later example but for now get this installed). This should be a part of the Rhino-tools package but if you want you can <a href="http://www.ayende.com/projects/nhibernate-query-analyzer/downloads.aspx" target="_blank">download the binaries</a>. Then setup the application as an external tool in Visual Studio (my settings are posted below). <a href="http://jhollingworth.wordpress.com/2008/03/28/subsonic-like-nhibernate-query-generator-button-in-visual-studio/%20target=">see James Hollingworth&#39;s post for more info</a>
+    <br />
+    <img src="http://ryanlanciaux.github.com/ryanlanciaux.com/image.axd?picture=nhibernateqg.gif" alt="" />
+    <ul>
+        <li>Command: C:\program files\nhqg\NHQG.exe</li>
+        <li>Arguments: /Lang:cs /InputFilePattern:$(BinDir)/ProductModelActiveRecord.dll /OutputDirectory:$(ProjectDir)/Queries /BaseNamespace:Queries</li>
+        <li>Initial Directory: $(TargetDir)</li>
+    </ul>
+    </li>
+    <li>Finally make sure you&#39;re running the preview 3 drop of the ASP.NET MVC Framework -- you can <a href="http://www.codeplex.com/aspnet/Release/ProjectReleases.aspx?ReleaseId=12640" target="_blank">get that here from CodePlex</a> </li>
+</ol>
+
+
+<p>You should now have everything setup. It may be good to take a look at the Exesto application in the rhino-tools\SampleApplications directory to get an introduction to the Rhino-tools / binsor / castle settings that we&#39;ll be looking at later on. Finally, if you are not familiar with the ASP.NET MVC Framework take a look <a href="http://weblogs.asp.net/fredriknormen/archive/2008/04/17/asp-net-mvc-framework-pre-preview-3-a-step-by-step-guide-to-create-a-simple-web-app.aspx" target="_blank">Fredrik Normen&#39;s step by step guide</a>. In the next couple of days, I will be posting how to wire these tools together for quick web application development. Stay Tuned.<br /></p>
+]]></content>
+  </entry>
+  
+</feed>
