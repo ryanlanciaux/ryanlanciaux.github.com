@@ -3,7 +3,7 @@ layout: post
 title: 6 Tips for Better Web Project Quoting
 date: 2008-01-27 10:37
 comments: false 
-categories: [web]
+categories: [web, legacy]
 ---
 <p>
 <font face="arial,helvetica,sans-serif" size="2">An often overlooked area of Web Projects is quoting.&nbsp; Many developers
