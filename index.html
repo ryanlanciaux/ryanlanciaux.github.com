@@ -9,7 +9,7 @@
   <meta name="author" content="Ryan Lanciaux">
 
   
-  <meta name="description" content="Recently, it seems that the only time I&#8217;ve spent with my blog has been moving it to other platforms. Hopefully, that will change with the move &hellip;">
+  <meta name="description" content="Recently, I have switched from Windows 8 to Ubuntu on my laptop. Since the primary function of my laptop is development I have spent some time &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/13/sublime-text-on-ubuntu/">Sublime Text on Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-13T18:42:00-04:00" pubdate data-updated="true">Apr 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recently, I have switched from Windows 8 to Ubuntu on my laptop. Since the primary function of my laptop is development I have spent some time tweaking the software installed to fit my workflow.</p>
+
+<p>The main tool I am using for all my development is <a href="http://www.sublimetext.com/">Sublime Text</a>. I like Sublime Text for many reasons &#8211; it&#8217;s lightweight, great community, tons of plugins and most importantly, <strong>vim keybindings</strong>; needless to say, it&#8217;s pretty awesome.</p>
+
+<p>To start with, I installed the package like so: <code>apt-get install sublime-text</code>. From there, I pretty much followed
+<a href="http://blog.alexmaccaw.com/sublime-text">Alex McCaw&#8217;s excellent post on Sublime Text</a>. Mentioned in the post, <a href="http://wbond.net/sublime_packages/package_control">Package Manager</a> is pretty much a must. As someone who has grown pretty dependent on ReSharper when doing .NET development, I find myself typing Ctrl + Shift + T to switch files (rather than the default Ctrl + P &#8211; which, to me, seems a little weird because doing that in different environments brings up print dialog)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{ "keys": ["ctrl+shift+t"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, since I will be writing most of my blog posts with Sublime Text (yea, this post about Sublime Text was written in Sublime Text :P), I installed <a href="https://github.com/revolunet/sublimetext-markdown-preview">Markdown Preview</a> through package control. If you notice the statement on the GitHub page, Linux users need to install a different version of Python to get the plugin to work. I wasn&#8217;t super comfortable just changing the version of Python to get a plugin to work. Thankfully, <a href="https://github.com/revolunet/sublimetext-markdown-preview/issues/27#issuecomment-11772098">one of the comments on the plugin&#8217;s GitHub</a> page has a pretty decent walkthrough on how to use pythonbrew to give Sublime Text the version of Python that the plugin needs (without necessarily using it throughout the system).</p>
+
+<p>Now, I only wish there was a way to open up a console directly in Sublime Text &#8211; because alt tabbing to terminal is just so difficult.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -133,6 +182,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/04/13/sublime-text-on-ubuntu/">Sublime Text on Ubuntu</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/04/06/moving-to-octopress/">Moving to Octopress</a>
       </li>
     
@@ -146,10 +199,6 @@
     
       <li class="post">
         <a href="/blog/2009/03/24/are-you-a-control-freak/">Are you a Control Freak?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2008/12/12/what-constitutes-ethical-seo/">What Constitutes Ethical SEO?</a>
       </li>
     
   </ul>
