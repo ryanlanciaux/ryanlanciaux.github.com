@@ -97,7 +97,7 @@
 
 
 <p>
-Up until now, we&#39;ve been using&nbsp; NHibernate Query Generator for all of our data access. Although this is a great way to retrieve our data, there is another option we can play around with &#8211; LINQ for NHibernate. To set this up in our existing application (see <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">Part 1</a>, <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Part 2</a>, <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-3-the-model.aspx" target="_blank">Part 3</a> and <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-4---The-MVC-Application.aspx" target="_blank">Part 4</a> on creating the ASP.NET MVC Application) we&#39;ll first need to grab the code out of subversion <a href="https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/experiments/NHibernate.Linq/" target="_blank">https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/experiments/NHibernate.Linq/</a> and build it using MSBuild or Visual Studio. After that we want to add a reference to it in our application. 
+Up until now, we&#39;ve been using&nbsp; NHibernate Query Generator for all of our data access. Although this is a great way to retrieve our data, there is another option we can play around with &#8211; LINQ for NHibernate. To set this up in our existing application (see <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">Part 1</a>, <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Part 2</a>, <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-3-the-model.aspx" target="_blank">Part 3</a> and <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-4---The-MVC-Application.aspx" target="_blank">Part 4</a> on creating the ASP.NET MVC Application) we&#39;ll first need to grab the code out of subversion <a href="https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/experiments/NHibernate.Linq/" target="_blank">https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/experiments/NHibernate.Linq/</a> and build it using MSBuild or Visual Studio. After that we want to add a reference to it in our application.
 </p>
 
 
@@ -311,12 +311,12 @@ One nice thing we can easily do with Linq for NHibernate is page and sort our da
 
 <p>
 <!--endcode-->
-Here, we&#39;ve created a class that has a private list of criteria, a method to add criteria to the list and a method to get the list based on the given criteria. I realize it may be a little intimidating but we can perfom most of our select queries through this method due to the use of Generics.&nbsp; 
+Here, we&#39;ve created a class that has a private list of criteria, a method to add criteria to the list and a method to get the list based on the given criteria. I realize it may be a little intimidating but we can perfom most of our select queries through this method due to the use of Generics.&nbsp;
 </p>
 
 
 <p>
-Updating the controllers to use this functionality is not too difficult. For pages that simply retrieve lists we call the GetList method without specifying any criteria: 
+Updating the controllers to use this functionality is not too difficult. For pages that simply retrieve lists we call the GetList method without specifying any criteria:
 </p>
 
 
@@ -336,7 +336,7 @@ Updating the controllers to use this functionality is not too difficult. For pag
 
 
 <p>
-&nbsp;Pass in new lambda expressions to add query criteria 
+&nbsp;Pass in new lambda expressions to add query criteria
 </p>
 
 
@@ -424,12 +424,6 @@ Now we see there are multiple options for interacting with our ActiveRecord Repo
   </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
 </div>
 
 <aside class="sidebar">
@@ -507,22 +501,6 @@ Now we see there are multiple options for interacting with our ActiveRecord Repo
 
 </footer>
   
-
-<script type="text/javascript">
-      var disqus_shortname = 'ryanlanciaux';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://ryanlanciaux.github.com/blog/2008/06/03/rhinocommons-nhibernate-and-asp-net-mvc-part-5-linq-to-nhibernate/';
-        var disqus_url = 'http://ryanlanciaux.github.com/blog/2008/06/03/rhinocommons-nhibernate-and-asp-net-mvc-part-5-linq-to-nhibernate/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
 
 
 

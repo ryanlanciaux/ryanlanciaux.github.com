@@ -540,7 +540,7 @@ project type you&#39;d like). A lot of thought went into the naming of the form.
 &nbsp;
 </p>
 <p style="margin: 0px; padding: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #47b3d1">MessageBox</span>.<span style="color: #a5a3a3">Show</span>(<span style="color: #80ff00">&quot;RX8: \n Drive Type: &quot;</span> + <span style="color: #a5a3a3">_rx8</span>.<span style="color: #a5a3a3">DriveType</span> + 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #47b3d1">MessageBox</span>.<span style="color: #a5a3a3">Show</span>(<span style="color: #80ff00">&quot;RX8: \n Drive Type: &quot;</span> + <span style="color: #a5a3a3">_rx8</span>.<span style="color: #a5a3a3">DriveType</span> +
 </p>
 <p style="margin: 0px; padding: 0px">
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #80ff00">&quot;\n Engine:&quot;</span> + <span style="color: #a5a3a3">_rx8</span>.<span style="color: #a5a3a3">Engine</span>);
@@ -598,7 +598,7 @@ the <a href="http://kohari.org/2008/03/13/context-variables-in-ninject/" target=
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">Bind</span>&lt;<span style="color: #2b91af">IEngine</span>&gt;().<span style="color: #a5a3a3">To</span>&lt;<span style="color: #47b3d1">Rotary</span>&gt;()
 </p>
 <p style="margin: 0px; padding: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; .<span style="color: #a5a3a3">Only</span>(<span style="color: #47b3d1">When</span>.<span style="color: #a5a3a3">Context</span>.<span style="color: #a5a3a3">Variable</span>(<span style="color: #80ff00">&quot;carType&quot;</span>).<span style="color: #a5a3a3">EqualTo</span>(<span style="color: #80ff00">&quot;RX8&quot;</span>));&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; .<span style="color: #a5a3a3">Only</span>(<span style="color: #47b3d1">When</span>.<span style="color: #a5a3a3">Context</span>.<span style="color: #a5a3a3">Variable</span>(<span style="color: #80ff00">&quot;carType&quot;</span>).<span style="color: #a5a3a3">EqualTo</span>(<span style="color: #80ff00">&quot;RX8&quot;</span>));&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
 </p>
 <p style="margin: 0px; padding: 0px">
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">Bind</span>&lt;<span style="color: #2b91af">IDriveType</span>&gt;().<span style="color: #a5a3a3">To</span>&lt;<span style="color: #47b3d1">RWD</span>&gt;()
@@ -634,7 +634,7 @@ the <a href="http://kohari.org/2008/03/13/context-variables-in-ninject/" target=
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">Bind</span>&lt;<span style="color: #2b91af">IDriveType</span>&gt;().<span style="color: #a5a3a3">To</span>&lt;<span style="color: #47b3d1">FourWD</span>&gt;()
 </p>
 <p style="margin: 0px; padding: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; .<span style="color: #a5a3a3">Only</span>(<span style="color: #47b3d1">When</span>.<span style="color: #a5a3a3">Context</span>.<span style="color: #a5a3a3">Variable</span>(<span style="color: #80ff00">&quot;carType&quot;</span>).<span style="color: #a5a3a3">EqualTo</span>(<span style="color: #80ff00">&quot;WRX&quot;</span>)); 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; .<span style="color: #a5a3a3">Only</span>(<span style="color: #47b3d1">When</span>.<span style="color: #a5a3a3">Context</span>.<span style="color: #a5a3a3">Variable</span>(<span style="color: #80ff00">&quot;carType&quot;</span>).<span style="color: #a5a3a3">EqualTo</span>(<span style="color: #80ff00">&quot;WRX&quot;</span>));
 </p>
 <p style="margin: 0px; padding: 0px">
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
@@ -878,12 +878,6 @@ More info on Ninject:
   </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
 </div>
 
 <aside class="sidebar">
@@ -961,22 +955,6 @@ More info on Ninject:
 
 </footer>
   
-
-<script type="text/javascript">
-      var disqus_shortname = 'ryanlanciaux';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://ryanlanciaux.github.com/blog/2008/03/26/real-ultimate-power-dependency-injection-with-ninject/';
-        var disqus_url = 'http://ryanlanciaux.github.com/blog/2008/03/26/real-ultimate-power-dependency-injection-with-ninject/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
 
 
 

@@ -92,7 +92,7 @@
 
 
 <div class="entry-content"><p>
-There are a lot of resources on the web about <a href="http://www.martinfowler.com/articles/injection.html" target="_blank">dependency injection</a> and using <a href="http://structuremap.sourceforge.net/Default.htm" target="_blank">StructureMap</a>, however, I wanted to write something that was an extremely simple example. This is basically the tip of the iceberg but hopefully it will help someone.&nbsp; 
+There are a lot of resources on the web about <a href="http://www.martinfowler.com/articles/injection.html" target="_blank">dependency injection</a> and using <a href="http://structuremap.sourceforge.net/Default.htm" target="_blank">StructureMap</a>, however, I wanted to write something that was an extremely simple example. This is basically the tip of the iceberg but hopefully it will help someone.&nbsp;
 </p>
 
 
@@ -100,7 +100,7 @@ There are a lot of resources on the web about <a href="http://www.martinfowler.c
     <tbody>
         <tr>
             <td valign="top">
-            We want to make our application very loosely coupled &#8211; to achieve this &#39;<a href="http://en.wikipedia.org/wiki/Loose_coupling" target="_blank">loose coupling</a>&#39; we&#39;re going to have several projects in the solution. What this means if we need to change any part of this application later on (we wouldn&#39;t want to in this case since its a demo and all), we could do so without impacting everything else. Anyways, we&#39;re going to create three class libraries and a WinForms application. 
+            We want to make our application very loosely coupled &#8211; to achieve this &#39;<a href="http://en.wikipedia.org/wiki/Loose_coupling" target="_blank">loose coupling</a>&#39; we&#39;re going to have several projects in the solution. What this means if we need to change any part of this application later on (we wouldn&#39;t want to in this case since its a demo and all), we could do so without impacting everything else. Anyways, we&#39;re going to create three class libraries and a WinForms application.
             </td>
             <td><img src="/ryanlanciaux.com/image.axd?picture=SolutionExplorer.gif" alt="" /> <br />
             </td>
@@ -110,7 +110,7 @@ There are a lot of resources on the web about <a href="http://www.martinfowler.c
 
 
 <p>
-Next we want to create our main inteface &#8211; this will be under the DisplayMessage Project: 
+Next we want to create our main inteface &#8211; this will be under the DisplayMessage Project:
 </p>
 
 
@@ -145,7 +145,7 @@ Next we want to create our main inteface &#8211; this will be under the DisplayM
 
 
 <p>
-The interface defines just one method that, when implemented, will return a string stating what class its coming from. Next, we want to create our two implementation classes (one under Implementation1, the other under Implementation2). Please keep in mind I&#39;m not suggesting to have every class in it&#39;s own library &#8211; it&#39;s just for the sake of example :) 
+The interface defines just one method that, when implemented, will return a string stating what class its coming from. Next, we want to create our two implementation classes (one under Implementation1, the other under Implementation2). Please keep in mind I&#39;m not suggesting to have every class in it&#39;s own library &#8211; it&#39;s just for the sake of example :)
 </p>
 
 
@@ -270,7 +270,7 @@ Okay that was easy enough, now on to the Forms App.&nbsp; We&#39;re first going 
 
 
 <p>
-Notice we define a PluginFamily for the IDisplayMessage interface and set the default implementation to be MessageOne (the DefaultKey of PluginFamily references the ConcreteKey of the Plugin). Other than that, this should be pretty straight-forward but if you have any confusion, please <a href="http://structuremap.sourceforge.net/Default.htm" target="_blank">check out the StructureMap documentation</a>. Only a couple more things to do before we can run this&#8230; 
+Notice we define a PluginFamily for the IDisplayMessage interface and set the default implementation to be MessageOne (the DefaultKey of PluginFamily references the ConcreteKey of the Plugin). Other than that, this should be pretty straight-forward but if you have any confusion, please <a href="http://structuremap.sourceforge.net/Default.htm" target="_blank">check out the StructureMap documentation</a>. Only a couple more things to do before we can run this&#8230;
 </p>
 
 
@@ -287,7 +287,7 @@ Notice we define a PluginFamily for the IDisplayMessage interface and set the de
 
 
 <p>
-&nbsp;Now to add the code&#8230; 
+&nbsp;Now to add the code&#8230;
 </p>
 
 
@@ -461,12 +461,6 @@ For more information please check out the following links:
   </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
 </div>
 
 <aside class="sidebar">
@@ -544,22 +538,6 @@ For more information please check out the following links:
 
 </footer>
   
-
-<script type="text/javascript">
-      var disqus_shortname = 'ryanlanciaux';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://ryanlanciaux.github.com/blog/2008/02/26/very-quick-and-simple-dependency-injection-with-structuremap/';
-        var disqus_url = 'http://ryanlanciaux.github.com/blog/2008/02/26/very-quick-and-simple-dependency-injection-with-structuremap/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
 
 
 
