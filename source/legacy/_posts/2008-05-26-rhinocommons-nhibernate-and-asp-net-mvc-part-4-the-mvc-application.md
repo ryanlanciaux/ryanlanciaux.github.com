@@ -2,7 +2,7 @@
 layout: post
 title: RhinoCommons, NHibernate and ASP.NET MVC Part 4 - The MVC Application
 date: 2008-05-26 20:26
-comments: true
+comments: false
 categories: [nhibernate, C#]
 ---
 <p>
@@ -19,7 +19,7 @@ In some of my initial tests with NHibernate and ASP.NET MVC Pattern I kept seein
 	A Unit of Work keeps track of everything you do during a business transaction that can affect the database. When you&#39;re done, it figures out everything that needs to be done to alter the database as a result of your work.
 </blockquote>
 <p>
-Luckily, with RhinoCommons, it&#39;s pretty easy to implement this pattern (<a href="http://www.ayende.com/Blog/archive/2007/06/08/Rhino-Commons-RepositoryltTgt-and-Unit-Of-Work.aspx" target="_blank">check out Ayende&#39;s post on this</a>). In a standard web forms application, we would normally create a Global.aspx that inherits UnitOfWorkApplication. Since we&#39;re using ASP.NET MVC, however, we don&#39;t necessarily want to go that route. As <a href="http://michaelhanney.com/blog/" target="_blank">Michael Hanney</a> notes on <a href="http://michaelhanney.com/blog/2008/04/27/beginning-systemwebmvc-with-rhino-tools-caslte-active-record-and-nhibernate/" target="_blank">his post on MVC and Castle</a> we can have our Global.asax inherit from UnitOfWorkApplication. 
+Luckily, with RhinoCommons, it&#39;s pretty easy to implement this pattern (<a href="http://www.ayende.com/Blog/archive/2007/06/08/Rhino-Commons-RepositoryltTgt-and-Unit-Of-Work.aspx" target="_blank">check out Ayende&#39;s post on this</a>). In a standard web forms application, we would normally create a Global.aspx that inherits UnitOfWorkApplication. Since we&#39;re using ASP.NET MVC, however, we don&#39;t necessarily want to go that route. As <a href="http://michaelhanney.com/blog/" target="_blank">Michael Hanney</a> notes on <a href="http://michaelhanney.com/blog/2008/04/27/beginning-systemwebmvc-with-rhino-tools-caslte-active-record-and-nhibernate/" target="_blank">his post on MVC and Castle</a> we can have our Global.asax inherit from UnitOfWorkApplication.
 </p>
 <p>
 &nbsp;
@@ -37,30 +37,30 @@ Luckily, with RhinoCommons, it&#39;s pretty easy to implement this pattern (<a h
 &nbsp;
 </p>
 <p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">override</span> <span style="color: #23b4eb">void</span> <span style="color: #a5a3a3">Application_Start</span>(<span style="color: #23b4eb">object</span> <span style="color: #a5a3a3">sender</span>, <span style="color: #47b3d1">EventArgs</span> <span style="color: #a5a3a3">e</span>)&nbsp; 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">override</span> <span style="color: #23b4eb">void</span> <span style="color: #a5a3a3">Application_Start</span>(<span style="color: #23b4eb">object</span> <span style="color: #a5a3a3">sender</span>, <span style="color: #47b3d1">EventArgs</span> <span style="color: #a5a3a3">e</span>)&nbsp;
 </p>
 <p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {&nbsp; 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {&nbsp;
 </p>
 <p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">base</span>.<span style="color: #a5a3a3">Application_Start</span>(<span style="color: #a5a3a3">sender</span>, <span style="color: #a5a3a3">e</span>);&nbsp; 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">base</span>.<span style="color: #a5a3a3">Application_Start</span>(<span style="color: #a5a3a3">sender</span>, <span style="color: #a5a3a3">e</span>);&nbsp;
 </p>
 <p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">RegisterRoutes</span>(<span style="color: #47b3d1">RouteTable</span>.<span style="color: #a5a3a3">Routes</span>);&nbsp; 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">RegisterRoutes</span>(<span style="color: #47b3d1">RouteTable</span>.<span style="color: #a5a3a3">Routes</span>);&nbsp;
 </p>
 <p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
 </p>
 <p style="margin: 0px">
-... 
+...
 </p>
 <p style="margin: 0px">
-&nbsp; &nbsp;&nbsp; } 
+&nbsp; &nbsp;&nbsp; }
 </p>
 </div>
 </div>
 <p>
-<!--endCode-->If you know of another way to do this, please be sure to let me know. Also, the routing still works as it normally would -- we&#39;re just running this code first to instantiate the UnitOfWork. 
+<!--endCode-->If you know of another way to do this, please be sure to let me know. Also, the routing still works as it normally would -- we&#39;re just running this code first to instantiate the UnitOfWork.
 </p>
 <p>
 In our controllers we can call our reference our Hibernate repositories and classes without specifying an ISession.
@@ -91,22 +91,22 @@ In our controllers we can call our reference our Hibernate repositories and clas
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">RenderView</span>(<span style="color: #80ff00">&quot;AddProductGroup&quot;</span>);
 </p>
 <p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
 </p>
 </div>
 </div>
 <p>
-<!--endCode--> Notice we&#39;re still flushing our data -- but it makes the controllers a LOT cleaner. Imagine if we had to instantiate and clean up our session in each controller. 
+<!--endCode--> Notice we&#39;re still flushing our data -- but it makes the controllers a LOT cleaner. Imagine if we had to instantiate and clean up our session in each controller.
 </p>
 <p>
-One further thing, the UnitOfWorkApplication supports both short and long conversations. I&#39;m not going to go too much into that but if your application requires keeping objects around for a couple HTTP Requests before saving to the database Long Conversation may be the way to go. <a href="http://www.ayende.com/Wiki/HttpModules.ashx" target="_blank">See Ayende&#39;s Wiki for more on this</a> 
+One further thing, the UnitOfWorkApplication supports both short and long conversations. I&#39;m not going to go too much into that but if your application requires keeping objects around for a couple HTTP Requests before saving to the database Long Conversation may be the way to go. <a href="http://www.ayende.com/Wiki/HttpModules.ashx" target="_blank">See Ayende&#39;s Wiki for more on this</a>
 </p>
 <p>
 <strong>NHibernate Query Generator</strong><br />
-In the <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">first post of this series</a> we looked at what it takes to setup NHibernate Query Generator (NHQG from here out). Now we get to use it to make some really nice looking code (in a later post, however, we&#39;ll be using LINQ to NHibernate). If we&#39;ve set up the tool as mentioned in the first post (listed earlier), all we have to do is run the tool and make sure the generated code is added to the project. 
+In the <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">first post of this series</a> we looked at what it takes to setup NHibernate Query Generator (NHQG from here out). Now we get to use it to make some really nice looking code (in a later post, however, we&#39;ll be using LINQ to NHibernate). If we&#39;ve set up the tool as mentioned in the first post (listed earlier), all we have to do is run the tool and make sure the generated code is added to the project.
 </p>
 <p>
-NHQG lets us use a fluent interface to set filters on our Hibernate queries; this results in code that, in my opinion, is very easy to write and understand later on. If we wanted to Find one Product with a specific title, our code would look something like this: 
+NHQG lets us use a fluent interface to set filters on our Hibernate queries; this results in code that, in my opinion, is very easy to write and understand later on. If we wanted to Find one Product with a specific title, our code would look something like this:
 </p>
 <!--code-->
 <div class="code">
@@ -130,7 +130,7 @@ NHQG lets us use a fluent interface to set filters on our Hibernate queries; thi
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">RenderView</span>(<span style="color: #80ff00">&quot;DisplayProduct&quot;</span>,
 </p>
 <p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; <span style="color: #a5a3a3">p</span>);&nbsp; 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; <span style="color: #a5a3a3">p</span>);&nbsp;
 </p>
 <p style="margin: 0px">
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }

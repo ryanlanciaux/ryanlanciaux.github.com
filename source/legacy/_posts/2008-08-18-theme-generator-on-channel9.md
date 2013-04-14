@@ -2,7 +2,7 @@
 layout: post
 title: Theme Generator on Channel9!
 date: 2008-08-18 12:36
-comments: true
+comments: false
 categories: [theme generator]
 ---
 <p>

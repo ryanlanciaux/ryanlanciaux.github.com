@@ -2,11 +2,11 @@
 layout: post
 title: Using NHibernate (years after I should have been)
 date: 2008-04-30 06:52
-comments: true
+comments: false
 categories: [nhibernate, C#]
 ---
 <p>
-As mentioned in my last post, I&#39;ve been starting to use <a href="http://www.hibernate.org/343.html" target="_blank">NHibernate </a>in some of my more recent projects. I checked it out years ago and I completely hated it (maybe becuase I was a newer developer -- not totally sure). More recently, however, I&#39;ve realized some of the benefits of <a href="http://www.domaindrivendesign.org/" target="_blank">Domain Driven Design</a> and thought its about time to give Hibernate another shot. I&#39;m admittedly pretty new to Hibernate so any feedback would be appreciated! 
+As mentioned in my last post, I&#39;ve been starting to use <a href="http://www.hibernate.org/343.html" target="_blank">NHibernate </a>in some of my more recent projects. I checked it out years ago and I completely hated it (maybe becuase I was a newer developer -- not totally sure). More recently, however, I&#39;ve realized some of the benefits of <a href="http://www.domaindrivendesign.org/" target="_blank">Domain Driven Design</a> and thought its about time to give Hibernate another shot. I&#39;m admittedly pretty new to Hibernate so any feedback would be appreciated!
 </p>
 <p>
 <strong>Classes</strong>&nbsp;
@@ -57,10 +57,10 @@ As mentioned in my last post, I&#39;ve been starting to use <a href="http://www.
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Description</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
 </p>
 <p style="margin: 0px; padding: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">SimpleProduct</span>&gt; <span style="color: #a5a3a3">RelatedProducts</span> 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">SimpleProduct</span>&gt; <span style="color: #a5a3a3">RelatedProducts</span>
 </p>
 <p style="margin: 0px; padding: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; { 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
 </p>
 <p style="margin: 0px; padding: 0px">
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span>{ <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_relatedProducts</span>; }
@@ -100,7 +100,7 @@ As mentioned in my last post, I&#39;ve been starting to use <a href="http://www.
 </p>
 </div>
 <p>
-We&#39;re going to start out with some very contrived classes (normally would start with tests but this is just for the hibernate concepts)... These classes should be pretty straight forward; they consist only of some basic properties and list methods. 
+We&#39;re going to start out with some very contrived classes (normally would start with tests but this is just for the hibernate concepts)... These classes should be pretty straight forward; they consist only of some basic properties and list methods.
 </p>
 <p>
 <strong>Data Tables&nbsp;</strong>
@@ -129,7 +129,7 @@ CREATE TABLE [dbo].[ProductsProductGroupsLookup](<br />
 CREATE TABLE [dbo].[ProductGroups](<br />
 &nbsp;&nbsp;&nbsp; [ProductGroupID] [char](32) NOT NULL,<br />
 &nbsp;&nbsp;&nbsp; [Title] [nvarchar](50) NULL<br />
-)&nbsp;&nbsp;&nbsp;&nbsp; 
+)&nbsp;&nbsp;&nbsp;&nbsp;
 </p>
 <p>
 &nbsp;You will want to set the Primary Key of the SimpleProduct and Product Groups table to be the ID.&nbsp;
@@ -392,10 +392,10 @@ Now that we&#39;ve defined all of our mappings its time to create some methods t
 &nbsp;
 </p>
 <p>
-The ISession is the Hibernate object to use when accessing the data -- from what it looks like, these should pretty much line up with a unit of work (<a href="http://blogs.hibernatingrhinos.com/nhibernate/archive/2008/04/10/nhibernate-and-the-unit-of-work-pattern.aspx" target="_blank">More on that here).</a> 
+The ISession is the Hibernate object to use when accessing the data -- from what it looks like, these should pretty much line up with a unit of work (<a href="http://blogs.hibernatingrhinos.com/nhibernate/archive/2008/04/10/nhibernate-and-the-unit-of-work-pattern.aspx" target="_blank">More on that here).</a>
 </p>
 <p>
-In the other methods of the class, we first need to define what type of object we&#39;re looking for. In case it&#39;s not obvious, we&#39;re specifying that in the CreateCriteria section. In the List() method, we&#39;re returning a list (of ProductGroups) -- there are no filters or other criteria defined for this operation. In the GetByTitle() method, however,&nbsp; we&#39;re stating that the Title for the product must match the Parameter &#39;Title&#39;. 
+In the other methods of the class, we first need to define what type of object we&#39;re looking for. In case it&#39;s not obvious, we&#39;re specifying that in the CreateCriteria section. In the List() method, we&#39;re returning a list (of ProductGroups) -- there are no filters or other criteria defined for this operation. In the GetByTitle() method, however,&nbsp; we&#39;re stating that the Title for the product must match the Parameter &#39;Title&#39;.
 </p>
 <p>
 <strong>Demo Application</strong>

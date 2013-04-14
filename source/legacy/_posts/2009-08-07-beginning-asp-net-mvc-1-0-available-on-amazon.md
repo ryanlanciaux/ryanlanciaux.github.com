@@ -2,7 +2,7 @@
 layout: post
 title: Beginning ASP.NET MVC 1.0 available on Amazon
 date: 2009-08-07 07:37
-comments: true
+comments: false
 categories: [mvc, books]
 ---
 <p>

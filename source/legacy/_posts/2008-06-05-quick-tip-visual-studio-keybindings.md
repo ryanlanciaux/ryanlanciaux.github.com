@@ -2,7 +2,7 @@
 layout: post
 title: Quick Tip - Visual Studio Keybindings
 date: 2008-06-05 13:08
-comments: true
+comments: false
 categories: [Visual Studio]
 ---
 <p>

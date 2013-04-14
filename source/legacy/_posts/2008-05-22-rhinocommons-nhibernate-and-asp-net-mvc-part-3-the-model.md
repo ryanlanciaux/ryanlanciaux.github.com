@@ -2,11 +2,11 @@
 layout: post
 title: RhinoCommons, NHibernate and ASP.NET MVC Part 3 - The Model
 date: 2008-05-22 10:00
-comments: true
+comments: false
 categories: [C#, nhibernate]
 ---
 <p>
-We&#39;re going to keep moving now that everything is setup (<a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">see part one for setup</a>) and configured (<a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">see part two for configuration</a>). 
+We&#39;re going to keep moving now that everything is setup (<a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">see part one for setup</a>) and configured (<a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">see part two for configuration</a>).
 </p>
 <p>
 First off we are going to create our classes. The original classes and SQL tables are posted below (these may look familiar -- they are from <a href="/ryanlanciaux.com/post/Using-NHibernate.aspx" target="_blank">my initial NHibernate post</a>)

@@ -2,7 +2,7 @@
 layout: post
 title: RhinoCommons, NHibernate and ASP.NET MVC Part 2 - Configuration
 date: 2008-05-20 22:23
-comments: true
+comments: false
 categories: [C#, nhibernate]
 ---
 <p>
@@ -107,7 +107,7 @@ These active record settings should be pretty straight-forward but for more info
 </p>
 </div>
 </div>
-<!--end code-->With this tag, we&#39;re telling Castle that we&#39;re going to configure Windsor with a boo file instead of an xml document. <a href="http://ayende.com/blog/" target="_blank">Ayende Rahien</a> pointed out in the comments that this tag is no longer necessary as long as the file is named windsor.boo 
+<!--end code-->With this tag, we&#39;re telling Castle that we&#39;re going to configure Windsor with a boo file instead of an xml document. <a href="http://ayende.com/blog/" target="_blank">Ayende Rahien</a> pointed out in the comments that this tag is no longer necessary as long as the file is named windsor.boo
 <p>
 <strong>Windsor Configuration With Boo</strong>&nbsp;
 </p>
@@ -118,7 +118,7 @@ Up until this point, we&#39;ve been dealing with the web.config to configure our
 	Boo is an object oriented, statically typed programming language developed starting in 2003, which seeks to make use of the Common Language Infrastructure support for Unicode, internationalization and web style applications, while using a Python-inspired syntax and a special focus on language and compiler extensibility.&nbsp;
 </blockquote>
 <p>
-The mere fact that you can use a programming language instead of an XML file to configure Windsor is pretty sweet. I would be lying if I claimed to know boo very well, however, the Exesto and Hibernating-Forums samples (from the Rhino-Tools project) have enough information to get you up and running. I plan on learning boo well enought to create my own config files from scratch but in the mean time, here&#39;s what my boo file looks like (heavily influenced by the sample applications mentioned above)... 
+The mere fact that you can use a programming language instead of an XML file to configure Windsor is pretty sweet. I would be lying if I claimed to know boo very well, however, the Exesto and Hibernating-Forums samples (from the Rhino-Tools project) have enough information to get you up and running. I plan on learning boo well enought to create my own config files from scratch but in the mean time, here&#39;s what my boo file looks like (heavily influenced by the sample applications mentioned above)...
 </p>
 <!--begin code-->
 <div class="code" style="width: 100%">
@@ -151,10 +151,10 @@ activeRecordAssemblies = ( Assembly.Load(&quot;ProductModelActiveRecord&quot;), 
 Component(&quot;active_record_repository&quot;, IRepository, ARRepository)
 </p>
 <p style="margin: 0px">
-Component(&quot;active_record_unit_of_work&quot;, 
+Component(&quot;active_record_unit_of_work&quot;,
 </p>
 <p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; IUnitOfWorkFactory, 
+&nbsp;&nbsp;&nbsp; IUnitOfWorkFactory,
 </p>
 <p style="margin: 0px">
 &nbsp;&nbsp;&nbsp; ActiveRecordUnitOfWorkFactory,
@@ -166,7 +166,7 @@ Component(&quot;active_record_unit_of_work&quot;,
 </div>
 <p>
 <!--end code-->Check out <a href="http://ayende.com/blog/" target="_blank">Ayende&#39;s</a> <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx#comment">comment </a>for a more succinct way to register these components.
-As you might have noticed, I still have to set up the colors for boo files in Visual Studio :) What this file is doing is loading the assemblies and setting up the repository / unit of work (we&#39;ll see those in action in the next parts of this series). Your project configuration should be all set. Next time we will actually be writing some code so stick around for that. <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-3-the-model.aspx">View Part Three - The Model</a> 
+As you might have noticed, I still have to set up the colors for boo files in Visual Studio :) What this file is doing is loading the assemblies and setting up the repository / unit of work (we&#39;ll see those in action in the next parts of this series). Your project configuration should be all set. Next time we will actually be writing some code so stick around for that. <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-3-the-model.aspx">View Part Three - The Model</a>
 </p>
 
 

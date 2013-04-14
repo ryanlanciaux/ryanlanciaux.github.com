@@ -2,17 +2,17 @@
 layout: post
 title: NHibernate Session Per Request
 date: 2008-05-11 23:47
-comments: true
+comments: false
 categories: [nhibernate, C#]
 ---
 <p>
-A little earlier on, I had posted a simple example of <a href="http://svn2.assembla.com/svn/NHibernateTest/" target="_blank">NHibernate in an MVC application</a> as well as some <a href="/ryanlanciaux.com/post/NHibernate-in-an-ASPNET-MVC-application.aspx" target="_blank">initial questions</a> I had about NHibernate Session management. In response to my question, <a href="http://mhinze.com/" target="_blank">Matt Hinze</a> mentioned that the session should be transparent to the controller and posted some links to various articles explaining how to achieve this. I finally had a chance to play around with this type of session management and spent most of my time looking through <a href="http://devlicio.us/blogs/billy_mccafferty/" target="_blank">Billy McCafferty</a>&#39;s <a href="http://www.codeproject.com/KB/architecture/NHibernateBestPractices.aspx" target="_blank">NHibernate Best practices</a> on CodeProject. As I&#39;ve mentioned before, I&#39;m very new to NHibernate so some of the things I&#39;m doing may not be ideal. 
+A little earlier on, I had posted a simple example of <a href="http://svn2.assembla.com/svn/NHibernateTest/" target="_blank">NHibernate in an MVC application</a> as well as some <a href="/ryanlanciaux.com/post/NHibernate-in-an-ASPNET-MVC-application.aspx" target="_blank">initial questions</a> I had about NHibernate Session management. In response to my question, <a href="http://mhinze.com/" target="_blank">Matt Hinze</a> mentioned that the session should be transparent to the controller and posted some links to various articles explaining how to achieve this. I finally had a chance to play around with this type of session management and spent most of my time looking through <a href="http://devlicio.us/blogs/billy_mccafferty/" target="_blank">Billy McCafferty</a>&#39;s <a href="http://www.codeproject.com/KB/architecture/NHibernateBestPractices.aspx" target="_blank">NHibernate Best practices</a> on CodeProject. As I&#39;ve mentioned before, I&#39;m very new to NHibernate so some of the things I&#39;m doing may not be ideal.
 </p>
 <p>
 <strong>HTTP Module</strong>
 </p>
 <p>
-First off, I created an HTTP module; this is where the session will be opened and closed (by accessing the session manager class). You&#39;ll notice on the Init that event handlers have been added. I&#39;m using the same session manager class that I was using in my last example, however, now it&#39;s being initialized / closed here (rather than in each controller action). 
+First off, I created an HTTP module; this is where the session will be opened and closed (by accessing the session manager class). You&#39;ll notice on the Init that event handlers have been added. I&#39;m using the same session manager class that I was using in my last example, however, now it&#39;s being initialized / closed here (rather than in each controller action).
 </p>
 <div class="code">
 <!--

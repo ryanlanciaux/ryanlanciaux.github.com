@@ -2,7 +2,7 @@
 layout: post
 title: Real Ultimate Power Dependency Injection with Ninject
 date: 2008-03-26 23:02
-comments: true
+comments: false
 categories: [C#, IoC, Ninject, ninjas]
 ---
 <div style="padding: 10px; float: right">
@@ -387,7 +387,7 @@ project type you&#39;d like). A lot of thought went into the naming of the form.
 &nbsp;
 </p>
 <p style="margin: 0px; padding: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #47b3d1">MessageBox</span>.<span style="color: #a5a3a3">Show</span>(<span style="color: #80ff00">&quot;RX8: \n Drive Type: &quot;</span> + <span style="color: #a5a3a3">_rx8</span>.<span style="color: #a5a3a3">DriveType</span> + 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #47b3d1">MessageBox</span>.<span style="color: #a5a3a3">Show</span>(<span style="color: #80ff00">&quot;RX8: \n Drive Type: &quot;</span> + <span style="color: #a5a3a3">_rx8</span>.<span style="color: #a5a3a3">DriveType</span> +
 </p>
 <p style="margin: 0px; padding: 0px">
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #80ff00">&quot;\n Engine:&quot;</span> + <span style="color: #a5a3a3">_rx8</span>.<span style="color: #a5a3a3">Engine</span>);
@@ -430,7 +430,7 @@ the <a href="http://kohari.org/2008/03/13/context-variables-in-ninject/" target=
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">Bind</span>&lt;<span style="color: #2b91af">IEngine</span>&gt;().<span style="color: #a5a3a3">To</span>&lt;<span style="color: #47b3d1">Rotary</span>&gt;()
 </p>
 <p style="margin: 0px; padding: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; .<span style="color: #a5a3a3">Only</span>(<span style="color: #47b3d1">When</span>.<span style="color: #a5a3a3">Context</span>.<span style="color: #a5a3a3">Variable</span>(<span style="color: #80ff00">&quot;carType&quot;</span>).<span style="color: #a5a3a3">EqualTo</span>(<span style="color: #80ff00">&quot;RX8&quot;</span>));&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; .<span style="color: #a5a3a3">Only</span>(<span style="color: #47b3d1">When</span>.<span style="color: #a5a3a3">Context</span>.<span style="color: #a5a3a3">Variable</span>(<span style="color: #80ff00">&quot;carType&quot;</span>).<span style="color: #a5a3a3">EqualTo</span>(<span style="color: #80ff00">&quot;RX8&quot;</span>));&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
 </p>
 <p style="margin: 0px; padding: 0px">
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">Bind</span>&lt;<span style="color: #2b91af">IDriveType</span>&gt;().<span style="color: #a5a3a3">To</span>&lt;<span style="color: #47b3d1">RWD</span>&gt;()
@@ -466,7 +466,7 @@ the <a href="http://kohari.org/2008/03/13/context-variables-in-ninject/" target=
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">Bind</span>&lt;<span style="color: #2b91af">IDriveType</span>&gt;().<span style="color: #a5a3a3">To</span>&lt;<span style="color: #47b3d1">FourWD</span>&gt;()
 </p>
 <p style="margin: 0px; padding: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; .<span style="color: #a5a3a3">Only</span>(<span style="color: #47b3d1">When</span>.<span style="color: #a5a3a3">Context</span>.<span style="color: #a5a3a3">Variable</span>(<span style="color: #80ff00">&quot;carType&quot;</span>).<span style="color: #a5a3a3">EqualTo</span>(<span style="color: #80ff00">&quot;WRX&quot;</span>)); 
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; .<span style="color: #a5a3a3">Only</span>(<span style="color: #47b3d1">When</span>.<span style="color: #a5a3a3">Context</span>.<span style="color: #a5a3a3">Variable</span>(<span style="color: #80ff00">&quot;carType&quot;</span>).<span style="color: #a5a3a3">EqualTo</span>(<span style="color: #80ff00">&quot;WRX&quot;</span>));
 </p>
 <p style="margin: 0px; padding: 0px">
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }

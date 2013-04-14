@@ -2,7 +2,7 @@
 layout: post
 title: RhinoCommons, NHibernate and ASP.NET MVC Part 1 - Setup
 date: 2008-05-19 17:29
-comments: true
+comments: false
 categories: [C#, nhibernate]
 ---
 <p>

@@ -2,7 +2,7 @@
 layout: post
 title: How did I get started in software development?
 date: 2008-07-08 20:16
-comments: true
+comments: false
 categories: [programming, personal]
 ---
 <p>
@@ -13,10 +13,10 @@ Justin Etheredge</a> recently tagged me to write up how I got started in softwar
 <strong>How old were you when you first started programming?</strong>
 </p>
 <p>
-I first started programming when I was 10 or 11 (I don&#39;t remember exactly). 
+I first started programming when I was 10 or 11 (I don&#39;t remember exactly).
 </p>
 <p>
-<strong>How did you get started in programming?</strong> 
+<strong>How did you get started in programming?</strong>
 </p>
 <p>
 My interest in programming initially began as a general interest in computer games. My dad showed me how to get around in DOS and pulled up some games in QBasic. It wasn&#39;t long after that I started messing with the code to see what would happen if I changed things. From there, I tried writing some stuff on my own spending a lot of time in the syntax help.&nbsp;
@@ -28,7 +28,7 @@ My interest in programming initially began as a general interest in computer gam
 BASIC
 </p>
 <p>
-<strong>What was the first real program you wrote?</strong> 
+<strong>What was the first real program you wrote?</strong>
 </p>
 <p>
 Depending on the definition, the first real program I wrote was a game that worked in an AOL chat room. When I was 13, one of my friends showed me this thing called a scrambler. The scrambler would let you enter a word, send the scrambled word to the chat and keep score of who got the word right first, etc. I don&#39;t know why but I thought it would be an interesting thing to try and replicate. About a month later, I had finished writing one using the VB and the Windows API. It was not very useful but I learned a lot that way I guess.
@@ -55,7 +55,7 @@ Absolutely.
 <strong>If there is one thing you learned along the way that you would tell new developers, what would it be?</strong>
 </p>
 <p>
-Be continuously learning. 
+Be continuously learning.
 </p>
 <p>
 <strong>What&#39;s the most fun you&#39;ve ever had programming?</strong>&nbsp;
@@ -73,7 +73,7 @@ I honestly couldn&#39;t tell you -- there are a lot of projects that have been r
 <a href="http://blog.sanzenbacher.com" target="_blank">Scott Sanzenbacher&nbsp;</a>
 </p>
 <p>
-<a href="http://blog.wekeroad.com" target="_blank">Rob Conery</a> 
+<a href="http://blog.wekeroad.com" target="_blank">Rob Conery</a>
 </p>
 <p>
 <a href="http://www.noop.nl/" target="_blank">Jurgen Appelo </a>
@@ -82,7 +82,7 @@ I honestly couldn&#39;t tell you -- there are a lot of projects that have been r
 <a href="http://www.dannydouglass.com/" target="_blank">Danny Douglass</a>
 </p>
 <p>
-<a href="http://www.ayende.com/Blog/" target="_blank">Oren Eini</a> 
+<a href="http://www.ayende.com/Blog/" target="_blank">Oren Eini</a>
 </p>
 <p>
 &nbsp;

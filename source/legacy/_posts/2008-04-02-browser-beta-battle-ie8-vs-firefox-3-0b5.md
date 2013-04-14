@@ -2,7 +2,7 @@
 layout: post
 title: Browser Beta Battle - IE8 vs Firefox 3.0b5
 date: 2008-04-02 22:38
-comments: true
+comments: false
 categories: [browsers, web]
 ---
 <p>
@@ -56,7 +56,7 @@ Amazon
 <br />
 <br />
 <h2 style="margin: 0px; padding: 0px">
-Mac.com 
+Mac.com
 </h2>
 <a href="http://www.mac.com" target="_blank">http://www.mac.com</a><br />
 <br />

@@ -2,14 +2,14 @@
 layout: post
 title: RhinoCommons, NHibernate and ASP.NET MVC Part 5 - LINQ to NHibernate
 date: 2008-06-03 21:15
-comments: true
+comments: false
 categories: [C#, nhibernate]
 ---
 <p>
 <strong>Settings</strong>&nbsp;
 </p>
 <p>
-Up until now, we&#39;ve been using&nbsp; NHibernate Query Generator for all of our data access. Although this is a great way to retrieve our data, there is another option we can play around with -- LINQ for NHibernate. To set this up in our existing application (see <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">Part 1</a>, <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Part 2</a>, <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-3-the-model.aspx" target="_blank">Part 3</a> and <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-4---The-MVC-Application.aspx" target="_blank">Part 4</a> on creating the ASP.NET MVC Application) we&#39;ll first need to grab the code out of subversion <a href="https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/experiments/NHibernate.Linq/" target="_blank">https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/experiments/NHibernate.Linq/</a> and build it using MSBuild or Visual Studio. After that we want to add a reference to it in our application. 
+Up until now, we&#39;ve been using&nbsp; NHibernate Query Generator for all of our data access. Although this is a great way to retrieve our data, there is another option we can play around with -- LINQ for NHibernate. To set this up in our existing application (see <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">Part 1</a>, <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Part 2</a>, <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-3-the-model.aspx" target="_blank">Part 3</a> and <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-4---The-MVC-Application.aspx" target="_blank">Part 4</a> on creating the ASP.NET MVC Application) we&#39;ll first need to grab the code out of subversion <a href="https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/experiments/NHibernate.Linq/" target="_blank">https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/experiments/NHibernate.Linq/</a> and build it using MSBuild or Visual Studio. After that we want to add a reference to it in our application.
 </p>
 <p>
 <strong>Simple Code</strong>&nbsp;
@@ -182,10 +182,10 @@ One nice thing we can easily do with Linq for NHibernate is page and sort our da
 </div>
 <p>
 <!--endcode-->
-Here, we&#39;ve created a class that has a private list of criteria, a method to add criteria to the list and a method to get the list based on the given criteria. I realize it may be a little intimidating but we can perfom most of our select queries through this method due to the use of Generics.&nbsp; 
+Here, we&#39;ve created a class that has a private list of criteria, a method to add criteria to the list and a method to get the list based on the given criteria. I realize it may be a little intimidating but we can perfom most of our select queries through this method due to the use of Generics.&nbsp;
 </p>
 <p>
-Updating the controllers to use this functionality is not too difficult. For pages that simply retrieve lists we call the GetList method without specifying any criteria: 
+Updating the controllers to use this functionality is not too difficult. For pages that simply retrieve lists we call the GetList method without specifying any criteria:
 </p>
 <!--code-->
 <div class="code">
@@ -199,7 +199,7 @@ Updating the controllers to use this functionality is not too difficult. For pag
 </div>
 </div>
 <p>
-&nbsp;Pass in new lambda expressions to add query criteria 
+&nbsp;Pass in new lambda expressions to add query criteria
 </p>
 <div class="code">
 <div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">

@@ -2,7 +2,7 @@
 layout: post
 title: What Constitutes Ethical SEO?
 date: 2008-12-12 00:45
-comments: true
+comments: false
 categories: [seo, web]
 ---
 <blockquote>

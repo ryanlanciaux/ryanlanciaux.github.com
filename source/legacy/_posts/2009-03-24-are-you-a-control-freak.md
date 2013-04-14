@@ -2,7 +2,7 @@
 layout: post
 title: Are you a Control Freak?
 date: 2009-03-24 21:04
-comments: true
+comments: false
 categories: [mvc, jquery]
 ---
 <strong>No Controls?</strong>

@@ -2,7 +2,7 @@
 layout: post
 title: NHibernate in an ASP.NET MVC application
 date: 2008-04-29 22:45
-comments: true
+comments: false
 categories: [nhibernate, C#]
 ---
 <p>
@@ -43,5 +43,5 @@ more of a domain driven approach on the project I&#39;m currently messing around
 </p>
 </div>
 <br />
-What is the best way to go about this? Also, should I be looking more at using a <a href="http://blogs.hibernatingrhinos.com/nhibernate/archive/2008/04/10/nhibernate-and-the-unit-of-work-pattern.aspx" target="_blank">Unit of Work</a> pattern to achieve this? 
+What is the best way to go about this? Also, should I be looking more at using a <a href="http://blogs.hibernatingrhinos.com/nhibernate/archive/2008/04/10/nhibernate-and-the-unit-of-work-pattern.aspx" target="_blank">Unit of Work</a> pattern to achieve this?
 

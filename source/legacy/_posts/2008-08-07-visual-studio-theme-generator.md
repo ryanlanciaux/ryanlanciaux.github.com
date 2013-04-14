@@ -2,7 +2,7 @@
 layout: post
 title: Visual Studio Theme Generator
 date: 2008-08-07 08:36
-comments: true
+comments: false
 categories: [C#, mvc, theme generator]
 ---
 <p>

@@ -2,17 +2,17 @@
 layout: post
 title: Very Quick and Simple Dependency Injection with StructureMap
 date: 2008-02-26 22:51
-comments: true
+comments: false
 categories: [C#, IoC, StructureMap]
 ---
 <p>
-There are a lot of resources on the web about <a href="http://www.martinfowler.com/articles/injection.html" target="_blank">dependency injection</a> and using <a href="http://structuremap.sourceforge.net/Default.htm" target="_blank">StructureMap</a>, however, I wanted to write something that was an extremely simple example. This is basically the tip of the iceberg but hopefully it will help someone.&nbsp; 
+There are a lot of resources on the web about <a href="http://www.martinfowler.com/articles/injection.html" target="_blank">dependency injection</a> and using <a href="http://structuremap.sourceforge.net/Default.htm" target="_blank">StructureMap</a>, however, I wanted to write something that was an extremely simple example. This is basically the tip of the iceberg but hopefully it will help someone.&nbsp;
 </p>
 <table border="0">
 	<tbody>
 		<tr>
 			<td valign="top">
-			We want to make our application very loosely coupled -- to achieve this &#39;<a href="http://en.wikipedia.org/wiki/Loose_coupling" target="_blank">loose coupling</a>&#39; we&#39;re going to have several projects in the solution. What this means if we need to change any part of this application later on (we wouldn&#39;t want to in this case since its a demo and all), we could do so without impacting everything else. Anyways, we&#39;re going to create three class libraries and a WinForms application. 
+			We want to make our application very loosely coupled -- to achieve this &#39;<a href="http://en.wikipedia.org/wiki/Loose_coupling" target="_blank">loose coupling</a>&#39; we&#39;re going to have several projects in the solution. What this means if we need to change any part of this application later on (we wouldn&#39;t want to in this case since its a demo and all), we could do so without impacting everything else. Anyways, we&#39;re going to create three class libraries and a WinForms application.
 			</td>
 			<td><img src="/ryanlanciaux.com/image.axd?picture=SolutionExplorer.gif" alt="" /> <br />
 			</td>
@@ -20,7 +20,7 @@ There are a lot of resources on the web about <a href="http://www.martinfowler.c
 	</tbody>
 </table>
 <p>
-Next we want to create our main inteface -- this will be under the DisplayMessage Project: 
+Next we want to create our main inteface -- this will be under the DisplayMessage Project:
 </p>
 <p>
 &nbsp;
@@ -49,7 +49,7 @@ Next we want to create our main inteface -- this will be under the DisplayMessag
 </p>
 </div>
 <p>
-The interface defines just one method that, when implemented, will return a string stating what class its coming from. Next, we want to create our two implementation classes (one under Implementation1, the other under Implementation2). Please keep in mind I&#39;m not suggesting to have every class in it&#39;s own library -- it&#39;s just for the sake of example :) 
+The interface defines just one method that, when implemented, will return a string stating what class its coming from. Next, we want to create our two implementation classes (one under Implementation1, the other under Implementation2). Please keep in mind I&#39;m not suggesting to have every class in it&#39;s own library -- it&#39;s just for the sake of example :)
 </p>
 <p>
 Implementation1:
@@ -160,7 +160,7 @@ Okay that was easy enough, now on to the Forms App.&nbsp; We&#39;re first going 
 </p>
 </div>
 <p>
-Notice we define a PluginFamily for the IDisplayMessage interface and set the default implementation to be MessageOne (the DefaultKey of PluginFamily references the ConcreteKey of the Plugin). Other than that, this should be pretty straight-forward but if you have any confusion, please <a href="http://structuremap.sourceforge.net/Default.htm" target="_blank">check out the StructureMap documentation</a>. Only a couple more things to do before we can run this... 
+Notice we define a PluginFamily for the IDisplayMessage interface and set the default implementation to be MessageOne (the DefaultKey of PluginFamily references the ConcreteKey of the Plugin). Other than that, this should be pretty straight-forward but if you have any confusion, please <a href="http://structuremap.sourceforge.net/Default.htm" target="_blank">check out the StructureMap documentation</a>. Only a couple more things to do before we can run this...
 </p>
 <table border="0">
 	<tbody>
@@ -173,7 +173,7 @@ Notice we define a PluginFamily for the IDisplayMessage interface and set the de
 	</tbody>
 </table>
 <p>
-&nbsp;Now to add the code... 
+&nbsp;Now to add the code...
 </p>
 <div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Consolas; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
 <p style="margin: 0px">
