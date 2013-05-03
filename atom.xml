@@ -4,7 +4,7 @@
   <title><![CDATA[Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2013-04-30T22:58:39-04:00</updated>
+  <updated>2013-05-02T21:36:20-04:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Goodreads status widget available on github]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/05/02/goodreads-status-widget-available-on-github/"/>
+    <updated>2013-05-02T19:49:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/05/02/goodreads-status-widget-available-on-github</id>
+    <content type="html"><![CDATA[<p><a href="http://www.goodreads.com">Goodreads</a> is currently one of my favorite sites; I love that I can see what my friends are reading and find new books to read based on their recommendations. Noticing that many other blog platforms have sidebar widgets (asides), I decided to create one for Octopress. The first thing I did was make sure I was not duplicating effort. Goodreads has some great <a href="http://www.goodreads.com/user/edit?tab=widgets">sidebar widgets</a>, however, I preferred to generate the aside in the standard <code>rake generate</code> process (as well as keep the same look-and-feel of the other asides).</p>
+
+<p>The Goodreads API is pretty robust but I was a little concerned about the possibility of a user&#8217;s API key getting checked into github. Thankfully, Goodreads also provides an RSS feed for status updates &#8211; which seemed a bit safer to use for publicly available code (and with the RSS feed it&#8217;s not necessary to obtain an API key). I assumed that if someone didn&#8217;t want their status updates public via RSS, they probably wouldn&#8217;t be installing an aside to display their status.</p>
+
+<p>I created an aside and a subsequent <a href="https://github.com/Shopify/liquid/wiki">liquid tags</a> plugin that grabbed and formatted the RSS data. I used REXML to process the xml because it wouldn&#8217;t require users to install additional gems. One thing I still need to figure out is how to pass data from the config.yml into the plugin via the aside. I realize I have access to the config properties via site.whatever  variables but I&#8217;m not entirely sure how to pass that info along to the tag plugin. Currently, the aside needs to be modified with the user&#8217;s Goodreads unique id and the max number of results to display. I noticed some others on the <a href="https://github.com/imathis/octopress/wiki/3rd-party-plugins">3rd party plugins list on the Octopress wiki</a> are doing the same thing, however, I would prefer to use the config file for the config data :P</p>
+
+<p>All-in-all, it was pretty fun creating the plugin. If you use Octopress and would like to install the Goodreads plugin, <a href="https://github.com/ryanlanciaux/octo-goodreads-status">take a look at the github repo</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sublime Text on Ubuntu]]></title>
@@ -2434,89 +2449,6 @@ more of a domain driven approach on the project I&#39;m currently messing around
 
 
 <p>What is the best way to go about this? Also, should I be looking more at using a <a href="http://blogs.hibernatingrhinos.com/nhibernate/archive/2008/04/10/nhibernate-and-the-unit-of-work-pattern.aspx" target="_blank">Unit of Work</a> pattern to achieve this?</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[IE8 vs Firefox 3.0b5 JavaScript Part 1]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/04/12/ie8-vs-firefox-3-0b5-javascript-part-1/"/>
-    <updated>2008-04-12T23:24:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/04/12/ie8-vs-firefox-3-0b5-javascript-part-1</id>
-    <content type="html"><![CDATA[<p>
-Last time I posted on the latest browser from Microsoft vs. Mozilla&#39;s latest I had compared page download times between the two browsers. This time, I would like to take a brief look at how they stack up in regard to JavaScript.
-</p>
-
-
-<p>
-<a href="http://ejohn.org/" target="_blank">John Resig</a> (of <a href="http://www.jquery.com" target="_blank">jQuery </a>/ <a href="http://www.mozilla.org">Mozilla </a>fame) announced the <a href="http://dromaeo.com/" target="_blank">Dromaeo: Javascript Performance Testing</a> suite yesterday. The suite runs some of the same tests as the <a href="http://webkit.org/" target="_blank">WebKit </a>team&#39;s <a href="http://webkit.org/perf/sunspider-0.9/sunspider.html" target="_blank">SunSpider</a>, however, there are some improved methodolgies (see the suite&#39;s <a href="http://wiki.mozilla.org/Dromaeo" target="_blank">wiki </a>for more info on this). I don&#39;t know how often I feel like doing DNA Sequence Alignment in JavaScript but I think it would be a good way to quickly get some metrics of how both FireFox and IE8 handle the code.
-</p>
-
-
-<h2>The Comparison:</h2>
-
-
-<p>
-I ran the tests in groups because there were certain ones that were not finishing under IE8. To be quite honest, I&#39;m not 100% sure if this is an Internet Explorer issue, or an issue with the tests. Both are a work in progress so I would rather not make assumptions at this point. Anyways, the results of the tests are listed below:
-</p>
-
-
-<table border="1" style="border: 1px none ; border-spacing: 0px">
-    <tbody>
-        <tr>
-            <th>Test Name <br />
-            </th>
-            <th>Firefox 3.0 beta 5</th>
-            <th>Internet Explorer 8</th>
-        </tr>
-        <tr>
-            <td>Fannkuch v122</td>
-            <td>802.80ms</td>
-            <td>1032.20ms</td>
-        </tr>
-        <tr>
-            <td>Base 64 Encoding and Decoding v122:</td>
-            <td>2942.00ms</td>
-            <td>Would not finish</td>
-        </tr>
-        <tr>
-            <td>DNA Sequence Alignment v116:</td>
-            <td>420.00ms</td>
-            <td>Would not finish</td>
-        </tr>
-        <tr>
-            <td>N-Body Rotation and Gravity v122:</td>
-            <td>270ms</td>
-            <td>529.40ms</td>
-        </tr>
-        <tr>
-            <td>Prime Number Computation (2) v122:</td>
-            <td>305.80ms</td>
-            <td>518.20ms</td>
-        </tr>
-        <tr>
-            <td>Recursive Number Calculation v122:</td>
-            <td>184.40ms</td>
-            <td>417.80ms</td>
-        </tr>
-        <tr>
-            <td>Traversing Binary Trees v122:</td>
-            <td>156.80ms</td>
-            <td>422.20ms</td>
-        </tr>
-    </tbody>
-</table>
-
-
-<br />
-
-
-<h2>The Results</h2>
-
-
-<p>
-The initial results look like Firefox is performing the more advanced Javascript operations faster than Internet Explorer. That being said, Dromaeo, IE8 and Firefox 3.0b5 are still being developed so a lot could change before the release. For more metrics <a href="http://dromaeo.com/?id=250,246,251,256" target="_blank">view a comparison</a> on the Dromaeo site of Safari 3.1, Firefox 3.0b5, Opera 9.5 and IE8b1. Let me know what you think or if you&#39;ve encountered different results.
-</p>
-
 ]]></content>
   </entry>
   
