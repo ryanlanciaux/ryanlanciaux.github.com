@@ -149,8 +149,12 @@
         <lastmod>2013-05-03T22:32:19-04:00</lastmod>
     </url>
     <url>
+        <loc>http://ryanlanciaux.github.com/blog/2013/05/07/tig-great-git-command-line-tool/</loc>
+        <lastmod>2013-05-07T23:36:39-04:00</lastmod>
+    </url>
+    <url>
         <loc>http://ryanlanciaux.github.com/blog/archives/</loc>
-        <lastmod>2013-05-03T22:32:19-04:00</lastmod>
+        <lastmod>2013-05-07T23:36:39-04:00</lastmod>
     </url>
     <url>
         <loc>http://ryanlanciaux.github.com/robots.txt</loc>
@@ -158,6 +162,6 @@
     </url>
     <url>
         <loc>http://ryanlanciaux.github.com/</loc>
-        <lastmod>2013-05-03T22:32:19-04:00</lastmod>
+        <lastmod>2013-05-07T23:36:39-04:00</lastmod>
     </url>
 </urlset>
