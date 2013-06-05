@@ -4,7 +4,7 @@
   <title><![CDATA[Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2013-06-05T00:06:31-04:00</updated>
+  <updated>2013-06-05T00:08:30-04:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -18,7 +18,7 @@
     <link href="http://ryanlanciaux.github.com/blog/2013/06/04/learning-angularjs/"/>
     <updated>2013-06-04T21:39:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/06/04/learning-angularjs</id>
-    <content type="html"><![CDATA[<p>I have recently been playing around with some of the client-side MV_ frameworks. I have avoided Angular for quite sometime because I was not a fan of using ng-click (etc.) HTML attributes to fire off js events. The more I&#8217;ve used the framework, however, the less of an issue that has been me.</p>
+    <content type="html"><![CDATA[<p>I have recently been playing around with some of the client-side MV_ frameworks. I have avoided Angular for quite some time because I was not a fan of using ng-click (etc.) HTML attributes to fire off js events. The more I&#8217;ve used the framework, however, the less of an issue that has been to me.</p>
 
 <p>As noted in a <a href="http://ryanlanciaux.github.io/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/">previous post</a>, another framework I have been using a bit is <a href="http://www.sailsjs.com">SailsJS</a>. While this post is not about Sails, I am using it as the REST endpoints of the AngularJS application.</p>
 
