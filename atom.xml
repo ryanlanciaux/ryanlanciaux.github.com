@@ -4,7 +4,7 @@
   <title><![CDATA[Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2013-05-09T23:07:25-04:00</updated>
+  <updated>2013-06-05T00:06:31-04:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -12,6 +12,284 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning AngularJS]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/06/04/learning-angularjs/"/>
+    <updated>2013-06-04T21:39:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/06/04/learning-angularjs</id>
+    <content type="html"><![CDATA[<p>I have recently been playing around with some of the client-side MV_ frameworks. I have avoided Angular for quite sometime because I was not a fan of using ng-click (etc.) HTML attributes to fire off js events. The more I&#8217;ve used the framework, however, the less of an issue that has been me.</p>
+
+<p>As noted in a <a href="http://ryanlanciaux.github.io/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/">previous post</a>, another framework I have been using a bit is <a href="http://www.sailsjs.com">SailsJS</a>. While this post is not about Sails, I am using it as the REST endpoints of the AngularJS application.</p>
+
+<p>First off, sails needs to be installed. Assuming you have <a href="https://github.com/joyent/node/wiki/Installation">node installed</a>, just <code>npm install -g sails</code> From there, create a new sails project from the command line <code>sails new foodinventory</code> and cd into that directory. Once in the directory, create a model <code>sails generate model food</code> and a controller so we can access the model <code>sails generate controller food</code>. Open up api/models/Food.js and edit the file to look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="cm">/*---------------------</span>
+</span><span class='line'><span class="cm">  :: Food</span>
+</span><span class='line'><span class="cm">  -&gt; model</span>
+</span><span class='line'><span class="cm">---------------------*/</span>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">attributes</span>  <span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;STRING&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;STRING&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">expiration</span><span class="o">:</span> <span class="s1">&#39;DATE&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">quantity</span><span class="o">:</span> <span class="s1">&#39;STRING&#39;</span><span class="p">,</span> <span class="c1">//for sake of example, ignore that this is a string...</span>
+</span><span class='line'>    <span class="nx">percentRemaining</span><span class="o">:</span> <span class="s1">&#39;INTEGER&#39;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now go back to the console and type <code>sails lift</code>. You should be presented with a cool ascii sailboat and a message stating that sails is running on port 1337. Fire up your browser and head to http://localhost:1337 &#8211; just to see the initial sails page. From there, navigate to /food &#8211; this should return an empty array, which is the JSON representation what&#8217;s currently stored in our food list.</p>
+
+<p>Add a couple of records to the Food list by visiting http://localhost:1337/food/create?name=Spinach&amp;type=Vegetable&amp;expiration=2013-06-20&amp;quantity=16oz&amp;percentRemaining=75 and /food/create with other properties. Now that you have a couple records in, lets start with the Angular stuffs.</p>
+
+<p>  <em>Please note that there are better ways to utilize the sails framework to write single page applications with Angular (see <a href="https://github.com/balderdashy/sails/issues/273">here</a> and <a href="https://github.com/balderdashy/sails/issues/205">here</a>) &#8211; For the sake of example we&#8217;re setting everything up in very few files.</em></p>
+
+<p>Open up your Layout file which is located in <code>views/layout.ejs</code> and add the following includes before <code>&lt;%- assets.js() %&gt;</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'> <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'> <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'> <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'> <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-resource.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From here we&#8217;re going to edit the default view. We can keep the same div structure as the sails default view but we&#8217;re stripping out all the CSS and other content &#8211; we should have something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'> <span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">&quot;header&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>   Food Inventory
+</span><span class='line'> <span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'> <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    Some Content Goes Here
+</span><span class='line'> <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'> <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;footer&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;a</span> <span class="na">target=</span><span class="s">&quot;_blank&quot;</span> <span class="na">href=</span><span class="s">&quot;http://sailsjs.com&quot;</span> <span class="na">class=</span><span class="s">&quot;copyright&quot;</span><span class="nt">&gt;</span>Built with Sails.js<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'> <span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Upon refreshing this page, you can see that not much is going on; we should totally do something about that. First, we want to add the ng-app directive to the html tag in layout.ejs (it should now look like <code>&lt;html ng-app="foodApp"</code>). This <a href="http://docs.angularjs.org/tutorial/step_00">bootstraps</a> (not to be confused with <a href="http://www.getbootstrap.com">Bootstrap</a>) our application, stating that the html tag is the Angular root. We could techincally add this directive to any element but the html tag is as good as any for this example.</p>
+
+<p>Next, we&#8217;re going to flip back to our index view (under /home) and add an Angular factory for our food app:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foodApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;foodApp&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ngResource&#39;</span><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">foodApp</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;Food&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$resource&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$resource</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">$resource</span><span class="p">(</span><span class="s1">&#39;/food/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span><span class="s1">&#39;@id&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="p">}]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using the factory, we can now access Query / Get / Save / Delete functions off our Food model (the REST API under /food). By using the :id, we are stating that we can alternatively pass an id (e.g. /Food/1).</p>
+
+<p>You may notice that we&#8217;re injecting &#8216;ngResource&#8217; into our module &#8211; this is the Angular library (that we&#8217;ve already included in the layout page) that is used to interact with our sails REST API that we created above.</p>
+
+<p>Now that we can access the data, lets add a controller.. The controller is responsible for managing the state of the application. There are plenty of tutorials that deal with <a href="http://docs.angularjs.org/tutorial/step_02">how to create a controller in Angular</a>, so lets just jump right in..</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">FoodController</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">Food</span><span class="p">){</span>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">food</span> <span class="o">=</span> <span class="nx">Food</span><span class="p">.</span><span class="nx">query</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">isFormActive</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">toggleForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">isFormActive</span><span class="p">){</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">isFormActive</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">isFormActive</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">editableFood</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Food</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">addFood</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">editableFood</span><span class="p">.</span><span class="nx">$save</span><span class="p">();</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">food</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">editableFood</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">toggleForm</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Our controller is just a plain old javascript function that takes $scope (used to sync data between controller and the view) and our Food item as parameters. The very first line in the controller is obtaining a list of all of the Food items (essentially the same as going to /Food and copying the JSON) and storing it in the $scope.food array.</p>
+
+<p>The isFormActive property is used to determine whether or not we want to show the create form. The toggle form action is used to change this active property as well as create a new model object to use with the form.</p>
+
+<p>Finally, the addFood method posts the newly created food item to our API. This editableForm &#8216;pattern&#8217; was something I first came across on <a href="http://odetocode.com/blogs/scott/archive/2013/02/21/forms-with-angularjs.aspx">K. Scott Allen&#8217;s website</a>.</p>
+
+<p>Now lets write some HTML that utilizes this controller&#8230; We&#8217;ll start this process by specifying that the #content area in our layout page corresponds to the FoodController with the ng-controller directive &#8211; Our modified #content tag should look like this: <code>&lt;div id="content" ng-controller="FoodController"&gt;</code>. All of our $scope.___ properties are now available to use in expressions within the #content div.</p>
+
+<p>Next we&#8217;re going to add a repeater to show the food items.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;table&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;thead&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Name<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Type<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Expiration<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Quantity<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Percent Remaining<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/thead&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;tbody&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span><span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span><span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span><span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span><span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">&quot;progress&quot;</span><span class="nt">&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;bar&quot;</span> <span class="na">style=</span><span class="s">&quot;width: %&quot;</span><span class="err">&lt;/</span><span class="na">td</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/tbody&gt;</span>
+</span><span class='line'><span class="nt">&lt;/table&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The tr element inside the tbody is where we are telling angular to loop through all our food items. We are going to reference the current item as f and display all of its properties. You may notice in the last column that we&#8217;re using Twitter Bootstrap&#8217;s progress bar in addition to an Angular expression. The expressions in Angular can be quite powerful and seem to have a bit more functionality than many of the other templating frameworks. Go ahead and refresh your page to see how everything is looking so far.</p>
+
+<p>Next we want to add the ability to add new items from this page</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;button</span> <span class="na">ng-click=</span><span class="s">&quot;toggleForm()&quot;</span> <span class="na">ng-hide=</span><span class="s">&quot;isFormActive&quot;</span><span class="nt">&gt;</span>Add One<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;button</span> <span class="na">ng-click=</span><span class="s">&quot;toggleForm()&quot;</span> <span class="na">ng-show=</span><span class="s">&quot;isFormActive&quot;</span><span class="nt">&gt;</span>Hide Form<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;form</span> <span class="na">ng-show=</span><span class="s">&quot;isFormActive&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;hr</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>Name:<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.name&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;type&quot;</span><span class="nt">&gt;</span>Type:<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.type&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;expiration&quot;</span><span class="nt">&gt;</span>Expiration<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;expiration&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.expiration&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;quantity&quot;</span><span class="nt">&gt;</span>Quantity<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;quantity&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.quantity&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;percentRemaining&quot;</span><span class="nt">&gt;</span>Percent Remaining<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;percentRemaining&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.percentRemaining&quot;</span> <span class="nt">/&gt;&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;span4 text-right&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;button</span> <span class="na">ng-click=</span><span class="s">&quot;toggleForm()&quot;</span><span class="nt">&gt;</span>Cancel<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;button</span> <span class="na">ng-click=</span><span class="s">&quot;addFood()&quot;</span><span class="nt">&gt;</span>Add<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/form&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is a bit more going on with the Angular directives in this snippet of HTML. First, you&#8217;ll notice that several of our elements have ng-click directives; these directives are calling functions on the controller when the user clicks on element. In addition to the click functions, we are using the ng-show / ng-hide directives to show or hide content based on a given condition. For instance, the button for &#8216;Add One&#8217; is only visible when isFormActive = false and the &#8216;Hide Form&#8217; button is only visible when isFormActive = true.</p>
+
+<p>We are using the ng-model directive to bind a form element to $scope.editableFood (which is being created in the toggleForm method of the FoodController). Clicking on &#8216;Add&#8217; will call the addFood method on the FoodController &#8211; this will post the new record to our /Food/Create and push the value into our $scope.food array. The UI will update automatically because Angular $scope properties are observed by default.</p>
+
+<p>So far, we&#8217;ve created a simple REST API and added / retrieved data from this API with AngularJS. The full contents of the modified files are available <a href="https://gist.github.com/ryanlanciaux/5711426">over here</a>. I plan on writing another part in this series where we will focus on searching / ordering / filtering the displayed data and in-place editing on the food list.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Less alt+tab with SublimeText]]></title>
@@ -1782,43 +2060,6 @@ As you might have noticed, I still have to set up the colors for boo files in Vi
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 1 - Setup]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/05/19/rhinocommons-nhibernate-and-asp-net-mvc-part-1-setup/"/>
-    <updated>2008-05-19T17:29:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/05/19/rhinocommons-nhibernate-and-asp-net-mvc-part-1-setup</id>
-    <content type="html"><![CDATA[<p>
-After my last post about the unit of work with NHibernate, <a href="http://www.lostechies.com/blogs/chad%5Fmyers/" target="_blank">Chad Myers</a> mentioned that I should take a look at Ayende&#39;s Rhino Commons (because the Unit of Work stuff is already being handled). Since I am not a big fan of reinventing the wheel I decided I would give it a shot. There&#39;s going to be another post in the near future about how to get Rhino Commons, Castle ActiveRecord and ASP.NET MVC working together but for now, it would be good to make sure all the necessary components are installed on your machine.
-</p>
-
-
-<ol>
-    <li>Make sure you have a subversion client &#8211; <a href="http://tortoisesvn.tigris.org/" target="_blank">Tortoise SVN</a> or the command prompt is what I use but any subversion client should be fine. </li>
-    <li>If you don&#39;t already have <a href="http://nant.sourceforge.net/" target="_blank">Nant</a> installed on your machine download and install that</li>
-    <li>Download and build the following (<a href="http://www.ayende.com/blog" target="_blank">Ayende </a>mentions, the <a href="http://www.ayende.com/Blog/archive/2007/08/06/Running-on-the-trunk-Building-Rhino-Commons.aspx" target="_blank">trick is not opening in Visual Studio</a>):
-    <ul>
-        <li>Castle Project &#8211; (<a href="http://svn.castleproject.org:8080/svn/castle/trunk" target="_blank">http://svn.castleproject.org:8080/svn/castle/trunk</a>)</li>
-        <li> NHibernate &#8211; (<a href="https://nhibernate.svn.sourceforge.net/svnroot/nhibernate/trunk" target="_blank">https://nhibernate.svn.sourceforge.net/svnroot/nhibernate/trunk</a>)</li>
-        <li> Rhino-Tools (<a href="https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/trunk" target="_blank">https://rhino-tools.svn.sourceforge.net/svnroot/rhino-tools/trunk</a>) </li>
-    </ul>
-    </li>
-    <li>Next you&#39;re going to want to setup the NHibernate Query Generator (we&#39;re going to use Linq to NHibernate in a later example but for now get this installed). This should be a part of the Rhino-tools package but if you want you can <a href="http://www.ayende.com/projects/nhibernate-query-analyzer/downloads.aspx" target="_blank">download the binaries</a>. Then setup the application as an external tool in Visual Studio (my settings are posted below). <a href="http://jhollingworth.wordpress.com/2008/03/28/subsonic-like-nhibernate-query-generator-button-in-visual-studio/%20target=">see James Hollingworth&#39;s post for more info</a>
-    <br />
-    <img src="http://ryanlanciaux.github.com/ryanlanciaux.com/image.axd?picture=nhibernateqg.gif" alt="" />
-    <ul>
-        <li>Command: C:\program files\nhqg\NHQG.exe</li>
-        <li>Arguments: /Lang:cs /InputFilePattern:$(BinDir)/ProductModelActiveRecord.dll /OutputDirectory:$(ProjectDir)/Queries /BaseNamespace:Queries</li>
-        <li>Initial Directory: $(TargetDir)</li>
-    </ul>
-    </li>
-    <li>Finally make sure you&#39;re running the preview 3 drop of the ASP.NET MVC Framework &#8211; you can <a href="http://www.codeplex.com/aspnet/Release/ProjectReleases.aspx?ReleaseId=12640" target="_blank">get that here from CodePlex</a> </li>
-</ol>
-
-
-<p>You should now have everything setup. It may be good to take a look at the Exesto application in the rhino-tools\SampleApplications directory to get an introduction to the Rhino-tools / binsor / castle settings that we&#39;ll be looking at later on. Finally, if you are not familiar with the ASP.NET MVC Framework take a look <a href="http://weblogs.asp.net/fredriknormen/archive/2008/04/17/asp-net-mvc-framework-pre-preview-3-a-step-by-step-guide-to-create-a-simple-web-app.aspx" target="_blank">Fredrik Normen&#39;s step by step guide</a>. In the next couple of days, I will be posting how to wire these tools together for quick web application development. Stay Tuned.<br /></p>
 ]]></content>
   </entry>
   
