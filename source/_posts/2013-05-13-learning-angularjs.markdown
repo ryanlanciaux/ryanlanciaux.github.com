@@ -5,7 +5,7 @@ date: 2013-06-04 21:39
 comments: true
 categories: [js, angular, sails]
 ---
-I have recently been playing around with some of the client-side MV_ frameworks. I have avoided Angular for quite sometime because I was not a fan of using ng-click (etc.) HTML attributes to fire off js events. The more I've used the framework, however, the less of an issue that has been me.
+I have recently been playing around with some of the client-side MV_ frameworks. I have avoided Angular for quite some time because I was not a fan of using ng-click (etc.) HTML attributes to fire off js events. The more I've used the framework, however, the less of an issue that has been to me.
 
 As noted in a [previous post](http://ryanlanciaux.github.io/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/), another framework I have been using a bit is [SailsJS](http://www.sailsjs.com). While this post is not about Sails, I am using it as the REST endpoints of the AngularJS application.
 
