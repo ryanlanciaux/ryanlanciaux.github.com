@@ -9,7 +9,7 @@
   <meta name="author" content="Ryan Lanciaux">
 
   
-  <meta name="description" content="I have recently been playing around with some of the client-side MV_ frameworks. I have avoided Angular for quite some time because I was not a fan &hellip;">
+  <meta name="description" content="When reviewing my recent AngularJS post, I noticed that none of my template display bindings were showing up. LiquidTags use the same {{ }} style &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,44 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin/">Note to Self: Escape LiquidTags With Jekyll Raw Tag Plugin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-05T21:57:00-04:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When reviewing <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">my recent AngularJS post</a>, I noticed that none of my template display bindings were showing up. LiquidTags use the same {{  }} style bindings as AngularJS (and was trying to render my Angular expressions as LiquidTags). Luckily, there is a <a href="https://gist.github.com/phaer/1020852">jekyll plugin called &#8216;raw tag&#8217;</a> for rendering data that you do not want interpreted as a LiquidTag / etc. Simply place this raw content between {% raw %} and {% endraw %}</p>
+
+<p>For more information <a href="http://stackoverflow.com/questions/3426182/how-to-escape-liquid-template-tags">check out this Stackoverflow Post</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -677,6 +715,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin/">Note to self: escape LiquidTags with Jekyll raw tag plugin</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/04/learning-angularjs/">Learning AngularJS</a>
       </li>
     
@@ -690,10 +732,6 @@
     
       <li class="post">
         <a href="/blog/2013/05/03/ikea-standing-desk/">Ikea Standing Desk</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/02/goodreads-status-widget-available-on-github/">Goodreads status widget available on github</a>
       </li>
     
   </ul>
