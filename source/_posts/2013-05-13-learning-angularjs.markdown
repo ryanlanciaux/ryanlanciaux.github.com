@@ -123,11 +123,11 @@ Next we're going to add a repeater to show the food items.
       </thead>
       <tbody>
         <tr class="row" ng-repeat="f in food">
-            <td>{{f.name}}</td>
-            <td>{{f.type}}</td>
-            <td>{{f.expiration}}</td>
-            <td>{{f.quantity}}</td>
-            <td class="progress"><div class="bar" style="width: {{f.percentRemaining}}%"</td>
+            <td>{% raw %}{{f.name}}{% endraw %}</td>
+            <td>{% raw %}{{f.type}}{% endraw %}</td>
+            <td>{% raw %}{{f.expiration}}{% endraw %}</td>
+            <td>{% raw %}{{f.quantity}}{% endraw %}</td>
+            <td class="progress"><div class="bar" style="width: {% raw %}{{f.percentRemaining}}%{% endraw %}"</td>
         </tr>
       </tbody>
     </table>
