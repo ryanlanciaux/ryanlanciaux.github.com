@@ -281,11 +281,11 @@
 </span><span class='line'>  <span class="nt">&lt;/thead&gt;</span>
 </span><span class='line'>  <span class="nt">&lt;tbody&gt;</span>
 </span><span class='line'>    <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;td&gt;</span><span class="nt">&lt;/td&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;td&gt;</span><span class="nt">&lt;/td&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;td&gt;</span><span class="nt">&lt;/td&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;td&gt;</span><span class="nt">&lt;/td&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">&quot;progress&quot;</span><span class="nt">&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;bar&quot;</span> <span class="na">style=</span><span class="s">&quot;width: %&quot;</span><span class="err">&lt;/</span><span class="na">td</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.name}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.type}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.expiration}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.quantity}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">&quot;progress&quot;</span><span class="nt">&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;bar&quot;</span> <span class="na">style=</span><span class="s">&quot;width: {{f.percentRemaining}}%&quot;</span><span class="err">&lt;/</span><span class="na">td</span><span class="nt">&gt;</span>
 </span><span class='line'>    <span class="nt">&lt;/tr&gt;</span>
 </span><span class='line'>  <span class="nt">&lt;/tbody&gt;</span>
 </span><span class='line'><span class="nt">&lt;/table&gt;</span>
@@ -702,10 +702,12 @@
   <h1><a href="http://www.goodreads.com" target="_blank">Status on Goodreads</a></h1>
   <ul>
     <li>
+            <a href='http://www.goodreads.com/user_status/show/28525093' target='blank'>Ryan is on page 44 of 153 of JavaScript</a>
+            <span class='tiny'>(2013-06-05)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/28524862' target='blank'>Ryan is on page 96 of 196 of AngularJS</a>
+            <span class='tiny'>(2013-06-05)</span></li><li>
             <a href='http://www.goodreads.com/user_status/show/23401786' target='blank'>Ryan is on page 133 of 404 of Heir to the Empire</a>
-            <span class='tiny'>(2013-02-09)</span></li><li>
-            <a href='http://www.goodreads.com/user_status/show/22894006' target='blank'>Ryan is on page 45 of 386 of The Silmarillion</a>
-            <span class='tiny'>(2013-01-29)</span></li>
+            <span class='tiny'>(2013-02-09)</span></li>
   </ul>
 </section>
 <section>

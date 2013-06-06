@@ -4,7 +4,7 @@
   <title><![CDATA[Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2013-06-05T00:08:30-04:00</updated>
+  <updated>2013-06-05T21:47:53-04:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -205,11 +205,11 @@
 </span><span class='line'>  <span class="nt">&lt;/thead&gt;</span>
 </span><span class='line'>  <span class="nt">&lt;tbody&gt;</span>
 </span><span class='line'>    <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;td&gt;</span><span class="nt">&lt;/td&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;td&gt;</span><span class="nt">&lt;/td&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;td&gt;</span><span class="nt">&lt;/td&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;td&gt;</span><span class="nt">&lt;/td&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">&quot;progress&quot;</span><span class="nt">&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;bar&quot;</span> <span class="na">style=</span><span class="s">&quot;width: %&quot;</span><span class="err">&lt;/</span><span class="na">td</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.name}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.type}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.expiration}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.quantity}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">&quot;progress&quot;</span><span class="nt">&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;bar&quot;</span> <span class="na">style=</span><span class="s">&quot;width: {{f.percentRemaining}}%&quot;</span><span class="err">&lt;/</span><span class="na">td</span><span class="nt">&gt;</span>
 </span><span class='line'>    <span class="nt">&lt;/tr&gt;</span>
 </span><span class='line'>  <span class="nt">&lt;/tbody&gt;</span>
 </span><span class='line'><span class="nt">&lt;/table&gt;</span>
