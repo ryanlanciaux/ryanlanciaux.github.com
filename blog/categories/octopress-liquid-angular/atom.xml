@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: note | Ryan Lanciaux]]></title>
-  <link href="http://ryanlanciaux.github.com/blog/categories/note/atom.xml" rel="self"/>
+  <title><![CDATA[Category: octopress,liquid,angular, | Ryan Lanciaux]]></title>
+  <link href="http://ryanlanciaux.github.com/blog/categories/octopress-liquid-angular/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2013-06-05T22:19:41-04:00</updated>
+  <updated>2013-06-06T12:39:52-04:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
