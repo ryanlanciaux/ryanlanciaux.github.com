@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Learning AngularJS II : Filtering / Ordering - Ryan Lanciaux</title>
+  <meta name="author" content="Ryan Lanciaux">
+
+  
+  <meta name="description" content="Last time I wrote about some basic AngularJS functionality for interacting with a RESTful API. We&#8217;re going to continue where with left off with &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Ryan Lanciaux" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Ryan Lanciaux</a></h1>
+  
+    <h2>Random programming blog.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ryanlanciaux.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Learning AngularJS II : Filtering / Ordering</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-19T20:38:00-04:00" pubdate data-updated="true">Jun 19<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Last time I wrote about some basic AngularJS functionality for interacting with a RESTful API. We&#8217;re going to continue where with left off with our food inventory app to add some filtering/sorting . <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Check out the first post</a> if you missed it, as we will be depending heavily on what is covered there.</p>
+
+<h3>Filtering</h3>
+
+<p>Lets say we want to search through our food inventory for something specific like oranges. We first need to open the index.ejs (that we created in <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a>) and add the following right before our table definition.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;filter&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;filter&quot;</span><span class="nt">&gt;</span>filter:<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;filter&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;filter&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The div isn&#8217;t entirely necessary, however, it could be useful for applying styling (it&#8217;s pretty ugly as it sits). Now that the filter definition is complete, we need to go back to our repeater definition and pipe the results through the filter as so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food | filter:filter&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In a console in your project directory &#8211; fire off a <code>sails lift</code> command, navigate to http://localhost:1337 in your browser of choice and start typing in the filter input box. You&#8217;ll notice that all of the model bound columns are available to be filtered (e.g. entering fruit displays only food items that were classified as fruit &#8211; typing in orange shows only any records with orange in the name etc. etc.). Also, you may notice that this is not case sensitive.</p>
+
+<h3>Ordering</h3>
+
+<p>Now lets add the ability to sort the data in our table. If we followed the basic example on the <a href="http://docs-angularjs-org-dev.appspot.com/api/ng.filter:orderBy">AngularJS docs site</a>, we could simply create a sort variable that we would modify in the table headers and reference in the orderBy of our repeater. The value of the sort property should be the names of one of our columns.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;sort=&#39;name&#39;&quot;</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food | filter:filter | orderBy:sort&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To handle ascending / descending we could do something like this (however, as we&#8217;ll see in a minute this may not be an ideal solution):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;sort=&#39;name&#39;; reverse=!reverse&quot;</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food | filter:filter | orderBy:sort:reverse&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Unfortunately, the reverse value would be shared across all columns. That means that if I click the &#8216;Name&#8217; column and sort it descending and then click the &#8216;Type&#8217; column &#8211; we will notice that it is sorting in ascending order. The problem is that the shared reverse variable is never getting reset when sorting by a different column.</p>
+
+<p>To get around this, lets move our sorting functionality to the controller so we&#8217;re not duplicating a lot of code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">sort</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">changeSort</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">sort</span> <span class="o">==</span> <span class="nx">value</span><span class="p">){</span>
+</span><span class='line'>      <span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span> <span class="o">=</span> <span class="o">!</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">sort</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&#8217;re creating the sort and reverse properties that are referenced in the orderBy of the repeater (<code>orderBy:sort:reverse</code>) as well as a function to manage whether to change the sort column or simply change the value of reverse. If you click the &#8216;Name&#8217; column several times, the sort will not change, however, the reverse value will (which wil trigger ascending / descending order).</p>
+
+<p>Next we need to change our table headers so they call this function when clicked. As before, the column&#8217;s property name will be passed as a parameter to this function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;changeSort(&#39;name&#39;)&quot;</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;changeSort(&#39;type&#39;)&quot;</span><span class="nt">&gt;</span>Type<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;changeSort(&#39;expiration&#39;)&quot;</span><span class="nt">&gt;</span>Expiration<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point fire up the page and see how everything is looking. The sorting / filtering is all working as intended. I have created <a href="https://gist.github.com/ryanlanciaux/5822098">a gist of the newly created index.ejs</a> file that you can <a href="https://gist.github.com/ryanlanciaux/5822098">view here</a>. In the next part of this series we will look at routes and editing our data.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ryan Lanciaux</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-19T20:38:00-04:00" pubdate data-updated="true">Jun 19<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/angular/'>angular</a>, <a class='category' href='/blog/categories/js/'>js</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering/" data-via="ryanlanciaux" data-counturl="http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin/" title="Previous Post: Note to self: escape LiquidTags with Jekyll raw tag plugin">&laquo; Note to self: escape LiquidTags with Jekyll raw tag plugin</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/19/angularjs-filtering-slash-ordering/">Learning AngularJS II : Filtering / Ordering</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin/">Note to self: escape LiquidTags with Jekyll raw tag plugin</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/04/learning-angularjs/">Learning AngularJS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/">Less alt+tab with SublimeText</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/07/tig-great-git-command-line-tool/">Tig: Great git command line tool</a>
+      </li>
+    
+  </ul>
+</section>
+<section class='goodreads-aside'>
+  <h1><a href="http://www.goodreads.com" target="_blank">Status on Goodreads</a></h1>
+  <ul>
+    <li>
+            <a href='http://www.goodreads.com/user_status/show/29100120' target='blank'>Ryan is on page 133 of 196 of AngularJS</a>
+            <span class='tiny'>(2013-06-18)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/28525093' target='blank'>Ryan is on page 44 of 153 of JavaScript</a>
+            <span class='tiny'>(2013-06-05)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/28524862' target='blank'>Ryan is on page 96 of 196 of AngularJS</a>
+            <span class='tiny'>(2013-06-05)</span></li>
+  </ul>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ryanlanciaux">@ryanlanciaux</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ryanlanciaux',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Ryan Lanciaux -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'ryanlanciaux';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering/';
+        var disqus_url = 'http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2013-06-06T12:45:26-04:00</updated>
+  <updated>2013-06-20T07:54:16-04:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -12,6 +12,109 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning AngularJS II : Filtering / Ordering]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering/"/>
+    <updated>2013-06-19T20:38:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering</id>
+    <content type="html"><![CDATA[<p>Last time I wrote about some basic AngularJS functionality for interacting with a RESTful API. We&#8217;re going to continue where with left off with our food inventory app to add some filtering/sorting . <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Check out the first post</a> if you missed it, as we will be depending heavily on what is covered there.</p>
+
+<h3>Filtering</h3>
+
+<p>Lets say we want to search through our food inventory for something specific like oranges. We first need to open the index.ejs (that we created in <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a>) and add the following right before our table definition.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;filter&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;filter&quot;</span><span class="nt">&gt;</span>filter:<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;filter&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;filter&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The div isn&#8217;t entirely necessary, however, it could be useful for applying styling (it&#8217;s pretty ugly as it sits). Now that the filter definition is complete, we need to go back to our repeater definition and pipe the results through the filter as so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food | filter:filter&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In a console in your project directory &#8211; fire off a <code>sails lift</code> command, navigate to http://localhost:1337 in your browser of choice and start typing in the filter input box. You&#8217;ll notice that all of the model bound columns are available to be filtered (e.g. entering fruit displays only food items that were classified as fruit &#8211; typing in orange shows only any records with orange in the name etc. etc.). Also, you may notice that this is not case sensitive.</p>
+
+<h3>Ordering</h3>
+
+<p>Now lets add the ability to sort the data in our table. If we followed the basic example on the <a href="http://docs-angularjs-org-dev.appspot.com/api/ng.filter:orderBy">AngularJS docs site</a>, we could simply create a sort variable that we would modify in the table headers and reference in the orderBy of our repeater. The value of the sort property should be the names of one of our columns.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;sort=&#39;name&#39;&quot;</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food | filter:filter | orderBy:sort&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To handle ascending / descending we could do something like this (however, as we&#8217;ll see in a minute this may not be an ideal solution):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;sort=&#39;name&#39;; reverse=!reverse&quot;</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food | filter:filter | orderBy:sort:reverse&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Unfortunately, the reverse value would be shared across all columns. That means that if I click the &#8216;Name&#8217; column and sort it descending and then click the &#8216;Type&#8217; column &#8211; we will notice that it is sorting in ascending order. The problem is that the shared reverse variable is never getting reset when sorting by a different column.</p>
+
+<p>To get around this, lets move our sorting functionality to the controller so we&#8217;re not duplicating a lot of code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">sort</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">changeSort</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">sort</span> <span class="o">==</span> <span class="nx">value</span><span class="p">){</span>
+</span><span class='line'>      <span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span> <span class="o">=</span> <span class="o">!</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">sort</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&#8217;re creating the sort and reverse properties that are referenced in the orderBy of the repeater (<code>orderBy:sort:reverse</code>) as well as a function to manage whether to change the sort column or simply change the value of reverse. If you click the &#8216;Name&#8217; column several times, the sort will not change, however, the reverse value will (which wil trigger ascending / descending order).</p>
+
+<p>Next we need to change our table headers so they call this function when clicked. As before, the column&#8217;s property name will be passed as a parameter to this function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;changeSort(&#39;name&#39;)&quot;</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;changeSort(&#39;type&#39;)&quot;</span><span class="nt">&gt;</span>Type<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;changeSort(&#39;expiration&#39;)&quot;</span><span class="nt">&gt;</span>Expiration<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point fire up the page and see how everything is looking. The sorting / filtering is all working as intended. I have created <a href="https://gist.github.com/ryanlanciaux/5822098">a gist of the newly created index.ejs</a> file that you can <a href="https://gist.github.com/ryanlanciaux/5822098">view here</a>. In the next part of this series we will look at routes and editing our data.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Note to self: escape LiquidTags with Jekyll raw tag plugin]]></title>
@@ -1413,450 +1516,6 @@ NHQG lets us use a fluent interface to set filters on our Hibernate queries; thi
 <p>
 <!--endCode-->
 The <em>Where.Product.Title == ID</em> is all from the NHQG autogenerated code. Now we actually have something to show for all our configuration and setup work. Soon, we&#39;re going to take a look at using LINQ to NHibernate instead of NHQG.</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 3 - The Model]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/05/22/rhinocommons-nhibernate-and-asp-net-mvc-part-3-the-model/"/>
-    <updated>2008-05-22T10:00:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/05/22/rhinocommons-nhibernate-and-asp-net-mvc-part-3-the-model</id>
-    <content type="html"><![CDATA[<p>
-We&#39;re going to keep moving now that everything is setup (<a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">see part one for setup</a>) and configured (<a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">see part two for configuration</a>).
-</p>
-
-
-<p>
-First off we are going to create our classes. The original classes and SQL tables are posted below (these may look familiar &#8211; they are from <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/Using-NHibernate.aspx" target="_blank">my initial NHibernate post</a>)
-</p>
-
-
-<br />
-
-
-<p>Initial Product<!--code --></p>
-
-<div class="code" style="width: 100%">
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">Product</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #a5a3a3">IList</span>&lt;<span style="color: #a5a3a3">Product</span>&gt; <span style="color: #a5a3a3">_RelatedProducts</span>;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #a5a3a3">IList</span>&lt;<span style="color: #a5a3a3">ProductGroup</span>&gt; <span style="color: #a5a3a3">_ProductGroups</span>;
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #a5a3a3">Product</span>()
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_RelatedProducts</span> = <span style="color: #23b4eb">new</span> <span style="color: #a5a3a3">List</span>&lt;<span style="color: #a5a3a3">Product</span>&gt;();
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_ProductGroups</span> = <span style="color: #23b4eb">new</span> <span style="color: #a5a3a3">List</span>&lt;<span style="color: #a5a3a3">ProductGroup</span>&gt;();
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ID</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">private</span> <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ImagePath</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Description</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #a5a3a3">IList</span>&lt;<span style="color: #a5a3a3">Product</span>&gt; <span style="color: #a5a3a3">RelatedProducts</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span> { <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_RelatedProducts</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">set</span> { <span style="color: #a5a3a3">_RelatedProducts</span> = <span style="color: #23b4eb">value</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #a5a3a3">IList</span>&lt;<span style="color: #a5a3a3">ProductGroup</span>&gt; <span style="color: #a5a3a3">ProductGroups</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span> { <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_ProductGroups</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">set</span> { <span style="color: #a5a3a3">_ProductGroups</span> = <span style="color: #23b4eb">value</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; }
-</p>
-</div>
-</div>
-
-
-<br />
-
-
-<!--end code-->
-
-
-<p>Initial ProductGroup<br /></p>
-
-<!--code-->
-
-
-<div class="code" style="width: 100%">
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">ProductGroup</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ProductGroupID</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #a5a3a3">Product</span>&gt; <span style="color: #a5a3a3">Products</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; }
-</p>
-</div>
-</div>
-
-
-<!--end code-->
-
-
-<br />
-
-
-<p>SQL Tables</p>
-
-<!--code-->
-
-
-<div class="code" style="width: 100%">
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-<span style="color: #a5a3a3">CREATE</span> <span style="color: #a5a3a3">TABLE</span> [<span style="color: #a5a3a3">dbo</span>].[<span style="color: #a5a3a3">SimpleProducts</span>](
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>,
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">Title</span>] [<span style="color: #a5a3a3">nvarchar</span>](<span style="color: lime">50</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>,
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ImagePath</span>] [<span style="color: #a5a3a3">nvarchar</span>](<span style="color: lime">300</span>) <span style="color: #a5a3a3">NULL</span>,
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">Description</span>] [<span style="color: #a5a3a3">nvarchar</span>](<span style="color: lime">500</span>) <span style="color: #a5a3a3">NULL</span>
-</p>
-<p style="margin: 0px">
-)
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-<span style="color: #a5a3a3">CREATE</span> <span style="color: #a5a3a3">TABLE</span> [<span style="color: #a5a3a3">dbo</span>].[<span style="color: #a5a3a3">RelatedProductsLookup</span>](
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>,
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">RelatedProductID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>
-</p>
-<p style="margin: 0px">
-)
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-<span style="color: #a5a3a3">CREATE</span> <span style="color: #a5a3a3">TABLE</span> [<span style="color: #a5a3a3">dbo</span>].[<span style="color: #a5a3a3">ProductsProductGroupsLookup</span>](
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductGroupID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NULL</span>,
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NULL</span>
-</p>
-<p style="margin: 0px">
-)
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-<span style="color: #a5a3a3">CREATE</span> <span style="color: #a5a3a3">TABLE</span> [<span style="color: #a5a3a3">dbo</span>].[<span style="color: #a5a3a3">ProductGroups</span>](
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductGroupID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>,
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">Title</span>] [<span style="color: #a5a3a3">nvarchar</span>](<span style="color: lime">50</span>) <span style="color: #a5a3a3">NULL</span>
-</p>
-</div>
-</div>
-
-
-<p>
-<!--end code--><br />
-<strong>ActiveRecord Classes</strong><br />
-In a traditional NHibernate application, we would write usually our mapping files at this time<a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/Using-NHibernate.aspx" target="_blank">(see my other NHibernate post</a> for more on that). Since we&#39;re using the ActiveRecord pattern, however, we can specify all our mappings inline with the classes. It is important to note that this would not be a pure domain because we&#39;re placing our mappings inside the model. Warning if you&#39;re sensitive to using Attributes this may not be the code for you&#8230;
-</p>
-
-
-<p>
-Our classes will now begin with an ActiveRecord attribute over the class; our properties will begin with Property/HasAndBelongsToMany/etc. Please note, for the sake of the example, I&#39;m being extremely verbose with my attributes. If your table/column names match the class/property names, some of the additional info in the attribute is not necessary.
-<br />
-<!--code-->
-</p>
-
-
-<div class="code" style="width: 100%">
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">ActiveRecord</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;SimpleProducts&quot;</span>)]
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">Product</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">Product</span>&gt; <span style="color: #a5a3a3">_RelatedProducts</span>;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">ProductGroup</span>&gt; <span style="color: #a5a3a3">_ProductGroups</span>;
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #a5a3a3">Product</span>()
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_RelatedProducts</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">List</span>&lt;<span style="color: #47b3d1">Product</span>&gt;();
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_ProductGroups</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">List</span>&lt;<span style="color: #47b3d1">ProductGroup</span>&gt;();
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">PrimaryKey</span>(<span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;ProductID&quot;</span>, <span style="color: #a5a3a3">Generator</span>=<span style="color: #a5a3a3">Castle</span>.<span style="color: #a5a3a3">ActiveRecord</span>.<span style="color: #2b91af">PrimaryKeyType</span>.<span style="color: #a5a3a3">UuidHex</span>)]
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ID</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">private</span> <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">Property</span>(<span style="color: #a5a3a3">NotNull</span>=<span style="color: #23b4eb">true</span>, <span style="color: #a5a3a3">Length</span>=<span style="color: lime">50</span>, <span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;Title&quot;</span>)]
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span> {<span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">Property</span>(<span style="color: #a5a3a3">Length</span>=<span style="color: lime">300</span>, <span style="color: #a5a3a3">NotNull</span>=<span style="color: #23b4eb">false</span>, <span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;ImagePath&quot;</span>)]
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ImagePath</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">Property</span>(<span style="color: #a5a3a3">NotNull</span> = <span style="color: #23b4eb">false</span>, <span style="color: #a5a3a3">Length</span> = <span style="color: lime">500</span>, <span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;Description&quot;</span>)]
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Description</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">HasAndBelongsToMany</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;RelatedProductsLookup&quot;</span>, <span style="color: #a5a3a3">ColumnKey</span>=<span style="color: #80ff00">&quot;ProductID&quot;</span>, <span style="color: #a5a3a3">ColumnRef</span>=<span style="color: #80ff00">&quot;RelatedProductID&quot;</span>)]
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">Product</span>&gt; <span style="color: #a5a3a3">RelatedProducts</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span> { <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_RelatedProducts</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">set</span> { <span style="color: #a5a3a3">_RelatedProducts</span> = <span style="color: #23b4eb">value</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">HasAndBelongsToMany</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;ProductsProductGroupsLookup&quot;</span>, <span style="color: #a5a3a3">ColumnKey</span>=<span style="color: #80ff00">&quot;ProductID&quot;</span>, <span style="color: #a5a3a3">ColumnRef</span>=<span style="color: #80ff00">&quot;ProductGroupID&quot;</span>)]
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">ProductGroup</span>&gt; <span style="color: #a5a3a3">ProductGroups</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span> { <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_ProductGroups</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">set</span> { <span style="color: #a5a3a3">_ProductGroups</span> = <span style="color: #23b4eb">value</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; }
-</p>
-</div>
-</div>
-
-
-<br />
-
-
-<!--code-->
-
-
-<div class="code" style="width: 100%">
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">ActiveRecord</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;ProductGroups&quot;</span>)]
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">ProductGroup</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">PrimaryKey</span>(<span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;ProductGroupID&quot;</span>, <span style="color: #a5a3a3">Generator</span>=<span style="color: #a5a3a3">Castle</span>.<span style="color: #a5a3a3">ActiveRecord</span>.<span style="color: #2b91af">PrimaryKeyType</span>.<span style="color: #a5a3a3">UuidHex</span>)]
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ProductGroupID</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">Property</span>(<span style="color: #a5a3a3">NotNull</span>=<span style="color: #23b4eb">true</span>, <span style="color: #a5a3a3">Length</span>=<span style="color: lime">50</span>, <span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;Title&quot;</span>)]
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">HasAndBelongsToMany</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;ProductsProductGroupsLookup&quot;</span>, <span style="color: #a5a3a3">ColumnKey</span>=<span style="color: #80ff00">&quot;ProductGroupID&quot;</span>, <span style="color: #a5a3a3">ColumnRef</span>=<span style="color: #80ff00">&quot;ProductID&quot;</span>)]
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">Product</span>&gt; <span style="color: #a5a3a3">Products</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; }
-</p>
-</div>
-</div>
-
-
-<p>
-<br />
-<strong>Repository Object</strong><br />
-Another added benefit of using the Castle Active Record library is that we can use the Repository&lt;T&gt; for all of our object persistence. Instead of creating our own implementation of IRepository, we can write code like this to save / retrieve / update objects.
-</p>
-
-
-<div class="code">
-Selecting an object (our product IDs are HEX UUID&#39;s so this is not exactly accurate)
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-<span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = <span style="color: #47b3d1">Repository</span>&lt;<span style="color: #47b3d1">Product</span>&gt;.<span style="color: #a5a3a3">Get</span>(<span style="color: lime">23</span>);&nbsp;
-</p>
-</div>
-</div>
-
-
-<br />
-
-
-<div class="code">
-Saving / Updating <br />
-<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-<span style="color: #47b3d1">Repository</span>&lt;<span style="color: #47b3d1">Product</span>&gt;.<span style="color: #a5a3a3">Save</span>(<span style="color: #a5a3a3">p</span>);
-</p>
-</div>
-</div>
-
-
-<p>
-<br />
-The repository is pretty nice &#8211; we can save all of our objects outside of the domain, which makes for a much cleaner design. Next time, we&#39;ll be looking at the extremely simple MVC application powered by this model and NHibernate Query Generator. <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-4---The-MVC-Application.aspx" target="_blank">Continue to Part 4</a>
-</p>
-
-
 
 ]]></content>
   </entry>
