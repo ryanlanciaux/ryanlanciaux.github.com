@@ -4,7 +4,7 @@
   <title><![CDATA[Category: angular | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/angular/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2013-06-20T07:54:16-04:00</updated>
+  <updated>2013-08-17T23:19:51-04:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning AngularJS III: Routes]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes/"/>
+    <updated>2013-08-17T19:47:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes</id>
+    <content type="html"><![CDATA[<p>So far we've covered the basics of <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">using AngularJS to interact with RESTful services</a> and <a href="http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/">Filtering / Ordering views in AngularJS</a>. Using <a href="http://docs.angularjs.org/tutorial/step_07">AngularJS Routes</a>, we are going to add a bit of structure to this example app.</p>
+
+<p>If you have not already, please take a look at <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a> and <a href="http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/">Part 2</a> as we will be working with the app we have started there...</p>
+
+<p>First off, lets open our index.ejs file. As you may notice this file is an unstructured mess. We want to break apart the controllers and templates into their own files so our architecture of our demo app is a bit more clear. When we're done, we will have the following files:</p>
+
+<ul>
+<li><strong>app.js</strong> under /assets/js/angular/</li>
+<li><strong>controllers.js</strong> under /assets/js/angular/</li>
+<li><strong>list.html</strong> under /public/templates/ -- there is <a href="https://github.com/balderdashy/sails/issues/273">a better way to use Angular with Sails</a>, however, for the sake of example this is okay</li>
+<li><strong>detail.html</strong> under /public/templates/</li>
+<li><strong>edit.html</strong> under /public/templates/</li>
+</ul>
+
+
+<h2>app.js</h2>
+
+<p>App.js is where we're storing our module definition (that we added in <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a>), our factory defintion and our routes. The factory is exactly the same as before except we've added an update endpoint.</p>
+
+<h4>Resource</h4>
+
+<p>```
+foodApp.factory('Food', ['$resource', function($resource){</p>
+
+<pre><code>return $resource('/food/:id', {id:'@id'}, { update: {method:'PUT' } } );
+</code></pre>
+
+<p>}]);
+```</p>
+
+<p>By default, the <a href="http://docs.angularjs.org/api/ngResource.$resource">Angular resource module</a> has get/save/query/remove/delete methods but no update. What's more, we want to make sure we are using a PUT method for storing our modified food items so Sails knows that we're trying to modify an existing record. Thankfully, we can add custom actions (as you may have noticed above) by simply adding a hash after our route parameters object in the resource defintion like so <code>{ update: {method:'PUT' } }</code>. Since this is just a hash, you can add as many definitions as you would like (e.g. <code>{ update: {method: 'PUT' }, somethingelse: {method: 'DELETE'} }</code>).</p>
+
+<h4>Routing</h4>
+
+<p>In <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a> we are showing/hiding a form based on a $scope variable on our controller. While this works, it may be a bit cleaner to use routing and separate our views by their function. Routing in Angular is pretty straight forward -- especially if you have routing experience in other frameworks.</p>
+
+<p>```
+foodApp.config(['$routeProvider', function($routeProvider) {
+  $routeProvider</p>
+
+<pre><code>.when('/food', {templateUrl: '/templates/list.html', controller: FoodController})
+.when('/food/edit/:id', {templateUrl: '/templates/edit.html', controller: FoodController})
+.when('/food/create', {templateUrl: '/templates/edit.html', controller: FoodController})
+.when('/food/:id', {templateUrl: '/templates/detail.html', controller: FoodController})
+.otherwise({redirectTo: '/food'});
+</code></pre>
+
+<p>}]);
+```</p>
+
+<p>When the URL matches one of the route values, the visitor will be directed to the template and given controller (you will notice that we're using the same controller for all our routes). Additionally, the routes that have :id will have a route parameter of id available in the controller (more on this later). If none of the routes are matched we default to /food. We won't focus too much on the views becuase they are mostly the same as our old index.ejs, however, they are available in <a href="https://gist.github.com/ryanlanciaux/6257478">the gist created for this post</a>.</p>
+
+<h2>controllers.js</h2>
+
+<p>Our controller is mostly the same as before except we're no longer maintaining which page we're showing. The whole controller is available as <a href="https://gist.github.com/ryanlanciaux/6257478">a gist</a> however, some of the more interesting parts are as follows:</p>
+
+<p><code>
+if($routeParams.id){
+ $scope.currentFood = Food.get({id: $routeParams.id});
+} else {
+  $scope.currentFood = new Food();
+  $scope.food = Food.query();
+}
+</code>
+This is checking for the route parameter that we are setting in our route -- if it's there, we get the individual food item with that ID. When the parameter is not there, we get all the food items to be displayed in a list (and initialize a Food item for creates).</p>
+
+<p>```
+$scope.addFood = function(){</p>
+
+<pre><code>  if ($scope.currentFood.id &amp;&amp; $scope.currentFood.id != 0){
+    Food.get({id: $scope.currentFood.id}, function(food){
+        food.type = $scope.currentFood.type;
+        food.name = $scope.currentFood.name;
+        food.percentRemaining = $scope.currentFood.percentRemaining;
+        food.quantity = $scope.currentFood.quantity;
+
+        food.$update({}, function(){
+          $location.path( "/" );
+        });
+    });
+  } else {
+    $scope.currentFood.$save();
+    $location.path( "/" );
+  }
+</code></pre>
+
+<p>};
+```
+In this method we are adding our food item or updating an existing food item. We start by checking the food item's id. If it has an id, we go ahead and get the server version and update the properties with the form values. If it doesn't have an id, we save the food item and redirect to the list view. Food.$save is calling the built in resource action where Food.$update is calling the custom resource action we created above -- both of these actions then interact with the Sails API on the server.</p>
+
+<h2>Wrapping Up</h2>
+
+<p>So there we have it. While this is still an example app -- it's way more organized than the previous iterations. The code files are available in <a href="https://gist.github.com/ryanlanciaux/6257478">this gist</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning AngularJS II : Filtering / Ordering]]></title>

@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Learning AngularJS III: Routes - Ryan Lanciaux</title>
+  <meta name="author" content="Ryan Lanciaux">
+
+  
+  <meta name="description" content="So far we&#8217;ve covered the basics of using AngularJS to interact with RESTful services and Filtering / Ordering views in AngularJS. Using &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Ryan Lanciaux" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Ryan Lanciaux</a></h1>
+  
+    <h2>Random programming blog.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ryanlanciaux.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Learning AngularJS III: Routes</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-17T19:47:00-04:00" pubdate data-updated="true">Aug 17<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>So far we&#8217;ve covered the basics of <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">using AngularJS to interact with RESTful services</a> and <a href="http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/">Filtering / Ordering views in AngularJS</a>. Using <a href="http://docs.angularjs.org/tutorial/step_07">AngularJS Routes</a>, we are going to add a bit of structure to this example app.</p>
+
+<p>If you have not already, please take a look at <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a> and <a href="http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/">Part 2</a> as we will be working with the app we have started there&#8230;</p>
+
+<p>First off, lets open our index.ejs file. As you may notice this file is an unstructured mess. We want to break apart the controllers and templates into their own files so our architecture of our demo app is a bit more clear. When we&#8217;re done, we will have the following files:</p>
+
+<ul>
+<li><strong>app.js</strong> under /assets/js/angular/</li>
+<li><strong>controllers.js</strong> under /assets/js/angular/</li>
+<li><strong>list.html</strong> under /public/templates/ &#8211; there is <a href="https://github.com/balderdashy/sails/issues/273">a better way to use Angular with Sails</a>, however, for the sake of example this is okay</li>
+<li><strong>detail.html</strong> under /public/templates/</li>
+<li><strong>edit.html</strong> under /public/templates/</li>
+</ul>
+
+
+<h2>app.js</h2>
+
+<p>App.js is where we&#8217;re storing our module definition (that we added in <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a>), our factory defintion and our routes. The factory is exactly the same as before except we&#8217;ve added an update endpoint.</p>
+
+<h4>Resource</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>foodApp.factory('Food', ['$resource', function($resource){
+</span><span class='line'>    return $resource('/food/:id', {id:'@id'}, { update: {method:'PUT' } } );
+</span><span class='line'>}]);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default, the <a href="http://docs.angularjs.org/api/ngResource.$resource">Angular resource module</a> has get/save/query/remove/delete methods but no update. What&#8217;s more, we want to make sure we are using a PUT method for storing our modified food items so Sails knows that we&#8217;re trying to modify an existing record. Thankfully, we can add custom actions (as you may have noticed above) by simply adding a hash after our route parameters object in the resource defintion like so <code>{ update: {method:'PUT' } }</code>. Since this is just a hash, you can add as many definitions as you would like (e.g. <code>{ update: {method: 'PUT' }, somethingelse: {method: 'DELETE'} }</code>).</p>
+
+<h4>Routing</h4>
+
+<p>In <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a> we are showing/hiding a form based on a $scope variable on our controller. While this works, it may be a bit cleaner to use routing and separate our views by their function. Routing in Angular is pretty straight forward &#8211; especially if you have routing experience in other frameworks.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>foodApp.config(['$routeProvider', function($routeProvider) {
+</span><span class='line'>  $routeProvider
+</span><span class='line'>    .when('/food', {templateUrl: '/templates/list.html', controller: FoodController})
+</span><span class='line'>    .when('/food/edit/:id', {templateUrl: '/templates/edit.html', controller: FoodController})
+</span><span class='line'>    .when('/food/create', {templateUrl: '/templates/edit.html', controller: FoodController})
+</span><span class='line'>    .when('/food/:id', {templateUrl: '/templates/detail.html', controller: FoodController})
+</span><span class='line'>    .otherwise({redirectTo: '/food'});
+</span><span class='line'>}]);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When the URL matches one of the route values, the visitor will be directed to the template and given controller (you will notice that we&#8217;re using the same controller for all our routes). Additionally, the routes that have :id will have a route parameter of id available in the controller (more on this later). If none of the routes are matched we default to /food. We won&#8217;t focus too much on the views becuase they are mostly the same as our old index.ejs, however, they are available in <a href="https://gist.github.com/ryanlanciaux/6257478">the gist created for this post</a>.</p>
+
+<h2>controllers.js</h2>
+
+<p>Our controller is mostly the same as before except we&#8217;re no longer maintaining which page we&#8217;re showing. The whole controller is available as <a href="https://gist.github.com/ryanlanciaux/6257478">a gist</a> however, some of the more interesting parts are as follows:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if($routeParams.id){
+</span><span class='line'> $scope.currentFood = Food.get({id: $routeParams.id});
+</span><span class='line'>} else {
+</span><span class='line'>  $scope.currentFood = new Food();
+</span><span class='line'>  $scope.food = Food.query();
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is checking for the route parameter that we are setting in our route &#8211; if it&#8217;s there, we get the individual food item with that ID. When the parameter is not there, we get all the food items to be displayed in a list (and initialize a Food item for creates).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$scope.addFood = function(){
+</span><span class='line'>      if ($scope.currentFood.id && $scope.currentFood.id != 0){
+</span><span class='line'>        Food.get({id: $scope.currentFood.id}, function(food){
+</span><span class='line'>            food.type = $scope.currentFood.type;
+</span><span class='line'>            food.name = $scope.currentFood.name;
+</span><span class='line'>            food.percentRemaining = $scope.currentFood.percentRemaining;
+</span><span class='line'>            food.quantity = $scope.currentFood.quantity;
+</span><span class='line'>
+</span><span class='line'>            food.$update({}, function(){
+</span><span class='line'>              $location.path( "/" );
+</span><span class='line'>            });
+</span><span class='line'>        });
+</span><span class='line'>      } else {
+</span><span class='line'>        $scope.currentFood.$save();
+</span><span class='line'>        $location.path( "/" );
+</span><span class='line'>      }
+</span><span class='line'>};</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this method we are adding our food item or updating an existing food item. We start by checking the food item&#8217;s id. If it has an id, we go ahead and get the server version and update the properties with the form values. If it doesn&#8217;t have an id, we save the food item and redirect to the list view. Food.$save is calling the built in resource action where Food.$update is calling the custom resource action we created above &#8211; both of these actions then interact with the Sails API on the server.</p>
+
+<h2>Wrapping Up</h2>
+
+<p>So there we have it. While this is still an example app &#8211; it&#8217;s way more organized than the previous iterations. The code files are available in <a href="https://gist.github.com/ryanlanciaux/6257478">this gist</a>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ryan Lanciaux</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-17T19:47:00-04:00" pubdate data-updated="true">Aug 17<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/angular/'>angular</a>, <a class='category' href='/blog/categories/js/'>js</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes/" data-via="ryanlanciaux" data-counturl="http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/06/19/angularjs-filtering-slash-ordering/" title="Previous Post: Learning AngularJS II : Filtering / Ordering">&laquo; Learning AngularJS II : Filtering / Ordering</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/08/17/learning-angularjs-iii-routes/">Learning AngularJS III: Routes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/19/angularjs-filtering-slash-ordering/">Learning AngularJS II : Filtering / Ordering</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin/">Note to self: escape LiquidTags with Jekyll raw tag plugin</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/04/learning-angularjs/">Learning AngularJS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/">Less alt+tab with SublimeText</a>
+      </li>
+    
+  </ul>
+</section>
+<section class='goodreads-aside'>
+  <h1><a href="http://www.goodreads.com" target="_blank">Status on Goodreads</a></h1>
+  <ul>
+    <li>
+            <a href='http://www.goodreads.com/user_status/show/30811077' target='blank'>Ryan is on page 124 of 324 of Twice a Spy</a>
+            <span class='tiny'>(2013-07-27)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/30581615' target='blank'>Ryan is on page 161 of 240 of Prince Caspian</a>
+            <span class='tiny'>(2013-07-22)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/30566897' target='blank'>Ryan is finished with Dark Force Rising</a>
+            <span class='tiny'>(2013-07-21)</span></li>
+  </ul>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ryanlanciaux">@ryanlanciaux</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ryanlanciaux',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Ryan Lanciaux -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'ryanlanciaux';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes/';
+        var disqus_url = 'http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

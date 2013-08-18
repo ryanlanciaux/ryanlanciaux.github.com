@@ -4,7 +4,7 @@
   <title><![CDATA[Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2013-06-20T07:54:16-04:00</updated>
+  <updated>2013-08-17T23:19:51-04:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -12,6 +12,130 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning AngularJS III: Routes]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes/"/>
+    <updated>2013-08-17T19:47:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes</id>
+    <content type="html"><![CDATA[<p>So far we&#8217;ve covered the basics of <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">using AngularJS to interact with RESTful services</a> and <a href="http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/">Filtering / Ordering views in AngularJS</a>. Using <a href="http://docs.angularjs.org/tutorial/step_07">AngularJS Routes</a>, we are going to add a bit of structure to this example app.</p>
+
+<p>If you have not already, please take a look at <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a> and <a href="http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/">Part 2</a> as we will be working with the app we have started there&#8230;</p>
+
+<p>First off, lets open our index.ejs file. As you may notice this file is an unstructured mess. We want to break apart the controllers and templates into their own files so our architecture of our demo app is a bit more clear. When we&#8217;re done, we will have the following files:</p>
+
+<ul>
+<li><strong>app.js</strong> under /assets/js/angular/</li>
+<li><strong>controllers.js</strong> under /assets/js/angular/</li>
+<li><strong>list.html</strong> under /public/templates/ &#8211; there is <a href="https://github.com/balderdashy/sails/issues/273">a better way to use Angular with Sails</a>, however, for the sake of example this is okay</li>
+<li><strong>detail.html</strong> under /public/templates/</li>
+<li><strong>edit.html</strong> under /public/templates/</li>
+</ul>
+
+
+<h2>app.js</h2>
+
+<p>App.js is where we&#8217;re storing our module definition (that we added in <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a>), our factory defintion and our routes. The factory is exactly the same as before except we&#8217;ve added an update endpoint.</p>
+
+<h4>Resource</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>foodApp.factory('Food', ['$resource', function($resource){
+</span><span class='line'>    return $resource('/food/:id', {id:'@id'}, { update: {method:'PUT' } } );
+</span><span class='line'>}]);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default, the <a href="http://docs.angularjs.org/api/ngResource.$resource">Angular resource module</a> has get/save/query/remove/delete methods but no update. What&#8217;s more, we want to make sure we are using a PUT method for storing our modified food items so Sails knows that we&#8217;re trying to modify an existing record. Thankfully, we can add custom actions (as you may have noticed above) by simply adding a hash after our route parameters object in the resource defintion like so <code>{ update: {method:'PUT' } }</code>. Since this is just a hash, you can add as many definitions as you would like (e.g. <code>{ update: {method: 'PUT' }, somethingelse: {method: 'DELETE'} }</code>).</p>
+
+<h4>Routing</h4>
+
+<p>In <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a> we are showing/hiding a form based on a $scope variable on our controller. While this works, it may be a bit cleaner to use routing and separate our views by their function. Routing in Angular is pretty straight forward &#8211; especially if you have routing experience in other frameworks.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>foodApp.config(['$routeProvider', function($routeProvider) {
+</span><span class='line'>  $routeProvider
+</span><span class='line'>    .when('/food', {templateUrl: '/templates/list.html', controller: FoodController})
+</span><span class='line'>    .when('/food/edit/:id', {templateUrl: '/templates/edit.html', controller: FoodController})
+</span><span class='line'>    .when('/food/create', {templateUrl: '/templates/edit.html', controller: FoodController})
+</span><span class='line'>    .when('/food/:id', {templateUrl: '/templates/detail.html', controller: FoodController})
+</span><span class='line'>    .otherwise({redirectTo: '/food'});
+</span><span class='line'>}]);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When the URL matches one of the route values, the visitor will be directed to the template and given controller (you will notice that we&#8217;re using the same controller for all our routes). Additionally, the routes that have :id will have a route parameter of id available in the controller (more on this later). If none of the routes are matched we default to /food. We won&#8217;t focus too much on the views becuase they are mostly the same as our old index.ejs, however, they are available in <a href="https://gist.github.com/ryanlanciaux/6257478">the gist created for this post</a>.</p>
+
+<h2>controllers.js</h2>
+
+<p>Our controller is mostly the same as before except we&#8217;re no longer maintaining which page we&#8217;re showing. The whole controller is available as <a href="https://gist.github.com/ryanlanciaux/6257478">a gist</a> however, some of the more interesting parts are as follows:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if($routeParams.id){
+</span><span class='line'> $scope.currentFood = Food.get({id: $routeParams.id});
+</span><span class='line'>} else {
+</span><span class='line'>  $scope.currentFood = new Food();
+</span><span class='line'>  $scope.food = Food.query();
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is checking for the route parameter that we are setting in our route &#8211; if it&#8217;s there, we get the individual food item with that ID. When the parameter is not there, we get all the food items to be displayed in a list (and initialize a Food item for creates).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$scope.addFood = function(){
+</span><span class='line'>      if ($scope.currentFood.id && $scope.currentFood.id != 0){
+</span><span class='line'>        Food.get({id: $scope.currentFood.id}, function(food){
+</span><span class='line'>            food.type = $scope.currentFood.type;
+</span><span class='line'>            food.name = $scope.currentFood.name;
+</span><span class='line'>            food.percentRemaining = $scope.currentFood.percentRemaining;
+</span><span class='line'>            food.quantity = $scope.currentFood.quantity;
+</span><span class='line'>
+</span><span class='line'>            food.$update({}, function(){
+</span><span class='line'>              $location.path( "/" );
+</span><span class='line'>            });
+</span><span class='line'>        });
+</span><span class='line'>      } else {
+</span><span class='line'>        $scope.currentFood.$save();
+</span><span class='line'>        $location.path( "/" );
+</span><span class='line'>      }
+</span><span class='line'>};</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this method we are adding our food item or updating an existing food item. We start by checking the food item&#8217;s id. If it has an id, we go ahead and get the server version and update the properties with the form values. If it doesn&#8217;t have an id, we save the food item and redirect to the list view. Food.$save is calling the built in resource action where Food.$update is calling the custom resource action we created above &#8211; both of these actions then interact with the Sails API on the server.</p>
+
+<h2>Wrapping Up</h2>
+
+<p>So there we have it. While this is still an example app &#8211; it&#8217;s way more organized than the previous iterations. The code files are available in <a href="https://gist.github.com/ryanlanciaux/6257478">this gist</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning AngularJS II : Filtering / Ordering]]></title>
@@ -1333,190 +1457,6 @@ Now we see there are multiple options for interacting with our ActiveRecord Repo
 
 
 <p></div></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[RhinoCommons, NHibernate and ASP.NET MVC Part 4 - The MVC Application]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2008/05/26/rhinocommons-nhibernate-and-asp-net-mvc-part-4-the-mvc-application/"/>
-    <updated>2008-05-26T20:26:00-04:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2008/05/26/rhinocommons-nhibernate-and-asp-net-mvc-part-4-the-mvc-application</id>
-    <content type="html"><![CDATA[<p>
-Finally we&#39;re to the point where we can see all our hard work come together. We have most of the hard work done but we still have a lot of ground to cover. If you haven&#39;t been following along, please check out <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">Setting Up The Assemblies</a>, <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Configuring the Application</a> and <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">Developing the Model</a>.
-</p>
-
-
-<p>
-<strong>Unit of Work</strong>
-</p>
-
-
-<p>
-In some of my initial tests with NHibernate and ASP.NET MVC Pattern I kept seeing the benefits of having a Unit of Work or Session Per Request (that is opening and closing the NHibernate session at the begining and end of the http request respectively). To Recap a little, I started to write my own Session Per Request, however, <a href="http://www.lostechies.com/blogs/chad_myers/" target="_blank">Chad Myers</a> pointed me to the Rhino Commons project which already implemented this. I think it&#39;s worthwhile becuase I don&#39;t really like putting NHibernate session code in my controller plus as <a href="http://martinfowler.com/eaaCatalog/unitOfWork.html" target="_blank">Martin Fowler writes</a>
-<br />
-</p>
-
-
-<blockquote>
-    A Unit of Work keeps track of everything you do during a business transaction that can affect the database. When you&#39;re done, it figures out everything that needs to be done to alter the database as a result of your work.
-</blockquote>
-
-
-<p>
-Luckily, with RhinoCommons, it&#39;s pretty easy to implement this pattern (<a href="http://www.ayende.com/Blog/archive/2007/06/08/Rhino-Commons-RepositoryltTgt-and-Unit-Of-Work.aspx" target="_blank">check out Ayende&#39;s post on this</a>). In a standard web forms application, we would normally create a Global.aspx that inherits UnitOfWorkApplication. Since we&#39;re using ASP.NET MVC, however, we don&#39;t necessarily want to go that route. As <a href="http://michaelhanney.com/blog/" target="_blank">Michael Hanney</a> notes on <a href="http://michaelhanney.com/blog/2008/04/27/beginning-systemwebmvc-with-rhino-tools-caslte-active-record-and-nhibernate/" target="_blank">his post on MVC and Castle</a> we can have our Global.asax inherit from UnitOfWorkApplication.
-</p>
-
-
-<p>
-&nbsp;
-</p>
-
-
-<!--code-->
-
-
-<div class="code">
-<div style="background: #1b1b1b none repeat scroll 0% 0%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">GlobalApplication</span> : <span style="color: #47b3d1">UnitOfWorkApplication</span>
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">override</span> <span style="color: #23b4eb">void</span> <span style="color: #a5a3a3">Application_Start</span>(<span style="color: #23b4eb">object</span> <span style="color: #a5a3a3">sender</span>, <span style="color: #47b3d1">EventArgs</span> <span style="color: #a5a3a3">e</span>)&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">base</span>.<span style="color: #a5a3a3">Application_Start</span>(<span style="color: #a5a3a3">sender</span>, <span style="color: #a5a3a3">e</span>);&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">RegisterRoutes</span>(<span style="color: #47b3d1">RouteTable</span>.<span style="color: #a5a3a3">Routes</span>);&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-<p style="margin: 0px">
-&#8230;
-</p>
-<p style="margin: 0px">
-&nbsp; &nbsp;&nbsp; }
-</p>
-</div>
-</div>
-
-
-<p>
-<!--endCode-->If you know of another way to do this, please be sure to let me know. Also, the routing still works as it normally would &#8211; we&#39;re just running this code first to instantiate the UnitOfWork.
-</p>
-
-
-<p>
-In our controllers we can call our reference our Hibernate repositories and classes without specifying an ISession.
-<br />
-<!--code-->
-</p>
-
-
-<div class="code">
-<div style="background: #1b1b1b none repeat scroll 0% 0%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #47b3d1">ActionResult</span> <span style="color: #a5a3a3">InsertProductGroup</span>(<span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span>)
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #47b3d1">ProductGroup</span> <span style="color: #a5a3a3">pg</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">ProductGroup</span>();
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">pg</span>.<span style="color: #a5a3a3">Title</span> = <span style="color: #a5a3a3">Title</span>;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #47b3d1">Repository</span>&lt;<span style="color: #47b3d1">ProductGroup</span>&gt;.<span style="color: #a5a3a3">Save</span>(<span style="color: #a5a3a3">pg</span>);
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #47b3d1">UnitOfWork</span>.<span style="color: #a5a3a3">Current</span>.<span style="color: #a5a3a3">Flush</span>();
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">RenderView</span>(<span style="color: #80ff00">&quot;AddProductGroup&quot;</span>);
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-</div>
-</div>
-
-
-<p>
-<!--endCode--> Notice we&#39;re still flushing our data &#8211; but it makes the controllers a LOT cleaner. Imagine if we had to instantiate and clean up our session in each controller.
-</p>
-
-
-<p>
-One further thing, the UnitOfWorkApplication supports both short and long conversations. I&#39;m not going to go too much into that but if your application requires keeping objects around for a couple HTTP Requests before saving to the database Long Conversation may be the way to go. <a href="http://www.ayende.com/Wiki/HttpModules.ashx" target="_blank">See Ayende&#39;s Wiki for more on this</a>
-</p>
-
-
-<p>
-<strong>NHibernate Query Generator</strong><br />
-In the <a href="http://ryanlanciaux.github.com/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">first post of this series</a> we looked at what it takes to setup NHibernate Query Generator (NHQG from here out). Now we get to use it to make some really nice looking code (in a later post, however, we&#39;ll be using LINQ to NHibernate). If we&#39;ve set up the tool as mentioned in the first post (listed earlier), all we have to do is run the tool and make sure the generated code is added to the project.
-</p>
-
-
-<p>
-NHQG lets us use a fluent interface to set filters on our Hibernate queries; this results in code that, in my opinion, is very easy to write and understand later on. If we wanted to Find one Product with a specific title, our code would look something like this:
-</p>
-
-
-<!--code-->
-
-
-<div class="code">
-<div style="background: #1b1b1b none repeat scroll 0% 0%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #47b3d1">ActionResult</span> <span style="color: #a5a3a3">ViewProduct</span>(<span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ID</span>)
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = <span style="color: #47b3d1">Repository</span>&lt;<span style="color: #47b3d1">Product</span>&gt;.<span style="color: #a5a3a3">FindOne</span>(<span style="color: #47b3d1">Where</span>.<span style="color: #a5a3a3">Product</span>.<span style="color: #a5a3a3">Title</span> == <span style="color: #a5a3a3">ID</span>);
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">if</span> (<span style="color: #a5a3a3">p</span> != <span style="color: #23b4eb">null</span>)
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">RenderView</span>(<span style="color: #80ff00">&quot;DisplayProduct&quot;</span>,
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; <span style="color: #a5a3a3">p</span>);&nbsp;
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">RenderView</span>(<span style="color: #80ff00">&quot;DisplayProduct&quot;</span>);
-</p>
-<p style="margin: 0px">
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
-</p>
-</div>
-</div>
-
-
-<p>
-<!--endCode-->
-The <em>Where.Product.Title == ID</em> is all from the NHQG autogenerated code. Now we actually have something to show for all our configuration and setup work. Soon, we&#39;re going to take a look at using LINQ to NHibernate instead of NHQG.</p>
-
 ]]></content>
   </entry>
   
