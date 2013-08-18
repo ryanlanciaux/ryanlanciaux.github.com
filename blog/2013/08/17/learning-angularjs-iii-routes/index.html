@@ -112,12 +112,13 @@
 
 <h4>Resource</h4>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>foodApp.factory('Food', ['$resource', function($resource){
-</span><span class='line'>    return $resource('/food/:id', {id:'@id'}, { update: {method:'PUT' } } );
-</span><span class='line'>}]);</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">foodApp</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;Food&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$resource&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$resource</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">$resource</span><span class="p">(</span><span class="s1">&#39;/food/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span><span class="s1">&#39;@id&#39;</span><span class="p">},</span> <span class="p">{</span> <span class="nx">update</span><span class="o">:</span> <span class="p">{</span><span class="nx">method</span><span class="o">:</span><span class="s1">&#39;PUT&#39;</span> <span class="p">}</span> <span class="p">}</span> <span class="p">);</span>
+</span><span class='line'><span class="p">}]);</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>By default, the <a href="http://docs.angularjs.org/api/ngResource.$resource">Angular resource module</a> has get/save/query/remove/delete methods but no update. What&#8217;s more, we want to make sure we are using a PUT method for storing our modified food items so Sails knows that we&#8217;re trying to modify an existing record. Thankfully, we can add custom actions (as you may have noticed above) by simply adding a hash after our route parameters object in the resource defintion like so <code>{ update: {method:'PUT' } }</code>. Since this is just a hash, you can add as many definitions as you would like (e.g. <code>{ update: {method: 'PUT' }, somethingelse: {method: 'DELETE'} }</code>).</p>
@@ -126,7 +127,7 @@
 
 <p>In <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a> we are showing/hiding a form based on a $scope variable on our controller. While this works, it may be a bit cleaner to use routing and separate our views by their function. Routing in Angular is pretty straight forward &#8211; especially if you have routing experience in other frameworks.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -134,14 +135,15 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>foodApp.config(['$routeProvider', function($routeProvider) {
-</span><span class='line'>  $routeProvider
-</span><span class='line'>    .when('/food', {templateUrl: '/templates/list.html', controller: FoodController})
-</span><span class='line'>    .when('/food/edit/:id', {templateUrl: '/templates/edit.html', controller: FoodController})
-</span><span class='line'>    .when('/food/create', {templateUrl: '/templates/edit.html', controller: FoodController})
-</span><span class='line'>    .when('/food/:id', {templateUrl: '/templates/detail.html', controller: FoodController})
-</span><span class='line'>    .otherwise({redirectTo: '/food'});
-</span><span class='line'>}]);</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">foodApp</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">&#39;$routeProvider&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$routeProvider</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">$routeProvider</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/food&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;/templates/list.html&#39;</span><span class="p">,</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">FoodController</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/food/edit/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;/templates/edit.html&#39;</span><span class="p">,</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">FoodController</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/food/create&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;/templates/edit.html&#39;</span><span class="p">,</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">FoodController</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/food/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;/templates/detail.html&#39;</span><span class="p">,</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">FoodController</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">otherwise</span><span class="p">({</span><span class="nx">redirectTo</span><span class="o">:</span> <span class="s1">&#39;/food&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="p">}]);</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>When the URL matches one of the route values, the visitor will be directed to the template and given controller (you will notice that we&#8217;re using the same controller for all our routes). Additionally, the routes that have :id will have a route parameter of id available in the controller (more on this later). If none of the routes are matched we default to /food. We won&#8217;t focus too much on the views becuase they are mostly the same as our old index.ejs, however, they are available in <a href="https://gist.github.com/ryanlanciaux/6257478">the gist created for this post</a>.</p>
@@ -150,23 +152,24 @@
 
 <p>Our controller is mostly the same as before except we&#8217;re no longer maintaining which page we&#8217;re showing. The whole controller is available as <a href="https://gist.github.com/ryanlanciaux/6257478">a gist</a> however, some of the more interesting parts are as follows:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>if($routeParams.id){
-</span><span class='line'> $scope.currentFood = Food.get({id: $routeParams.id});
-</span><span class='line'>} else {
-</span><span class='line'>  $scope.currentFood = new Food();
-</span><span class='line'>  $scope.food = Food.query();
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span><span class="p">(</span><span class="nx">$routeParams</span><span class="p">.</span><span class="nx">id</span><span class="p">){</span>
+</span><span class='line'> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span> <span class="o">=</span> <span class="nx">Food</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span><span class="nx">id</span><span class="o">:</span> <span class="nx">$routeParams</span><span class="p">.</span><span class="nx">id</span><span class="p">});</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Food</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">food</span> <span class="o">=</span> <span class="nx">Food</span><span class="p">.</span><span class="nx">query</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>This is checking for the route parameter that we are setting in our route &#8211; if it&#8217;s there, we get the individual food item with that ID. When the parameter is not there, we get all the food items to be displayed in a list (and initialize a Food item for creates).</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -183,23 +186,24 @@
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$scope.addFood = function(){
-</span><span class='line'>      if ($scope.currentFood.id && $scope.currentFood.id != 0){
-</span><span class='line'>        Food.get({id: $scope.currentFood.id}, function(food){
-</span><span class='line'>            food.type = $scope.currentFood.type;
-</span><span class='line'>            food.name = $scope.currentFood.name;
-</span><span class='line'>            food.percentRemaining = $scope.currentFood.percentRemaining;
-</span><span class='line'>            food.quantity = $scope.currentFood.quantity;
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">addFood</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">id</span> <span class="o">&amp;&amp;</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">id</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+</span><span class='line'>        <span class="nx">Food</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span><span class="nx">id</span><span class="o">:</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">id</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">food</span><span class="p">){</span>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">type</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">percentRemaining</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">percentRemaining</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">quantity</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">quantity</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'>            food.$update({}, function(){
-</span><span class='line'>              $location.path( "/" );
-</span><span class='line'>            });
-</span><span class='line'>        });
-</span><span class='line'>      } else {
-</span><span class='line'>        $scope.currentFood.$save();
-</span><span class='line'>        $location.path( "/" );
-</span><span class='line'>      }
-</span><span class='line'>};</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">$update</span><span class="p">({},</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>              <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span> <span class="s2">&quot;/&quot;</span> <span class="p">);</span>
+</span><span class='line'>            <span class="p">});</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">$save</span><span class="p">();</span>
+</span><span class='line'>        <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span> <span class="s2">&quot;/&quot;</span> <span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>In this method we are adding our food item or updating an existing food item. We start by checking the food item&#8217;s id. If it has an id, we go ahead and get the server version and update the properties with the form values. If it doesn&#8217;t have an id, we save the food item and redirect to the list view. Food.$save is calling the built in resource action where Food.$update is calling the custom resource action we created above &#8211; both of these actions then interact with the Sails API on the server.</p>

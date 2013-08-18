@@ -4,7 +4,7 @@
   <title><![CDATA[Category: js | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/js/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2013-08-17T23:19:51-04:00</updated>
+  <updated>2013-08-17T23:28:15-04:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -39,7 +39,7 @@
 
 <h4>Resource</h4>
 
-<p>```
+<p>```javascript
 foodApp.factory('Food', ['$resource', function($resource){</p>
 
 <pre><code>return $resource('/food/:id', {id:'@id'}, { update: {method:'PUT' } } );
@@ -54,7 +54,7 @@ foodApp.factory('Food', ['$resource', function($resource){</p>
 
 <p>In <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a> we are showing/hiding a form based on a $scope variable on our controller. While this works, it may be a bit cleaner to use routing and separate our views by their function. Routing in Angular is pretty straight forward -- especially if you have routing experience in other frameworks.</p>
 
-<p>```
+<p>```javascript
 foodApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider</p>
 
@@ -74,7 +74,7 @@ foodApp.config(['$routeProvider', function($routeProvider) {
 
 <p>Our controller is mostly the same as before except we're no longer maintaining which page we're showing. The whole controller is available as <a href="https://gist.github.com/ryanlanciaux/6257478">a gist</a> however, some of the more interesting parts are as follows:</p>
 
-<p><code>
+<p><code>javascript
 if($routeParams.id){
  $scope.currentFood = Food.get({id: $routeParams.id});
 } else {
@@ -84,7 +84,7 @@ if($routeParams.id){
 </code>
 This is checking for the route parameter that we are setting in our route -- if it's there, we get the individual food item with that ID. When the parameter is not there, we get all the food items to be displayed in a list (and initialize a Food item for creates).</p>
 
-<p>```
+<p>```javascript
 $scope.addFood = function(){</p>
 
 <pre><code>  if ($scope.currentFood.id &amp;&amp; $scope.currentFood.id != 0){
@@ -336,11 +336,11 @@ $scope.editableFood = new Food();
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr class="row" ng-repeat="f in food"&gt;
-        &lt;td&gt;{{f.name}}&lt;/td&gt;
-        &lt;td&gt;{{f.type}}&lt;/td&gt;
-        &lt;td&gt;{{f.expiration}}&lt;/td&gt;
-        &lt;td&gt;{{f.quantity}}&lt;/td&gt;
-        &lt;td class="progress"&gt;&lt;div class="bar" style="width: {{f.percentRemaining}}%"&lt;/td&gt;
+        &lt;td&gt;{% raw %}{{f.name}}{% endraw %}&lt;/td&gt;
+        &lt;td&gt;{% raw %}{{f.type}}{% endraw %}&lt;/td&gt;
+        &lt;td&gt;{% raw %}{{f.expiration}}{% endraw %}&lt;/td&gt;
+        &lt;td&gt;{% raw %}{{f.quantity}}{% endraw %}&lt;/td&gt;
+        &lt;td class="progress"&gt;&lt;div class="bar" style="width: {% raw %}{{f.percentRemaining}}%{% endraw %}"&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
