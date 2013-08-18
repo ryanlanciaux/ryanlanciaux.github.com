@@ -23,7 +23,7 @@ App.js is where we're storing our module definition (that we added in [Part 1](h
 
 #### Resource
 
-```
+```javascript
 foodApp.factory('Food', ['$resource', function($resource){
     return $resource('/food/:id', {id:'@id'}, { update: {method:'PUT' } } );
 }]);
@@ -35,7 +35,7 @@ By default, the [Angular resource module](http://docs.angularjs.org/api/ngResour
 
 In [Part 1](http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/) we are showing/hiding a form based on a $scope variable on our controller. While this works, it may be a bit cleaner to use routing and separate our views by their function. Routing in Angular is pretty straight forward -- especially if you have routing experience in other frameworks.
 
-```
+```javascript
 foodApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider
     .when('/food', {templateUrl: '/templates/list.html', controller: FoodController})
@@ -53,7 +53,7 @@ When the URL matches one of the route values, the visitor will be directed to th
 Our controller is mostly the same as before except we're no longer maintaining which page we're showing. The whole controller is available as [a gist](https://gist.github.com/ryanlanciaux/6257478) however, some of the more interesting parts are as follows:
 
 
-```
+```javascript
 if($routeParams.id){
  $scope.currentFood = Food.get({id: $routeParams.id});
 } else {
@@ -63,7 +63,7 @@ if($routeParams.id){
 ```
 This is checking for the route parameter that we are setting in our route -- if it's there, we get the individual food item with that ID. When the parameter is not there, we get all the food items to be displayed in a list (and initialize a Food item for creates).
 
-```
+```javascript
 $scope.addFood = function(){
       if ($scope.currentFood.id && $scope.currentFood.id != 0){
         Food.get({id: $scope.currentFood.id}, function(food){
