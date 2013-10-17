@@ -9,7 +9,7 @@
   <meta name="author" content="Ryan Lanciaux">
 
   
-  <meta name="description" content="So far we&#8217;ve covered the basics of using AngularJS to interact with RESTful services and Filtering / Ordering views in AngularJS. Using &hellip;">
+  <meta name="description" content="I was recently working on a project with AngularJS and xeditable (if you&#8217;re not familiar, xeditable is an awesome library for inline editing). &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,162 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/10/16/fake-popovers-for-angular-xeditable/">Fake Popovers for Angular-xeditable</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-16T21:58:00-04:00" pubdate data-updated="true">Oct 16<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I was recently working on a project with <a href="http://www.angularjs.org">AngularJS</a> and <a href="http://vitalets.github.io/x-editable/">xeditable</a> (if you&#8217;re not familiar, xeditable is an awesome library for inline editing). There is an <a href="http://vitalets.github.io/angular-xeditable/">Angular version of xeditable</a> but the popover editing functionality is not implemented yet (it&#8217;s in the roadmap). Instead of using the original version of xeditable and implementing custom directives or try to add the popover functionality to the project, I decided to see if I could make the popover using just CSS &#8211; this happened to be more inline with my timeframe.</p>
+
+<p>Take a look at the original (non-angular) popover:</p>
+
+<p><img src="/files/original_xeditable.png" /></p>
+
+<p>Starting out, I noticed that clicking on the link of an xeditable element was showing an input element (and buttons) in a form and hiding the link. To mimic the popover, the link and the form should both be visible when the form was activated, however, the form should be positioned a bit higher than the link. Working with a forked version of <a href="http://jsfiddle.net/NfPcH/3/">vitalets&#8217; jsfiddle</a> example, I wrapped the initial links in <code>&lt;span class='item-wrapper'&gt;&lt;/span&gt;</code> &#8211; from there, I edited the link and the form&#8217;s CSS as follows</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.item-wrapper</span> <span class="nt">a</span><span class="p">{</span>
+</span><span class='line'>    <span class="c">/* make the link always show up */</span>
+</span><span class='line'>    <span class="k">display</span><span class="o">:</span> <span class="k">inline</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.item-wrapper</span><span class="p">{</span>
+</span><span class='line'>    <span class="c">/* make absolutely positioned children constrained to this box*/</span>
+</span><span class='line'>    <span class="k">position</span><span class="o">:</span> <span class="k">relative</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.item-wrapper</span> <span class="nt">form</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">background</span><span class="o">:</span> <span class="m">#FFF</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="m">#AAA</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">5px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">left</span><span class="o">:</span> <span class="m">50</span><span class="o">%</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">/* half the width */</span>
+</span><span class='line'>    <span class="k">margin-left</span><span class="o">:</span> <span class="m">-110px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding</span><span class="o">:</span> <span class="m">7px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">top</span><span class="o">:</span> <span class="m">-55px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span> <span class="m">220px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">z-index</span><span class="o">:</span> <span class="m">101</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="/files/xeditable_popover_1.png" /></p>
+
+<p>It&#8217;s a step in the right direction, however, doesn&#8217;t really look exactly like we want. To get the triangle to show up below the pop-up, I thought it would be good to use the <a href="http://css-tricks.com/snippets/css/css-triangle/">technique for creating a triangle on css-tricks</a> as an :after filter (please <a href="http://css-tricks.com/snippets/css/css-triangle/">check the link</a> for more info on that because how it works is a bit outside the scope of this post).</p>
+
+<p><img src="/files/xeditable_popover_2.png" /></p>
+
+<p> This works but it looks funny because the popover has a border but the triangle is just a solid color. Additionally, we cannot just toss a border on the :after filter since we&#8217;re using the border to create the triangle. What I ended up doing is using a :before filter with a width of 10px and a background color the same as the border color followed by an :after filter 1px narrower and the same background color as the popover.</p>
+
+<p> <img src="/files/xeditable_popover_3.png" /></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.item-wrapper</span> <span class="nt">form</span><span class="nd">:before</span><span class="p">{</span>
+</span><span class='line'>    <span class="k">content</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-left</span><span class="o">:</span> <span class="m">10px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-right</span><span class="o">:</span> <span class="m">10px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-top</span><span class="o">:</span> <span class="m">10px</span> <span class="k">solid</span> <span class="m">#AAA</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">position</span><span class="o">:</span><span class="k">absolute</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">bottom</span><span class="o">:-</span><span class="m">10px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">left</span><span class="o">:</span><span class="m">100px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.item-wrapper</span> <span class="nt">form</span><span class="nd">:after</span><span class="p">{</span>
+</span><span class='line'>    <span class="k">content</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span><span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">height</span><span class="o">:</span><span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-left</span><span class="o">:</span> <span class="m">9px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-right</span><span class="o">:</span> <span class="m">9px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-top</span><span class="o">:</span> <span class="m">9px</span> <span class="k">solid</span> <span class="m">#FFF</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">position</span><span class="o">:</span><span class="k">absolute</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">bottom</span><span class="o">:-</span><span class="m">9px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">left</span><span class="o">:</span><span class="m">101px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is a <a href="http://jsfiddle.net/EWcUw/4/">jsfiddle of the example available here</a>. A few things to note&#8230; I am only using this with the Angular-xeditable dropdowns and text boxes so the other controls may or may not work. Additionally, I added some javascript (not in the examples) to hide any visible popovers when displaying a new one. I was running into some issues displaying multiple (or displaying the same one multiple times).</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -933,61 +1089,9 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/06/moving-to-octopress/">Moving to Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-06T14:11:00-04:00" pubdate data-updated="true">Apr 6<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Recently, it seems that the only time I&#8217;ve spent with my blog has been moving it to other platforms. Hopefully, that will change with the move to Octopress. Since this is mainly a programming / technical blog, I thought it would be great to host the blog with <a href="http://pages.github.com/">Github pages</a>.</p>
-
-<p>The Octopress install was pretty simple.. I mostly just followed the steps on the <a href="http://octopress.org/docs/setup/">Octopress Setup page</a>:</p>
-
-<ol>
-<li>Install Ruby / rbenv</li>
-<li>Install git</li>
-<li>Clone the Octopress repo</li>
-<li>Export posts from Wordpress</li>
-<li>Convert the Wordpress xml file to Jekyll with <a href="https://github.com/theaob/wpXml2Jekyll">wpXml2Jekyll</a></li>
-<li>rake generate / rake deploy / git commit origin source (from the examples)</li>
-</ol>
-
-
-<p>The part that gave me the most trouble was hiding legacy posts from the main page area. I wanted to keep some of the posts around for posterity but I didn&#8217;t want them to show up with any sort of prominence on the blog. To that end, I created a folder called &#8216;Legacy&#8217; and a folder within this newly created folder called &#8216;_posts&#8217;. From there, I moved the markdown versions of the posts into this folder. So far so good&#8230;</p>
-
-<p>When I fired up the preview for Octopress, the blog was still loading all the legacy posts in the content area. I asked a question on <a href="http://stackoverflow.com/questions/15852698/octopress-custom-folder-for-old-posts">Stack Overflow</a> (that was subsequently shut down for not being programmy enough &#8211; whoops) and tried a couple other things until I stumbled upon <a href="http://arshad.github.io/blog/2012/05/10/recipe-hiding-posts-from-the-octopress-front-page/">this post</a> on Hiding Pages from Octopress. Making the suggested changes produced the results I was looking for. Mission Accomplished &#8211; for now. I may try to change the &#8216;Recent Posts&#8217; widget so it does not show legacy posts, however, that won&#8217;t be an issue when there is more content.</p>
-
-<p>So, as of this post, I&#8217;ve used all Octopress for all of one new article but I really like the workflow; storing the posts in github is definitely an added benefit. Hopefully, I will continue writing beyond this post but I guess we will see.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -998,6 +1102,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/10/16/fake-popovers-for-angular-xeditable/">Fake popovers for Angular-xeditable</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/08/17/learning-angularjs-iii-routes/">Learning AngularJS III: Routes</a>
@@ -1015,22 +1123,18 @@
         <a href="/blog/2013/06/04/learning-angularjs/">Learning AngularJS</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/">Less alt+tab with SublimeText</a>
-      </li>
-    
   </ul>
 </section>
 <section class='goodreads-aside'>
   <h1><a href="http://www.goodreads.com" target="_blank">Status on Goodreads</a></h1>
   <ul>
     <li>
+            <a href='http://www.goodreads.com/user_status/show/31832060' target='blank'>Ryan is on page 100 of 509 of Wool Omnibus</a>
+            <span class='tiny'>(2013-08-19)</span></li><li>
             <a href='http://www.goodreads.com/user_status/show/30811077' target='blank'>Ryan is on page 124 of 324 of Twice a Spy</a>
             <span class='tiny'>(2013-07-27)</span></li><li>
             <a href='http://www.goodreads.com/user_status/show/30581615' target='blank'>Ryan is on page 161 of 240 of Prince Caspian</a>
-            <span class='tiny'>(2013-07-22)</span></li><li>
-            <a href='http://www.goodreads.com/user_status/show/30566897' target='blank'>Ryan is finished with Dark Force Rising</a>
-            <span class='tiny'>(2013-07-21)</span></li>
+            <span class='tiny'>(2013-07-22)</span></li>
   </ul>
 </section>
 <section>
