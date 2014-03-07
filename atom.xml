@@ -1,0 +1,1313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Ryan Lanciaux]]></title>
+  <link href="http://ryanlanciaux.github.com/atom.xml" rel="self"/>
+  <link href="http://ryanlanciaux.github.com/"/>
+  <updated>2013-10-17T00:03:09-04:00</updated>
+  <id>http://ryanlanciaux.github.com/</id>
+  <author>
+    <name><![CDATA[Ryan Lanciaux]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Fake popovers for Angular-xeditable]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/10/16/fake-popovers-for-angular-xeditable/"/>
+    <updated>2013-10-16T21:58:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/10/16/fake-popovers-for-angular-xeditable</id>
+    <content type="html"><![CDATA[<p>I was recently working on a project with <a href="http://www.angularjs.org">AngularJS</a> and <a href="http://vitalets.github.io/x-editable/">xeditable</a> (if you&#8217;re not familiar, xeditable is an awesome library for inline editing). There is an <a href="http://vitalets.github.io/angular-xeditable/">Angular version of xeditable</a> but the popover editing functionality is not implemented yet (it&#8217;s in the roadmap). Instead of using the original version of xeditable and implementing custom directives or try to add the popover functionality to the project, I decided to see if I could make the popover using just CSS &#8211; this happened to be more inline with my timeframe.</p>
+
+<p>Take a look at the original (non-angular) popover:</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/original_xeditable.png" /></p>
+
+<p>Starting out, I noticed that clicking on the link of an xeditable element was showing an input element (and buttons) in a form and hiding the link. To mimic the popover, the link and the form should both be visible when the form was activated, however, the form should be positioned a bit higher than the link. Working with a forked version of <a href="http://jsfiddle.net/NfPcH/3/">vitalets&#8217; jsfiddle</a> example, I wrapped the initial links in <code>&lt;span class='item-wrapper'&gt;&lt;/span&gt;</code> &#8211; from there, I edited the link and the form&#8217;s CSS as follows</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.item-wrapper</span> <span class="nt">a</span><span class="p">{</span>
+</span><span class='line'>    <span class="c">/* make the link always show up */</span>
+</span><span class='line'>    <span class="k">display</span><span class="o">:</span> <span class="k">inline</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.item-wrapper</span><span class="p">{</span>
+</span><span class='line'>    <span class="c">/* make absolutely positioned children constrained to this box*/</span>
+</span><span class='line'>    <span class="k">position</span><span class="o">:</span> <span class="k">relative</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.item-wrapper</span> <span class="nt">form</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">background</span><span class="o">:</span> <span class="m">#FFF</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="m">#AAA</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">5px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">left</span><span class="o">:</span> <span class="m">50</span><span class="o">%</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">/* half the width */</span>
+</span><span class='line'>    <span class="k">margin-left</span><span class="o">:</span> <span class="m">-110px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding</span><span class="o">:</span> <span class="m">7px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">top</span><span class="o">:</span> <span class="m">-55px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span> <span class="m">220px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">z-index</span><span class="o">:</span> <span class="m">101</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://ryanlanciaux.github.com/files/xeditable_popover_1.png" /></p>
+
+<p>It&#8217;s a step in the right direction, however, doesn&#8217;t really look exactly like we want. To get the triangle to show up below the pop-up, I thought it would be good to use the <a href="http://css-tricks.com/snippets/css/css-triangle/">technique for creating a triangle on css-tricks</a> as an :after filter (please <a href="http://css-tricks.com/snippets/css/css-triangle/">check the link</a> for more info on that because how it works is a bit outside the scope of this post).</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/xeditable_popover_2.png" /></p>
+
+<p> This works but it looks funny because the popover has a border but the triangle is just a solid color. Additionally, we cannot just toss a border on the :after filter since we&#8217;re using the border to create the triangle. What I ended up doing is using a :before filter with a width of 10px and a background color the same as the border color followed by an :after filter 1px narrower and the same background color as the popover.</p>
+
+<p> <img src="http://ryanlanciaux.github.com/files/xeditable_popover_3.png" /></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.item-wrapper</span> <span class="nt">form</span><span class="nd">:before</span><span class="p">{</span>
+</span><span class='line'>    <span class="k">content</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-left</span><span class="o">:</span> <span class="m">10px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-right</span><span class="o">:</span> <span class="m">10px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-top</span><span class="o">:</span> <span class="m">10px</span> <span class="k">solid</span> <span class="m">#AAA</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">position</span><span class="o">:</span><span class="k">absolute</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">bottom</span><span class="o">:-</span><span class="m">10px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">left</span><span class="o">:</span><span class="m">100px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.item-wrapper</span> <span class="nt">form</span><span class="nd">:after</span><span class="p">{</span>
+</span><span class='line'>    <span class="k">content</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span><span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">height</span><span class="o">:</span><span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-left</span><span class="o">:</span> <span class="m">9px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-right</span><span class="o">:</span> <span class="m">9px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-top</span><span class="o">:</span> <span class="m">9px</span> <span class="k">solid</span> <span class="m">#FFF</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">position</span><span class="o">:</span><span class="k">absolute</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">bottom</span><span class="o">:-</span><span class="m">9px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">left</span><span class="o">:</span><span class="m">101px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is a <a href="http://jsfiddle.net/EWcUw/4/">jsfiddle of the example available here</a>. A few things to note&#8230; I am only using this with the Angular-xeditable dropdowns and text boxes so the other controls may or may not work. Additionally, I added some javascript (not in the examples) to hide any visible popovers when displaying a new one. I was running into some issues displaying multiple (or displaying the same one multiple times).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Learning AngularJS III: Routes]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes/"/>
+    <updated>2013-08-17T19:47:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes</id>
+    <content type="html"><![CDATA[<p>So far we&#8217;ve covered the basics of <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">using AngularJS to interact with RESTful services</a> and <a href="http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/">Filtering / Ordering views in AngularJS</a>. Using <a href="http://docs.angularjs.org/tutorial/step_07">AngularJS Routes</a>, we are going to add a bit of structure to this example app.</p>
+
+<p>If you have not already, please take a look at <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a> and <a href="http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/">Part 2</a> as we will be working with the app we have started there&#8230;</p>
+
+<p>First off, lets open our index.ejs file. As you may notice this file is an unstructured mess. We want to break apart the controllers and templates into their own files so our architecture of our demo app is a bit more clear. When we&#8217;re done, we will have the following files:</p>
+
+<ul>
+<li><strong>app.js</strong> under /assets/js/angular/</li>
+<li><strong>controllers.js</strong> under /assets/js/angular/</li>
+<li><strong>list.html</strong> under /public/templates/ &#8211; there is <a href="https://github.com/balderdashy/sails/issues/273">a better way to use Angular with Sails</a>, however, for the sake of example this is okay</li>
+<li><strong>detail.html</strong> under /public/templates/</li>
+<li><strong>edit.html</strong> under /public/templates/</li>
+</ul>
+
+
+<h2>app.js</h2>
+
+<p>App.js is where we&#8217;re storing our module definition (that we added in <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a>), our factory defintion and our routes. The factory is exactly the same as before except we&#8217;ve added an update endpoint.</p>
+
+<h4>Resource</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">foodApp</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;Food&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$resource&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$resource</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">$resource</span><span class="p">(</span><span class="s1">&#39;/food/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span><span class="s1">&#39;@id&#39;</span><span class="p">},</span> <span class="p">{</span> <span class="nx">update</span><span class="o">:</span> <span class="p">{</span><span class="nx">method</span><span class="o">:</span><span class="s1">&#39;PUT&#39;</span> <span class="p">}</span> <span class="p">}</span> <span class="p">);</span>
+</span><span class='line'><span class="p">}]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default, the <a href="http://docs.angularjs.org/api/ngResource.$resource">Angular resource module</a> has get/save/query/remove/delete methods but no update. What&#8217;s more, we want to make sure we are using a PUT method for storing our modified food items so Sails knows that we&#8217;re trying to modify an existing record. Thankfully, we can add custom actions (as you may have noticed above) by simply adding a hash after our route parameters object in the resource defintion like so <code>{ update: {method:'PUT' } }</code>. Since this is just a hash, you can add as many definitions as you would like (e.g. <code>{ update: {method: 'PUT' }, somethingelse: {method: 'DELETE'} }</code>).</p>
+
+<h4>Routing</h4>
+
+<p>In <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a> we are showing/hiding a form based on a $scope variable on our controller. While this works, it may be a bit cleaner to use routing and separate our views by their function. Routing in Angular is pretty straight forward &#8211; especially if you have routing experience in other frameworks.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">foodApp</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">&#39;$routeProvider&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$routeProvider</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">$routeProvider</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/food&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;/templates/list.html&#39;</span><span class="p">,</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">FoodController</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/food/edit/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;/templates/edit.html&#39;</span><span class="p">,</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">FoodController</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/food/create&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;/templates/edit.html&#39;</span><span class="p">,</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">FoodController</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/food/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;/templates/detail.html&#39;</span><span class="p">,</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">FoodController</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">otherwise</span><span class="p">({</span><span class="nx">redirectTo</span><span class="o">:</span> <span class="s1">&#39;/food&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="p">}]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When the URL matches one of the route values, the visitor will be directed to the template and given controller (you will notice that we&#8217;re using the same controller for all our routes). Additionally, the routes that have :id will have a route parameter of id available in the controller (more on this later). If none of the routes are matched we default to /food. We won&#8217;t focus too much on the views becuase they are mostly the same as our old index.ejs, however, they are available in <a href="https://gist.github.com/ryanlanciaux/6257478">the gist created for this post</a>.</p>
+
+<h2>controllers.js</h2>
+
+<p>Our controller is mostly the same as before except we&#8217;re no longer maintaining which page we&#8217;re showing. The whole controller is available as <a href="https://gist.github.com/ryanlanciaux/6257478">a gist</a> however, some of the more interesting parts are as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span><span class="p">(</span><span class="nx">$routeParams</span><span class="p">.</span><span class="nx">id</span><span class="p">){</span>
+</span><span class='line'> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span> <span class="o">=</span> <span class="nx">Food</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span><span class="nx">id</span><span class="o">:</span> <span class="nx">$routeParams</span><span class="p">.</span><span class="nx">id</span><span class="p">});</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Food</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">food</span> <span class="o">=</span> <span class="nx">Food</span><span class="p">.</span><span class="nx">query</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is checking for the route parameter that we are setting in our route &#8211; if it&#8217;s there, we get the individual food item with that ID. When the parameter is not there, we get all the food items to be displayed in a list (and initialize a Food item for creates).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">addFood</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">id</span> <span class="o">&amp;&amp;</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">id</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+</span><span class='line'>        <span class="nx">Food</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span><span class="nx">id</span><span class="o">:</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">id</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">food</span><span class="p">){</span>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">type</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">percentRemaining</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">percentRemaining</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">quantity</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">quantity</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">$update</span><span class="p">({},</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>              <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span> <span class="s2">&quot;/&quot;</span> <span class="p">);</span>
+</span><span class='line'>            <span class="p">});</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">$save</span><span class="p">();</span>
+</span><span class='line'>        <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span> <span class="s2">&quot;/&quot;</span> <span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this method we are adding our food item or updating an existing food item. We start by checking the food item&#8217;s id. If it has an id, we go ahead and get the server version and update the properties with the form values. If it doesn&#8217;t have an id, we save the food item and redirect to the list view. Food.$save is calling the built in resource action where Food.$update is calling the custom resource action we created above &#8211; both of these actions then interact with the Sails API on the server.</p>
+
+<h2>Wrapping Up</h2>
+
+<p>So there we have it. While this is still an example app &#8211; it&#8217;s way more organized than the previous iterations. The code files are available in <a href="https://gist.github.com/ryanlanciaux/6257478">this gist</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Learning AngularJS II : Filtering / Ordering]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering/"/>
+    <updated>2013-06-19T20:38:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering</id>
+    <content type="html"><![CDATA[<p>Last time I wrote about some basic AngularJS functionality for interacting with a RESTful API. We&#8217;re going to continue where with left off with our food inventory app to add some filtering/sorting . <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Check out the first post</a> if you missed it, as we will be depending heavily on what is covered there.</p>
+
+<h3>Filtering</h3>
+
+<p>Lets say we want to search through our food inventory for something specific like oranges. We first need to open the index.ejs (that we created in <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a>) and add the following right before our table definition.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;filter&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;filter&quot;</span><span class="nt">&gt;</span>filter:<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;filter&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;filter&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The div isn&#8217;t entirely necessary, however, it could be useful for applying styling (it&#8217;s pretty ugly as it sits). Now that the filter definition is complete, we need to go back to our repeater definition and pipe the results through the filter as so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food | filter:filter&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In a console in your project directory &#8211; fire off a <code>sails lift</code> command, navigate to http://localhost:1337 in your browser of choice and start typing in the filter input box. You&#8217;ll notice that all of the model bound columns are available to be filtered (e.g. entering fruit displays only food items that were classified as fruit &#8211; typing in orange shows only any records with orange in the name etc. etc.). Also, you may notice that this is not case sensitive.</p>
+
+<h3>Ordering</h3>
+
+<p>Now lets add the ability to sort the data in our table. If we followed the basic example on the <a href="http://docs-angularjs-org-dev.appspot.com/api/ng.filter:orderBy">AngularJS docs site</a>, we could simply create a sort variable that we would modify in the table headers and reference in the orderBy of our repeater. The value of the sort property should be the names of one of our columns.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;sort=&#39;name&#39;&quot;</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food | filter:filter | orderBy:sort&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To handle ascending / descending we could do something like this (however, as we&#8217;ll see in a minute this may not be an ideal solution):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;sort=&#39;name&#39;; reverse=!reverse&quot;</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food | filter:filter | orderBy:sort:reverse&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Unfortunately, the reverse value would be shared across all columns. That means that if I click the &#8216;Name&#8217; column and sort it descending and then click the &#8216;Type&#8217; column &#8211; we will notice that it is sorting in ascending order. The problem is that the shared reverse variable is never getting reset when sorting by a different column.</p>
+
+<p>To get around this, lets move our sorting functionality to the controller so we&#8217;re not duplicating a lot of code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">sort</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">changeSort</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">sort</span> <span class="o">==</span> <span class="nx">value</span><span class="p">){</span>
+</span><span class='line'>      <span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span> <span class="o">=</span> <span class="o">!</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">sort</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&#8217;re creating the sort and reverse properties that are referenced in the orderBy of the repeater (<code>orderBy:sort:reverse</code>) as well as a function to manage whether to change the sort column or simply change the value of reverse. If you click the &#8216;Name&#8217; column several times, the sort will not change, however, the reverse value will (which wil trigger ascending / descending order).</p>
+
+<p>Next we need to change our table headers so they call this function when clicked. As before, the column&#8217;s property name will be passed as a parameter to this function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;changeSort(&#39;name&#39;)&quot;</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;changeSort(&#39;type&#39;)&quot;</span><span class="nt">&gt;</span>Type<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;changeSort(&#39;expiration&#39;)&quot;</span><span class="nt">&gt;</span>Expiration<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point fire up the page and see how everything is looking. The sorting / filtering is all working as intended. I have created <a href="https://gist.github.com/ryanlanciaux/5822098">a gist of the newly created index.ejs</a> file that you can <a href="https://gist.github.com/ryanlanciaux/5822098">view here</a>. In the next part of this series we will look at routes and editing our data.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Note to self: escape LiquidTags with Jekyll raw tag plugin]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin/"/>
+    <updated>2013-06-05T21:57:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin</id>
+    <content type="html"><![CDATA[<p>When reviewing <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">my recent AngularJS post</a>, I noticed that none of my template display bindings were showing up. LiquidTags use the same {{  }} style bindings as AngularJS (and was trying to render my Angular expressions as LiquidTags). Luckily, there is a <a href="https://gist.github.com/phaer/1020852">jekyll plugin called &#8216;raw tag&#8217;</a> for rendering data that you do not want interpreted as a LiquidTag / etc. Simply place this raw content between {% raw %} and {% endraw %}</p>
+
+<p>For more information <a href="http://stackoverflow.com/questions/3426182/how-to-escape-liquid-template-tags">check out this Stackoverflow Post</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Learning AngularJS]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/06/04/learning-angularjs/"/>
+    <updated>2013-06-04T21:39:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/06/04/learning-angularjs</id>
+    <content type="html"><![CDATA[<p>I have recently been playing around with some of the client-side MV_ frameworks. I have avoided Angular for quite some time because I was not a fan of using ng-click (etc.) HTML attributes to fire off js events. The more I&#8217;ve used the framework, however, the less of an issue that has been to me.</p>
+
+<p>As noted in a <a href="http://ryanlanciaux.github.io/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/">previous post</a>, another framework I have been using a bit is <a href="http://www.sailsjs.com">SailsJS</a>. While this post is not about Sails, I am using it as the REST endpoints of the AngularJS application.</p>
+
+<p>First off, sails needs to be installed. Assuming you have <a href="https://github.com/joyent/node/wiki/Installation">node installed</a>, just <code>npm install -g sails</code> From there, create a new sails project from the command line <code>sails new foodinventory</code> and cd into that directory. Once in the directory, create a model <code>sails generate model food</code> and a controller so we can access the model <code>sails generate controller food</code>. Open up api/models/Food.js and edit the file to look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="cm">/*---------------------</span>
+</span><span class='line'><span class="cm">  :: Food</span>
+</span><span class='line'><span class="cm">  -&gt; model</span>
+</span><span class='line'><span class="cm">---------------------*/</span>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">attributes</span>  <span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;STRING&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;STRING&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">expiration</span><span class="o">:</span> <span class="s1">&#39;DATE&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">quantity</span><span class="o">:</span> <span class="s1">&#39;STRING&#39;</span><span class="p">,</span> <span class="c1">//for sake of example, ignore that this is a string...</span>
+</span><span class='line'>    <span class="nx">percentRemaining</span><span class="o">:</span> <span class="s1">&#39;INTEGER&#39;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now go back to the console and type <code>sails lift</code>. You should be presented with a cool ascii sailboat and a message stating that sails is running on port 1337. Fire up your browser and head to http://localhost:1337 &#8211; just to see the initial sails page. From there, navigate to /food &#8211; this should return an empty array, which is the JSON representation what&#8217;s currently stored in our food list.</p>
+
+<p>Add a couple of records to the Food list by visiting http://localhost:1337/food/create?name=Spinach&amp;type=Vegetable&amp;expiration=2013-06-20&amp;quantity=16oz&amp;percentRemaining=75 and /food/create with other properties. Now that you have a couple records in, lets start with the Angular stuffs.</p>
+
+<p>  <em>Please note that there are better ways to utilize the sails framework to write single page applications with Angular (see <a href="https://github.com/balderdashy/sails/issues/273">here</a> and <a href="https://github.com/balderdashy/sails/issues/205">here</a>) &#8211; For the sake of example we&#8217;re setting everything up in very few files.</em></p>
+
+<p>Open up your Layout file which is located in <code>views/layout.ejs</code> and add the following includes before <code>&lt;%- assets.js() %&gt;</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'> <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'> <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'> <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'> <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-resource.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From here we&#8217;re going to edit the default view. We can keep the same div structure as the sails default view but we&#8217;re stripping out all the CSS and other content &#8211; we should have something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'> <span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">&quot;header&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>   Food Inventory
+</span><span class='line'> <span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'> <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    Some Content Goes Here
+</span><span class='line'> <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'> <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;footer&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;a</span> <span class="na">target=</span><span class="s">&quot;_blank&quot;</span> <span class="na">href=</span><span class="s">&quot;http://sailsjs.com&quot;</span> <span class="na">class=</span><span class="s">&quot;copyright&quot;</span><span class="nt">&gt;</span>Built with Sails.js<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'> <span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Upon refreshing this page, you can see that not much is going on; we should totally do something about that. First, we want to add the ng-app directive to the html tag in layout.ejs (it should now look like <code>&lt;html ng-app="foodApp"</code>). This <a href="http://docs.angularjs.org/tutorial/step_00">bootstraps</a> (not to be confused with <a href="http://www.getbootstrap.com">Bootstrap</a>) our application, stating that the html tag is the Angular root. We could techincally add this directive to any element but the html tag is as good as any for this example.</p>
+
+<p>Next, we&#8217;re going to flip back to our index view (under /home) and add an Angular factory for our food app:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foodApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;foodApp&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ngResource&#39;</span><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">foodApp</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;Food&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$resource&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$resource</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">$resource</span><span class="p">(</span><span class="s1">&#39;/food/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span><span class="s1">&#39;@id&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="p">}]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using the factory, we can now access Query / Get / Save / Delete functions off our Food model (the REST API under /food). By using the :id, we are stating that we can alternatively pass an id (e.g. /Food/1).</p>
+
+<p>You may notice that we&#8217;re injecting &#8216;ngResource&#8217; into our module &#8211; this is the Angular library (that we&#8217;ve already included in the layout page) that is used to interact with our sails REST API that we created above.</p>
+
+<p>Now that we can access the data, lets add a controller.. The controller is responsible for managing the state of the application. There are plenty of tutorials that deal with <a href="http://docs.angularjs.org/tutorial/step_02">how to create a controller in Angular</a>, so lets just jump right in..</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">FoodController</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">Food</span><span class="p">){</span>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">food</span> <span class="o">=</span> <span class="nx">Food</span><span class="p">.</span><span class="nx">query</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">isFormActive</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">toggleForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">isFormActive</span><span class="p">){</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">isFormActive</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">isFormActive</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">editableFood</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Food</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">addFood</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">editableFood</span><span class="p">.</span><span class="nx">$save</span><span class="p">();</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">food</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">editableFood</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">toggleForm</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Our controller is just a plain old javascript function that takes $scope (used to sync data between controller and the view) and our Food item as parameters. The very first line in the controller is obtaining a list of all of the Food items (essentially the same as going to /Food and copying the JSON) and storing it in the $scope.food array.</p>
+
+<p>The isFormActive property is used to determine whether or not we want to show the create form. The toggle form action is used to change this active property as well as create a new model object to use with the form.</p>
+
+<p>Finally, the addFood method posts the newly created food item to our API. This editableForm &#8216;pattern&#8217; was something I first came across on <a href="http://odetocode.com/blogs/scott/archive/2013/02/21/forms-with-angularjs.aspx">K. Scott Allen&#8217;s website</a>.</p>
+
+<p>Now lets write some HTML that utilizes this controller&#8230; We&#8217;ll start this process by specifying that the #content area in our layout page corresponds to the FoodController with the ng-controller directive &#8211; Our modified #content tag should look like this: <code>&lt;div id="content" ng-controller="FoodController"&gt;</code>. All of our $scope.___ properties are now available to use in expressions within the #content div.</p>
+
+<p>Next we&#8217;re going to add a repeater to show the food items.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;table&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;thead&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Name<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Type<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Expiration<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Quantity<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Percent Remaining<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/thead&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;tbody&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.name}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.type}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.expiration}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.quantity}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">&quot;progress&quot;</span><span class="nt">&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;bar&quot;</span> <span class="na">style=</span><span class="s">&quot;width: {{f.percentRemaining}}%&quot;</span><span class="err">&lt;/</span><span class="na">td</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/tbody&gt;</span>
+</span><span class='line'><span class="nt">&lt;/table&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The tr element inside the tbody is where we are telling angular to loop through all our food items. We are going to reference the current item as f and display all of its properties. You may notice in the last column that we&#8217;re using Twitter Bootstrap&#8217;s progress bar in addition to an Angular expression. The expressions in Angular can be quite powerful and seem to have a bit more functionality than many of the other templating frameworks. Go ahead and refresh your page to see how everything is looking so far.</p>
+
+<p>Next we want to add the ability to add new items from this page</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;button</span> <span class="na">ng-click=</span><span class="s">&quot;toggleForm()&quot;</span> <span class="na">ng-hide=</span><span class="s">&quot;isFormActive&quot;</span><span class="nt">&gt;</span>Add One<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;button</span> <span class="na">ng-click=</span><span class="s">&quot;toggleForm()&quot;</span> <span class="na">ng-show=</span><span class="s">&quot;isFormActive&quot;</span><span class="nt">&gt;</span>Hide Form<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;form</span> <span class="na">ng-show=</span><span class="s">&quot;isFormActive&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;hr</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>Name:<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.name&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;type&quot;</span><span class="nt">&gt;</span>Type:<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.type&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;expiration&quot;</span><span class="nt">&gt;</span>Expiration<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;expiration&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.expiration&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;quantity&quot;</span><span class="nt">&gt;</span>Quantity<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;quantity&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.quantity&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;percentRemaining&quot;</span><span class="nt">&gt;</span>Percent Remaining<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;percentRemaining&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.percentRemaining&quot;</span> <span class="nt">/&gt;&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;span4 text-right&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;button</span> <span class="na">ng-click=</span><span class="s">&quot;toggleForm()&quot;</span><span class="nt">&gt;</span>Cancel<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;button</span> <span class="na">ng-click=</span><span class="s">&quot;addFood()&quot;</span><span class="nt">&gt;</span>Add<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/form&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is a bit more going on with the Angular directives in this snippet of HTML. First, you&#8217;ll notice that several of our elements have ng-click directives; these directives are calling functions on the controller when the user clicks on element. In addition to the click functions, we are using the ng-show / ng-hide directives to show or hide content based on a given condition. For instance, the button for &#8216;Add One&#8217; is only visible when isFormActive = false and the &#8216;Hide Form&#8217; button is only visible when isFormActive = true.</p>
+
+<p>We are using the ng-model directive to bind a form element to $scope.editableFood (which is being created in the toggleForm method of the FoodController). Clicking on &#8216;Add&#8217; will call the addFood method on the FoodController &#8211; this will post the new record to our /Food/Create and push the value into our $scope.food array. The UI will update automatically because Angular $scope properties are observed by default.</p>
+
+<p>So far, we&#8217;ve created a simple REST API and added / retrieved data from this API with AngularJS. The full contents of the modified files are available <a href="https://gist.github.com/ryanlanciaux/5711426">over here</a>. I plan on writing another part in this series where we will focus on searching / ordering / filtering the displayed data and in-place editing on the food list.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Less alt+tab with SublimeText]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/"/>
+    <updated>2013-05-09T20:40:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/05/09/less-alt-plus-tab-with-sublimetext</id>
+    <content type="html"><![CDATA[<p><a href="http://ryanlanciaux.github.io/blog/2013/04/13/sublime-text-on-ubuntu/">Back in April</a>, I jokingly lamented not having the ability to run a console from directly within SublimeText &#8211; apparently I did not do quite enough searching. There is a plug-in called <a href="https://github.com/wuub/SublimeREPL">SublimeREPL</a> that lets you run ruby, node and a whole slew of other environments from within SublimeText.</p>
+
+<p><strong>To install SublimeREPL</strong>:</p>
+
+<ol>
+<li>Fire up the Command Palette (ctrl+shift+p) and type &#8220;Package Control: Install Package&#8221;</li>
+<li>Search for and install SublimeREPL</li>
+<li>Restart SublimeText</li>
+</ol>
+
+
+<p>If you are using rbenv, (I assume something similar applies to rvm as well) you will need to edit your SublimeREPL settings (Preferences -> Package Settings -> SublimeREPL -> Settings - User) so your rbenv ruby is used.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>  "default_extend_env": { "PATH": "{HOME}/.rbenv/shims:{PATH}" }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, SublimeREPL uses <a href="https://github.com/pry/pry">pry</a> to power the ruby REPL. If you don&#8217;t have the pry gem installed, you will need to install it prior to running ruby console.</p>
+
+<p>Now that everything is setup you can launch a REPL and test code before you  add it to your project, use rake thru shell, etc. One note, I would be careful about running servers &#8211; I was messing around with <a href="http://www.sailsjs.com">one of my favorite new frameworks</a> and realized I could not shut down the server (this occurs with servers and other long running operations). That being said, SublimeREPL is definitely a plug-in I would recommend.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Tig: Great git command line tool]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/05/07/tig-great-git-command-line-tool/"/>
+    <updated>2013-05-07T20:28:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/05/07/tig-great-git-command-line-tool</id>
+    <content type="html"><![CDATA[<p>I have been using git on most of my hobby projects for quite some time. I prefer the command line when possible, however, it is nice to visualize certain operations. <a href="http://sourcetreeapp.com/">SourceTree</a> and Github&#8217;s <a href="http://windows.github.com">Windows</a> and <a href="http://mac.github.com">Mac</a> apps are very nice but I&#8217;m mostly on Ubuntu when using git. <a href="https://www.kernel.org/pub/software/scm/git/docs/gitk.html">Gitk</a> is a decent option but sometimes tools such as this and the aforementioned GUI tools can be a bit over-the-top for a command line junkie such as myself. Something between the command line and full blown windowed GUI applications would be great; this seems to be where <a href="http://jonas.nitro.dk/tig/">tig</a> comes in.</p>
+
+<p><a href="http://jonas.nitro.dk/tig/">Tig</a> has been around for a little while now but it just came across my radar via <a href="http://blogs.atlassian.com/2013/05/git-tig/">an excellent post on Atlassian&#8217;s blog by Antoine Büsch</a> (as a side note, it&#8217;s kinda cool to see this post on Atlassian&#8217;s blog considering they make SourceTree). Antoine listed some compelling reasons for using tig but I was sold when he related tig to vim versus other development tools :)</p>
+
+<p>To install tig on Ubuntu just open up a command line and run the obvious <code>apt-get install tig</code>. From there, navigate to a directory under source control (with git) and type <code>tig</code> &#8211; you should see the main log view. Pressing &#8216;h&#8217; will bring up help to see a list of available commands. You can stage changes by pressing &#8216;c&#8217;. For a more exhaustive list of commands, check out <a href="http://jonas.nitro.dk/tig/manual.html">the official tig manual</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ikea Standing Desk]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/05/03/ikea-standing-desk/"/>
+    <updated>2013-05-03T21:02:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/05/03/ikea-standing-desk</id>
+    <content type="html"><![CDATA[<p>Over the past several years, I have grown quite accustomed to using a standing desk at home (I have an adjustable Ergotron that I absolutely love). I decided it was about time to make the switch at work, however, I didn&#8217;t want to spend a lot of money on a desk. Thankfully, I had come across a <a href="http://iamnotaprogrammer.com/Ikea-Standing-desk-for-22-dollars.html">blog post by Colin Nederkoorn</a> on a standing desk he and a coworker built for $22. I like the design, however, I wanted more room for monitors. One of the comments on the blog led me to <a href="http://www.jinyoungkim.com/blog/2012/07/standing-desk/">Jinyoung Kim&#8217;s modification of the Ikea desk</a> which used a wider table than Colin&#8217;s design. I ultimately based my desk plans off Jinyoung&#8217;s design, since it allowed for multiple monitors, laptops and other gadgets.</p>
+
+<p>The main components of the desk are as follows (they should cost about $45 total):</p>
+
+<ul>
+<li><a href="http://www.ikea.com/us/en/catalog/products/40104294/">LACK</a> coffee table &#8211; this is the main piece of the desk.</li>
+<li><a href="http://www.ikea.com/us/en/catalog/products/10056987/#/20094347">EKBY JÄRPEN</a> shelf &#8211; for keyboard / mouse</li>
+<li><a href="http://www.ikea.com/us/en/catalog/products/10136135/#/10136135">EKBY BJÄRNUM</a> brackets</li>
+</ul>
+
+
+<p><img src="http://ryanlanciaux.github.com/files/desk-setup.jpg" alt="" /></p>
+
+<p>As noted on Jinyoung&#8217;s site, the shelf needs to be sawed down a bit to fit the dimensions of the coffee table. I like the brackets I used since it hides the rougher side of the shelf that was cut down. I would also echo his sentiment about using bolts to hold up the shelf as  they are sturdier than screws. Finally, as someone who has used standing desks for a couple years now I would HIGHLY recommend having a gel kitchen mat to stand on; especially if you&#8217;re over hardwood or concrete flooring.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Goodreads status widget available on github]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/05/02/goodreads-status-widget-available-on-github/"/>
+    <updated>2013-05-02T19:49:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/05/02/goodreads-status-widget-available-on-github</id>
+    <content type="html"><![CDATA[<p><a href="http://www.goodreads.com">Goodreads</a> is currently one of my favorite sites; I love that I can see what my friends are reading and find new books to read based on their recommendations. Noticing that many other blog platforms have sidebar widgets (asides), I decided to create one for Octopress. The first thing I did was make sure I was not duplicating effort. Goodreads has some great <a href="http://www.goodreads.com/user/edit?tab=widgets">sidebar widgets</a>, however, I preferred to generate the aside in the standard <code>rake generate</code> process (as well as keep the same look-and-feel of the other asides).</p>
+
+<p>The Goodreads API is pretty robust but I was a little concerned about the possibility of a user&#8217;s API key getting checked into github. Thankfully, Goodreads also provides an RSS feed for status updates &#8211; which seemed a bit safer to use for publicly available code (and with the RSS feed it&#8217;s not necessary to obtain an API key). I assumed that if someone didn&#8217;t want their status updates public via RSS, they probably wouldn&#8217;t be installing an aside to display their status.</p>
+
+<p>I created an aside and a subsequent <a href="https://github.com/Shopify/liquid/wiki">liquid tags</a> plugin that grabbed and formatted the RSS data. I used REXML to process the xml because it wouldn&#8217;t require users to install additional gems. One thing I still need to figure out is how to pass data from the config.yml into the plugin via the aside. I realize I have access to the config properties via site.whatever  variables but I&#8217;m not entirely sure how to pass that info along to the tag plugin. Currently, the aside needs to be modified with the user&#8217;s Goodreads unique id and the max number of results to display. I noticed some others on the <a href="https://github.com/imathis/octopress/wiki/3rd-party-plugins">3rd party plugins list on the Octopress wiki</a> are doing the same thing, however, I would prefer to use the config file for the config data :P</p>
+
+<p>All-in-all, it was pretty fun creating the plugin. If you use Octopress and would like to install the Goodreads plugin, <a href="https://github.com/ryanlanciaux/octo-goodreads-status">take a look at the github repo</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Sublime Text on Ubuntu]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/04/13/sublime-text-on-ubuntu/"/>
+    <updated>2013-04-13T18:42:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/04/13/sublime-text-on-ubuntu</id>
+    <content type="html"><![CDATA[<p>Recently, I have switched from Windows 8 to Ubuntu on my laptop. Since the primary function of my laptop is development I have spent some time tweaking the software installed to fit my workflow.</p>
+
+<p>The main tool I am using for all my development is <a href="http://www.sublimetext.com/">Sublime Text</a>. I like Sublime Text for many reasons &#8211; it&#8217;s lightweight, great community, tons of plugins and most importantly, <strong>vim keybindings</strong>; needless to say, it&#8217;s pretty awesome.</p>
+
+<p>To start with, I installed the package like so: <code>apt-get install sublime-text</code>. From there, I pretty much followed
+<a href="http://blog.alexmaccaw.com/sublime-text">Alex MacCaw&#8217;s excellent post on Sublime Text</a>. Mentioned in the post, <a href="http://wbond.net/sublime_packages/package_control">Package Manager</a> is pretty much a must. As someone who has grown pretty dependent on ReSharper when doing .NET development, I find myself typing Ctrl + Shift + T to switch files (rather than the default Ctrl + P &#8211; which, to me, seems a little weird because doing that in different environments brings up print dialog)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{ "keys": ["ctrl+shift+t"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, since I will be writing most of my blog posts with Sublime Text (yea, this post about Sublime Text was written in Sublime Text :P), I installed <a href="https://github.com/revolunet/sublimetext-markdown-preview">Markdown Preview</a> through package control. If you notice the statement on the GitHub page, Linux users need to install a different version of Python to get the plugin to work. I wasn&#8217;t super comfortable changing Python just for installing the Markdown plugin. Thankfully, <a href="https://github.com/revolunet/sublimetext-markdown-preview/issues/27#issuecomment-11772098">one of the comments on the plugin&#8217;s GitHub</a> page has a pretty decent walkthrough on how to use pythonbrew to give Sublime Text the version of Python that the plugin needs (without necessarily using it throughout the system).</p>
+
+<p>Now, I only wish there was a way to open up a console directly in Sublime Text &#8211; because alt tabbing to terminal is just so difficult.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Moving to Octopress]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/04/06/moving-to-octopress/"/>
+    <updated>2013-04-06T14:11:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/04/06/moving-to-octopress</id>
+    <content type="html"><![CDATA[<p>Recently, it seems that the only time I&#8217;ve spent with my blog has been moving it to other platforms. Hopefully, that will change with the move to Octopress. Since this is mainly a programming / technical blog, I thought it would be great to host the blog with <a href="http://pages.github.com/">Github pages</a>.</p>
+
+<p>The Octopress install was pretty simple.. I mostly just followed the steps on the <a href="http://octopress.org/docs/setup/">Octopress Setup page</a>:</p>
+
+<ol>
+<li>Install Ruby / rbenv</li>
+<li>Install git</li>
+<li>Clone the Octopress repo</li>
+<li>Export posts from Wordpress</li>
+<li>Convert the Wordpress xml file to Jekyll with <a href="https://github.com/theaob/wpXml2Jekyll">wpXml2Jekyll</a></li>
+<li>rake generate / rake deploy / git commit origin source (from the examples)</li>
+</ol>
+
+
+<p>The part that gave me the most trouble was hiding legacy posts from the main page area. I wanted to keep some of the posts around for posterity but I didn&#8217;t want them to show up with any sort of prominence on the blog. To that end, I created a folder called &#8216;Legacy&#8217; and a folder within this newly created folder called &#8216;_posts&#8217;. From there, I moved the markdown versions of the posts into this folder. So far so good&#8230;</p>
+
+<p>When I fired up the preview for Octopress, the blog was still loading all the legacy posts in the content area. I asked a question on <a href="http://stackoverflow.com/questions/15852698/octopress-custom-folder-for-old-posts">Stack Overflow</a> (that was subsequently shut down for not being programmy enough &#8211; whoops) and tried a couple other things until I stumbled upon <a href="http://arshad.github.io/blog/2012/05/10/recipe-hiding-posts-from-the-octopress-front-page/">this post</a> on Hiding Pages from Octopress. Making the suggested changes produced the results I was looking for. Mission Accomplished &#8211; for now. I may try to change the &#8216;Recent Posts&#8217; widget so it does not show legacy posts, however, that won&#8217;t be an issue when there is more content.</p>
+
+<p>So, as of this post, I&#8217;ve used all Octopress for all of one new article but I really like the workflow; storing the posts in github is definitely an added benefit. Hopefully, I will continue writing beyond this post but I guess we will see.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Gherkin style BDD testing in .NET]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2011/08/14/gherkin-style-bdd-testing-in-net/"/>
+    <updated>2011-08-14T18:03:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2011/08/14/gherkin-style-bdd-testing-in-net</id>
+    <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/Behavior_Driven_Development" target="_blank">Behavior Driven Development</a> is something that has interested me forquite awhile. I have constantly tried to write my tests as clear andconcise as possible but once I saw <a href="http://cukes.info/" target="_blank">Cucumber for Ruby</a> that became thenew standard for what I was trying to achieve in .NET. This is where<a href="http://specflow.org/" target="_blank">SpecFlow </a>comes in.<p>&nbsp;</p><p>SpecFlow is a BDD library for .NET that aimsto add testing capabilities that are similar to  <a href="http://cukes.info/" target="_blank">Cucumber</a> &#8211; that is,specifications are written in human readable Gherkin Format. From the<a href="http://specflow.org/" target="_blank">project site</a>:&nbsp;</p><blockquote>   <a href="http://specflow.org/" target="_blank">SpecFlow </a>aims at bridging the communication gap between domain experts   and developers by binding business readable behavior specifications to  the underlying implementation. <br /></blockquote><p>In theory, I really like that domain experts could write the specifications but I would be interested in seeing how that works out. </p><p><strong>So what exactly is this Gherkin format?</strong> </p><p>According to the <a href="http://wiki.github.com/aslakhellesoy/cucumber/gherkin" target="_blank">Gherkin project</a> on github, &#39;Gherkin is the language that Cucumber understands. It is a <a href="http://martinfowler.com/bliki/BusinessReadableDSL.html">Business Readable, Domain Specific Language</a> that lets you describe software&rsquo;s behaviour without detailing how that behaviour is implemented.&#39; In other words, its a common DSL for describing the required functionality for a given system.&nbsp;</p><p>This functionality is typically broken down by feature and each feature has a number of scenarios. A scenario is made up of 3 steps: GIVEN, WHEN and THEN (which seems to somewhat loosely correspond to Arrange, Act, Assert) and in a simplistic world, looks a little like this:</p><blockquote> GIVEN an admin user<br />   WHEN user requests top secret data<br />    THEN return the list of data <br /></blockquote>If you want to learn more about the Gherkin format check out <a href="http://www.engineyard.com/blog/2009/cucumber-introduction/" target="_blank">Engine Yard&#39;s Introduction to BDD with Cucumber by Dave Astels</a>  or <a href="http://wiki.github.com/aslakhellesoy/cucumber/given-when-then" target="_blank">Given-When-Then by Aslak Helles&oslash;y</a><p><strong>Quick Synopsis</strong></p><p>I&#39;ve recently started to move my blog over to a new server and a new root domain name; this could have an adverse affect on inbound links. In order to make sure this move was successful, I wanted to write an app to perform 301 redirects from the old URL to the new one. </p><p>There are a number of <a href="http://www.singingeels.com/Blogs/Nullable/2007/09/14/URL_ReWriting_The_Right_Way_Its_Easy.aspx" target="_blank">examples out there already for performing 301s</a> but I wanted to make sure I was testing the code &#8211; It seemed like a great opportunity to get a little more use out of SpecFlow. </p><p><strong>Initial Setup</strong></p><ol> <li><a href="http://specflow.org/getdoc/b647f699-ff30-48db-9bd5-db6dc45016e8/SpecFlowSetup_v1-1-0.aspx" target="_blank">Download and run the SpecFlow installer </a></li>   <li>Create a new Project and add a reference to SpecFlow and NUnit Framework</li>   <li>Add references to your mocking framework (this example is using <a href="http://code.google.com/p/moq/" target="_blank">Moq</a>)</li></ol><p><strong>On with the code!</strong> </p><p>After all the references are sorted out add a SpecFlow feature. <br /><br /><img src="http://ryanlanciaux.github.com/files/templates.gif" alt="" /><br /><br />The feature file is where we&#39;re going to define our specifications. I want to make sure that when a request is made to the old root it will get redirect to the new root url. So here is what the feature looks like initially:</p><blockquote style="width: 550px">    Feature: Redirection <br /> &nbsp;&nbsp;&nbsp; In order to not upset the google<br />   &nbsp;&nbsp;&nbsp; As a blogger who almost never has the time to blog<br /> &nbsp;&nbsp;&nbsp; I want to redirect my old url to my new one <br />   <br />  Scenario: Redirect root request<br />   &nbsp;&nbsp;&nbsp; Given I have entered a request to http://www.frickinsweet.com/ryanlanciaux.com<br /> &nbsp;&nbsp;&nbsp; And the old url is frickinsweet.com/ryanlanciaux.com<br />   &nbsp;&nbsp;&nbsp; And my new url is ryanlanciaux.com<br /> &nbsp;&nbsp;&nbsp; When the request is made<br />   &nbsp;&nbsp;&nbsp; Then the response url is http://www.ryanlanciaux.com<br />   &nbsp;&nbsp;&nbsp; And the response has a 301 in the status </blockquote><p>Notice that over in the Solution Explorer window you can expand the feature to reveal a .cs file. <br /><img src="http://ryanlanciaux.github.com/files/solution_explorer.gif" alt="" /><br />The class is an auto-generated file that updates when the .feature file is changed. We can run this through our test runner to watch it fail and get some extra information as to why it failed. </p><p>&nbsp;</p><p><img src="http://ryanlanciaux.github.com/files/test_runner.gif" alt="" /><br /><br />The tests are failing because there is no real definition to the scenario steps. We can almost directly copy and paste the output from the test runner dialog to a new class and fill in the code for the methods with standard unit testing code. Like I said before, I treat everything that is a GIVEN statement like an arrange section of a standard test; WHEN and THEN like act and assert respectively. </p><p>We could hardcode these tests to be specifically run against the urls specified in the scenario but this approach feels brittle and does not encourage code reuse. In order to use these these same steps in our future scenarios we can add wildcard mappings rather than specifying a single url in the attribute definition. The wildcard mapping is the familiar .<em> surrounded by parenthesis.<br /><br /></p><div class="code"><div style="background-image: none; background-repeat: repeat; background-attachment: scroll; -webkit-background-clip: initial; -webkit-background-origin: initial; background-color: white; font-family: 'Courier New'; font-size: 10pt; color: black; background-position: 0% 0%"><pre style="margin: 0px"><span style="color: #2b91af">&nbsp;&nbsp;&nbsp;24</span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Given</span>(<span style="color: #a31515">@&quot;I have entered a request to (.</em>)&quot;</span>)]</pre></div><div style="background-image: none; background-repeat: repeat; background-attachment: scroll; -webkit-background-clip: initial; -webkit-background-origin: initial; background-color: white; font-family: 'Courier New'; font-size: 10pt; color: black; background-position: 0% 0%">&nbsp;</div></div><p>Also note now that when we have a wildcard mapping, we can pass in a parameter to that ScenarioStepDefinition</p><br /><div class="code"><div style="background-image: none; background-repeat: repeat; background-attachment: scroll; -webkit-background-clip: initial; -webkit-background-origin: initial; background-color: white; font-family: 'Courier New'; font-size: 10pt; color: black; background-position: 0% 0%"><pre style="margin: 0px"><span style="color: blue">public</span> <span style="color: blue">void</span> GivenIHaveEnteredARequestToHttpWww_Frickinsweet_ComRyanlanciaux_ComPage2(<span style="color: blue">string</span> url)</pre></div></div><br />The final result is a lot of code but it is broken down into small, reusable sections. <div class="code"><div style="background-image: none; background-repeat: repeat; background-attachment: scroll; -webkit-background-clip: initial; -webkit-background-origin: initial; background-color: white; font-family: 'Courier New'; font-size: 9pt; color: black; background-position: 0% 0%"><pre style="margin: 0px">[<span style="color: #2b91af">TestFixture</span>]</pre><pre style="margin: 0px">[<span style="color: #2b91af">Binding</span>]</pre><pre style="margin: 0px"><span style="color: blue">public</span> <span style="color: blue">class</span> <span style="color: #2b91af">RedirectTest</span></pre><pre style="margin: 0px">{</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: blue">string</span> oldUrl;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: blue">string</span> newUrl;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: blue">string</span> requestedUrl;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: blue">string</span> finalUrl;</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: #2b91af">RedirectHandler</span> <em>handler;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: #2b91af">Mock</span>&lt;<span style="color: #2b91af">HttpContextBase</span>&gt; mockContext;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">private</span> <span style="color: #2b91af">Mock</span>&lt;<span style="color: #2b91af">HttpResponseBase</span>&gt; mockResponse;</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Given</span>(<span style="color: #a31515">@&quot;I have entered a request to (.<em>)&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> GivenIHaveEnteredARequestToHttpWww_Frickinsweet_ComRyanlanciaux_ComPage2(<span style="color: blue">string</span> url)</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: blue">var</span> uri = <span style="color: blue">new</span> <span style="color: #2b91af">Uri</span>(url);</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; requestedUrl = url;</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mockContext = <span style="color: blue">new</span> <span style="color: #2b91af">Mock</span>&lt;<span style="color: #2b91af">HttpContextBase</span>&gt;();</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mockContext.Setup(x =&gt; x.Request.Url).Returns(uri);</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Given</span>(<span style="color: #a31515">@&quot;the old url is (.</em>)&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> GivenTheOldUrlIsFrickinsweet_ComRyanlanciaux_Com(<span style="color: blue">string</span> url)</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; oldUrl = url;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Given</span>(<span style="color: #a31515">@&quot;my new url is (.*)&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> GivenMyNewUrlIsRyanlanciaux_Com(<span style="color: blue">string</span> url)</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; newUrl = url;</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: green">//now that we know both old and new url do a replace on httpcontexts&#39; url</span></pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: green">//setup what we expect the called url to be and throw a callback on the mock so we can verify later</span></pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mockResponse = <span style="color: blue">new</span> <span style="color: #2b91af">Mock</span>&lt;<span style="color: #2b91af">HttpResponseBase</span>&gt;();</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mockResponse.SetupProperty(x =&gt; x.Status);</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mockResponse.Setup(x =&gt; x.AddHeader(<span style="color: #a31515">&quot;Location&quot;</span>, requestedUrl.Replace(oldUrl, newUrl)))</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; .Callback(() =&gt; finalUrl = requestedUrl.Replace(oldUrl, newUrl));</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; mockContext.Setup(x =&gt; x.Response).Returns(mockResponse.Object);</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">When</span>(<span style="color: #a31515">@&quot;the request is made&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> WhenTheRequestIsMade()</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </em>handler = <span style="color: blue">new</span> <span style="color: #2b91af">RedirectHandler</span>();</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; _handler.ProcessRequest(mockContext.Object, oldUrl, newUrl);</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Then</span>(<span style="color: #a31515">@&quot;the response has a 301 in the status&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> ThenTheResponseHasA301InTheStatus()</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #2b91af">Assert</span>.That(mockContext.Object.Response.Status == <span style="color: #a31515">&quot;301 Moved Permanently&quot;</span>);</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Then</span>(<span style="color: #a31515">@&quot;the response url is (.*)&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> ThenTheResponseUrlIsTheNewUrl(<span style="color: blue">string</span> expectedUrl)</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #2b91af">Assert</span>.AreEqual(expectedUrl, finalUrl);</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">&nbsp;</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af">Then</span>(<span style="color: #a31515">@&quot;301 is not in the headers&quot;</span>)]</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; <span style="color: blue">public</span> <span style="color: blue">void</span> Then_301IsNotInTheHeaders()</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #2b91af">Assert</span>.IsNull(mockResponse.Object.Status);</pre><pre style="margin: 0px">&nbsp;&nbsp;&nbsp; }</pre><pre style="margin: 0px">}</pre></div></div><p>Since we are using wildcards instead of raw urls in the step definitions we can easily write other tests that will just work with out adding any extra code.</p><blockquote style="width: 550px">  <p> Scenario: Redirect to correct path on new url<br /> &nbsp;&nbsp;&nbsp; Given I have entered a request to http://www.frickinsweet.com/ryanlanciaux.com/page2<br />   &nbsp;&nbsp;&nbsp; And the old url is frickinsweet.com/ryanlanciaux.com<br />   &nbsp;&nbsp;&nbsp; And my new url is ryanlanciaux.com<br /> &nbsp;&nbsp;&nbsp; When the request is made<br />   &nbsp;&nbsp;&nbsp; Then the response url is http://www.ryanlanciaux.com/page2<br /> &nbsp;&nbsp;&nbsp; And the response has a 301 in the status     </p></blockquote><p>This project, in its entirety, is <a href="http://github.com/ryanlanciaux/Redirect" target="_blank">hosted on GitHub</a>. Check it out if you are interested in seeing SpecFlow in the context of the whole (tiny) application. Make sure that you add all the files from the lib dir into your references the first time you run it or you will receive all kinds of errors &#8211; additionally, I wrote this quickly for myself so there is no real warranty / guarantee that the code is free from defects &#8211; use at your own risk. :) </p><p><a href="http://github.com/ryanlanciaux/Redirect" target="_blank">Download Project from GitHub</a> </p><p><a href="http://specflow.org/" target="_blank">Visit the SpecFlow homepage</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Beginning ASP.NET MVC 1.0 available on Amazon]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2009/08/07/beginning-asp-net-mvc-1-0-available-on-amazon/"/>
+    <updated>2009-08-07T07:37:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2009/08/07/beginning-asp-net-mvc-1-0-available-on-amazon</id>
+    <content type="html"><![CDATA[<p>
+I know I&#39;ve been quiet for a little bit here but wanted to point out some great news. Simone Chiaretta and Keyvan Nayyeri&#39;s book <a href="http://www.amazon.com/gp/product/047043399X/105-8603807-8434027?ie=UTF8&amp;tag=keyvannayyeri-20&amp;linkCode=xm2&amp;camp=1789&amp;creativeASIN=047043399X" target="_blank">Beginning ASP.NET MVC 1.0 </a>is available for purchase in the US on Amazon. Both Simone and Keyvan have a wealth of knowledge about the framework, so I&#39;m really looking forward to the book. For more information check out
+</p>
+
+
+<ul>
+    <li><a href="http://codeclimber.net.nz/archive/2009/08/05/beginning-asp.net-mvc-1.0-available-on-amazon.aspx" target="_blank">Simone&#39;s site&nbsp;</a></li>
+    <li><a href="http://nayyeri.net/blog/beginning-asp-net-mvc-1-0-ndash-finally-available/" target="_blank">Keyvan&#39;s site</a><br />
+    </li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Are you a Control Freak?]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2009/03/24/are-you-a-control-freak/"/>
+    <updated>2009-03-24T21:04:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2009/03/24/are-you-a-control-freak</id>
+    <content type="html"><![CDATA[<p><strong>No Controls?</strong>
+Since the very early ASP.NET MVC previews, the
+most common argument I&#8217;ve heard against using the framework is the lack
+of user controls. In my opinion, this is a mixed blessing, however, for
+some, this is a show stopper. What can you do to provide a rich user
+interface with the MVC framework, while not reinventing the wheel?</p>
+
+<p><strong>jQuery</strong>
+Now
+you could go ahead and program a full fledged data grid or WYSIWYG
+editor, however, unless you have a bit of time to spare this is not the
+ideal solution. As most may realize, jQuery fits very nicely to fill in
+the gaps left by the absence of user controls. For the most part, the
+controls are not going to let you just drag-and-drop, type in a dataset
+and profit but a lot of the pain is kept to a minimum.</p>
+
+<p><strong>Examples</strong>
+<a id="k9ve" title="Ingrid" href="http://www.reconstrukt.com/ingrid/">Ingrid</a>
+<img src="http://ryanlanciaux.github.com/files/ingrid.gif" alt="" />
+If
+you&#8217;re looking for a data grid there are a number of options available
+pictured above is Ingrid. <strong>Flexigrid </strong>is another good one that people
+have <a id="zc7x" title="used with the MVC framework" href="http://www.codeproject.com/KB/aspnet/MVCFlexigrid.aspx">used with the MVC framework</a>, however, <em>their site appears to be down</em> at the moment.
+<a href="http://bassistance.de/jquery-plugins/jquery-plugin-treeview/" target="_blank">Treeviews</a> are available</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/treeview.gif" alt="" /></p>
+
+<p><a href="http://code.google.com/p/jquery-checkbox/" target="_blank">Radio Buttons / Check Boxes
+</a></p>
+
+<p><img src="http://ryanlanciaux.github.com/files/check_box.gif" alt="" /></p>
+
+<p><a href="http://plugins.jquery.com/" target="_blank">Check out the jQuery plugin database</a>.</p>
+
+<p><strong>Getting Started
+</strong>So,
+if you&#8217;ve decided you want to look more into using jQuery plugins &#8211; a
+couple of tips that may make the transition a little easier:</p>
+
+<ul>
+    <li>Obviously,
+familiarize yourself with jQuery. Some of the plugins will work with
+almost 0 configuration but it&#8217;s much better to actually know what&#8217;s
+going on. <a href="http://www.smashingmagazine.com/2008/09/16/jquery-examples-and-best-practices/" target="_blank">View more info on getting started with jQuery</a></li>
+</ul>
+
+
+<ul>
+    <li>The <a href="http://nayyeri.net/blog/using-jsonresult-in-asp-net-mvc-ajax/" target="_blank">JsonResult</a> is your friend &#8211; <a href="http://www.dev102.com/2008/08/19/jquery-and-the-aspnet-mvc-framework/" target="_blank">learn it well</a>.</li>
+</ul>
+
+
+<ul>
+    <li>Read up on what people using different languages are doing. I&#8217;m
+not saying that you should necessarily go out and learn Rails or
+CakePHP/CodeIgniter (although, it is beneficial). but at least look at the
+techniques that programmers from that realm of things are doing &#8211; see how they are implementing their controls.</li>
+</ul>
+
+
+<p>What tips do you have for creating robust user interfaces with the MVC framework?</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[What Constitutes Ethical SEO?]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/12/12/what-constitutes-ethical-seo/"/>
+    <updated>2008-12-12T00:45:00-05:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/12/12/what-constitutes-ethical-seo</id>
+    <content type="html"><![CDATA[<blockquote>
+    <em>&quot;nice post!!thanks for the info..that&#39;s great and cool&quot;<br />
+    &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Random Spammer</em>
+</blockquote>
+
+
+<br />
+
+
+<p>As
+a web developer / someone who has a blog, I understand dealing with
+spam is one of the necessary evils of having a comments enabled on my
+site. For the most part, my site has remained far enough under the
+radar that most spammers do not waste their time. More recently,
+however, there has been a gradual influx of comment spam with a title
+something along the lines of &quot;[Company Name] SEO Test.&quot; There is worse
+spam for sure but it was definitely annoying. <br /></p>
+
+<br />
+
+
+<p>A quick Google
+search pointed me to a Web Development and Search Engine Optimization
+company hosting an SEO competition. I checked the rules and sure enough,
+there was a rule stating that only Ethical SEO Techniques would be
+permitted. Quickly, I emailed the organization one of the comments
+(with url, ip, email, etc) exepecting the offending parties would be
+removed from the competition, eliminating additional garbage comments.
+I was shocked to receive their reply.<br /></p>
+
+<blockquote>
+    <em>Unfortunately
+    this is not against the rules of the competition &ndash; I would encourage
+    you to remove the spamming links for your website to discourage this
+    behaviour but as I said I can&rsquo;t actually penalise this person
+    for making posts on other peoples websites.</em><br />
+    <br />
+    <em>Sorry about the spam.</em><br />
+</blockquote>
+
+
+<p><strong>Gaming the System</strong><br />
+In
+my opinion, Search Engine Optimization should be about perfecting a
+website and the website&#39;s content; not tricking google into thinking
+more people find your content useful than actuality. <a href="http://www.youngentrepreneur.com/blog/2008/12/11/seo-advice-josh-can-help/" target="_blank">Optimizing tags
+and titles</a> is one thing but gaming the system to garner search ranking is wrong
+and is detrimental to the web as a whole. Just because commenting is
+legal and allowable does not make it ethical. Unfortunately, this
+practice will continue to exist as long as it gets results and
+organizations act as enablers to those who would use these tactics for
+financial gain (not to mention increased search engine ranking for the
+enabling organizations). <br /></p>
+
+<br />
+
+
+<p><strong>Link Spam is Digital Graffiti</strong><br /></p>
+
+<div style="float: right">
+<img src="http://ryanlanciaux.github.com/files/spra-paint.jpg" alt="" />
+</div>
+
+
+<p>Imagine
+for a second if companies condoned this practice outside of the Web &#8211;
+what if McDonalds or Nike paid for their logos to be spray painted on
+other&#39;s property? To make matters worse what if after receiving
+numerous complaints they held a press conference and said &quot;soap and
+water removes the paint&quot; or &quot;just hire some guards and the problem will
+go away.&quot;? I think it&#39;s safe to assume that practice would not be
+received so kindly (h/t <a href="http://www.codehinting.com" target="_blank">Matt Braun</a> on the graffiti analogy)!
+Fortunately a link is not as hard to remove as paint but the concept is
+similar. <br /></p>
+
+<br />
+
+
+<p><strong>Solutions anyone?</strong><br />
+Social networks such as
+<a href="http://www.digg.com" target="_blank">Digg</a>, <a href="http://www.dotnetkicks.com" target="_blank">DotNetKicks </a>and <a href="http://www.dzone.com" target="_blank">DZone </a>have always been plagued by those who would
+try to circumvent the rules for personal gain. Where honeypots and
+captcha systems would traditionally help against
+bots, an increasing number of spammers seem to be actual people. The
+administrators of these social networks are constantly coming up with
+more sophisticated ways to combat spam but what should small blogs and
+websites do?<br /></p>
+
+<br />
+
+
+<p>Currently,
+there are a number of methodologies for preventing blog spam that work
+with varying degrees of effectiveness but none are ideal. Obviously,
+you can moderate comments &#8211; this works okay but is painful if you are
+getting a lot of spam or a lot of comments. Also, make sure your
+comment links have a rel=&quot;nofollow&quot; attribute (h/t <a href="http://codeclimber.net.nz" target="_blank">Simone Chiaretta</a>). Google
+does not take nofollow links into account when calculating page rank.
+Although this does not reward the spammer, it does not prevent spam. <br /></p>
+
+<br />
+
+
+<p>What I would like to see is a centralized comment system like Disqus or
+IntenseDebate that lets a user login with OpenID, Google Friend
+Connect, Microsoft LiveID, Facebook Connect (whichever the user wants).
+There would be a standard vote up / down vote for every comment a user
+makes where the overall votes across all sites would determine the
+users rating. Casting a down vote would remove a minimal amount of
+points from the voter to prevent someone from going on a down vote
+rampage (exactly how <a href="http://www.stackoverflow.com" target="_blank">StackOverflow </a>works). Site owners could set
+restrictions that would prevent users with a rating less than a
+specified number from posting on their site. This may be idealistic and
+introduce a new realm of privacy concerns but if done properly, I think it
+would help eliminate a great deal of spam.<br /></p>
+
+<br />
+
+
+<p><strong>Wrapping things up<br />
+</strong>Although there are many less-than ethical tactics to increasing a
+site&#39;s ranking, site structure and site content are the best methods of
+SEO. I would love to hear your thoughts, ideas and any suggestions you
+have in eliminating link spam.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[What is your strategy for becoming a better developer?]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/09/21/what-is-your-strategy-for-becoming-a-better-developer/"/>
+    <updated>2008-09-21T11:59:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/09/21/what-is-your-strategy-for-becoming-a-better-developer</id>
+    <content type="html"><![CDATA[<p>
+<a href="http://www.codethinked.com">Justin Etheredge</a> recently posted <a href="http://www.codethinked.com/post/2008/09/20/What-is-your-strategy-for-becoming-a-better-developer.aspx" target="_blank">a question</a> for the community on <a href="http://www.codethinked.com" target="_blank">his site</a>. I think this is a good thing to think about because my definition of a good developer is one who continually tries to be better at their craft. My suggestions may be very similar to others but I would love to hear feedback.
+</p>
+
+
+<p>
+<strong>Read</strong> : the first suggestion I have is a bit obvious. I like to read books and blogs on programming &#8211; especially methodologies and architecture. Its hard to find good books becuase there seems to be an over saturation, many of which are not good. That being said, there are quite a few that I would still recommend : <a href="http://www.amazon.com/Head-First-Design-Patterns/dp/0596007124" target="_blank">Head First Design Patterns</a>, <a href="http://www.amazon.com/Dont-Make-Me-Think-Usability/dp/0321344758/ref=pd_bbs_sr_1?ie=UTF8&amp;s=books&amp;qid=1222029313&amp;sr=8-1" target="_blank">Don&#39;t Make Me Think</a> (not really a programming book but important for anyone that writes applications with end-users) and <a href="http://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670/" target="_blank">Code Complete</a>. Additionally I&#39;m really looking foward to <a href="http://www.amazon.com/gp/product/047043399X/" target="_blank">Beginning ASP.NET MVC</a> by <a href="http://codeclimber.net.nz/" target="_blank">Simone </a>and <a href="http://nayyeri.net/" target="_blank">Keyvan</a>. As for blogs, there are tons I subscribe to but a few I&#39;ll mention are <a href="http://www.codethinked.com" target="_blank">Justin</a>&#39;s, <a href="http://www.noop.nl" target="_blank">Jurgen Appelo</a>&#39;s and <a href="http://www.diditwith.net" target="_blank">Dustin Campbell</a>&#39;s.
+</p>
+
+
+<p>
+<strong>Share </strong>:&nbsp; I first started my site to help myself and hopefully others with programming topics. As I chose a subject to write about, I realized I did a lot more research than I would if it was just something I wanted to learn. Additionally, there was a lot of experience that I gained from the comments on the articles. Sharing information with a high level of transparency helps you become a better developer because you will get feedback on your work.
+</p>
+
+
+<p>
+<strong>Set Goals</strong> : Set goals to learn new languages / techniques. I start off by reading blogs/books/articles then think of achievable pet project to use these new techniques on. The progress on the project can be used as the baseline for determining your progress. This is not saying you would be an expert in the new area but, in my opinion, is one of the best ways to learn.
+</p>
+
+
+<p>
+There are tons of additional ways to become a better developer and I would love to hear your suggestions!
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Theme Generator on Channel9!]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/08/18/theme-generator-on-channel9/"/>
+    <updated>2008-08-18T12:36:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/08/18/theme-generator-on-channel9</id>
+    <content type="html"><![CDATA[<p>
+Wow, the <a href="http://www.frickinsweet.com/tools" target="_blank">theme generator</a> that my <a href="http://www.frickinsweet.com/joelroxor" target="_blank">brother</a> and I made is on <a href="http://channel9.msdn.com/shows/This+Week+On+Channel+9/This-Week-on-C9-Christian-LittleGuru-Liensberger-VS-2008-and-NET-Framework-35-SP1/" target="_blank">Channel 9</a>.<br />
+</p>
+
+
+<div>
+<a style="text-decoration: none" href="http://go.microsoft.com/fwlink/?LinkID=124807">
+<img style="border-style: none" src="http://go.microsoft.com/fwlink/?LinkId=108181" alt="Get Microsoft Silverlight" />
+</a>
+</div>
+
+
+<p>
+It&#39;s in the video at about 11:30. Thanks to <a href="http://blogs.msdn.com/danielfe/" target="_blank">Dan</a> and team for mentioning it! <a href="http://channel9.msdn.com/shows/This+Week+On+Channel+9/This-Week-on-C9-Christian-LittleGuru-Liensberger-VS-2008-and-NET-Framework-35-SP1/" target="_blank">View the channel 9 site here</a>.
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Visual Studio Theme Generator]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/08/07/visual-studio-theme-generator/"/>
+    <updated>2008-08-07T08:36:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/08/07/visual-studio-theme-generator</id>
+    <content type="html"><![CDATA[<p>
+This is a really short post but I wanted to pass the word along. I just finished a fun little ASP.NET MVC Application to generate Visual Studio
+themes based off of 3 given colors. I have always felt that selecting
+every color to make a coherent theme is way too repetitive. This web
+application automatically chooses complements / contrasts based off
+your initial color selections (and uses jQuery to let you preview your
+theme before creating). I will be making another, more detailed post later that will explain how it all works but for now, <a href="http://www.frickinsweet.com/tools">check it out</a> and let me know what you think.
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+
+<p>
+<a href="http://www.frickinsweet.com/tools">View the application </a>
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How did I get started in software development?]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/07/08/how-did-i-get-started-in-software-development/"/>
+    <updated>2008-07-08T20:16:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/07/08/how-did-i-get-started-in-software-development</id>
+    <content type="html"><![CDATA[<p>
+<a href="http://www.codethinked.com" target="_blank">
+Justin Etheredge</a> recently tagged me to write up how I got started in software development (you are probably familiar with the meme started by <a href="http://www.michaeleatonconsulting.com/blog/archive/2008/06/04/how-did-you-get-started-in-software-development.aspx" target="_blank">Michael Eaton</a>). Without any further explanation, here goes:
+</p>
+
+
+<p>
+<strong>How old were you when you first started programming?</strong>
+</p>
+
+
+<p>
+I first started programming when I was 10 or 11 (I don&#39;t remember exactly).
+</p>
+
+
+<p>
+<strong>How did you get started in programming?</strong>
+</p>
+
+
+<p>
+My interest in programming initially began as a general interest in computer games. My dad showed me how to get around in DOS and pulled up some games in QBasic. It wasn&#39;t long after that I started messing with the code to see what would happen if I changed things. From there, I tried writing some stuff on my own spending a lot of time in the syntax help.&nbsp;
+</p>
+
+
+<p>
+<strong>What was your first language?</strong>
+</p>
+
+
+<p>
+BASIC
+</p>
+
+
+<p>
+<strong>What was the first real program you wrote?</strong>
+</p>
+
+
+<p>
+Depending on the definition, the first real program I wrote was a game that worked in an AOL chat room. When I was 13, one of my friends showed me this thing called a scrambler. The scrambler would let you enter a word, send the scrambled word to the chat and keep score of who got the word right first, etc. I don&#39;t know why but I thought it would be an interesting thing to try and replicate. About a month later, I had finished writing one using the VB and the Windows API. It was not very useful but I learned a lot that way I guess.
+</p>
+
+
+<p>
+<strong>What languages have you used since you started programming?</strong>
+</p>
+
+
+<p>
+C#, VB.NET, Java, JavaScript, Ruby, Perl, PHP, BASIC, C, C++, F# (and others)
+</p>
+
+
+<p>
+<strong>What was your first professional programming gig?</strong>
+</p>
+
+
+<p>
+When I was in Highschool/College I did some freelance websites/applications mainly for construction and contracting companies. After college my first full-time programming job was working at Franklin University on the development team (websites / web applications).
+</p>
+
+
+<p>
+<strong>If you knew then what you know now, would you have started programming?</strong>
+</p>
+
+
+<p>
+Absolutely.
+</p>
+
+
+<p>
+<strong>If there is one thing you learned along the way that you would tell new developers, what would it be?</strong>
+</p>
+
+
+<p>
+Be continuously learning.
+</p>
+
+
+<p>
+<strong>What&#39;s the most fun you&#39;ve ever had programming?</strong>&nbsp;
+</p>
+
+
+<p>
+I honestly couldn&#39;t tell you &#8211; there are a lot of projects that have been really fun. I especially like when there&#39;s some new kind of challenge I haven&#39;t encountered before.
+</p>
+
+
+<p>
+<strong>Who are you calling out?</strong>&nbsp;
+</p>
+
+
+<p>
+<a href="http://www.codehinting.com" target="_blank">Matt Braun</a>
+</p>
+
+
+<p>
+<a href="http://blog.sanzenbacher.com" target="_blank">Scott Sanzenbacher&nbsp;</a>
+</p>
+
+
+<p>
+<a href="http://blog.wekeroad.com" target="_blank">Rob Conery</a>
+</p>
+
+
+<p>
+<a href="http://www.noop.nl/" target="_blank">Jurgen Appelo </a>
+</p>
+
+
+<p>
+<a href="http://www.dannydouglass.com/" target="_blank">Danny Douglass</a>
+</p>
+
+
+<p>
+<a href="http://www.ayende.com/Blog/" target="_blank">Oren Eini</a>
+</p>
+
+
+<p>
+&nbsp;
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Quick Tip - Visual Studio Keybindings]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2008/06/05/quick-tip-visual-studio-keybindings/"/>
+    <updated>2008-06-05T13:08:00-04:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2008/06/05/quick-tip-visual-studio-keybindings</id>
+    <content type="html"><![CDATA[<p>
+This may be common knowledge but it was new to me. If you&#39;re ever hand mangling control position in a winforms designer you can setup keybindings for Bring to Front Send to Back options that are normally available on the controls context menu. This is really useful if you have layers of controls and you can&#39;t always get to the Context.
+</p>
+
+
+<ol>
+    <li>Click on Tools -&gt; Options<br />
+    </li>
+    <li>Under Environment, Select the Keyboard menu</li>
+    <li>Type &quot;Format.BringtoFront&quot; (or &quot;Format.SendtoBack&quot;) in the &quot;Show Commands Containing&quot; box</li>
+    <li>Choose your shortcut keys <br />
+    </li>
+    <li>Press Assign</li>
+</ol>
+
+
+<p>
+<br />
+<img src="http://ryanlanciaux.github.com/files/BringToFront.gif" alt="" />
+<br />
+<br />
+Thanks to my friend Ross for pointing this out.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

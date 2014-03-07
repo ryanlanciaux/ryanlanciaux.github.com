@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Diving into Ruby on Rails - Ryan Lanciaux</title>
+  <meta name="author" content="Ryan Lanciaux">
+
+  
+  <meta name="description" content="This past weekend I started really digging into Ruby on Rails.&nbsp;&nbsp;For&nbsp;a
+while now, I have&nbsp;known a little bit of ruby (by reading &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ryanlanciaux.github.com/blog/2008/02/06/diving-into-ruby-on-rails">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Ryan Lanciaux" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Ryan Lanciaux</a></h1>
+  
+    <h2>Random programming blog.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ryanlanciaux.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Diving Into Ruby on Rails</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-06T19:09:00-05:00" pubdate data-updated="true">Feb 6<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>
+This past weekend I started really digging into <a href="http://www.rubyonrails.org/" target="_blank">Ruby on Rails</a>.&nbsp;&nbsp;For&nbsp;a
+while now, I have&nbsp;known a little bit of ruby (by reading <a href="http://poignantguide.net/ruby/" target="_blank">Why&#39;s Poignant
+Guide</a> and messing around a little with Rails), however,&nbsp;I wanted to
+have a much stronger understanding in it &#8211; even if it&#39;s only for the
+concepts.&nbsp;
+</p>
+
+
+<p>
+&nbsp;
+<br />
+<strong>Why Rails &#8211; Why Now?</strong>
+</p>
+
+
+<p>
+Rails has been publicly available since July 2004; some may ask why
+I am just now becoming interested in the framework. There are actually
+several main reasons&#8230; 
+</p>
+
+
+<ol>
+    <li>It is a good educational
+    resource in the <a href="http://en.wikipedia.org/wiki/Model-view-controller" target="_blank">MVC Pattern</a>. This applies to many implementations such
+    as <a href="http://weblogs.asp.net/scottgu/archive/2007/10/14/asp-net-mvc-framework.aspx" target="_blank">Microsoft MVC</a>, <a href="http://www.symfony-project.org/" target="_blank">Symfony </a>and <a href="http://www.cakephp.org/" target="_blank">Cake </a>on PHP and a whole slew of <a href="http://merbivore.com/" target="_blank">other</a>
+    frameworks.</li>
+    <li>Rails is becoming a more viable option with <a href="http://jruby.codehaus.org/" target="_blank">JRuby </a>and the forthcoming releases of <a href="http://www.ironruby.net/" target="_blank">IronRuby</a>.</li>
+    <li>The concept of <a href="http://glu.ttono.us/articles/2005/10/27/the-joy-of-migrations" target="_blank">DB Migrations</a> is very nice &#8211; especially when you
+    have encountered the difficulty involved in placing your <a href="http://www.codinghorror.com/blog/archives/001050.html" target="_blank">database under source control</a>.</li>
+</ol>
+
+
+<p>
+&nbsp;
+</p>
+
+
+<p>
+<strong>Setting up the environment</strong>
+</p>
+
+
+<ol>
+    <li>
+    <div>
+    I needed to configure my computer to run the rails apps. <a href="http://www.netbeans.org/" target="_blank">NetBeans
+    </a>seemed like a good idea to me because of the simple JRuby integration
+    (other options <a href="http://www.aptana.com/" target="_blank">Aptana Studio</a>, <a href="http://www.eclipse.org/" target="_blank">Eclipse</a>, your favorite text editor w/ <a href="http://instantrails.rubyforge.org/wiki/wiki.pl" target="_blank">Instant rails</a>).&nbsp;
+    </div>
+    </li>
+    <li>
+    <div>
+    I already had <a href="http://www.mysql.com/" target="_blank">MySql </a>installed on my computer so there was no need
+    to set up a database server (<a href="http://www.sqlite.org/" target="_blank">Sqlite </a>was a tempting option as well). 
+    </div>
+    </li>
+    <li>
+    <div>
+    Created a series of databases (as needed)&nbsp;for the various test&nbsp;rails apps to write to.
+    </div>
+    </li>
+    <li>
+    <div>
+    Downloaded and installed <a href="http://webyog.com/en/" target="_blank">MySqlYog </a>Community edition. I knew I was
+    going to be handling most of my database stuff with the Rails
+    ActiveRecord implementation and db migrations BUT I still wanted to see
+    what was going on inside the db.
+    </div>
+    </li>
+</ol>
+
+
+<p>
+&nbsp;
+</p>
+
+
+<p>
+<strong>Initial Impressions</strong>
+</p>
+
+
+<p>After the initial hour or so of
+setting up my environment, I wrote some quick test applications
+(following some tutorials, at first obviously). I really liked the
+principle of Convention over Configuration.&nbsp; This was apparent in many
+areas of the framework such as the <a href="http://wiki.rubyonrails.org/rails/pages/UnderstandingGenerators" target="_blank">generator</a> / <a href="http://rake.rubyforge.org/" target="_blank">rake </a>tools and the easy
+application configuration in the <a href="http://railscasts.com/episodes/85" target="_blank">.yam</a>l files. I can see how this may
+not be the best choice for certain applications but for a lot of web
+applications, it seems like it will be a good fit.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ryan Lanciaux</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-06T19:09:00-05:00" pubdate data-updated="true">Feb 6<span>th</span>, 2008</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/legacy/'>legacy</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ryanlanciaux.github.com/blog/2008/02/06/diving-into-ruby-on-rails/" data-via="ryanlanciaux" data-counturl="http://ryanlanciaux.github.com/blog/2008/02/06/diving-into-ruby-on-rails/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2008/01/27/6-tips-for-better-web-project-quoting/" title="Previous Post: 6 Tips for Better Web Project Quoting">&laquo; 6 Tips for Better Web Project Quoting</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2008/02/24/learning-a-new-language/" title="Next Post: Learning a new Language">Learning a new Language &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/10/16/fake-popovers-for-angular-xeditable/">Fake popovers for Angular-xeditable</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/17/learning-angularjs-iii-routes/">Learning AngularJS III: Routes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/19/angularjs-filtering-slash-ordering/">Learning AngularJS II : Filtering / Ordering</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin/">Note to self: escape LiquidTags with Jekyll raw tag plugin</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/04/learning-angularjs/">Learning AngularJS</a>
+      </li>
+    
+  </ul>
+</section>
+<section class='goodreads-aside'>
+  <h1><a href="http://www.goodreads.com" target="_blank">Status on Goodreads</a></h1>
+  <ul>
+    <li>
+            <a href='http://www.goodreads.com/user_status/show/31832060' target='blank'>Ryan is on page 100 of 509 of Wool Omnibus</a>
+            <span class='tiny'>(2013-08-19)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/30811077' target='blank'>Ryan is on page 124 of 324 of Twice a Spy</a>
+            <span class='tiny'>(2013-07-27)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/30581615' target='blank'>Ryan is on page 161 of 240 of Prince Caspian</a>
+            <span class='tiny'>(2013-07-22)</span></li>
+  </ul>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ryanlanciaux">@ryanlanciaux</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ryanlanciaux',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Ryan Lanciaux -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

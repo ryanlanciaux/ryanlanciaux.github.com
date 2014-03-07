@@ -1,0 +1,1237 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ryan Lanciaux</title>
+  <meta name="author" content="Ryan Lanciaux">
+
+  
+  <meta name="description" content="I was recently working on a project with AngularJS and xeditable (if you&#8217;re not familiar, xeditable is an awesome library for inline editing). &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ryanlanciaux.github.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Ryan Lanciaux" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Ryan Lanciaux</a></h1>
+  
+    <h2>Random programming blog.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ryanlanciaux.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/10/16/fake-popovers-for-angular-xeditable/">Fake Popovers for Angular-xeditable</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-16T21:58:00-04:00" pubdate data-updated="true">Oct 16<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I was recently working on a project with <a href="http://www.angularjs.org">AngularJS</a> and <a href="http://vitalets.github.io/x-editable/">xeditable</a> (if you&#8217;re not familiar, xeditable is an awesome library for inline editing). There is an <a href="http://vitalets.github.io/angular-xeditable/">Angular version of xeditable</a> but the popover editing functionality is not implemented yet (it&#8217;s in the roadmap). Instead of using the original version of xeditable and implementing custom directives or try to add the popover functionality to the project, I decided to see if I could make the popover using just CSS &#8211; this happened to be more inline with my timeframe.</p>
+
+<p>Take a look at the original (non-angular) popover:</p>
+
+<p><img src="/files/original_xeditable.png" /></p>
+
+<p>Starting out, I noticed that clicking on the link of an xeditable element was showing an input element (and buttons) in a form and hiding the link. To mimic the popover, the link and the form should both be visible when the form was activated, however, the form should be positioned a bit higher than the link. Working with a forked version of <a href="http://jsfiddle.net/NfPcH/3/">vitalets&#8217; jsfiddle</a> example, I wrapped the initial links in <code>&lt;span class='item-wrapper'&gt;&lt;/span&gt;</code> &#8211; from there, I edited the link and the form&#8217;s CSS as follows</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.item-wrapper</span> <span class="nt">a</span><span class="p">{</span>
+</span><span class='line'>    <span class="c">/* make the link always show up */</span>
+</span><span class='line'>    <span class="k">display</span><span class="o">:</span> <span class="k">inline</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.item-wrapper</span><span class="p">{</span>
+</span><span class='line'>    <span class="c">/* make absolutely positioned children constrained to this box*/</span>
+</span><span class='line'>    <span class="k">position</span><span class="o">:</span> <span class="k">relative</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.item-wrapper</span> <span class="nt">form</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">background</span><span class="o">:</span> <span class="m">#FFF</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="m">#AAA</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">5px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">left</span><span class="o">:</span> <span class="m">50</span><span class="o">%</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">/* half the width */</span>
+</span><span class='line'>    <span class="k">margin-left</span><span class="o">:</span> <span class="m">-110px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding</span><span class="o">:</span> <span class="m">7px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">top</span><span class="o">:</span> <span class="m">-55px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span> <span class="m">220px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">z-index</span><span class="o">:</span> <span class="m">101</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="/files/xeditable_popover_1.png" /></p>
+
+<p>It&#8217;s a step in the right direction, however, doesn&#8217;t really look exactly like we want. To get the triangle to show up below the pop-up, I thought it would be good to use the <a href="http://css-tricks.com/snippets/css/css-triangle/">technique for creating a triangle on css-tricks</a> as an :after filter (please <a href="http://css-tricks.com/snippets/css/css-triangle/">check the link</a> for more info on that because how it works is a bit outside the scope of this post).</p>
+
+<p><img src="/files/xeditable_popover_2.png" /></p>
+
+<p> This works but it looks funny because the popover has a border but the triangle is just a solid color. Additionally, we cannot just toss a border on the :after filter since we&#8217;re using the border to create the triangle. What I ended up doing is using a :before filter with a width of 10px and a background color the same as the border color followed by an :after filter 1px narrower and the same background color as the popover.</p>
+
+<p> <img src="/files/xeditable_popover_3.png" /></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.item-wrapper</span> <span class="nt">form</span><span class="nd">:before</span><span class="p">{</span>
+</span><span class='line'>    <span class="k">content</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-left</span><span class="o">:</span> <span class="m">10px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-right</span><span class="o">:</span> <span class="m">10px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-top</span><span class="o">:</span> <span class="m">10px</span> <span class="k">solid</span> <span class="m">#AAA</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">position</span><span class="o">:</span><span class="k">absolute</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">bottom</span><span class="o">:-</span><span class="m">10px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">left</span><span class="o">:</span><span class="m">100px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.item-wrapper</span> <span class="nt">form</span><span class="nd">:after</span><span class="p">{</span>
+</span><span class='line'>    <span class="k">content</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span><span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">height</span><span class="o">:</span><span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-left</span><span class="o">:</span> <span class="m">9px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-right</span><span class="o">:</span> <span class="m">9px</span> <span class="k">solid</span> <span class="k">transparent</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border-top</span><span class="o">:</span> <span class="m">9px</span> <span class="k">solid</span> <span class="m">#FFF</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">position</span><span class="o">:</span><span class="k">absolute</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">bottom</span><span class="o">:-</span><span class="m">9px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">left</span><span class="o">:</span><span class="m">101px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is a <a href="http://jsfiddle.net/EWcUw/4/">jsfiddle of the example available here</a>. A few things to note&#8230; I am only using this with the Angular-xeditable dropdowns and text boxes so the other controls may or may not work. Additionally, I added some javascript (not in the examples) to hide any visible popovers when displaying a new one. I was running into some issues displaying multiple (or displaying the same one multiple times).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/17/learning-angularjs-iii-routes/">Learning AngularJS III: Routes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-17T19:47:00-04:00" pubdate data-updated="true">Aug 17<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>So far we&#8217;ve covered the basics of <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">using AngularJS to interact with RESTful services</a> and <a href="http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/">Filtering / Ordering views in AngularJS</a>. Using <a href="http://docs.angularjs.org/tutorial/step_07">AngularJS Routes</a>, we are going to add a bit of structure to this example app.</p>
+
+<p>If you have not already, please take a look at <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a> and <a href="http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/">Part 2</a> as we will be working with the app we have started there&#8230;</p>
+
+<p>First off, lets open our index.ejs file. As you may notice this file is an unstructured mess. We want to break apart the controllers and templates into their own files so our architecture of our demo app is a bit more clear. When we&#8217;re done, we will have the following files:</p>
+
+<ul>
+<li><strong>app.js</strong> under /assets/js/angular/</li>
+<li><strong>controllers.js</strong> under /assets/js/angular/</li>
+<li><strong>list.html</strong> under /public/templates/ &#8211; there is <a href="https://github.com/balderdashy/sails/issues/273">a better way to use Angular with Sails</a>, however, for the sake of example this is okay</li>
+<li><strong>detail.html</strong> under /public/templates/</li>
+<li><strong>edit.html</strong> under /public/templates/</li>
+</ul>
+
+
+<h2>app.js</h2>
+
+<p>App.js is where we&#8217;re storing our module definition (that we added in <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a>), our factory defintion and our routes. The factory is exactly the same as before except we&#8217;ve added an update endpoint.</p>
+
+<h4>Resource</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">foodApp</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;Food&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$resource&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$resource</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">$resource</span><span class="p">(</span><span class="s1">&#39;/food/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span><span class="s1">&#39;@id&#39;</span><span class="p">},</span> <span class="p">{</span> <span class="nx">update</span><span class="o">:</span> <span class="p">{</span><span class="nx">method</span><span class="o">:</span><span class="s1">&#39;PUT&#39;</span> <span class="p">}</span> <span class="p">}</span> <span class="p">);</span>
+</span><span class='line'><span class="p">}]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default, the <a href="http://docs.angularjs.org/api/ngResource.$resource">Angular resource module</a> has get/save/query/remove/delete methods but no update. What&#8217;s more, we want to make sure we are using a PUT method for storing our modified food items so Sails knows that we&#8217;re trying to modify an existing record. Thankfully, we can add custom actions (as you may have noticed above) by simply adding a hash after our route parameters object in the resource defintion like so <code>{ update: {method:'PUT' } }</code>. Since this is just a hash, you can add as many definitions as you would like (e.g. <code>{ update: {method: 'PUT' }, somethingelse: {method: 'DELETE'} }</code>).</p>
+
+<h4>Routing</h4>
+
+<p>In <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a> we are showing/hiding a form based on a $scope variable on our controller. While this works, it may be a bit cleaner to use routing and separate our views by their function. Routing in Angular is pretty straight forward &#8211; especially if you have routing experience in other frameworks.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">foodApp</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">&#39;$routeProvider&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$routeProvider</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">$routeProvider</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/food&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;/templates/list.html&#39;</span><span class="p">,</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">FoodController</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/food/edit/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;/templates/edit.html&#39;</span><span class="p">,</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">FoodController</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/food/create&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;/templates/edit.html&#39;</span><span class="p">,</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">FoodController</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="s1">&#39;/food/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">templateUrl</span><span class="o">:</span> <span class="s1">&#39;/templates/detail.html&#39;</span><span class="p">,</span> <span class="nx">controller</span><span class="o">:</span> <span class="nx">FoodController</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">otherwise</span><span class="p">({</span><span class="nx">redirectTo</span><span class="o">:</span> <span class="s1">&#39;/food&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="p">}]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When the URL matches one of the route values, the visitor will be directed to the template and given controller (you will notice that we&#8217;re using the same controller for all our routes). Additionally, the routes that have :id will have a route parameter of id available in the controller (more on this later). If none of the routes are matched we default to /food. We won&#8217;t focus too much on the views becuase they are mostly the same as our old index.ejs, however, they are available in <a href="https://gist.github.com/ryanlanciaux/6257478">the gist created for this post</a>.</p>
+
+<h2>controllers.js</h2>
+
+<p>Our controller is mostly the same as before except we&#8217;re no longer maintaining which page we&#8217;re showing. The whole controller is available as <a href="https://gist.github.com/ryanlanciaux/6257478">a gist</a> however, some of the more interesting parts are as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span><span class="p">(</span><span class="nx">$routeParams</span><span class="p">.</span><span class="nx">id</span><span class="p">){</span>
+</span><span class='line'> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span> <span class="o">=</span> <span class="nx">Food</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span><span class="nx">id</span><span class="o">:</span> <span class="nx">$routeParams</span><span class="p">.</span><span class="nx">id</span><span class="p">});</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Food</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">food</span> <span class="o">=</span> <span class="nx">Food</span><span class="p">.</span><span class="nx">query</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is checking for the route parameter that we are setting in our route &#8211; if it&#8217;s there, we get the individual food item with that ID. When the parameter is not there, we get all the food items to be displayed in a list (and initialize a Food item for creates).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">addFood</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">id</span> <span class="o">&amp;&amp;</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">id</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+</span><span class='line'>        <span class="nx">Food</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span><span class="nx">id</span><span class="o">:</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">id</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">food</span><span class="p">){</span>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">type</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">percentRemaining</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">percentRemaining</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">quantity</span> <span class="o">=</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">quantity</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">food</span><span class="p">.</span><span class="nx">$update</span><span class="p">({},</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>              <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span> <span class="s2">&quot;/&quot;</span> <span class="p">);</span>
+</span><span class='line'>            <span class="p">});</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">currentFood</span><span class="p">.</span><span class="nx">$save</span><span class="p">();</span>
+</span><span class='line'>        <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span> <span class="s2">&quot;/&quot;</span> <span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this method we are adding our food item or updating an existing food item. We start by checking the food item&#8217;s id. If it has an id, we go ahead and get the server version and update the properties with the form values. If it doesn&#8217;t have an id, we save the food item and redirect to the list view. Food.$save is calling the built in resource action where Food.$update is calling the custom resource action we created above &#8211; both of these actions then interact with the Sails API on the server.</p>
+
+<h2>Wrapping Up</h2>
+
+<p>So there we have it. While this is still an example app &#8211; it&#8217;s way more organized than the previous iterations. The code files are available in <a href="https://gist.github.com/ryanlanciaux/6257478">this gist</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/19/angularjs-filtering-slash-ordering/">Learning AngularJS II : Filtering / Ordering</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-19T20:38:00-04:00" pubdate data-updated="true">Jun 19<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Last time I wrote about some basic AngularJS functionality for interacting with a RESTful API. We&#8217;re going to continue where with left off with our food inventory app to add some filtering/sorting . <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Check out the first post</a> if you missed it, as we will be depending heavily on what is covered there.</p>
+
+<h3>Filtering</h3>
+
+<p>Lets say we want to search through our food inventory for something specific like oranges. We first need to open the index.ejs (that we created in <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Part 1</a>) and add the following right before our table definition.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;filter&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;filter&quot;</span><span class="nt">&gt;</span>filter:<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;filter&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;filter&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The div isn&#8217;t entirely necessary, however, it could be useful for applying styling (it&#8217;s pretty ugly as it sits). Now that the filter definition is complete, we need to go back to our repeater definition and pipe the results through the filter as so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food | filter:filter&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In a console in your project directory &#8211; fire off a <code>sails lift</code> command, navigate to http://localhost:1337 in your browser of choice and start typing in the filter input box. You&#8217;ll notice that all of the model bound columns are available to be filtered (e.g. entering fruit displays only food items that were classified as fruit &#8211; typing in orange shows only any records with orange in the name etc. etc.). Also, you may notice that this is not case sensitive.</p>
+
+<h3>Ordering</h3>
+
+<p>Now lets add the ability to sort the data in our table. If we followed the basic example on the <a href="http://docs-angularjs-org-dev.appspot.com/api/ng.filter:orderBy">AngularJS docs site</a>, we could simply create a sort variable that we would modify in the table headers and reference in the orderBy of our repeater. The value of the sort property should be the names of one of our columns.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;sort=&#39;name&#39;&quot;</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food | filter:filter | orderBy:sort&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To handle ascending / descending we could do something like this (however, as we&#8217;ll see in a minute this may not be an ideal solution):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;sort=&#39;name&#39;; reverse=!reverse&quot;</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food | filter:filter | orderBy:sort:reverse&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Unfortunately, the reverse value would be shared across all columns. That means that if I click the &#8216;Name&#8217; column and sort it descending and then click the &#8216;Type&#8217; column &#8211; we will notice that it is sorting in ascending order. The problem is that the shared reverse variable is never getting reset when sorting by a different column.</p>
+
+<p>To get around this, lets move our sorting functionality to the controller so we&#8217;re not duplicating a lot of code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">sort</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">changeSort</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">sort</span> <span class="o">==</span> <span class="nx">value</span><span class="p">){</span>
+</span><span class='line'>      <span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span> <span class="o">=</span> <span class="o">!</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">sort</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">reverse</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&#8217;re creating the sort and reverse properties that are referenced in the orderBy of the repeater (<code>orderBy:sort:reverse</code>) as well as a function to manage whether to change the sort column or simply change the value of reverse. If you click the &#8216;Name&#8217; column several times, the sort will not change, however, the reverse value will (which wil trigger ascending / descending order).</p>
+
+<p>Next we need to change our table headers so they call this function when clicked. As before, the column&#8217;s property name will be passed as a parameter to this function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;changeSort(&#39;name&#39;)&quot;</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;changeSort(&#39;type&#39;)&quot;</span><span class="nt">&gt;</span>Type<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span><span class='line'><span class="nt">&lt;th&gt;&lt;a</span> <span class="na">ng-click=</span><span class="s">&quot;changeSort(&#39;expiration&#39;)&quot;</span><span class="nt">&gt;</span>Expiration<span class="nt">&lt;/a&gt;&lt;/th&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point fire up the page and see how everything is looking. The sorting / filtering is all working as intended. I have created <a href="https://gist.github.com/ryanlanciaux/5822098">a gist of the newly created index.ejs</a> file that you can <a href="https://gist.github.com/ryanlanciaux/5822098">view here</a>. In the next part of this series we will look at routes and editing our data.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin/">Note to Self: Escape LiquidTags With Jekyll Raw Tag Plugin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-05T21:57:00-04:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When reviewing <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">my recent AngularJS post</a>, I noticed that none of my template display bindings were showing up. LiquidTags use the same {{  }} style bindings as AngularJS (and was trying to render my Angular expressions as LiquidTags). Luckily, there is a <a href="https://gist.github.com/phaer/1020852">jekyll plugin called &#8216;raw tag&#8217;</a> for rendering data that you do not want interpreted as a LiquidTag / etc. Simply place this raw content between {% raw %} and {% endraw %}</p>
+
+<p>For more information <a href="http://stackoverflow.com/questions/3426182/how-to-escape-liquid-template-tags">check out this Stackoverflow Post</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/04/learning-angularjs/">Learning AngularJS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-04T21:39:00-04:00" pubdate data-updated="true">Jun 4<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have recently been playing around with some of the client-side MV_ frameworks. I have avoided Angular for quite some time because I was not a fan of using ng-click (etc.) HTML attributes to fire off js events. The more I&#8217;ve used the framework, however, the less of an issue that has been to me.</p>
+
+<p>As noted in a <a href="http://ryanlanciaux.github.io/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/">previous post</a>, another framework I have been using a bit is <a href="http://www.sailsjs.com">SailsJS</a>. While this post is not about Sails, I am using it as the REST endpoints of the AngularJS application.</p>
+
+<p>First off, sails needs to be installed. Assuming you have <a href="https://github.com/joyent/node/wiki/Installation">node installed</a>, just <code>npm install -g sails</code> From there, create a new sails project from the command line <code>sails new foodinventory</code> and cd into that directory. Once in the directory, create a model <code>sails generate model food</code> and a controller so we can access the model <code>sails generate controller food</code>. Open up api/models/Food.js and edit the file to look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="cm">/*---------------------</span>
+</span><span class='line'><span class="cm">  :: Food</span>
+</span><span class='line'><span class="cm">  -&gt; model</span>
+</span><span class='line'><span class="cm">---------------------*/</span>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">attributes</span>  <span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;STRING&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;STRING&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">expiration</span><span class="o">:</span> <span class="s1">&#39;DATE&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">quantity</span><span class="o">:</span> <span class="s1">&#39;STRING&#39;</span><span class="p">,</span> <span class="c1">//for sake of example, ignore that this is a string...</span>
+</span><span class='line'>    <span class="nx">percentRemaining</span><span class="o">:</span> <span class="s1">&#39;INTEGER&#39;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now go back to the console and type <code>sails lift</code>. You should be presented with a cool ascii sailboat and a message stating that sails is running on port 1337. Fire up your browser and head to http://localhost:1337 &#8211; just to see the initial sails page. From there, navigate to /food &#8211; this should return an empty array, which is the JSON representation what&#8217;s currently stored in our food list.</p>
+
+<p>Add a couple of records to the Food list by visiting http://localhost:1337/food/create?name=Spinach&amp;type=Vegetable&amp;expiration=2013-06-20&amp;quantity=16oz&amp;percentRemaining=75 and /food/create with other properties. Now that you have a couple records in, lets start with the Angular stuffs.</p>
+
+<p>  <em>Please note that there are better ways to utilize the sails framework to write single page applications with Angular (see <a href="https://github.com/balderdashy/sails/issues/273">here</a> and <a href="https://github.com/balderdashy/sails/issues/205">here</a>) &#8211; For the sake of example we&#8217;re setting everything up in very few files.</em></p>
+
+<p>Open up your Layout file which is located in <code>views/layout.ejs</code> and add the following includes before <code>&lt;%- assets.js() %&gt;</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'> <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'> <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'> <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'> <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-resource.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From here we&#8217;re going to edit the default view. We can keep the same div structure as the sails default view but we&#8217;re stripping out all the CSS and other content &#8211; we should have something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'> <span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">&quot;header&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>   Food Inventory
+</span><span class='line'> <span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'> <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    Some Content Goes Here
+</span><span class='line'> <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'> <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;footer&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;a</span> <span class="na">target=</span><span class="s">&quot;_blank&quot;</span> <span class="na">href=</span><span class="s">&quot;http://sailsjs.com&quot;</span> <span class="na">class=</span><span class="s">&quot;copyright&quot;</span><span class="nt">&gt;</span>Built with Sails.js<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'> <span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Upon refreshing this page, you can see that not much is going on; we should totally do something about that. First, we want to add the ng-app directive to the html tag in layout.ejs (it should now look like <code>&lt;html ng-app="foodApp"</code>). This <a href="http://docs.angularjs.org/tutorial/step_00">bootstraps</a> (not to be confused with <a href="http://www.getbootstrap.com">Bootstrap</a>) our application, stating that the html tag is the Angular root. We could techincally add this directive to any element but the html tag is as good as any for this example.</p>
+
+<p>Next, we&#8217;re going to flip back to our index view (under /home) and add an Angular factory for our food app:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foodApp</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;foodApp&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ngResource&#39;</span><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">foodApp</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;Food&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;$resource&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$resource</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">$resource</span><span class="p">(</span><span class="s1">&#39;/food/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span><span class="s1">&#39;@id&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="p">}]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using the factory, we can now access Query / Get / Save / Delete functions off our Food model (the REST API under /food). By using the :id, we are stating that we can alternatively pass an id (e.g. /Food/1).</p>
+
+<p>You may notice that we&#8217;re injecting &#8216;ngResource&#8217; into our module &#8211; this is the Angular library (that we&#8217;ve already included in the layout page) that is used to interact with our sails REST API that we created above.</p>
+
+<p>Now that we can access the data, lets add a controller.. The controller is responsible for managing the state of the application. There are plenty of tutorials that deal with <a href="http://docs.angularjs.org/tutorial/step_02">how to create a controller in Angular</a>, so lets just jump right in..</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">FoodController</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">Food</span><span class="p">){</span>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">food</span> <span class="o">=</span> <span class="nx">Food</span><span class="p">.</span><span class="nx">query</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">isFormActive</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">toggleForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">isFormActive</span><span class="p">){</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">isFormActive</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">isFormActive</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">editableFood</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Food</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$scope</span><span class="p">.</span><span class="nx">addFood</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">editableFood</span><span class="p">.</span><span class="nx">$save</span><span class="p">();</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">food</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">editableFood</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">$scope</span><span class="p">.</span><span class="nx">toggleForm</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Our controller is just a plain old javascript function that takes $scope (used to sync data between controller and the view) and our Food item as parameters. The very first line in the controller is obtaining a list of all of the Food items (essentially the same as going to /Food and copying the JSON) and storing it in the $scope.food array.</p>
+
+<p>The isFormActive property is used to determine whether or not we want to show the create form. The toggle form action is used to change this active property as well as create a new model object to use with the form.</p>
+
+<p>Finally, the addFood method posts the newly created food item to our API. This editableForm &#8216;pattern&#8217; was something I first came across on <a href="http://odetocode.com/blogs/scott/archive/2013/02/21/forms-with-angularjs.aspx">K. Scott Allen&#8217;s website</a>.</p>
+
+<p>Now lets write some HTML that utilizes this controller&#8230; We&#8217;ll start this process by specifying that the #content area in our layout page corresponds to the FoodController with the ng-controller directive &#8211; Our modified #content tag should look like this: <code>&lt;div id="content" ng-controller="FoodController"&gt;</code>. All of our $scope.___ properties are now available to use in expressions within the #content div.</p>
+
+<p>Next we&#8217;re going to add a repeater to show the food items.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;table&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;thead&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Name<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Type<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Expiration<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Quantity<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;th&gt;</span>Percent Remaining<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/thead&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;tbody&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">ng-repeat=</span><span class="s">&quot;f in food&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.name}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.type}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.expiration}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td&gt;</span>{{f.quantity}}<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;td</span> <span class="na">class=</span><span class="s">&quot;progress&quot;</span><span class="nt">&gt;&lt;div</span> <span class="na">class=</span><span class="s">&quot;bar&quot;</span> <span class="na">style=</span><span class="s">&quot;width: {{f.percentRemaining}}%&quot;</span><span class="err">&lt;/</span><span class="na">td</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/tbody&gt;</span>
+</span><span class='line'><span class="nt">&lt;/table&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The tr element inside the tbody is where we are telling angular to loop through all our food items. We are going to reference the current item as f and display all of its properties. You may notice in the last column that we&#8217;re using Twitter Bootstrap&#8217;s progress bar in addition to an Angular expression. The expressions in Angular can be quite powerful and seem to have a bit more functionality than many of the other templating frameworks. Go ahead and refresh your page to see how everything is looking so far.</p>
+
+<p>Next we want to add the ability to add new items from this page</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>  <span class="nt">&lt;button</span> <span class="na">ng-click=</span><span class="s">&quot;toggleForm()&quot;</span> <span class="na">ng-hide=</span><span class="s">&quot;isFormActive&quot;</span><span class="nt">&gt;</span>Add One<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;button</span> <span class="na">ng-click=</span><span class="s">&quot;toggleForm()&quot;</span> <span class="na">ng-show=</span><span class="s">&quot;isFormActive&quot;</span><span class="nt">&gt;</span>Hide Form<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;form</span> <span class="na">ng-show=</span><span class="s">&quot;isFormActive&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;hr</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>Name:<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.name&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;type&quot;</span><span class="nt">&gt;</span>Type:<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.type&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;expiration&quot;</span><span class="nt">&gt;</span>Expiration<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;expiration&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.expiration&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;quantity&quot;</span><span class="nt">&gt;</span>Quantity<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;quantity&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.quantity&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;percentRemaining&quot;</span><span class="nt">&gt;</span>Percent Remaining<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">&quot;percentRemaining&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;editableFood.percentRemaining&quot;</span> <span class="nt">/&gt;&lt;br</span> <span class="nt">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;span4 text-right&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;button</span> <span class="na">ng-click=</span><span class="s">&quot;toggleForm()&quot;</span><span class="nt">&gt;</span>Cancel<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;button</span> <span class="na">ng-click=</span><span class="s">&quot;addFood()&quot;</span><span class="nt">&gt;</span>Add<span class="nt">&lt;/button&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/form&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is a bit more going on with the Angular directives in this snippet of HTML. First, you&#8217;ll notice that several of our elements have ng-click directives; these directives are calling functions on the controller when the user clicks on element. In addition to the click functions, we are using the ng-show / ng-hide directives to show or hide content based on a given condition. For instance, the button for &#8216;Add One&#8217; is only visible when isFormActive = false and the &#8216;Hide Form&#8217; button is only visible when isFormActive = true.</p>
+
+<p>We are using the ng-model directive to bind a form element to $scope.editableFood (which is being created in the toggleForm method of the FoodController). Clicking on &#8216;Add&#8217; will call the addFood method on the FoodController &#8211; this will post the new record to our /Food/Create and push the value into our $scope.food array. The UI will update automatically because Angular $scope properties are observed by default.</p>
+
+<p>So far, we&#8217;ve created a simple REST API and added / retrieved data from this API with AngularJS. The full contents of the modified files are available <a href="https://gist.github.com/ryanlanciaux/5711426">over here</a>. I plan on writing another part in this series where we will focus on searching / ordering / filtering the displayed data and in-place editing on the food list.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/">Less Alt+tab With SublimeText</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-09T20:40:00-04:00" pubdate data-updated="true">May 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://ryanlanciaux.github.io/blog/2013/04/13/sublime-text-on-ubuntu/">Back in April</a>, I jokingly lamented not having the ability to run a console from directly within SublimeText &#8211; apparently I did not do quite enough searching. There is a plug-in called <a href="https://github.com/wuub/SublimeREPL">SublimeREPL</a> that lets you run ruby, node and a whole slew of other environments from within SublimeText.</p>
+
+<p><strong>To install SublimeREPL</strong>:</p>
+
+<ol>
+<li>Fire up the Command Palette (ctrl+shift+p) and type &#8220;Package Control: Install Package&#8221;</li>
+<li>Search for and install SublimeREPL</li>
+<li>Restart SublimeText</li>
+</ol>
+
+
+<p>If you are using rbenv, (I assume something similar applies to rvm as well) you will need to edit your SublimeREPL settings (Preferences -> Package Settings -> SublimeREPL -> Settings - User) so your rbenv ruby is used.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>  "default_extend_env": { "PATH": "{HOME}/.rbenv/shims:{PATH}" }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, SublimeREPL uses <a href="https://github.com/pry/pry">pry</a> to power the ruby REPL. If you don&#8217;t have the pry gem installed, you will need to install it prior to running ruby console.</p>
+
+<p>Now that everything is setup you can launch a REPL and test code before you  add it to your project, use rake thru shell, etc. One note, I would be careful about running servers &#8211; I was messing around with <a href="http://www.sailsjs.com">one of my favorite new frameworks</a> and realized I could not shut down the server (this occurs with servers and other long running operations). That being said, SublimeREPL is definitely a plug-in I would recommend.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/07/tig-great-git-command-line-tool/">Tig: Great Git Command Line Tool</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-07T20:28:00-04:00" pubdate data-updated="true">May 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have been using git on most of my hobby projects for quite some time. I prefer the command line when possible, however, it is nice to visualize certain operations. <a href="http://sourcetreeapp.com/">SourceTree</a> and Github&#8217;s <a href="http://windows.github.com">Windows</a> and <a href="http://mac.github.com">Mac</a> apps are very nice but I&#8217;m mostly on Ubuntu when using git. <a href="https://www.kernel.org/pub/software/scm/git/docs/gitk.html">Gitk</a> is a decent option but sometimes tools such as this and the aforementioned GUI tools can be a bit over-the-top for a command line junkie such as myself. Something between the command line and full blown windowed GUI applications would be great; this seems to be where <a href="http://jonas.nitro.dk/tig/">tig</a> comes in.</p>
+
+<p><a href="http://jonas.nitro.dk/tig/">Tig</a> has been around for a little while now but it just came across my radar via <a href="http://blogs.atlassian.com/2013/05/git-tig/">an excellent post on Atlassian&#8217;s blog by Antoine Büsch</a> (as a side note, it&#8217;s kinda cool to see this post on Atlassian&#8217;s blog considering they make SourceTree). Antoine listed some compelling reasons for using tig but I was sold when he related tig to vim versus other development tools :)</p>
+
+<p>To install tig on Ubuntu just open up a command line and run the obvious <code>apt-get install tig</code>. From there, navigate to a directory under source control (with git) and type <code>tig</code> &#8211; you should see the main log view. Pressing &#8216;h&#8217; will bring up help to see a list of available commands. You can stage changes by pressing &#8216;c&#8217;. For a more exhaustive list of commands, check out <a href="http://jonas.nitro.dk/tig/manual.html">the official tig manual</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/03/ikea-standing-desk/">Ikea Standing Desk</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-03T21:02:00-04:00" pubdate data-updated="true">May 3<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Over the past several years, I have grown quite accustomed to using a standing desk at home (I have an adjustable Ergotron that I absolutely love). I decided it was about time to make the switch at work, however, I didn&#8217;t want to spend a lot of money on a desk. Thankfully, I had come across a <a href="http://iamnotaprogrammer.com/Ikea-Standing-desk-for-22-dollars.html">blog post by Colin Nederkoorn</a> on a standing desk he and a coworker built for $22. I like the design, however, I wanted more room for monitors. One of the comments on the blog led me to <a href="http://www.jinyoungkim.com/blog/2012/07/standing-desk/">Jinyoung Kim&#8217;s modification of the Ikea desk</a> which used a wider table than Colin&#8217;s design. I ultimately based my desk plans off Jinyoung&#8217;s design, since it allowed for multiple monitors, laptops and other gadgets.</p>
+
+<p>The main components of the desk are as follows (they should cost about $45 total):</p>
+
+<ul>
+<li><a href="http://www.ikea.com/us/en/catalog/products/40104294/">LACK</a> coffee table &#8211; this is the main piece of the desk.</li>
+<li><a href="http://www.ikea.com/us/en/catalog/products/10056987/#/20094347">EKBY JÄRPEN</a> shelf &#8211; for keyboard / mouse</li>
+<li><a href="http://www.ikea.com/us/en/catalog/products/10136135/#/10136135">EKBY BJÄRNUM</a> brackets</li>
+</ul>
+
+
+<p><img src="/files/desk-setup.jpg" alt="" /></p>
+
+<p>As noted on Jinyoung&#8217;s site, the shelf needs to be sawed down a bit to fit the dimensions of the coffee table. I like the brackets I used since it hides the rougher side of the shelf that was cut down. I would also echo his sentiment about using bolts to hold up the shelf as  they are sturdier than screws. Finally, as someone who has used standing desks for a couple years now I would HIGHLY recommend having a gel kitchen mat to stand on; especially if you&#8217;re over hardwood or concrete flooring.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/05/02/goodreads-status-widget-available-on-github/">Goodreads Status Widget Available on Github</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-02T19:49:00-04:00" pubdate data-updated="true">May 2<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.goodreads.com">Goodreads</a> is currently one of my favorite sites; I love that I can see what my friends are reading and find new books to read based on their recommendations. Noticing that many other blog platforms have sidebar widgets (asides), I decided to create one for Octopress. The first thing I did was make sure I was not duplicating effort. Goodreads has some great <a href="http://www.goodreads.com/user/edit?tab=widgets">sidebar widgets</a>, however, I preferred to generate the aside in the standard <code>rake generate</code> process (as well as keep the same look-and-feel of the other asides).</p>
+
+<p>The Goodreads API is pretty robust but I was a little concerned about the possibility of a user&#8217;s API key getting checked into github. Thankfully, Goodreads also provides an RSS feed for status updates &#8211; which seemed a bit safer to use for publicly available code (and with the RSS feed it&#8217;s not necessary to obtain an API key). I assumed that if someone didn&#8217;t want their status updates public via RSS, they probably wouldn&#8217;t be installing an aside to display their status.</p>
+
+<p>I created an aside and a subsequent <a href="https://github.com/Shopify/liquid/wiki">liquid tags</a> plugin that grabbed and formatted the RSS data. I used REXML to process the xml because it wouldn&#8217;t require users to install additional gems. One thing I still need to figure out is how to pass data from the config.yml into the plugin via the aside. I realize I have access to the config properties via site.whatever  variables but I&#8217;m not entirely sure how to pass that info along to the tag plugin. Currently, the aside needs to be modified with the user&#8217;s Goodreads unique id and the max number of results to display. I noticed some others on the <a href="https://github.com/imathis/octopress/wiki/3rd-party-plugins">3rd party plugins list on the Octopress wiki</a> are doing the same thing, however, I would prefer to use the config file for the config data :P</p>
+
+<p>All-in-all, it was pretty fun creating the plugin. If you use Octopress and would like to install the Goodreads plugin, <a href="https://github.com/ryanlanciaux/octo-goodreads-status">take a look at the github repo</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/13/sublime-text-on-ubuntu/">Sublime Text on Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-13T18:42:00-04:00" pubdate data-updated="true">Apr 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recently, I have switched from Windows 8 to Ubuntu on my laptop. Since the primary function of my laptop is development I have spent some time tweaking the software installed to fit my workflow.</p>
+
+<p>The main tool I am using for all my development is <a href="http://www.sublimetext.com/">Sublime Text</a>. I like Sublime Text for many reasons &#8211; it&#8217;s lightweight, great community, tons of plugins and most importantly, <strong>vim keybindings</strong>; needless to say, it&#8217;s pretty awesome.</p>
+
+<p>To start with, I installed the package like so: <code>apt-get install sublime-text</code>. From there, I pretty much followed
+<a href="http://blog.alexmaccaw.com/sublime-text">Alex MacCaw&#8217;s excellent post on Sublime Text</a>. Mentioned in the post, <a href="http://wbond.net/sublime_packages/package_control">Package Manager</a> is pretty much a must. As someone who has grown pretty dependent on ReSharper when doing .NET development, I find myself typing Ctrl + Shift + T to switch files (rather than the default Ctrl + P &#8211; which, to me, seems a little weird because doing that in different environments brings up print dialog)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{ "keys": ["ctrl+shift+t"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, since I will be writing most of my blog posts with Sublime Text (yea, this post about Sublime Text was written in Sublime Text :P), I installed <a href="https://github.com/revolunet/sublimetext-markdown-preview">Markdown Preview</a> through package control. If you notice the statement on the GitHub page, Linux users need to install a different version of Python to get the plugin to work. I wasn&#8217;t super comfortable changing Python just for installing the Markdown plugin. Thankfully, <a href="https://github.com/revolunet/sublimetext-markdown-preview/issues/27#issuecomment-11772098">one of the comments on the plugin&#8217;s GitHub</a> page has a pretty decent walkthrough on how to use pythonbrew to give Sublime Text the version of Python that the plugin needs (without necessarily using it throughout the system).</p>
+
+<p>Now, I only wish there was a way to open up a console directly in Sublime Text &#8211; because alt tabbing to terminal is just so difficult.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/10/16/fake-popovers-for-angular-xeditable/">Fake popovers for Angular-xeditable</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/17/learning-angularjs-iii-routes/">Learning AngularJS III: Routes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/19/angularjs-filtering-slash-ordering/">Learning AngularJS II : Filtering / Ordering</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin/">Note to self: escape LiquidTags with Jekyll raw tag plugin</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/04/learning-angularjs/">Learning AngularJS</a>
+      </li>
+    
+  </ul>
+</section>
+<section class='goodreads-aside'>
+  <h1><a href="http://www.goodreads.com" target="_blank">Status on Goodreads</a></h1>
+  <ul>
+    <li>
+            <a href='http://www.goodreads.com/user_status/show/31832060' target='blank'>Ryan is on page 100 of 509 of Wool Omnibus</a>
+            <span class='tiny'>(2013-08-19)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/30811077' target='blank'>Ryan is on page 124 of 324 of Twice a Spy</a>
+            <span class='tiny'>(2013-07-27)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/30581615' target='blank'>Ryan is on page 161 of 240 of Prince Caspian</a>
+            <span class='tiny'>(2013-07-22)</span></li>
+  </ul>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/ryanlanciaux">@ryanlanciaux</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ryanlanciaux',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Ryan Lanciaux -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'ryanlanciaux';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
