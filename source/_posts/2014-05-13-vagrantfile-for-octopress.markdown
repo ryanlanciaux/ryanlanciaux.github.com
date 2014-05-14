@@ -99,8 +99,8 @@ I'm not going to spend as much time on this as it's not too interesting if you k
 1. Get git and make
 1. Install rbenv and Ruby `1.9.3-p194` (that was the version I was using when my blog was on an actual machine so I'll stick with that for now)
 1. modify the path so it contains the Ruby defined in rbenv
-1. Change the ownership of the .rbenv file from the privelaged user (sudo) to vagrant -- if you don't do this, you will not be able to use the gem files when you ssh into the box later on. 
-1. Rehash rbenv so it uses the right Ruby version and instal the bundler gem as the vagrant user
+1. Change the ownership of the .rbenv file from the privileged user (sudo) to vagrant -- if you don't do this, you will not be able to use the gem files when you ssh into the box later on. 
+1. Rehash rbenv so it uses the right Ruby version and install the bundler gem as the vagrant user
 1. Install the files required to run octopress (as it says in the comment, I really don't like the sudo su - vagrant commands)
 
 ## Running the machine
