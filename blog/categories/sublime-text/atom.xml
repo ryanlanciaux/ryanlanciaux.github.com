@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: sublime text | Ryan Lanciaux]]></title>
+  <link href="http://ryanlanciaux.github.com/blog/categories/sublime-text/atom.xml" rel="self"/>
+  <link href="http://ryanlanciaux.github.com/"/>
+  <updated>2014-11-18T16:26:23+00:00</updated>
+  <id>http://ryanlanciaux.github.com/</id>
+  <author>
+    <name><![CDATA[Ryan Lanciaux]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Less alt+tab with SublimeText]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/"/>
+    <updated>2013-05-09T20:40:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/05/09/less-alt-plus-tab-with-sublimetext</id>
+    <content type="html"><![CDATA[<p><a href="http://ryanlanciaux.github.io/blog/2013/04/13/sublime-text-on-ubuntu/">Back in April</a>, I jokingly lamented not having the ability to run a console from directly within SublimeText -- apparently I did not do quite enough searching. There is a plug-in called <a href="https://github.com/wuub/SublimeREPL">SublimeREPL</a> that lets you run ruby, node and a whole slew of other environments from within SublimeText.</p>
+
+<p><strong>To install SublimeREPL</strong>:</p>
+
+<ol>
+<li>Fire up the Command Palette (ctrl+shift+p) and type "Package Control: Install Package"</li>
+<li>Search for and install SublimeREPL</li>
+<li>Restart SublimeText</li>
+</ol>
+
+
+<p>If you are using rbenv, (I assume something similar applies to rvm as well) you will need to edit your SublimeREPL settings (Preferences -> Package Settings -> SublimeREPL -> Settings - User) so your rbenv ruby is used.</p>
+
+<p><code>
+{
+  "default_extend_env": { "PATH": "{HOME}/.rbenv/shims:{PATH}" }
+}
+</code></p>
+
+<p>Finally, SublimeREPL uses <a href="https://github.com/pry/pry">pry</a> to power the ruby REPL. If you don't have the pry gem installed, you will need to install it prior to running ruby console.</p>
+
+<p>Now that everything is setup you can launch a REPL and test code before you  add it to your project, use rake thru shell, etc. One note, I would be careful about running servers -- I was messing around with <a href="http://www.sailsjs.com">one of my favorite new frameworks</a> and realized I could not shut down the server (this occurs with servers and other long running operations). That being said, SublimeREPL is definitely a plug-in I would recommend.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Sublime Text on Ubuntu]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/04/13/sublime-text-on-ubuntu/"/>
+    <updated>2013-04-13T18:42:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/04/13/sublime-text-on-ubuntu</id>
+    <content type="html"><![CDATA[<p>Recently, I have switched from Windows 8 to Ubuntu on my laptop. Since the primary function of my laptop is development I have spent some time tweaking the software installed to fit my workflow.</p>
+
+<p>The main tool I am using for all my development is <a href="http://www.sublimetext.com/">Sublime Text</a>. I like Sublime Text for many reasons -- it's lightweight, great community, tons of plugins and most importantly, <strong>vim keybindings</strong>; needless to say, it's pretty awesome.</p>
+
+<p>To start with, I installed the package like so: <code>apt-get install sublime-text</code>. From there, I pretty much followed
+<a href="http://blog.alexmaccaw.com/sublime-text">Alex MacCaw's excellent post on Sublime Text</a>. Mentioned in the post, <a href="http://wbond.net/sublime_packages/package_control">Package Manager</a> is pretty much a must. As someone who has grown pretty dependent on ReSharper when doing .NET development, I find myself typing Ctrl + Shift + T to switch files (rather than the default Ctrl + P -- which, to me, seems a little weird because doing that in different environments brings up print dialog)</p>
+
+<p><code>
+{ "keys": ["ctrl+shift+t"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} }
+</code></p>
+
+<p>Finally, since I will be writing most of my blog posts with Sublime Text (yea, this post about Sublime Text was written in Sublime Text :P), I installed <a href="https://github.com/revolunet/sublimetext-markdown-preview">Markdown Preview</a> through package control. If you notice the statement on the GitHub page, Linux users need to install a different version of Python to get the plugin to work. I wasn't super comfortable changing Python just for installing the Markdown plugin. Thankfully, <a href="https://github.com/revolunet/sublimetext-markdown-preview/issues/27#issuecomment-11772098">one of the comments on the plugin's GitHub</a> page has a pretty decent walkthrough on how to use pythonbrew to give Sublime Text the version of Python that the plugin needs (without necessarily using it throughout the system).</p>
+
+<p>Now, I only wish there was a way to open up a console directly in Sublime Text -- because alt tabbing to terminal is just so difficult.</p>
+]]></content>
+  </entry>
+  
+</feed>

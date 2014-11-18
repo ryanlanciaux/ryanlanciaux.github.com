@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: testing | Ryan Lanciaux]]></title>
+  <link href="http://ryanlanciaux.github.com/blog/categories/testing/atom.xml" rel="self"/>
+  <link href="http://ryanlanciaux.github.com/"/>
+  <updated>2014-11-18T16:26:23+00:00</updated>
+  <id>http://ryanlanciaux.github.com/</id>
+  <author>
+    <name><![CDATA[Ryan Lanciaux]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Miscellaneous Jest Issues/Workarouds II]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii/"/>
+    <updated>2014-11-17T02:15:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii</id>
+    <content type="html"><![CDATA[<p>My brother recently installed Jest on his Windows machine and alerted me that there were some problems that he encountered when using Visual Studio 2013 Express to compile some of the requirements. <a href="http://joellanciaux.github.io/blog/2014/11/14/react-plus-jest-testing-on-windows-2-dot-5/">Check out his full post</a> on what he did to resolve (tldr: Install Express 2012 and update the GYP_MSVS_VERSION environment variable).</p>
+
+<p>This does make me wonder how this whole process works on the newly released <a href="http://www.visualstudio.com/news/vs2013-community-vs">Visual Studio Community edition</a>...</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Miscellaneous Jest Issues/Workarounds]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds/"/>
+    <updated>2014-10-28T20:44:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds</id>
+    <content type="html"><![CDATA[<p>I've been using Jest a bit lately and wanted to document some issues I've run into for future reference.</p>
+
+<h2>Debugging Jest Tests</h2>
+
+<p>Recently I had a test that was failing and from looking at the stack trace it wasn't really clear why. I followed some advice I had seen about running jest in-band and then <a href="http://ryanlanciaux.github.io/blog/2014/05/25/debugging-express-applications/">running node-inspector</a>. Every time I tried to run node-inspector, however, it failed. Similar to the issue I encountered in <a href="http://ryanlanciaux.github.io/blog/2014/10/28/react-plus-jest-testing-on-windows-ii/">my previous post</a>, it appears that there is a <a href="https://github.com/facebook/jest/pull/153">forthcoming fix</a>.</p>
+
+<p>Until the fix makes it's way into the release version, following the steps in <a href="http://stackoverflow.com/questions/25142173/debugging-jest-test-cases-using-node-inspector/26415442#26415442">this stackoverflow post</a> should allow test debugging. Like the solution author, I'm not super thrilled about modifying the jest.js file outright but it's nice to be able to debug the tests.</p>
+
+<h2>Mocking Third-Party Libraries (that aren't CommonJS modules)</h2>
+
+<p>Another issue I've encountered is testing components that wrap third-party libraries that are not CommonJS modules. I tried a couple different hacks to try to shim the library in question into something that would load as a CommonJS module but ultimately was unsuccessful in the time I wanted to spend on that.</p>
+
+<p>Thankfully, <a href="https://groups.google.com/forum/#!topic/jestjs/EJGZcNtbW78">a post in the React Google Group</a> led me to use <a href="http://facebook.github.io/jest/docs/manual-mocks.html">Manual mocks</a> as a way to work around these third-party libraries.</p>
+
+<p>Creating a manual mock is pretty simple. Just create a new folder called <code>__mocks__</code> at the same level as the <code>__tests__</code> directory and create a CommonJS module with the same name/properties as the third-party module that is being mocked. Adding <code>var someModule = require('moduleName')</code> will cause <code>someModule</code> to get replaced with the mock when running through jest. Finally, set the third-party library as an <a href="http://webpack.github.io/docs/library-and-externals.html">external module in webpack.config.js</a> and everything should be good-to-go for both the test and the "compiled" version of the code.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[React + Jest Testing on Windows II]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2014/10/28/react-plus-jest-testing-on-windows-ii/"/>
+    <updated>2014-10-28T03:14:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2014/10/28/react-plus-jest-testing-on-windows-ii</id>
+    <content type="html"><![CDATA[<p>Last time I wrote about running <a href="http://ryanlanciaux.github.io/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/">Jest on Windows</a> there was one thing I left out. The test output would show if the tests pass or fail but no data is displayed regarding why they fail. This is due to an <a href="https://github.com/joyent/node/issues/3584">issue with stdio in Windows</a>, however, there appears to be <a href="https://github.com/facebook/jest/pull/111">a fix in the works</a>.</p>
+
+<p>Until that fix makes its way into a released version of Jest, you can simply copy bin/jest.js from <a href="https://github.com/malonecj/jest">Connor Malone's branch on GitHub</a> as a workaround. If using the file outright doesn't sound desirable, any line that has <code>process.exit(0)</code> can be wrapped in a <code>process.on('exit')</code> block:</p>
+
+<p><code>
+process.on('exit', function(){
+  process.exit(0);
+});
+</code></p>
+
+<p>See the diff of the modified code <a href="https://github.com/malonecj/jest/commit/3e66e456f4c612126053483508d89f4751966f45">here</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Test React Components Using Jest (on Windows)]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/"/>
+    <updated>2014-08-02T12:37:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2014/08/02/using-jest-for-testing-react-components-on-windows</id>
+    <content type="html"><![CDATA[<p>I'm currently going through the process creating unit tests for <a href="http://dynamictyped.github.io/Griddle">Griddle</a> and thought it would be good to document the steps I took to get Jest up and running. I did not find it as simple as typing <code>npm install -g jest-cli</code>, however it was not too bad.</p>
+
+<p>My primary machine is running Windows 8 -- these steps may be a bit different if you're on Mac / Linux.</p>
+
+<ol>
+<li><strong>Install Python</strong> - Install version 2.7 of Python and add it to your path or create a <code>PYTHONPATH</code> environment variable.</li>
+<li><strong>Install Visual Studio (Express Edition is Fine)</strong> - Thankfully, this step was not required for me as I already use Visual Studio. We will need this for some of modules that are compiled when we are installing Jest. (Express editions available <a href="http://www.visualstudio.com/en-us/products/visual-studio-express-vs.aspx">here</a> -- get one of the versions that has C++)</li>
+<li><strong>Set Visual Studio Version Flags</strong> - this step tripped me up a bit at first. We need to tell node-gyp (something that is used for compiling addons) what version of Visual Studio we want to compile with. You can do this either through an environment variable <code>GYP_MSVS_VERSION</code> or the command line option <code>--msvs_version</code>. My environment variable looks a bit like this <code>GYP_MSVS_VERSION=2013</code> but if you are using Express, I think you have to say <code>GYP_MSVS_VERSION=2013e</code></li>
+<li><strong>Install Jest-CLI</strong> - Now you can run the command on the <a href="http://facebook.github.io/jest/docs/getting-started.html#content">Jest docs site</a> <code>npm install jest-cli --save-dev</code></li>
+</ol>
+
+
+<p>At this point you should be ready to run Jest, however, I experienced some further trouble on Windows against React components. In the <a href="http://facebook.github.io/jest/docs/tutorial-react.html#content">react example</a>, the package.json contains <code>"unmockedModulePathPatterns": ["&lt;rootDir&gt;/node_modules/react"]</code> which is basically stating that we don't want to mock React when running our tests. Unfortunately, it seemed like we need to change this path to just <code>"unmockedModulePathPatterns": ["react"]</code> in order for the test to run successfully (again on Windows -- seems fine on other OS). See <a href="https://github.com/facebook/jest/issues/100">this GitHub issue</a> for more on that.</p>
+
+<p>For more reading on installing Jest's requirements see:</p>
+
+<ul>
+<li><a href="http://www.steveworkman.com/node-js/2012/installing-jsdom-on-windows/">http://www.steveworkman.com/node-js/2012/installing-jsdom-on-windows/</a></li>
+<li><a href="https://github.com/atom/atom/issues/2435">https://github.com/atom/atom/issues/2435</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

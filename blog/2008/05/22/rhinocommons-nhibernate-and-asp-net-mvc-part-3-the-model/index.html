@@ -1,0 +1,715 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>RhinoCommons, NHibernate and ASP.NET MVC Part 3 - The Model - Ryan Lanciaux</title>
+  <meta name="author" content="Ryan Lanciaux">
+
+  
+  <meta name="description" content="We&#39;re going to keep moving now that everything is setup (see part one for setup) and configured (see part two for configuration). First off we &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ryanlanciaux.github.com/blog/2008/05/22/rhinocommons-nhibernate-and-asp-net-mvc-part-3-the-model">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Ryan Lanciaux" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Ryan Lanciaux</a></h1>
+  
+    <h2>Random programming blog.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ryanlanciaux.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">RhinoCommons, NHibernate and ASP.NET MVC Part 3 - the Model</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-22T10:00:00+00:00" pubdate data-updated="true">May 22<span>nd</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>
+We&#39;re going to keep moving now that everything is setup (<a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC.aspx" target="_blank">see part one for setup</a>) and configured (<a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-2--.aspx" target="_blank">see part two for configuration</a>).
+</p>
+
+
+<p>
+First off we are going to create our classes. The original classes and SQL tables are posted below (these may look familiar &#8211; they are from <a href="/ryanlanciaux.com/post/Using-NHibernate.aspx" target="_blank">my initial NHibernate post</a>)
+</p>
+
+
+<br />
+
+
+<p>Initial Product<!--code --></p>
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">Product</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #a5a3a3">IList</span>&lt;<span style="color: #a5a3a3">Product</span>&gt; <span style="color: #a5a3a3">_RelatedProducts</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #a5a3a3">IList</span>&lt;<span style="color: #a5a3a3">ProductGroup</span>&gt; <span style="color: #a5a3a3">_ProductGroups</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #a5a3a3">Product</span>()
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_RelatedProducts</span> = <span style="color: #23b4eb">new</span> <span style="color: #a5a3a3">List</span>&lt;<span style="color: #a5a3a3">Product</span>&gt;();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_ProductGroups</span> = <span style="color: #23b4eb">new</span> <span style="color: #a5a3a3">List</span>&lt;<span style="color: #a5a3a3">ProductGroup</span>&gt;();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ID</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">private</span> <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ImagePath</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Description</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #a5a3a3">IList</span>&lt;<span style="color: #a5a3a3">Product</span>&gt; <span style="color: #a5a3a3">RelatedProducts</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span> { <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_RelatedProducts</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">set</span> { <span style="color: #a5a3a3">_RelatedProducts</span> = <span style="color: #23b4eb">value</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #a5a3a3">IList</span>&lt;<span style="color: #a5a3a3">ProductGroup</span>&gt; <span style="color: #a5a3a3">ProductGroups</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span> { <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_ProductGroups</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">set</span> { <span style="color: #a5a3a3">_ProductGroups</span> = <span style="color: #23b4eb">value</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; }
+</p>
+</div>
+</div>
+
+
+<br />
+
+
+<!--end code-->
+
+
+<p>Initial ProductGroup<br /></p>
+
+<!--code-->
+
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">ProductGroup</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ProductGroupID</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #a5a3a3">Product</span>&gt; <span style="color: #a5a3a3">Products</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; }
+</p>
+</div>
+</div>
+
+
+<!--end code-->
+
+
+<br />
+
+
+<p>SQL Tables</p>
+
+<!--code-->
+
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+<span style="color: #a5a3a3">CREATE</span> <span style="color: #a5a3a3">TABLE</span> [<span style="color: #a5a3a3">dbo</span>].[<span style="color: #a5a3a3">SimpleProducts</span>](
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">Title</span>] [<span style="color: #a5a3a3">nvarchar</span>](<span style="color: lime">50</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ImagePath</span>] [<span style="color: #a5a3a3">nvarchar</span>](<span style="color: lime">300</span>) <span style="color: #a5a3a3">NULL</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">Description</span>] [<span style="color: #a5a3a3">nvarchar</span>](<span style="color: lime">500</span>) <span style="color: #a5a3a3">NULL</span>
+</p>
+<p style="margin: 0px">
+)
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+<span style="color: #a5a3a3">CREATE</span> <span style="color: #a5a3a3">TABLE</span> [<span style="color: #a5a3a3">dbo</span>].[<span style="color: #a5a3a3">RelatedProductsLookup</span>](
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">RelatedProductID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>
+</p>
+<p style="margin: 0px">
+)
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+<span style="color: #a5a3a3">CREATE</span> <span style="color: #a5a3a3">TABLE</span> [<span style="color: #a5a3a3">dbo</span>].[<span style="color: #a5a3a3">ProductsProductGroupsLookup</span>](
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductGroupID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NULL</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NULL</span>
+</p>
+<p style="margin: 0px">
+)
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+<span style="color: #a5a3a3">CREATE</span> <span style="color: #a5a3a3">TABLE</span> [<span style="color: #a5a3a3">dbo</span>].[<span style="color: #a5a3a3">ProductGroups</span>](
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">ProductGroupID</span>] [<span style="color: #23b4eb">char</span>](<span style="color: lime">32</span>) <span style="color: #a5a3a3">NOT</span> <span style="color: #a5a3a3">NULL</span>,
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #a5a3a3">Title</span>] [<span style="color: #a5a3a3">nvarchar</span>](<span style="color: lime">50</span>) <span style="color: #a5a3a3">NULL</span>
+</p>
+</div>
+</div>
+
+
+<p>
+<!--end code--><br />
+<strong>ActiveRecord Classes</strong><br />
+In a traditional NHibernate application, we would write usually our mapping files at this time<a href="/ryanlanciaux.com/post/Using-NHibernate.aspx" target="_blank">(see my other NHibernate post</a> for more on that). Since we&#39;re using the ActiveRecord pattern, however, we can specify all our mappings inline with the classes. It is important to note that this would not be a pure domain because we&#39;re placing our mappings inside the model. Warning if you&#39;re sensitive to using Attributes this may not be the code for you&#8230;
+</p>
+
+
+<p>
+Our classes will now begin with an ActiveRecord attribute over the class; our properties will begin with Property/HasAndBelongsToMany/etc. Please note, for the sake of the example, I&#39;m being extremely verbose with my attributes. If your table/column names match the class/property names, some of the additional info in the attribute is not necessary.
+<br />
+<!--code-->
+</p>
+
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">ActiveRecord</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;SimpleProducts&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">Product</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">Product</span>&gt; <span style="color: #a5a3a3">_RelatedProducts</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">private</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">ProductGroup</span>&gt; <span style="color: #a5a3a3">_ProductGroups</span>;
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #a5a3a3">Product</span>()
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_RelatedProducts</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">List</span>&lt;<span style="color: #47b3d1">Product</span>&gt;();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #a5a3a3">_ProductGroups</span> = <span style="color: #23b4eb">new</span> <span style="color: #47b3d1">List</span>&lt;<span style="color: #47b3d1">ProductGroup</span>&gt;();
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">PrimaryKey</span>(<span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;ProductID&quot;</span>, <span style="color: #a5a3a3">Generator</span>=<span style="color: #a5a3a3">Castle</span>.<span style="color: #a5a3a3">ActiveRecord</span>.<span style="color: #2b91af">PrimaryKeyType</span>.<span style="color: #a5a3a3">UuidHex</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ID</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">private</span> <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">Property</span>(<span style="color: #a5a3a3">NotNull</span>=<span style="color: #23b4eb">true</span>, <span style="color: #a5a3a3">Length</span>=<span style="color: lime">50</span>, <span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;Title&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span> {<span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">Property</span>(<span style="color: #a5a3a3">Length</span>=<span style="color: lime">300</span>, <span style="color: #a5a3a3">NotNull</span>=<span style="color: #23b4eb">false</span>, <span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;ImagePath&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ImagePath</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">Property</span>(<span style="color: #a5a3a3">NotNull</span> = <span style="color: #23b4eb">false</span>, <span style="color: #a5a3a3">Length</span> = <span style="color: lime">500</span>, <span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;Description&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Description</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">HasAndBelongsToMany</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;RelatedProductsLookup&quot;</span>, <span style="color: #a5a3a3">ColumnKey</span>=<span style="color: #80ff00">&quot;ProductID&quot;</span>, <span style="color: #a5a3a3">ColumnRef</span>=<span style="color: #80ff00">&quot;RelatedProductID&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">Product</span>&gt; <span style="color: #a5a3a3">RelatedProducts</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span> { <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_RelatedProducts</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">set</span> { <span style="color: #a5a3a3">_RelatedProducts</span> = <span style="color: #23b4eb">value</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">HasAndBelongsToMany</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;ProductsProductGroupsLookup&quot;</span>, <span style="color: #a5a3a3">ColumnKey</span>=<span style="color: #80ff00">&quot;ProductID&quot;</span>, <span style="color: #a5a3a3">ColumnRef</span>=<span style="color: #80ff00">&quot;ProductGroupID&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">ProductGroup</span>&gt; <span style="color: #a5a3a3">ProductGroups</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">get</span> { <span style="color: #23b4eb">return</span> <span style="color: #a5a3a3">_ProductGroups</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">set</span> { <span style="color: #a5a3a3">_ProductGroups</span> = <span style="color: #23b4eb">value</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; }
+</p>
+</div>
+</div>
+
+
+<br />
+
+
+<!--code-->
+
+
+<div class="code" style="width: 100%">
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">ActiveRecord</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;ProductGroups&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">class</span> <span style="color: #47b3d1">ProductGroup</span>
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; {
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">PrimaryKey</span>(<span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;ProductGroupID&quot;</span>, <span style="color: #a5a3a3">Generator</span>=<span style="color: #a5a3a3">Castle</span>.<span style="color: #a5a3a3">ActiveRecord</span>.<span style="color: #2b91af">PrimaryKeyType</span>.<span style="color: #a5a3a3">UuidHex</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">ProductGroupID</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">Property</span>(<span style="color: #a5a3a3">NotNull</span>=<span style="color: #23b4eb">true</span>, <span style="color: #a5a3a3">Length</span>=<span style="color: lime">50</span>, <span style="color: #a5a3a3">Column</span>=<span style="color: #80ff00">&quot;Title&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #23b4eb">string</span> <span style="color: #a5a3a3">Title</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; [<span style="color: #47b3d1">HasAndBelongsToMany</span>(<span style="color: #a5a3a3">Table</span>=<span style="color: #80ff00">&quot;ProductsProductGroupsLookup&quot;</span>, <span style="color: #a5a3a3">ColumnKey</span>=<span style="color: #80ff00">&quot;ProductGroupID&quot;</span>, <span style="color: #a5a3a3">ColumnRef</span>=<span style="color: #80ff00">&quot;ProductID&quot;</span>)]
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: #23b4eb">public</span> <span style="color: #23b4eb">virtual</span> <span style="color: #2b91af">IList</span>&lt;<span style="color: #47b3d1">Product</span>&gt; <span style="color: #a5a3a3">Products</span> { <span style="color: #23b4eb">get</span>; <span style="color: #23b4eb">set</span>; }
+</p>
+<p style="margin: 0px">
+&nbsp;&nbsp;&nbsp; }
+</p>
+</div>
+</div>
+
+
+<p>
+<br />
+<strong>Repository Object</strong><br />
+Another added benefit of using the Castle Active Record library is that we can use the Repository&lt;T&gt; for all of our object persistence. Instead of creating our own implementation of IRepository, we can write code like this to save / retrieve / update objects.
+</p>
+
+
+<div class="code">
+Selecting an object (our product IDs are HEX UUID&#39;s so this is not exactly accurate)
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+<span style="color: #23b4eb">var</span> <span style="color: #a5a3a3">p</span> = <span style="color: #47b3d1">Repository</span>&lt;<span style="color: #47b3d1">Product</span>&gt;.<span style="color: #a5a3a3">Get</span>(<span style="color: lime">23</span>);&nbsp;
+</p>
+</div>
+</div>
+
+
+<br />
+
+
+<div class="code">
+Saving / Updating <br />
+<div style="background: #1b1b1b none repeat scroll 0% 50%; font-family: Monaco; font-size: 9pt; color: white; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+<p style="margin: 0px">
+<span style="color: #47b3d1">Repository</span>&lt;<span style="color: #47b3d1">Product</span>&gt;.<span style="color: #a5a3a3">Save</span>(<span style="color: #a5a3a3">p</span>);
+</p>
+</div>
+</div>
+
+
+<p>
+<br />
+The repository is pretty nice &#8211; we can save all of our objects outside of the domain, which makes for a much cleaner design. Next time, we&#39;ll be looking at the extremely simple MVC application powered by this model and NHibernate Query Generator. <a href="/ryanlanciaux.com/post/RhinoCommons2c-NHibernate-and-ASPNET-MVC-Part-4---The-MVC-Application.aspx" target="_blank">Continue to Part 4</a>
+</p>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ryan Lanciaux</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-22T10:00:00+00:00" pubdate data-updated="true">May 22<span>nd</span>, 2008</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/legacy/'>legacy</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ryanlanciaux.github.com/blog/2008/05/22/rhinocommons-nhibernate-and-asp-net-mvc-part-3-the-model/" data-via="ryanlanciaux" data-counturl="http://ryanlanciaux.github.com/blog/2008/05/22/rhinocommons-nhibernate-and-asp-net-mvc-part-3-the-model/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2008/05/20/rhinocommons-nhibernate-and-asp-net-mvc-part-2-configuration/" title="Previous Post: RhinoCommons, NHibernate and ASP.NET MVC Part 2 - Configuration">&laquo; RhinoCommons, NHibernate and ASP.NET MVC Part 2 - Configuration</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2008/05/26/rhinocommons-nhibernate-and-asp-net-mvc-part-4-the-mvc-application/" title="Next Post: RhinoCommons, NHibernate and ASP.NET MVC Part 4 - The MVC Application">RhinoCommons, NHibernate and ASP.NET MVC Part 4 - The MVC Application &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii/">Miscellaneous Jest Issues/Workarouds II</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds/">Miscellaneous Jest Issues/Workarounds</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/28/react-plus-jest-testing-on-windows-ii/">React + Jest Testing on Windows II</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/18/azure-active-directory-authentication-in-existing-project/">Azure Active Directory authentication in existing project</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/">Test React Components Using Jest (on Windows)</a>
+      </li>
+    
+  </ul>
+</section>
+<section class='goodreads-aside'>
+  <h1><a href="http://www.goodreads.com" target="_blank">Status on Goodreads</a></h1>
+  <ul>
+    <li>
+            <a href='http://www.goodreads.com/user_status/show/47285993' target='blank'>Ryan is 46% done with Getting Started with </a>
+            <span class='tiny'>(2014-08-02)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/47285988' target='blank'>Ryan is finished with Tuck</a>
+            <span class='tiny'>(2014-08-02)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/46065249' target='blank'>Ryan is on page 103 of 452 of Tuck</a>
+            <span class='tiny'>(2014-07-07)</span></li>
+  </ul>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ryanlanciaux">@ryanlanciaux</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ryanlanciaux',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ryan Lanciaux -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

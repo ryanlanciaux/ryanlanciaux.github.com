@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: express | Ryan Lanciaux]]></title>
+  <link href="http://ryanlanciaux.github.com/blog/categories/express/atom.xml" rel="self"/>
+  <link href="http://ryanlanciaux.github.com/"/>
+  <updated>2014-11-18T16:26:23+00:00</updated>
+  <id>http://ryanlanciaux.github.com/</id>
+  <author>
+    <name><![CDATA[Ryan Lanciaux]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Debugging Express Applications]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2014/05/25/debugging-express-applications/"/>
+    <updated>2014-05-25T16:18:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2014/05/25/debugging-express-applications</id>
+    <content type="html"><![CDATA[<p>Coming from the .NET world, I've grown accustomed to great debugging tools. My initial Node setup didn't have a very good way to debug an application (outside of using <code>DEBUG=express:* node .bin/www</code>) and I wanted to resolve that. I had heard about <a href="https://github.com/node-inspector/node-inspector">node-inspector</a> in several places and decided to give that a shot.</p>
+
+<p>Node-inspector is a visual interface for the Node debugger that looks like just Chrome Developer Tools for Chrome / Opera. I use the Developer Tools quite frequently for debugging front-end code so it is a natural fit for my work-flow.</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/node-inspector.png" /></p>
+
+<h2>Setup</h2>
+
+<p>The guide on <a href="https://github.com/node-inspector/node-inspector">the github page for node-inspector</a> is pretty good but I wanted to run through how I'm using it on my Express 4 application.</p>
+
+<p>First, like the guides suggest, I ran <code>npm install -g node-inspector</code>. From there, I tried running the application (<code>node --debug ./bin/www</code>) and then running <code>node-debug</code>. Unfortunately, I mixed up node-debug and node-inspector a little bit and the inspector was throwing an <code>EADDRINUSE</code> error. Thankfully, <a href="http://peterlyons.com/">Peter Lyons</a> quickly answered <a href="http://stackoverflow.com/questions/23797931/node-inspector-with-express-4">a question I put on StackOverflow</a> which straightened out the issue I was encountering. Apparently, you either want to use <code>node --debug ___</code> and <code>node-inspector</code> or just <code>node-debug ____</code> -- using <code>node --debug _____.js</code> with the inspector's <code>node-debug</code> option was causing conflicts as both were starting node's debugger.</p>
+
+<p>Starting the application with <code>node --debug ./bin/www</code> followed by <code>node-inspector</code> (in another terminal) worked painlessly. I could open up the inspector website (generally <code>localhost:8080/debug?port=5858</code>) and set breakpoints. When navigating through my node application, the code execution was stopping at the breakpoint and I could debug from there using the standard Chrome Developer tools.</p>
+
+<h2>Forever</h2>
+
+<p>One final thing I wanted to do is get all this working with Forever as it would be nice to be able to make changes to my code with out needing to restart the node server. I have encountered some weirdness with forever and node-inspector but it does seem to work okay. Starting forever generally doesn't fire up the debugger. After some searching, I came across <a href="http://stackoverflow.com/questions/12819268/node-js-debugging-with-node-inspector-and-forever-js">this StackOverflow post</a> that suggests you have to run a custom command to start forever in debug mode <code>forever -w -c 'node --debug' ./bin/www</code>. From there, I could navigate to both the site I was trying to debug and the inspector page and all seemed to work.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ui | Ryan Lanciaux]]></title>
+  <link href="http://ryanlanciaux.github.com/blog/categories/ui/atom.xml" rel="self"/>
+  <link href="http://ryanlanciaux.github.com/"/>
+  <updated>2014-11-18T16:26:23+00:00</updated>
+  <id>http://ryanlanciaux.github.com/</id>
+  <author>
+    <name><![CDATA[Ryan Lanciaux]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Introducing Griddle: A React.js grid]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2014/07/08/introducing-griddle-a-react-dot-js-grid/"/>
+    <updated>2014-07-08T01:01:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2014/07/08/introducing-griddle-a-react-dot-js-grid</id>
+    <content type="html"><![CDATA[<p>Many of the websites I have worked on have required a grid component. As I had been exploring <a href="http://facebook.github.io/react/">React.js</a> more it was made apparent that I was going to need a grid component for it to be a viable my projects. There are many great solutions for displaying grid data with React but many seem to rely  on writing wrappers for components using jQuery or other libraries. While these solutions work well, I was hoping to render entirely with React. Additionally, I wanted to avoid a dependency on libraries like jQuery / Angular if I could help it.</p>
+
+<p>I decided to try my hand at writing a grid to fit my requirements -- the outcome is <a href="http://dynamictyped.github.io/Griddle/">Griddle - a simple React.js grid</a>.</p>
+
+<h2>What it is</h2>
+
+<p><a href="http://dynamictyped.github.io/Griddle/">Griddle</a> is a configurable grid component for React.js. The main philosophy is that the grid should render quickly, contain a lot of the expected functionality and be simple to use without dictating how the rest of the code is structured. While Griddle is far from perfect I'm pretty happy with the initial outcome.</p>
+
+<h2>Where it's going</h2>
+
+<p>As stated above Griddle is far from finished. There are a lot of things that need to be cleaned up and a good deal of functionality that needs to be added. The high-level road map is as follows:</p>
+
+<ol>
+<li><strong>Tests</strong> - The initial version of this grid was mostly a coding session or two followed by some basic clean-up. Griddle should be sustainable and tests are big part of that.</li>
+<li><strong>Metadata</strong> - Griddle should allow a more advanced column order, locked columns, column width, etc. Currently with the column order, for example, an initial order is set but hiding and showing the column will display this column at the end of the list.</li>
+<li><strong>Additional User-configuration</strong> - The user should be able to drag columns around.</li>
+<li><strong>Better sub-grid support</strong> - Currently sub-grids are constrained to have the same columns as the parent and are only one-level deep. Sub-grids should be able to have entirely different columns than the parent and should be able to be nested. Finally, sub-grids should be able to be loaded from the server.</li>
+<li><strong>More responsive options</strong> - Columns should have an optional priority. When the grid gets below a certain size, some columns should drop off depending on the priority. Additionally there should be the option to stack certain columns when a grid gets below a specific size.</li>
+<li><strong>Streaming Data</strong> - Similar to one result page per request, there should be an option to allow the grid to get the initial page and stream the rest of the data behind the scenes.</li>
+</ol>
+
+
+<h2>Conclusion</h2>
+
+<p>So that is basically <a href="http://dynamictyped.github.io/Griddle/">Griddle</a>. The priority of the road-map items could change but that is the current order. Please <a href="http://dynamictyped.github.io/Griddle/">check it out</a> and submit issues for anything you run into :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Trying out ReactJS with the Marvel API]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2014/05/26/trying-out-reactjs-with-the-marvel-api/"/>
+    <updated>2014-05-26T18:29:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2014/05/26/trying-out-reactjs-with-the-marvel-api</id>
+    <content type="html"><![CDATA[<p>I've recently started looking into <a href="http://facebook.github.io/react">ReactJS</a> (Facebook's front-end JavaScript library) for building web UIs. React has an interesting philosophy about how the UI should function and be defined. First off, while many frameworks have an entire system for interacting with the server, routing, etc, React is just the View portion (in a MV* application). Second, React does not employ 2-way data binding. Instead, it uses a one-way data flow where data is maintained in the parent items and is manually shared to its child components. Finally, React uses a Virtual DOM which they say helps with performance (I cannot speak to this first-hand but it seems logical -- <a href="http://www.forbes.com/sites/quora/2013/06/18/how-is-facebooks-react-javascript-library/">see here for more on React's performance</a> from someone who can speak more authoritatively on this).</p>
+
+<p>One other thing that jumped out at me about React is how they recommend you build your UI. According to the documentation, you should start out with a design/mock-up and build a static version of the application. Once the static version is complete, figure out which components are available and how data should flow. Finally, toss your real data into your UI. See <a href="http://facebook.github.io/react/docs/thinking-in-react.html">Thinking in React</a> for more information on this.</p>
+
+<h2>The App</h2>
+
+<p>I generally like to have a goal in mind when learning a new language or framework (this goal doesn't necessarily have to be useful). It was determined that working with the Marvel API would be a good way to test the framework since I wouldn't have to write a fake API first -- plus it seemed fun :)</p>
+
+<p>The application should let a user search through the Marvel characters API and allow for the assembling of a team. The team members can later be removed from the list. We're keeping it pretty simple for this example (wire-frame below).</p>
+
+<blockquote><p><strong>Disclaimer</strong>: This was my first <em>quick</em> foray into using React. There is likely a better way to do some of the things I will be walking through here. Additionally, I know almost nothing about comic books so please don't laugh that you can build a "Hero Team" out of heroes and villains, etc. (<a href="http://en.wikipedia.org/wiki/Comic_Book_Guy">worst example ever</a>).</p></blockquote>
+
+<p><img src="http://ryanlanciaux.github.com/files/reactMockupFull.png" /></p>
+
+<h2>Setup</h2>
+
+<p>Before we really get going, we need to perform some initial, setup tasks. As a side note, if you want to skip all this and head right to the code -- it's available <a href="https://github.com/ryanlanciaux/react-test">here</a>.</p>
+
+<ol>
+<li>Obtain a Marvel API key at <a href="http://developer.marvel.com/">http://developer.marvel.com/</a></li>
+<li>Add some version of Localhost to the referrers section on the Marvel website (we will need this for testing).</li>
+<li>Create some jQuery methods for interacting with the Marvel Character's API (see <a href="http://developer.marvel.com">developer.marvel.com</a> for more on the specifics of the API).</li>
+<li>Add your public key as a JavaScript field named key. Something like <code>window.key = "___________"; //this is your public key</code></li>
+<li>Create an HTML page and load the required scripts/styles</li>
+</ol>
+
+
+<p>```
+<link href="http://ryanlanciaux.github.com//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="styles/site.css" rel="stylesheet"></p>
+
+<script src="http://fb.me/react-0.10.0.js"></script>
+
+
+<script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+
+<p>```</p>
+
+<p>Notice we are including the React files. Also of note, for this example we're simply loading everything from the CDN's without a local fallback.</p>
+
+<h2>Determine Component Architecture</h2>
+
+<p>Taking a look at the wire-frame included above, we want to come up with what React components we will need. Each component should be responsible for it's own content so there should ideally be little overlap. Additionally, as mentioned above, we are using a one-way data flow -- we want to design our components as children of a main component.</p>
+
+<ul>
+<li><strong>HeroBox</strong>: HeroBox is the container for everything we will be creating with React (the Search / Search Results / Current team). If we take a look at our wire-frame, it consists of pretty much everything but the header section.</li>
+<li><strong>Hero</strong>: This is the individual Hero item. <br /><img src="http://ryanlanciaux.github.com/files/hero.png" /><br /></li>
+<li><strong>HeroList</strong>: A list of the possible HeroItems (this is the left side of the HeroBox).</li>
+<li><strong>HeroForm</strong>: The search form. <br /><img src="http://ryanlanciaux.github.com/files/heroForm.png" /><br /></li>
+<li><strong>CurrentTeam</strong>: The container for all of the Heroes / Villains in our current team. <br /><img src="http://ryanlanciaux.github.com/files/currentTeam.png" /><br /></li>
+<li><strong>CurrentTeamItem</strong>: An individual Hero/Villain partial that will be displayed in our CurrentTeam container. <br /><img src="http://ryanlanciaux.github.com/files/currentTeamItem.png" /><br /></li>
+</ul>
+
+
+<p> Since HeroBox is the parent of all the other components, it will be the component that owns the state of our application. That is, everything will get its data from HeroBox and will write back to HeroBox if it needs to change the data.</p>
+
+<h2>React Components</h2>
+
+<p>We will need to start out by creating an intial React Component. To do that we can simply say <code>var someComponent = React.createClass({ ... });</code>. This React class, can contain custom methods / properties or override some of the <a href="http://facebook.github.io/react/docs/component-specs.html">default React methods</a>. One of these default methods is the <strong>render()</strong> method which will build the DOM elements for the component. In our example we will be using <a href="http://facebook.github.io/react/docs/jsx-in-depth.html">JSX</a> as the output of our Render method. JSX is simply a JavaScript XML syntax transform -- what that means for us is that we can practically write HTML as the output of a render method. For example:</p>
+
+<p>```
+var someComponent = React.createClass({
+  render: function(){</p>
+
+<pre><code>return(
+    &lt;h1&gt;Hello&lt;/h1&gt;
+)
+</code></pre>
+
+<p>  }
+});
+<code>``
+When *someComponent* is rendered it would *unsurprisingly* write out</code><h1>Hello</h1>` to the document. This is a bit basic for our example but the concept is necessary.</p>
+
+<h2>HeroBox</h2>
+
+<p>The HeroBox will be the first component we create because all of the other components will obtain it's data through it. We will be spending the most time on this component because most of the React-specific <em>stuff</em> is occuring here (the code for this component is posted in its entirety while we will just highlight the interesting parts of the other components).</p>
+
+<p>```
+var HeroBox = React.createClass({</p>
+
+<pre><code>loadHeroes: function(){
+    getCharacters().then(function(data){
+        this.setState({data:data.data.results});
+    }.bind(this));
+},
+loadHeroByName: function(name){
+    getCharacters("?nameStartsWith=" + name).then(function(data){
+        this.setState({data: data.data.results, currentTeam: this.state.currentTeam});
+    }.bind(this));
+},
+addToTeam: function(item){
+    this.state.currentTeam.push(item);
+    this.setState({data:this.state.data, currentTeam: this.state.currentTeam});
+},
+getInitialState: function(){
+    return{ data: [], currentTeam: []};
+},
+delete: function(item){
+    this.state.currentTeam.splice(item, 1);
+    this.setState({data: this.state.data, currentTeam: this.state.currentTeam})
+},
+componentWillMount: function(){
+    this.loadHeroes();
+    //this.loadHeroByName("Ajaxis");
+},
+render: function(){
+    return(
+        &lt;div className="heroBox row"&gt;
+            &lt;div className="col-md-8"&gt;
+                &lt;HeroForm onSearchSubmit={this.loadHeroByName} onCancel={this.loadHeroes}/&gt; 
+                &lt;HeroList data={this.state.data} addToTeam={this.addToTeam} /&gt; 
+            &lt;/div&gt;
+            &lt;div className="col-md-4 teamWrapper"&gt;              
+                &lt;CurrentTeam data={this.state.currentTeam} delete={this.delete} /&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    )
+}
+</code></pre>
+
+<p>});
+```</p>
+
+<ul>
+<li><strong>loadHeroes</strong>: method for obtaining a list of heroes starting at the first location in the Marvel API (if we were including pagination, this call would be used for browse functionality). Take special note of the <strong>setState</strong> method. We are using this method to trigger the UI updates (<a href="http://facebook.github.io/react/docs/component-api.html#setstate">see React documentation on setState</a> for more information)</li>
+<li><strong>loadHeroByName</strong>: Calls our jQuery method for interacting with the Marvel data with a given hero name</li>
+<li><strong>addToTeam</strong>: Adds a record to the current team State and calls setState (see description on setState).</li>
+<li><strong>getInitialState</strong>: Define the initial state of the component -- <a href="http://facebook.github.io/react/tips/props-in-getInitialState-as-anti-pattern.html">be careful with this method on non-root components</a></li>
+<li><strong>delete</strong>: Remove a given item (by index) from the current team and re-render the component.</li>
+<li><strong>componentWillMount</strong>: This is a method that is invoked immediately before the rendering occurs. This is one of the methods I was a little iffy about as far as how I'm using it but it seems okay due to the demos.</li>
+<li><strong>render</strong>: The render method is simply the JSX representation of how we want to render this component. You may notice we're using some elements that are not valid DOM elements, such as HeroForm / HeroList / CurrentTeam. These are elements we will be defining below. The attributes on the elements are how we are passing the properties from the HeroBox to the rest of the components.</li>
+</ul>
+
+
+<h2>HeroList</h2>
+
+<p>With this component we want to parse through the list of data from HeroBox and create a Hero component for each item. Additionally, this component should serve as the middle man between events on the HeroComponent and the HeroBox component.</p>
+
+<p>```
+var HeroList = React.createClass({</p>
+
+<pre><code>addToTeam: function(item){
+    //basically a passthru
+    this.props.addToTeam(item);
+},
+render: function(){
+    var that = this; 
+    var nodes = this.props.data.map(function(hero, index){
+        return &lt;Hero key={index} name={hero.name} thumbnail={hero.thumbnail} description={hero.description} addToTeam={that.addToTeam}&gt;&lt;/Hero&gt;;
+    });
+
+    return &lt;div className="heroList"&gt;{nodes}&lt;/div&gt;
+}
+</code></pre>
+
+<p>});
+```</p>
+
+<p>In this component we are using <code>this.props.____</code> to access properties that were passed in from the render method on HeroBox. The render method of HeroBox contains <code>&lt;HeroList data={this.state.data} addToTeam={this.addToTeam} /&gt;</code> -- this means we have this.props.addToTeam and this.props.data as available options here. The <strong>render</strong> function may look a little strange but it is basically iterating through our list of items and returning a Hero component for each one.</p>
+
+<h2>Hero</h2>
+
+<p>As we saw above, the parent component of this item defines what properties we have available. Since the Hero item is rendered as <code>&lt;Hero key={index} name={hero.name} thumbnail={hero.thumbnail} description={hero.description} addToTeam={that.addToTeam}&gt;&lt;/Hero&gt;</code>, we have key, name, thumbnail, description and an addToTeam method available on the object's <code>props</code>. The Hero component is mostly just rendering out the properties, however, it is also handling button clicks.</p>
+
+<p>```
+var Hero = React.createClass({</p>
+
+<pre><code>...
+handleClick: function(){
+    var image = this.getImage();
+    this.props.addToTeam({name: this.props.name, image: image })
+},
+render: function(){
+    return (
+        &lt;div className="hero col-md-3"&gt;
+            ...
+                &lt;button type="button" className="addToTeam btn btn-primary" onClick={this.handleClick}&gt;Add To Team&lt;/button&gt;
+            ...
+        &lt;/div&gt;
+    );
+}
+</code></pre>
+
+<p>});
+```</p>
+
+<p>What's happening when a user clicks on the "Add to Team" button is the onClick method, handleClick is called. From there, the handleClick method calls the addToTeam method from the HeroList which calls the addToTeam method on the HeroBox. The HeroBox method runs the <code>setState</code> function so our UI is kept up-to-date. This may seem like a lot of work to update the UI but its nice how clear and non-magical this is.</p>
+
+<h2>HeroForm</h2>
+
+<p>Similar to Hero, we're mostly calling functions back on the HeroBox from this Component. We will call loadHeroByName (which is what is performing our search against the API) when the user submits the form and loadHeroes when the user presses cancel (for the sake of example -- there is not a lot of the standard logic that should go on in reseting form states, etc).</p>
+
+<p>```
+var HeroForm = React.createClass({</p>
+
+<pre><code>handleSubmit: function(){
+    var name = this.refs.name.getDOMNode().value.trim();
+    this.props.onSearchSubmit(name);
+    this.refs.name.getDOMNode().value = '';
+    return false;
+},
+handleCancel: function(){
+    this.props.onCancel();
+},
+render: function(){
+    return (
+        &lt;form className="searchForm row form-inline" onSubmit={this.handleSubmit}&gt;
+                &lt;input type="text" className="form-control" placeholder="Enter a Hero name" ref="name" /&gt;
+
+                &lt;input type="submit" value="Search" className="btn btn-primary" /&gt;
+
+                &lt;button type="button" className="btn" onClick={this.handleCancel}&gt;Clear Results&lt;/button&gt;
+        &lt;/form&gt;
+    );
+}
+</code></pre>
+
+<p>});
+```</p>
+
+<p>This is all pretty standard to what we've seen so far except for the <code>getDOMNode()</code> and <code>this.refs</code> in the handleSubmit function. These statements are allowing us to interact with the data in the form. For more on this, <a href="http://facebook.github.io/react/docs/working-with-the-browser.html">see React's documentation on the subject</a>.</p>
+
+<h2>CurrentTeam / CurrentTeamItem</h2>
+
+<p>We are not going to go into detail on the Team Components -- they are simply using the same techniques we've already encountered on the other Components. Please <a href="https://github.com/ryanlanciaux/react-test">check out the project on GitHub</a> for the code.</p>
+
+<h2>Finishing Up</h2>
+
+<p>Now that the components are created we need to write out our HeroBox component to the page.</p>
+
+<p>index.html
+```
+<body></p>
+
+<pre><code>...
+&lt;div id="content" class="container-fluid"&gt;&lt;/content&gt;
+&lt;script type="text/jsx" src="scripts/heroes.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p></body>
+```</p>
+
+<p>heroes.js
+```
+React.renderComponent(</p>
+
+<pre><code>&lt;HeroBox /&gt;, document.getElementById('content')
+</code></pre>
+
+<p>);</p>
+
+<p>```</p>
+
+<p>Be sure to <a href="https://github.com/ryanlanciaux/react-test">take a look at code for this project</a> on GitHub.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: desk | Ryan Lanciaux]]></title>
+  <link href="http://ryanlanciaux.github.com/blog/categories/desk/atom.xml" rel="self"/>
+  <link href="http://ryanlanciaux.github.com/"/>
+  <updated>2014-11-18T16:26:23+00:00</updated>
+  <id>http://ryanlanciaux.github.com/</id>
+  <author>
+    <name><![CDATA[Ryan Lanciaux]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ikea Standing Desk]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/05/03/ikea-standing-desk/"/>
+    <updated>2013-05-03T21:02:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/05/03/ikea-standing-desk</id>
+    <content type="html"><![CDATA[<p>Over the past several years, I have grown quite accustomed to using a standing desk at home (I have an adjustable Ergotron that I absolutely love). I decided it was about time to make the switch at work, however, I didn't want to spend a lot of money on a desk. Thankfully, I had come across a <a href="http://iamnotaprogrammer.com/Ikea-Standing-desk-for-22-dollars.html">blog post by Colin Nederkoorn</a> on a standing desk he and a coworker built for $22. I like the design, however, I wanted more room for monitors. One of the comments on the blog led me to <a href="http://www.jinyoungkim.com/blog/2012/07/standing-desk/">Jinyoung Kim's modification of the Ikea desk</a> which used a wider table than Colin's design. I ultimately based my desk plans off Jinyoung's design, since it allowed for multiple monitors, laptops and other gadgets.</p>
+
+<p>The main components of the desk are as follows (they should cost about $45 total):</p>
+
+<ul>
+<li><a href="http://www.ikea.com/us/en/catalog/products/40104294/">LACK</a> coffee table -- this is the main piece of the desk.</li>
+<li><a href="http://www.ikea.com/us/en/catalog/products/10056987/#/20094347">EKBY JÄRPEN</a> shelf -- for keyboard / mouse</li>
+<li><a href="http://www.ikea.com/us/en/catalog/products/10136135/#/10136135">EKBY BJÄRNUM</a> brackets</li>
+</ul>
+
+
+<p><img src="http://ryanlanciaux.github.com/files/desk-setup.jpg" alt="" /></p>
+
+<p>As noted on Jinyoung's site, the shelf needs to be sawed down a bit to fit the dimensions of the coffee table. I like the brackets I used since it hides the rougher side of the shelf that was cut down. I would also echo his sentiment about using bolts to hold up the shelf as  they are sturdier than screws. Finally, as someone who has used standing desks for a couple years now I would HIGHLY recommend having a gel kitchen mat to stand on; especially if you're over hardwood or concrete flooring.</p>
+]]></content>
+  </entry>
+  
+</feed>

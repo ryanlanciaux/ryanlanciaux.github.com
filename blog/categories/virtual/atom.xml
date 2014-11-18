@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: virtual | Ryan Lanciaux]]></title>
+  <link href="http://ryanlanciaux.github.com/blog/categories/virtual/atom.xml" rel="self"/>
+  <link href="http://ryanlanciaux.github.com/"/>
+  <updated>2014-11-18T16:26:23+00:00</updated>
+  <id>http://ryanlanciaux.github.com/</id>
+  <author>
+    <name><![CDATA[Ryan Lanciaux]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Running ssh-agent on Windows]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2014/05/15/running-ssh-agent-on-windows/"/>
+    <updated>2014-05-15T03:41:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2014/05/15/running-ssh-agent-on-windows</id>
+    <content type="html"><![CDATA[<p>There was one thing I didn't mention in my <a href="http://ryanlanciaux.github.io/blog/2014/05/13/vagrantfile-for-octopress/">previous post about running Octopress on a Vagrant machine</a> -- in the machine's current state (with Windows as a host machine), we cannot deploy the site with a <code>rake deploy</code> command. The reason for this is we don't have an ssh key available to the Vagrant box.</p>
+
+<p>While we could create new keys on the Vagrant machine, this kind of seems to defeat part of the purpose of using Vagrant (setting up a development environment with little manual interaction). Additionally, we could simply share our host machine's ~/.ssh folder with our vagrant machine but this also seems kind of messy.</p>
+
+<p>Thankfully, there is a pretty simple way to get everything working to where we can use the host machine's ssh key and that is through an <a href="http://en.wikipedia.org/wiki/Ssh-agent">ssh-agent</a>. In the Vagrantfile we setup as part of the <a href="http://ryanlanciaux.github.io/blog/2014/05/13/vagrantfile-for-octopress/">previous post</a>, we are already giving our machine access to the ssh-agent with the following command <code>config.ssh.forward_agent = true</code>. The only problem with this forward_agent property is that you may not have an ssh-agent running (especially if you are on Windows). There are a couple things we can do to get around that...</p>
+
+<ol>
+<li><strong>Install <a href="http://msysgit.github.io/">msysgit</a> and manually say <code>eval `ssh-agent`</code> followed by <code>ssh-add</code> (assuming your keys are id_rsa/id_rsa.pub)</strong> -- You'd connect to your Vagrant machine after running this command and would be able to deploy, however, there are a couple of problems with this method. First off, this is a manual process you'd have to remember every time you wish to deploy. Another issue is that you have an ssh-agent process that you need to remember to get rid of down the road.</li>
+<li><strong>Use msysgit and .profile</strong> -- Adding the <code>eval `ssh-agent`</code> and <code>ssh-add</code> to the .profile would allow us to automate the process of starting the agent when loading the terminal. That being said, using the <code>eval</code> script would be bad -- it would create a new ssh-agent each time a new shell is loaded. Thankfully, <a href="https://help.github.com/articles/working-with-ssh-key-passphrases#auto-launching-ssh-agent-on-msysgit">GitHub has shared a solution to this problem</a>.</li>
+<li><strong>Use <a href="https://github.com/dahlbyk/posh-git">posh-git</a> with PowerShell</strong> -- Posh-git is a series of PowerShell scripts for git integration. Upon installing posh-git and running PowerShell, I was presented with my ssh key's password prompt. After entering the password, it started an ssh-agent and everything was good-to-go.</li>
+</ol>
+
+
+<p>I generally stick with option 2, as I am not much of a PowerShell user. It's definitely nice to have the PowerShell option available as a backup, however. One thing I would really like to explore a bit more is making this working with <a href="http://bliker.github.io/cmder/">cmder</a>. I could not get the agent to run when using cmder (without having it launch PowerShell) but I did not spend much time on that yet.</p>
+
+<h4>Testing it out</h4>
+
+<p>If you want to test to make sure that your ssh-agent is running and getting shared to your vagrant machine...</p>
+
+<ol>
+<li>Fire up your terminal (either PowerShell with posh-git or msysgit with the github agent code added to your .profile)</li>
+<li>Navigate to the directory where your Vagrantfile is and <code>vagrant up</code> followed by <code>vagrant ssh</code></li>
+<li>Once ssh'd into your vagrant machine type <code>ssh -T git@github.com</code></li>
+</ol>
+
+
+<p>If everything is working you should see:<br /><br /> <code>Hi _______! You've successfully authenticated, but GitHub does not provide shell access.</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Vagrantfile for Octopress]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2014/05/13/vagrantfile-for-octopress/"/>
+    <updated>2014-05-13T03:59:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2014/05/13/vagrantfile-for-octopress</id>
+    <content type="html"><![CDATA[<p>I've recently started using <a href="http://www.vagrantup.com">Vagrant</a> for managing lightweight virtual machines for various projects. Vagrant is awesome because it allows you to:</p>
+
+<ol>
+<li><strong>Configure an environment for a specific project / application</strong> -- For instance, if you want to install Ruby / Rails and a mongo database, you can set up an environment specifically for your project. You don't need to worry about messing up another project's requirements because each project can have it's own!</li>
+<li><strong>Save system resources</strong> -- Vagrant starts Virtual Machines in headless mode (no UI) -- the VM I'm using for my blog (which we'll see more in a second) is only using 512megs of RAM and it runs without any hiccups. Additionally, these VMs take virtually no hard-drive space when you are not using them. When you're done using a machine, you can remove it, keeping only the Vagrantfile and provision scripts. Your scripts can be run later on and your environment will be setup exactly as it was the last time it was configured.</li>
+<li><strong>Edit all your code from your host machine</strong> -- Often times with development VMs, I would treat the machine as if it was a standalone computer (installing vim / sublime, etc. etc). Using Vagrant, however, you can edit the code on the host machine and simply run/serve the application with the VM (it should be noted you definitely could do this with standard VMs -- it's just a bit easier with Vagrant). As a developer who is pretty OCD about IDE configuration, this is a fantastic feature.</li>
+<li><strong>Easily share machines with other developers</strong> -- Vagrant cuts down on the need for sharing giant virtual machines between different computers / developers. You can simply share your Vagrantfile and provision scripts and you have the same environment on any machine (assuming that machine can run Vagrant, etc.).</li>
+</ol>
+
+
+<h2>Vagrant File</h2>
+
+<p>We are going to walk through the Vagrantfile and provisioning script I'm using for my blog. First off, the <a href="https://docs.vagrantup.com/v2/vagrantfile/index.html">Vagrantfile</a>:</p>
+
+<p>```
+VAGRANTFILE_API_VERSION = "2"</p>
+
+<p>Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "precise64"
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"</p>
+
+<p>  config.vm.provision :shell, :path => "bootstrap.sh"
+  config.vm.network :private_network, ip: '10.0.33.36'
+  config.ssh.forward_agent = true</p>
+
+<p>  config.vm.synced_folder "../octopress", "/home/vagrant/octopress", create: false</p>
+
+<p>  config.vm.provider :virtualbox do |vb|</p>
+
+<pre><code>vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+vb.customize ["modifyvm", :id, "--memory", "512"]
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>```</p>
+
+<p>Vagrant files are written in Ruby, however, you don't need to know Ruby to use Vagrant -- the configuration code is nothing too crazy. Lets walk through some of the more interesting parts of the Vagrantfile...</p>
+
+<h4>Box settings</h4>
+
+<p>The first thing we are doing in the configuration block is defining the type of machine to use. Precise64 is a 64bit Ubuntu 12.04 machine. I generally use this one but there are <a href="https://vagrantcloud.com/discover/featured">quite a few to choose from</a> in the <a href="https://vagrantcloud.com/">Vagrant Cloud</a>. With <code>box_url</code> we are describing where this box can be downloaded if it is not currently available on the host machine.</p>
+
+<h4>Provision settings</h4>
+
+<p>Next, we are telling Vagrant to run this <code>bootstrap.sh</code> as part of it's <a href="https://docs.vagrantup.com/v2/provisioning/index.html">provisioning</a> process. Provisioning is where we will define what the environment should look like so it's not just a base Ubuntu machine. You can provision a Vagrant box with Chef, Puppet, etc. but for this post I'm just using a shell script (still learning Chef). We will take a look at this shell script in a little bit.</p>
+
+<h4>Network / Sync settings</h4>
+
+<p>Following the vm configuration, we are setting up the networking and folder options for our box. The <code>vm.network</code> property is stating that when there is a webserver running on this machine, we can access it on our host browser at '10.0.33.36'. The <code>synced_folder</code> property is stating that the folder <code>octopress</code> living in a sibling folder to the folder that the Vagrantfile is contained in should be accessible within the virtual machine as <code>~/octopress</code>. The octopress directory already exists (and has it's own github repo) so we do not want to recreate it.</p>
+
+<h4>Additional settings</h4>
+
+<p>Finally, in the provider block toward the bottom of this script we are adjusting the memory used and setting a property that allows us to use symbolic links.</p>
+
+<h2>Provisioning Script</h2>
+
+<p>As we talked about earlier, the provisioning script is what differentiates our box from a base Ubuntu machine. In the case of this example it's basically just a shell script.</p>
+
+<p>```</p>
+
+<h1>!/usr/bin/env bash</h1>
+
+<p>HOME="/home/vagrant"
+PROV_FILE=.vagrant_provision.lock</p>
+
+<h1>inspired by https://github.com/junwatu/nodejs-vagrant</h1>
+
+<p>if [ -f $PROV_FILE ];
+then</p>
+
+<pre><code>echo "Already Provisioned"
+</code></pre>
+
+<p>else</p>
+
+<pre><code>touch $PROV_FILE
+
+sudo apt-get install -y git make
+
+git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
+
+# Install ruby-build
+git clone https://github.com/sstephenson/ruby-build.git $HOME/.rbenv/plugins/ruby-build
+
+$HOME/.rbenv/bin/rbenv install 1.9.3-p194
+$HOME/.rbenv/bin/rbenv global 1.9.3-p194
+
+#Add rbenv to PATH
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' &gt;&gt; $HOME/.profile
+echo 'eval "$(rbenv init -)"' &gt;&gt; $HOME/.profile
+
+#own rbenv as the vagrant user
+sudo chown -Rf vagrant $HOME/.rbenv
+
+#don't like doing this
+sudo su - vagrant -c "rbenv rehash &amp;&amp; cd /home/vagrant/octopress/ &amp;&amp; gem install bundler"
+sudo su - vagrant -c "cd /home/vagrant/octopress/ &amp;&amp; bundle install"
+</code></pre>
+
+<p>fi
+```</p>
+
+<p>I'm not going to spend as much time on this as it's not too interesting if you know shell scripting (and there is probably a better way to do a lot of this).</p>
+
+<ol>
+<li>Check to see if the provision lock exists. If it does it means our box is already setup and we shouldn't configure our environment again.</li>
+<li>If the lock file does not exist we are create it</li>
+<li>Get git and make</li>
+<li>Install rbenv and Ruby <code>1.9.3-p194</code> (that was the version I was using when my blog was on an actual machine so I'll stick with that for now)</li>
+<li>modify the path so it contains the Ruby defined in rbenv</li>
+<li>Change the ownership of the .rbenv file from the privileged user (sudo) to vagrant -- if you don't do this, you will not be able to use the gem files when you ssh into the box later on.</li>
+<li>Rehash rbenv so it uses the right Ruby version and install the bundler gem as the vagrant user</li>
+<li>Install the files required to run octopress (as it says in the comment, I really don't like the sudo su - vagrant commands)</li>
+</ol>
+
+
+<h2>Running the machine</h2>
+
+<p>Once everything is setup, you can simply say <code>vagrant up</code>. Vagrant will then run through the Vagrantfile and the script to configure the environment. Once the configuration is complete, you can say <code>vagrant ssh</code>. Once you are ssh'd into the box, you can <code>cd octopress</code>, <code>rake generate</code>, <code>rake preview</code>, etc (see <a href="http://octopress.org/docs/blogging/">Octopress docs</a> for more information). When finished, <code>vagrant halt</code> will shut down the VM. If you need to destroy the box, you simply can type <code>vagrant destroy</code>. Removing the machine does not remove the code in the synced folders or the Vagrant scripts. Running <code>vagrant up</code> will configure the machine all over again and your code will still be intact where you left off.</p>
+
+<h2>Finishing up</h2>
+
+<p>I have tossed this <a href="https://github.com/ryanlanciaux/octopress-vagrant">Octopress Vagrantfile and provision script on github</a>. For more information on Vagrant, check out the <a href="http://www.vagrantup.com">Vagrant site</a>. Of further note, I referenced <a href="https://github.com/junwatu/nodejs-vagrant">junwatu's Vagrant script</a> when writing the Octopress script. Please feel free to <a href="https://github.com/ryanlanciaux/ryanlanciaux.github.com">submit pull requests</a> for any corrections that you may have to this content.</p>
+]]></content>
+  </entry>
+  
+</feed>

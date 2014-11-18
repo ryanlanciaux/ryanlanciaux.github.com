@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: xeditable | Ryan Lanciaux]]></title>
+  <link href="http://ryanlanciaux.github.com/blog/categories/xeditable/atom.xml" rel="self"/>
+  <link href="http://ryanlanciaux.github.com/"/>
+  <updated>2014-11-18T16:26:23+00:00</updated>
+  <id>http://ryanlanciaux.github.com/</id>
+  <author>
+    <name><![CDATA[Ryan Lanciaux]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Fake popovers for Angular-xeditable]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2013/10/16/fake-popovers-for-angular-xeditable/"/>
+    <updated>2013-10-16T21:58:00+00:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2013/10/16/fake-popovers-for-angular-xeditable</id>
+    <content type="html"><![CDATA[<p>I was recently working on a project with <a href="http://www.angularjs.org">AngularJS</a> and <a href="http://vitalets.github.io/x-editable/">xeditable</a> (if you're not familiar, xeditable is an awesome library for inline editing). There is an <a href="http://vitalets.github.io/angular-xeditable/">Angular version of xeditable</a> but the popover editing functionality is not implemented yet (it's in the roadmap). Instead of using the original version of xeditable and implementing custom directives or try to add the popover functionality to the project, I decided to see if I could make the popover using just CSS -- this happened to be more inline with my timeframe.</p>
+
+<p>Take a look at the original (non-angular) popover:</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/original_xeditable.png" /></p>
+
+<p>Starting out, I noticed that clicking on the link of an xeditable element was showing an input element (and buttons) in a form and hiding the link. To mimic the popover, the link and the form should both be visible when the form was activated, however, the form should be positioned a bit higher than the link. Working with a forked version of <a href="http://jsfiddle.net/NfPcH/3/">vitalets' jsfiddle</a> example, I wrapped the initial links in <code>&lt;span class='item-wrapper'&gt;&lt;/span&gt;</code> -- from there, I edited the link and the form's CSS as follows</p>
+
+<p>```css
+.item-wrapper a{</p>
+
+<pre><code>/* make the link always show up */
+display: inline !important;
+</code></pre>
+
+<p>}</p>
+
+<p>.item-wrapper{</p>
+
+<pre><code>/* make absolutely positioned children constrained to this box*/
+position: relative;
+</code></pre>
+
+<p>}</p>
+
+<p>.item-wrapper form {</p>
+
+<pre><code>background: #FFF;
+border: 1px solid #AAA;
+border-radius: 5px;
+display: inline-block;
+left: 50%;
+
+/* half the width */
+margin-left: -110px;
+padding: 7px;
+position: absolute;
+top: -55px;
+width: 220px;
+z-index: 101;
+</code></pre>
+
+<p>}
+```</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/xeditable_popover_1.png" /></p>
+
+<p>It's a step in the right direction, however, doesn't really look exactly like we want. To get the triangle to show up below the pop-up, I thought it would be good to use the <a href="http://css-tricks.com/snippets/css/css-triangle/">technique for creating a triangle on css-tricks</a> as an :after filter (please <a href="http://css-tricks.com/snippets/css/css-triangle/">check the link</a> for more info on that because how it works is a bit outside the scope of this post).</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/xeditable_popover_2.png" /></p>
+
+<p> This works but it looks funny because the popover has a border but the triangle is just a solid color. Additionally, we cannot just toss a border on the :after filter since we're using the border to create the triangle. What I ended up doing is using a :before filter with a width of 10px and a background color the same as the border color followed by an :after filter 1px narrower and the same background color as the popover.</p>
+
+<p> <img src="http://ryanlanciaux.github.com/files/xeditable_popover_3.png" /></p>
+
+<p>```css
+.item-wrapper form:before{</p>
+
+<pre><code>content:"";
+width: 0;
+height: 0;
+border-left: 10px solid transparent;
+border-right: 10px solid transparent;
+border-top: 10px solid #AAA;
+position:absolute;
+bottom:-10px;
+left:100px;
+</code></pre>
+
+<p>}</p>
+
+<p>.item-wrapper form:after{</p>
+
+<pre><code>content:"";
+width:0;
+height:0;
+border-left: 9px solid transparent;
+border-right: 9px solid transparent;
+border-top: 9px solid #FFF;
+position:absolute;
+bottom:-9px;
+left:101px;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>There is a <a href="http://jsfiddle.net/EWcUw/4/">jsfiddle of the example available here</a>. A few things to note... I am only using this with the Angular-xeditable dropdowns and text boxes so the other controls may or may not work. Additionally, I added some javascript (not in the examples) to hide any visible popovers when displaying a new one. I was running into some issues displaying multiple (or displaying the same one multiple times).</p>
+]]></content>
+  </entry>
+  
+</feed>

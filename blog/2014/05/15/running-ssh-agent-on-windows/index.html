@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Running ssh-agent on Windows - Ryan Lanciaux</title>
+  <meta name="author" content="Ryan Lanciaux">
+
+  
+  <meta name="description" content="There was one thing I didn&#8217;t mention in my previous post about running Octopress on a Vagrant machine &#8211; in the machine&#8217;s current &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ryanlanciaux.github.com/blog/2014/05/15/running-ssh-agent-on-windows">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Ryan Lanciaux" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Ryan Lanciaux</a></h1>
+  
+    <h2>Random programming blog.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ryanlanciaux.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Running Ssh-agent on Windows</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-15T03:41:00+00:00" pubdate data-updated="true">May 15<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>There was one thing I didn&#8217;t mention in my <a href="http://ryanlanciaux.github.io/blog/2014/05/13/vagrantfile-for-octopress/">previous post about running Octopress on a Vagrant machine</a> &#8211; in the machine&#8217;s current state (with Windows as a host machine), we cannot deploy the site with a <code>rake deploy</code> command. The reason for this is we don&#8217;t have an ssh key available to the Vagrant box.</p>
+
+<p>While we could create new keys on the Vagrant machine, this kind of seems to defeat part of the purpose of using Vagrant (setting up a development environment with little manual interaction). Additionally, we could simply share our host machine&#8217;s ~/.ssh folder with our vagrant machine but this also seems kind of messy.</p>
+
+<p>Thankfully, there is a pretty simple way to get everything working to where we can use the host machine&#8217;s ssh key and that is through an <a href="http://en.wikipedia.org/wiki/Ssh-agent">ssh-agent</a>. In the Vagrantfile we setup as part of the <a href="http://ryanlanciaux.github.io/blog/2014/05/13/vagrantfile-for-octopress/">previous post</a>, we are already giving our machine access to the ssh-agent with the following command <code>config.ssh.forward_agent = true</code>. The only problem with this forward_agent property is that you may not have an ssh-agent running (especially if you are on Windows). There are a couple things we can do to get around that&#8230;</p>
+
+<ol>
+<li><strong>Install <a href="http://msysgit.github.io/">msysgit</a> and manually say <code>eval `ssh-agent`</code> followed by <code>ssh-add</code> (assuming your keys are id_rsa/id_rsa.pub)</strong> &#8211; You&#8217;d connect to your Vagrant machine after running this command and would be able to deploy, however, there are a couple of problems with this method. First off, this is a manual process you&#8217;d have to remember every time you wish to deploy. Another issue is that you have an ssh-agent process that you need to remember to get rid of down the road.</li>
+<li><strong>Use msysgit and .profile</strong> &#8211; Adding the <code>eval `ssh-agent`</code> and <code>ssh-add</code> to the .profile would allow us to automate the process of starting the agent when loading the terminal. That being said, using the <code>eval</code> script would be bad &#8211; it would create a new ssh-agent each time a new shell is loaded. Thankfully, <a href="https://help.github.com/articles/working-with-ssh-key-passphrases#auto-launching-ssh-agent-on-msysgit">GitHub has shared a solution to this problem</a>.</li>
+<li><strong>Use <a href="https://github.com/dahlbyk/posh-git">posh-git</a> with PowerShell</strong> &#8211; Posh-git is a series of PowerShell scripts for git integration. Upon installing posh-git and running PowerShell, I was presented with my ssh key&#8217;s password prompt. After entering the password, it started an ssh-agent and everything was good-to-go.</li>
+</ol>
+
+
+<p>I generally stick with option 2, as I am not much of a PowerShell user. It&#8217;s definitely nice to have the PowerShell option available as a backup, however. One thing I would really like to explore a bit more is making this working with <a href="http://bliker.github.io/cmder/">cmder</a>. I could not get the agent to run when using cmder (without having it launch PowerShell) but I did not spend much time on that yet.</p>
+
+<h4>Testing it out</h4>
+
+<p>If you want to test to make sure that your ssh-agent is running and getting shared to your vagrant machine&#8230;</p>
+
+<ol>
+<li>Fire up your terminal (either PowerShell with posh-git or msysgit with the github agent code added to your .profile)</li>
+<li>Navigate to the directory where your Vagrantfile is and <code>vagrant up</code> followed by <code>vagrant ssh</code></li>
+<li>Once ssh&#8217;d into your vagrant machine type <code>ssh -T git@github.com</code></li>
+</ol>
+
+
+<p>If everything is working you should see:<br /><br /> <code>Hi _______! You've successfully authenticated, but GitHub does not provide shell access.</code></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ryan Lanciaux</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-15T03:41:00+00:00" pubdate data-updated="true">May 15<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ssh/'>ssh</a>, <a class='category' href='/blog/categories/vagrant/'>vagrant</a>, <a class='category' href='/blog/categories/virtual/'>virtual</a>, <a class='category' href='/blog/categories/windows/'>windows</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ryanlanciaux.github.com/blog/2014/05/15/running-ssh-agent-on-windows/" data-via="ryanlanciaux" data-counturl="http://ryanlanciaux.github.com/blog/2014/05/15/running-ssh-agent-on-windows/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/13/vagrantfile-for-octopress/" title="Previous Post: Vagrantfile for Octopress">&laquo; Vagrantfile for Octopress</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/05/25/debugging-express-applications/" title="Next Post: Debugging Express Applications">Debugging Express Applications &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii/">Miscellaneous Jest Issues/Workarouds II</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds/">Miscellaneous Jest Issues/Workarounds</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/28/react-plus-jest-testing-on-windows-ii/">React + Jest Testing on Windows II</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/18/azure-active-directory-authentication-in-existing-project/">Azure Active Directory authentication in existing project</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/">Test React Components Using Jest (on Windows)</a>
+      </li>
+    
+  </ul>
+</section>
+<section class='goodreads-aside'>
+  <h1><a href="http://www.goodreads.com" target="_blank">Status on Goodreads</a></h1>
+  <ul>
+    <li>
+            <a href='http://www.goodreads.com/user_status/show/47285993' target='blank'>Ryan is 46% done with Getting Started with </a>
+            <span class='tiny'>(2014-08-02)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/47285988' target='blank'>Ryan is finished with Tuck</a>
+            <span class='tiny'>(2014-08-02)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/46065249' target='blank'>Ryan is on page 103 of 452 of Tuck</a>
+            <span class='tiny'>(2014-07-07)</span></li>
+  </ul>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ryanlanciaux">@ryanlanciaux</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ryanlanciaux',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Ryan Lanciaux -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'ryanlanciaux';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://ryanlanciaux.github.com/blog/2014/05/15/running-ssh-agent-on-windows/';
+        var disqus_url = 'http://ryanlanciaux.github.com/blog/2014/05/15/running-ssh-agent-on-windows/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
