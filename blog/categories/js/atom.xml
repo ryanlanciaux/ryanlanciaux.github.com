@@ -4,7 +4,7 @@
   <title><![CDATA[Category: js | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/js/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2014-11-18T16:26:23+00:00</updated>
+  <updated>2016-11-18T01:45:17-05:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -14,9 +14,102 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Setup Bash on Windows: My environment configuration]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/"/>
+    <updated>2016-11-17T23:32:00-05:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration</id>
+    <content type="html"><![CDATA[<p>Inspired by some recent conversations on Twitter, I've decided to give Bash on Windows another shot. This post contains the steps I've taken to install and configure Bash on Windows to closely resemble my Linux / Mac settings for JavaScript and node development (with some extra steps I've taken for Ruby, etc at the end).</p>
+
+<h2>1. Enable Bash on Windows</h2>
+
+<p>Bash on Windows requires the Anniversary update of Windows 10. Please make sure you have that before continuing. To determine what version of Windows you are running, open a command prompt window and type <code>winver</code>. If you see Version 1607, you should be good to proceed (thanks Josh Pollard).</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/winver.png" alt="Windows Version dialog" /></p>
+
+<p>Once that's all set go to <code>Settings -&gt; Update &amp; Security -&gt; For Developers</code> and enable <code>Developer mode</code>. Finally, go to <code>Windows Features</code> and enable <code>Windows Subsystem for Linux</code>. Your computer should restart and you should be able to run Bash for Windows at this point.</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/windows_features.png" alt="Windows features dialog" /></p>
+
+<p>See <a href="http://www.hanselman.com/blog/DevelopersCanRunBashShellAndUsermodeUbuntuLinuxBinariesOnWindows10.aspx">Scott Hanselman's blog</a> or <a href="https://blogs.technet.microsoft.com/heyscriptingguy/2016/09/28/part-1-install-bash-on-windows-10-omi-cim-server-and-dsc-for-linux/">Stefan Roth's post on TechNet</a> for more on this.</p>
+
+<h2>2. Update apt-get</h2>
+
+<p>We are going to be installing some things and it would be good to make sure we're up-to-date here. Launch bash by pressing the Windows key and typing <code>bash</code>. From there, <code>apt-get update</code> should obtain the latest package information. If you are running into issues with IPv6 vs IPv4 checkout this post on <a href="http://askubuntu.com/questions/759524/problem-with-ipv6-sudo-apt-get-update-upgrade">Ask Ubuntu</a> or here on <a href="https://bruteforce.gr/make-apt-get-use-ipv4-instead-ipv6.html">BruteForce labs</a>.</p>
+
+<h2>3. Install nvm</h2>
+
+<p>nvm stands for Node version manager and is an essential part of my development environment. Using nvm allows you to switch what version of node you're using on a project by project basis. To install nvm, run <code>curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash</code> (from <a href="https://github.com/creationix/nvm">the nvm documentation</a>) followed by <code>Source .bashrc</code></p>
+
+<h2>4. Install git</h2>
+
+<p>Take the following steps to install git on Bash for Windows and be ready to work with projects on GitHub.</p>
+
+<ol>
+<li><code>apt-get install git</code> (see <a href="https://help.github.com/articles/set-up-git/#platform-linux">GitHub's guides for more on this</a>)</li>
+<li>Generate <a href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/">an access token</a> or <a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#platform-linux">a SSH key</a> (and associate the key to your GitHub account)</li>
+</ol>
+
+
+<h2>5. Setup bash git prompt</h2>
+
+<p><a href="https://github.com/magicmonty/bash-git-prompt">bash-git-prompt</a> is, as the project describes, "An informative and fancy bash prompt for Git users" -- that is, it shows git information for the current repository when navigating to project folder.</p>
+
+<p>To install bash-git-prompt:</p>
+
+<ol>
+<li><code>cd ~</code></li>
+<li><code>git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt --depth=1</code></li>
+<li>Add <code>GIT_PROMPT_ONLY_IN_REPO=1</code> to .bashrc</li>
+</ol>
+
+
+<p><a href="https://github.com/magicmonty/bash-git-prompt">Read through the documentation</a> as there is a bit of configuration and themeing that's possible. That said, I'm running with the default for now.</p>
+
+<h2>6. Make Visual Studio Code use Bash</h2>
+
+<p>It's possible to toggle a terminal inside Visual Studio Code -- by default, this appears to be the standard command prompt. Thankfully, <a href="http://pjdecarlo.com/2016/06/bash-on-windows-as-integrated-terminal-in-visual-studio-code.html">Paul DeCarlo created a blog post</a> explaining that you can add <code>"terminal.integrated.shell.windows": "C:\\Windows\\sysnative\\bash.exe"</code> to your user settings to use Bash as the default instead.</p>
+
+<p>It should look like this if everything is working correctly:</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/git_with_changes.png" alt="Visual Studio code window" /></p>
+
+<h2>Extras</h2>
+
+<h3>Install tmux</h3>
+
+<p>tmux is a terminal multiplexer that lets you run multiple programs in one terminal (it does a lot more than that but <a href="https://tmux.github.io/">read the docs for more info</a>). I frequently use tmux to run tests while running webpack server, <a href="https://getstorybook.io/">React Storybook</a>, or something else along those lines.</p>
+
+<p>You can install tmux by running <code>apt-get install tmux</code>. Once tmux is installed on the system you can press <code>ctrl + b + c</code> to create a new window and <code>ctrl + b + w</code> to list the windows. <a href="https://gist.github.com/MohamedAlaa/2961058">See this tmux cheatsheet for more</a></p>
+
+<h3>Install Ruby and Rails</h3>
+
+<p>I do a bit of Ruby work and highly recommend rbenv for multiple ruby versions. <a href="https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-14-04">Digital Ocean's guide to installing ruby / rbenv</a> is great AND it works on Bash for Windows.</p>
+
+<h3>Setup vim and Vundle</h3>
+
+<p>I use <a href="http://www.vim.org/">Vim</a> quite a lot and <a href="https://github.com/VundleVim/Vundle.vim">Vundle</a> for managing vim plugins.</p>
+
+<ol>
+<li><code>git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim</code></li>
+<li>Setup your .vimrc (here's <a href="https://github.com/ryanlanciaux/dotfiles/blob/master/.vimrc">my .vimrc</a> for example)</li>
+<li>Run vim and type <code>:PluginInstall</code></li>
+</ol>
+
+
+<h3>Install cmder</h3>
+
+<p><a href="http://cmder.net/">Cmder</a> is a nice console emulator for Windows. You can run bash in cmder by typing <code>bash</code> from the prompt. You may have to type <code>cd ~</code>from there to get back to your standard bash home directory.</p>
+
+<h2>The End</h2>
+
+<p>Please feel free to let me know of any questions or feel free to <a href="https://github.com/ryanlanciaux/ryanlanciaux.github.com">submit a PR or issue</a> on anything that's mistaken here :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Miscellaneous Jest Issues/Workarouds II]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii/"/>
-    <updated>2014-11-17T02:15:00+00:00</updated>
+    <updated>2014-11-17T02:15:00-05:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii</id>
     <content type="html"><![CDATA[<p>My brother recently installed Jest on his Windows machine and alerted me that there were some problems that he encountered when using Visual Studio 2013 Express to compile some of the requirements. <a href="http://joellanciaux.github.io/blog/2014/11/14/react-plus-jest-testing-on-windows-2-dot-5/">Check out his full post</a> on what he did to resolve (tldr: Install Express 2012 and update the GYP_MSVS_VERSION environment variable).</p>
 
@@ -27,7 +120,7 @@
   <entry>
     <title type="html"><![CDATA[Miscellaneous Jest Issues/Workarounds]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds/"/>
-    <updated>2014-10-28T20:44:00+00:00</updated>
+    <updated>2014-10-28T20:44:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds</id>
     <content type="html"><![CDATA[<p>I've been using Jest a bit lately and wanted to document some issues I've run into for future reference.</p>
 
@@ -50,7 +143,7 @@
   <entry>
     <title type="html"><![CDATA[React + Jest Testing on Windows II]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/10/28/react-plus-jest-testing-on-windows-ii/"/>
-    <updated>2014-10-28T03:14:00+00:00</updated>
+    <updated>2014-10-28T03:14:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/10/28/react-plus-jest-testing-on-windows-ii</id>
     <content type="html"><![CDATA[<p>Last time I wrote about running <a href="http://ryanlanciaux.github.io/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/">Jest on Windows</a> there was one thing I left out. The test output would show if the tests pass or fail but no data is displayed regarding why they fail. This is due to an <a href="https://github.com/joyent/node/issues/3584">issue with stdio in Windows</a>, however, there appears to be <a href="https://github.com/facebook/jest/pull/111">a fix in the works</a>.</p>
 
@@ -69,7 +162,7 @@ process.on('exit', function(){
   <entry>
     <title type="html"><![CDATA[Test React Components Using Jest (on Windows)]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/"/>
-    <updated>2014-08-02T12:37:00+00:00</updated>
+    <updated>2014-08-02T12:37:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/08/02/using-jest-for-testing-react-components-on-windows</id>
     <content type="html"><![CDATA[<p>I'm currently going through the process creating unit tests for <a href="http://dynamictyped.github.io/Griddle">Griddle</a> and thought it would be good to document the steps I took to get Jest up and running. I did not find it as simple as typing <code>npm install -g jest-cli</code>, however it was not too bad.</p>
 
@@ -92,39 +185,6 @@ process.on('exit', function(){
 <li><a href="https://github.com/atom/atom/issues/2435">https://github.com/atom/atom/issues/2435</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Introducing Griddle: A React.js grid]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2014/07/08/introducing-griddle-a-react-dot-js-grid/"/>
-    <updated>2014-07-08T01:01:00+00:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2014/07/08/introducing-griddle-a-react-dot-js-grid</id>
-    <content type="html"><![CDATA[<p>Many of the websites I have worked on have required a grid component. As I had been exploring <a href="http://facebook.github.io/react/">React.js</a> more it was made apparent that I was going to need a grid component for it to be a viable my projects. There are many great solutions for displaying grid data with React but many seem to rely  on writing wrappers for components using jQuery or other libraries. While these solutions work well, I was hoping to render entirely with React. Additionally, I wanted to avoid a dependency on libraries like jQuery / Angular if I could help it.</p>
-
-<p>I decided to try my hand at writing a grid to fit my requirements -- the outcome is <a href="http://dynamictyped.github.io/Griddle/">Griddle - a simple React.js grid</a>.</p>
-
-<h2>What it is</h2>
-
-<p><a href="http://dynamictyped.github.io/Griddle/">Griddle</a> is a configurable grid component for React.js. The main philosophy is that the grid should render quickly, contain a lot of the expected functionality and be simple to use without dictating how the rest of the code is structured. While Griddle is far from perfect I'm pretty happy with the initial outcome.</p>
-
-<h2>Where it's going</h2>
-
-<p>As stated above Griddle is far from finished. There are a lot of things that need to be cleaned up and a good deal of functionality that needs to be added. The high-level road map is as follows:</p>
-
-<ol>
-<li><strong>Tests</strong> - The initial version of this grid was mostly a coding session or two followed by some basic clean-up. Griddle should be sustainable and tests are big part of that.</li>
-<li><strong>Metadata</strong> - Griddle should allow a more advanced column order, locked columns, column width, etc. Currently with the column order, for example, an initial order is set but hiding and showing the column will display this column at the end of the list.</li>
-<li><strong>Additional User-configuration</strong> - The user should be able to drag columns around.</li>
-<li><strong>Better sub-grid support</strong> - Currently sub-grids are constrained to have the same columns as the parent and are only one-level deep. Sub-grids should be able to have entirely different columns than the parent and should be able to be nested. Finally, sub-grids should be able to be loaded from the server.</li>
-<li><strong>More responsive options</strong> - Columns should have an optional priority. When the grid gets below a certain size, some columns should drop off depending on the priority. Additionally there should be the option to stack certain columns when a grid gets below a specific size.</li>
-<li><strong>Streaming Data</strong> - Similar to one result page per request, there should be an option to allow the grid to get the initial page and stream the rest of the data behind the scenes.</li>
-</ol>
-
-
-<h2>Conclusion</h2>
-
-<p>So that is basically <a href="http://dynamictyped.github.io/Griddle/">Griddle</a>. The priority of the road-map items could change but that is the current order. Please <a href="http://dynamictyped.github.io/Griddle/">check it out</a> and submit issues for anything you run into :)</p>
 ]]></content>
   </entry>
   

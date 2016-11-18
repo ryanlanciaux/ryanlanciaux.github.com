@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Setup Bash on Windows: My environment configuration - Ryan Lanciaux</title>
+  <meta name="author" content="Ryan Lanciaux">
+
+  
+  <meta name="description" content="Inspired by some recent conversations on Twitter, I&#8217;ve decided to give Bash on Windows another shot. This post contains the steps I&#8217;ve &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Ryan Lanciaux" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Ryan Lanciaux</a></h1>
+  
+    <h2>Random programming blog.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:ryanlanciaux.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Setup Bash on Windows: My Environment Configuration</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-11-17T23:32:00-05:00" pubdate data-updated="true">Nov 17<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Inspired by some recent conversations on Twitter, I&#8217;ve decided to give Bash on Windows another shot. This post contains the steps I&#8217;ve taken to install and configure Bash on Windows to closely resemble my Linux / Mac settings for JavaScript and node development (with some extra steps I&#8217;ve taken for Ruby, etc at the end).</p>
+
+<h2>1. Enable Bash on Windows</h2>
+
+<p>Bash on Windows requires the Anniversary update of Windows 10. Please make sure you have that before continuing. To determine what version of Windows you are running, open a command prompt window and type <code>winver</code>. If you see Version 1607, you should be good to proceed (thanks Josh Pollard).</p>
+
+<p><img src="/files/winver.png" alt="Windows Version dialog" /></p>
+
+<p>Once that&#8217;s all set go to <code>Settings -&gt; Update &amp; Security -&gt; For Developers</code> and enable <code>Developer mode</code>. Finally, go to <code>Windows Features</code> and enable <code>Windows Subsystem for Linux</code>. Your computer should restart and you should be able to run Bash for Windows at this point.</p>
+
+<p><img src="/files/windows_features.png" alt="Windows features dialog" /></p>
+
+<p>See <a href="http://www.hanselman.com/blog/DevelopersCanRunBashShellAndUsermodeUbuntuLinuxBinariesOnWindows10.aspx">Scott Hanselman&#8217;s blog</a> or <a href="https://blogs.technet.microsoft.com/heyscriptingguy/2016/09/28/part-1-install-bash-on-windows-10-omi-cim-server-and-dsc-for-linux/">Stefan Roth&#8217;s post on TechNet</a> for more on this.</p>
+
+<h2>2. Update apt-get</h2>
+
+<p>We are going to be installing some things and it would be good to make sure we&#8217;re up-to-date here. Launch bash by pressing the Windows key and typing <code>bash</code>. From there, <code>apt-get update</code> should obtain the latest package information. If you are running into issues with IPv6 vs IPv4 checkout this post on <a href="http://askubuntu.com/questions/759524/problem-with-ipv6-sudo-apt-get-update-upgrade">Ask Ubuntu</a> or here on <a href="https://bruteforce.gr/make-apt-get-use-ipv4-instead-ipv6.html">BruteForce labs</a>.</p>
+
+<h2>3. Install nvm</h2>
+
+<p>nvm stands for Node version manager and is an essential part of my development environment. Using nvm allows you to switch what version of node you&#8217;re using on a project by project basis. To install nvm, run <code>curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash</code> (from <a href="https://github.com/creationix/nvm">the nvm documentation</a>) followed by <code>Source .bashrc</code></p>
+
+<h2>4. Install git</h2>
+
+<p>Take the following steps to install git on Bash for Windows and be ready to work with projects on GitHub.</p>
+
+<ol>
+<li><code>apt-get install git</code> (see <a href="https://help.github.com/articles/set-up-git/#platform-linux">GitHub&#8217;s guides for more on this</a>)</li>
+<li>Generate <a href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/">an access token</a> or <a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#platform-linux">a SSH key</a> (and associate the key to your GitHub account)</li>
+</ol>
+
+
+<h2>5. Setup bash git prompt</h2>
+
+<p><a href="https://github.com/magicmonty/bash-git-prompt">bash-git-prompt</a> is, as the project describes, &#8220;An informative and fancy bash prompt for Git users&#8221; &#8211; that is, it shows git information for the current repository when navigating to project folder.</p>
+
+<p>To install bash-git-prompt:</p>
+
+<ol>
+<li><code>cd ~</code></li>
+<li><code>git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt --depth=1</code></li>
+<li>Add <code>GIT_PROMPT_ONLY_IN_REPO=1</code> to .bashrc</li>
+</ol>
+
+
+<p><a href="https://github.com/magicmonty/bash-git-prompt">Read through the documentation</a> as there is a bit of configuration and themeing that&#8217;s possible. That said, I&#8217;m running with the default for now.</p>
+
+<h2>6. Make Visual Studio Code use Bash</h2>
+
+<p>It&#8217;s possible to toggle a terminal inside Visual Studio Code &#8211; by default, this appears to be the standard command prompt. Thankfully, <a href="http://pjdecarlo.com/2016/06/bash-on-windows-as-integrated-terminal-in-visual-studio-code.html">Paul DeCarlo created a blog post</a> explaining that you can add <code>"terminal.integrated.shell.windows": "C:\\Windows\\sysnative\\bash.exe"</code> to your user settings to use Bash as the default instead.</p>
+
+<p>It should look like this if everything is working correctly:</p>
+
+<p><img src="/files/git_with_changes.png" alt="Visual Studio code window" /></p>
+
+<h2>Extras</h2>
+
+<h3>Install tmux</h3>
+
+<p>tmux is a terminal multiplexer that lets you run multiple programs in one terminal (it does a lot more than that but <a href="https://tmux.github.io/">read the docs for more info</a>). I frequently use tmux to run tests while running webpack server, <a href="https://getstorybook.io/">React Storybook</a>, or something else along those lines.</p>
+
+<p>You can install tmux by running <code>apt-get install tmux</code>. Once tmux is installed on the system you can press <code>ctrl + b + c</code> to create a new window and <code>ctrl + b + w</code> to list the windows. <a href="https://gist.github.com/MohamedAlaa/2961058">See this tmux cheatsheet for more</a></p>
+
+<h3>Install Ruby and Rails</h3>
+
+<p>I do a bit of Ruby work and highly recommend rbenv for multiple ruby versions. <a href="https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-14-04">Digital Ocean&#8217;s guide to installing ruby / rbenv</a> is great AND it works on Bash for Windows.</p>
+
+<h3>Setup vim and Vundle</h3>
+
+<p>I use <a href="http://www.vim.org/">Vim</a> quite a lot and <a href="https://github.com/VundleVim/Vundle.vim">Vundle</a> for managing vim plugins.</p>
+
+<ol>
+<li><code>git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim</code></li>
+<li>Setup your .vimrc (here&#8217;s <a href="https://github.com/ryanlanciaux/dotfiles/blob/master/.vimrc">my .vimrc</a> for example)</li>
+<li>Run vim and type <code>:PluginInstall</code></li>
+</ol>
+
+
+<h3>Install cmder</h3>
+
+<p><a href="http://cmder.net/">Cmder</a> is a nice console emulator for Windows. You can run bash in cmder by typing <code>bash</code> from the prompt. You may have to type <code>cd ~</code>from there to get back to your standard bash home directory.</p>
+
+<h2>The End</h2>
+
+<p>Please feel free to let me know of any questions or feel free to <a href="https://github.com/ryanlanciaux/ryanlanciaux.github.com">submit a PR or issue</a> on anything that&#8217;s mistaken here :)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ryan Lanciaux</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-11-17T23:32:00-05:00" pubdate data-updated="true">Nov 17<span>th</span>, 2016</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/bash/'>bash</a>, <a class='category' href='/blog/categories/development/'>development</a>, <a class='category' href='/blog/categories/js/'>js</a>, <a class='category' href='/blog/categories/node/'>node</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>, <a class='category' href='/blog/categories/windows/'>windows</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/" data-via="ryanlanciaux" data-counturl="http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii/" title="Previous Post: Miscellaneous Jest Issues/Workarouds II">&laquo; Miscellaneous Jest Issues/Workarouds II</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/">Setup Bash on Windows: My environment configuration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii/">Miscellaneous Jest Issues/Workarouds II</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds/">Miscellaneous Jest Issues/Workarounds</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/28/react-plus-jest-testing-on-windows-ii/">React + Jest Testing on Windows II</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/18/azure-active-directory-authentication-in-existing-project/">Azure Active Directory authentication in existing project</a>
+      </li>
+    
+  </ul>
+</section>
+<section class='goodreads-aside'>
+  <h1><a href="http://www.goodreads.com" target="_blank">Status on Goodreads</a></h1>
+  <ul>
+    <li>
+            <a href='http://www.goodreads.com/user_status/show/89405590' target='blank'>Ryan is 97% done with Remote</a>
+            <span class='tiny'>(2016-02-25)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/87891925' target='blank'>Ryan is 47% done with Clojure for the Brave and</a>
+            <span class='tiny'>(2016-02-09)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/76508112' target='blank'>Ryan is finished with Practical Object-Oriented</a>
+            <span class='tiny'>(2015-09-22)</span></li>
+  </ul>
+</section>
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/ryanlanciaux">@ryanlanciaux</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'ryanlanciaux',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Ryan Lanciaux -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'ryanlanciaux';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/';
+        var disqus_url = 'http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

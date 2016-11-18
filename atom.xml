@@ -4,7 +4,7 @@
   <title><![CDATA[Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2014-11-18T15:43:36+00:00</updated>
+  <updated>2016-11-18T01:45:17-05:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -14,9 +14,102 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Setup Bash on Windows: My environment configuration]]></title>
+    <link href="http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/"/>
+    <updated>2016-11-17T23:32:00-05:00</updated>
+    <id>http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration</id>
+    <content type="html"><![CDATA[<p>Inspired by some recent conversations on Twitter, I&#8217;ve decided to give Bash on Windows another shot. This post contains the steps I&#8217;ve taken to install and configure Bash on Windows to closely resemble my Linux / Mac settings for JavaScript and node development (with some extra steps I&#8217;ve taken for Ruby, etc at the end).</p>
+
+<h2>1. Enable Bash on Windows</h2>
+
+<p>Bash on Windows requires the Anniversary update of Windows 10. Please make sure you have that before continuing. To determine what version of Windows you are running, open a command prompt window and type <code>winver</code>. If you see Version 1607, you should be good to proceed (thanks Josh Pollard).</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/winver.png" alt="Windows Version dialog" /></p>
+
+<p>Once that&#8217;s all set go to <code>Settings -&gt; Update &amp; Security -&gt; For Developers</code> and enable <code>Developer mode</code>. Finally, go to <code>Windows Features</code> and enable <code>Windows Subsystem for Linux</code>. Your computer should restart and you should be able to run Bash for Windows at this point.</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/windows_features.png" alt="Windows features dialog" /></p>
+
+<p>See <a href="http://www.hanselman.com/blog/DevelopersCanRunBashShellAndUsermodeUbuntuLinuxBinariesOnWindows10.aspx">Scott Hanselman&#8217;s blog</a> or <a href="https://blogs.technet.microsoft.com/heyscriptingguy/2016/09/28/part-1-install-bash-on-windows-10-omi-cim-server-and-dsc-for-linux/">Stefan Roth&#8217;s post on TechNet</a> for more on this.</p>
+
+<h2>2. Update apt-get</h2>
+
+<p>We are going to be installing some things and it would be good to make sure we&#8217;re up-to-date here. Launch bash by pressing the Windows key and typing <code>bash</code>. From there, <code>apt-get update</code> should obtain the latest package information. If you are running into issues with IPv6 vs IPv4 checkout this post on <a href="http://askubuntu.com/questions/759524/problem-with-ipv6-sudo-apt-get-update-upgrade">Ask Ubuntu</a> or here on <a href="https://bruteforce.gr/make-apt-get-use-ipv4-instead-ipv6.html">BruteForce labs</a>.</p>
+
+<h2>3. Install nvm</h2>
+
+<p>nvm stands for Node version manager and is an essential part of my development environment. Using nvm allows you to switch what version of node you&#8217;re using on a project by project basis. To install nvm, run <code>curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash</code> (from <a href="https://github.com/creationix/nvm">the nvm documentation</a>) followed by <code>Source .bashrc</code></p>
+
+<h2>4. Install git</h2>
+
+<p>Take the following steps to install git on Bash for Windows and be ready to work with projects on GitHub.</p>
+
+<ol>
+<li><code>apt-get install git</code> (see <a href="https://help.github.com/articles/set-up-git/#platform-linux">GitHub&#8217;s guides for more on this</a>)</li>
+<li>Generate <a href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/">an access token</a> or <a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#platform-linux">a SSH key</a> (and associate the key to your GitHub account)</li>
+</ol>
+
+
+<h2>5. Setup bash git prompt</h2>
+
+<p><a href="https://github.com/magicmonty/bash-git-prompt">bash-git-prompt</a> is, as the project describes, &#8220;An informative and fancy bash prompt for Git users&#8221; &#8211; that is, it shows git information for the current repository when navigating to project folder.</p>
+
+<p>To install bash-git-prompt:</p>
+
+<ol>
+<li><code>cd ~</code></li>
+<li><code>git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt --depth=1</code></li>
+<li>Add <code>GIT_PROMPT_ONLY_IN_REPO=1</code> to .bashrc</li>
+</ol>
+
+
+<p><a href="https://github.com/magicmonty/bash-git-prompt">Read through the documentation</a> as there is a bit of configuration and themeing that&#8217;s possible. That said, I&#8217;m running with the default for now.</p>
+
+<h2>6. Make Visual Studio Code use Bash</h2>
+
+<p>It&#8217;s possible to toggle a terminal inside Visual Studio Code &#8211; by default, this appears to be the standard command prompt. Thankfully, <a href="http://pjdecarlo.com/2016/06/bash-on-windows-as-integrated-terminal-in-visual-studio-code.html">Paul DeCarlo created a blog post</a> explaining that you can add <code>"terminal.integrated.shell.windows": "C:\\Windows\\sysnative\\bash.exe"</code> to your user settings to use Bash as the default instead.</p>
+
+<p>It should look like this if everything is working correctly:</p>
+
+<p><img src="http://ryanlanciaux.github.com/files/git_with_changes.png" alt="Visual Studio code window" /></p>
+
+<h2>Extras</h2>
+
+<h3>Install tmux</h3>
+
+<p>tmux is a terminal multiplexer that lets you run multiple programs in one terminal (it does a lot more than that but <a href="https://tmux.github.io/">read the docs for more info</a>). I frequently use tmux to run tests while running webpack server, <a href="https://getstorybook.io/">React Storybook</a>, or something else along those lines.</p>
+
+<p>You can install tmux by running <code>apt-get install tmux</code>. Once tmux is installed on the system you can press <code>ctrl + b + c</code> to create a new window and <code>ctrl + b + w</code> to list the windows. <a href="https://gist.github.com/MohamedAlaa/2961058">See this tmux cheatsheet for more</a></p>
+
+<h3>Install Ruby and Rails</h3>
+
+<p>I do a bit of Ruby work and highly recommend rbenv for multiple ruby versions. <a href="https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-14-04">Digital Ocean&#8217;s guide to installing ruby / rbenv</a> is great AND it works on Bash for Windows.</p>
+
+<h3>Setup vim and Vundle</h3>
+
+<p>I use <a href="http://www.vim.org/">Vim</a> quite a lot and <a href="https://github.com/VundleVim/Vundle.vim">Vundle</a> for managing vim plugins.</p>
+
+<ol>
+<li><code>git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim</code></li>
+<li>Setup your .vimrc (here&#8217;s <a href="https://github.com/ryanlanciaux/dotfiles/blob/master/.vimrc">my .vimrc</a> for example)</li>
+<li>Run vim and type <code>:PluginInstall</code></li>
+</ol>
+
+
+<h3>Install cmder</h3>
+
+<p><a href="http://cmder.net/">Cmder</a> is a nice console emulator for Windows. You can run bash in cmder by typing <code>bash</code> from the prompt. You may have to type <code>cd ~</code>from there to get back to your standard bash home directory.</p>
+
+<h2>The End</h2>
+
+<p>Please feel free to let me know of any questions or feel free to <a href="https://github.com/ryanlanciaux/ryanlanciaux.github.com">submit a PR or issue</a> on anything that&#8217;s mistaken here :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Miscellaneous Jest Issues/Workarouds II]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii/"/>
-    <updated>2014-11-17T02:15:00+00:00</updated>
+    <updated>2014-11-17T02:15:00-05:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii</id>
     <content type="html"><![CDATA[<p>My brother recently installed Jest on his Windows machine and alerted me that there were some problems that he encountered when using Visual Studio 2013 Express to compile some of the requirements. <a href="http://joellanciaux.github.io/blog/2014/11/14/react-plus-jest-testing-on-windows-2-dot-5/">Check out his full post</a> on what he did to resolve (tldr: Install Express 2012 and update the GYP_MSVS_VERSION environment variable).</p>
 
@@ -27,7 +120,7 @@
   <entry>
     <title type="html"><![CDATA[Miscellaneous Jest Issues/Workarounds]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds/"/>
-    <updated>2014-10-28T20:44:00+00:00</updated>
+    <updated>2014-10-28T20:44:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds</id>
     <content type="html"><![CDATA[<p>I&#8217;ve been using Jest a bit lately and wanted to document some issues I&#8217;ve run into for future reference.</p>
 
@@ -50,7 +143,7 @@
   <entry>
     <title type="html"><![CDATA[React + Jest Testing on Windows II]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/10/28/react-plus-jest-testing-on-windows-ii/"/>
-    <updated>2014-10-28T03:14:00+00:00</updated>
+    <updated>2014-10-28T03:14:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/10/28/react-plus-jest-testing-on-windows-ii</id>
     <content type="html"><![CDATA[<p>Last time I wrote about running <a href="http://ryanlanciaux.github.io/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/">Jest on Windows</a> there was one thing I left out. The test output would show if the tests pass or fail but no data is displayed regarding why they fail. This is due to an <a href="https://github.com/joyent/node/issues/3584">issue with stdio in Windows</a>, however, there appears to be <a href="https://github.com/facebook/jest/pull/111">a fix in the works</a>.</p>
 
@@ -71,7 +164,7 @@
   <entry>
     <title type="html"><![CDATA[Azure Active Directory authentication in existing project]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/10/18/azure-active-directory-authentication-in-existing-project/"/>
-    <updated>2014-10-18T04:28:00+00:00</updated>
+    <updated>2014-10-18T04:28:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/10/18/azure-active-directory-authentication-in-existing-project</id>
     <content type="html"><![CDATA[<p>Recently, I needed to add Azure Active directory authentication to an existing web project. There was an automated tool for Visual Studio 2012 but there does not seem to be a similar component for 2013. A lot of the advice I found suggested creating a new project and importing a bit of the code / config from the other application &#8211; that&#8217;s what I did here. What follows is not a how-to but rather a log of the steps I took to use AAD authentication (mostly for <a href="http://xkcd.com/1421/">future reference</a>).</p>
 
@@ -133,7 +226,7 @@
   <entry>
     <title type="html"><![CDATA[Test React Components Using Jest (on Windows)]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/"/>
-    <updated>2014-08-02T12:37:00+00:00</updated>
+    <updated>2014-08-02T12:37:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/08/02/using-jest-for-testing-react-components-on-windows</id>
     <content type="html"><![CDATA[<p>I&#8217;m currently going through the process creating unit tests for <a href="http://dynamictyped.github.io/Griddle">Griddle</a> and thought it would be good to document the steps I took to get Jest up and running. I did not find it as simple as typing <code>npm install -g jest-cli</code>, however it was not too bad.</p>
 
@@ -162,7 +255,7 @@
   <entry>
     <title type="html"><![CDATA[Introducing Griddle: A React.js grid]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/07/08/introducing-griddle-a-react-dot-js-grid/"/>
-    <updated>2014-07-08T01:01:00+00:00</updated>
+    <updated>2014-07-08T01:01:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/07/08/introducing-griddle-a-react-dot-js-grid</id>
     <content type="html"><![CDATA[<p>Many of the websites I have worked on have required a grid component. As I had been exploring <a href="http://facebook.github.io/react/">React.js</a> more it was made apparent that I was going to need a grid component for it to be a viable my projects. There are many great solutions for displaying grid data with React but many seem to rely  on writing wrappers for components using jQuery or other libraries. While these solutions work well, I was hoping to render entirely with React. Additionally, I wanted to avoid a dependency on libraries like jQuery / Angular if I could help it.</p>
 
@@ -195,7 +288,7 @@
   <entry>
     <title type="html"><![CDATA[Trying out ReactJS with the Marvel API]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/05/26/trying-out-reactjs-with-the-marvel-api/"/>
-    <updated>2014-05-26T18:29:00+00:00</updated>
+    <updated>2014-05-26T18:29:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/05/26/trying-out-reactjs-with-the-marvel-api</id>
     <content type="html"><![CDATA[<p>I&#8217;ve recently started looking into <a href="http://facebook.github.io/react">ReactJS</a> (Facebook&#8217;s front-end JavaScript library) for building web UIs. React has an interesting philosophy about how the UI should function and be defined. First off, while many frameworks have an entire system for interacting with the server, routing, etc, React is just the View portion (in a MV* application). Second, React does not employ 2-way data binding. Instead, it uses a one-way data flow where data is maintained in the parent items and is manually shared to its child components. Finally, React uses a Virtual DOM which they say helps with performance (I cannot speak to this first-hand but it seems logical &#8211; <a href="http://www.forbes.com/sites/quora/2013/06/18/how-is-facebooks-react-javascript-library/">see here for more on React&#8217;s performance</a> from someone who can speak more authoritatively on this).</p>
 
@@ -543,7 +636,7 @@
   <entry>
     <title type="html"><![CDATA[Debugging Express Applications]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/05/25/debugging-express-applications/"/>
-    <updated>2014-05-25T16:18:00+00:00</updated>
+    <updated>2014-05-25T16:18:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/05/25/debugging-express-applications</id>
     <content type="html"><![CDATA[<p>Coming from the .NET world, I&#8217;ve grown accustomed to great debugging tools. My initial Node setup didn&#8217;t have a very good way to debug an application (outside of using <code>DEBUG=express:* node .bin/www</code>) and I wanted to resolve that. I had heard about <a href="https://github.com/node-inspector/node-inspector">node-inspector</a> in several places and decided to give that a shot.</p>
 
@@ -568,7 +661,7 @@
   <entry>
     <title type="html"><![CDATA[Running ssh-agent on Windows]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/05/15/running-ssh-agent-on-windows/"/>
-    <updated>2014-05-15T03:41:00+00:00</updated>
+    <updated>2014-05-15T03:41:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/05/15/running-ssh-agent-on-windows</id>
     <content type="html"><![CDATA[<p>There was one thing I didn&#8217;t mention in my <a href="http://ryanlanciaux.github.io/blog/2014/05/13/vagrantfile-for-octopress/">previous post about running Octopress on a Vagrant machine</a> &#8211; in the machine&#8217;s current state (with Windows as a host machine), we cannot deploy the site with a <code>rake deploy</code> command. The reason for this is we don&#8217;t have an ssh key available to the Vagrant box.</p>
 
@@ -603,7 +696,7 @@
   <entry>
     <title type="html"><![CDATA[Vagrantfile for Octopress]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/05/13/vagrantfile-for-octopress/"/>
-    <updated>2014-05-13T03:59:00+00:00</updated>
+    <updated>2014-05-13T03:59:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/05/13/vagrantfile-for-octopress</id>
     <content type="html"><![CDATA[<p>I&#8217;ve recently started using <a href="http://www.vagrantup.com">Vagrant</a> for managing lightweight virtual machines for various projects. Vagrant is awesome because it allows you to:</p>
 
@@ -771,7 +864,7 @@
   <entry>
     <title type="html"><![CDATA[Thoughts on Microsoft Surface]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/03/06/-thoughts-on-microsoft-surface/"/>
-    <updated>2014-03-06T20:15:00+00:00</updated>
+    <updated>2014-03-06T20:15:00-05:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/03/06/-thoughts-on-microsoft-surface</id>
     <content type="html"><![CDATA[<p>Last fall, I won a Microsoft Surface 2 as part of the <a href="http://www.surfaceremixproject.com">Surface Remix Project contest</a>. I always love to win gadgets but this was a bit more exciting to me as I am a hobby music producer (<a href="http://www.soundcloud.com/ryanlanciaux">shameless link to some of my music</a>). I was initially planning on using the device for the music app/remix blade, however, after I had used the device a little over a week, I realized that there was a lot more to the Surface than just another device trying to make waves in the tablet market. I have since purchased a Surface Pro (1) and am really liking it.</p>
 
@@ -808,7 +901,7 @@
   <entry>
     <title type="html"><![CDATA[Fake popovers for Angular-xeditable]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/10/16/fake-popovers-for-angular-xeditable/"/>
-    <updated>2013-10-16T21:58:00+00:00</updated>
+    <updated>2013-10-16T21:58:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/10/16/fake-popovers-for-angular-xeditable</id>
     <content type="html"><![CDATA[<p>I was recently working on a project with <a href="http://www.angularjs.org">AngularJS</a> and <a href="http://vitalets.github.io/x-editable/">xeditable</a> (if you&#8217;re not familiar, xeditable is an awesome library for inline editing). There is an <a href="http://vitalets.github.io/angular-xeditable/">Angular version of xeditable</a> but the popover editing functionality is not implemented yet (it&#8217;s in the roadmap). Instead of using the original version of xeditable and implementing custom directives or try to add the popover functionality to the project, I decided to see if I could make the popover using just CSS &#8211; this happened to be more inline with my timeframe.</p>
 
@@ -937,7 +1030,7 @@
   <entry>
     <title type="html"><![CDATA[Learning AngularJS III: Routes]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes/"/>
-    <updated>2013-08-17T19:47:00+00:00</updated>
+    <updated>2013-08-17T19:47:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes</id>
     <content type="html"><![CDATA[<p>So far we&#8217;ve covered the basics of <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">using AngularJS to interact with RESTful services</a> and <a href="http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/">Filtering / Ordering views in AngularJS</a>. Using <a href="http://docs.angularjs.org/tutorial/step_07">AngularJS Routes</a>, we are going to add a bit of structure to this example app.</p>
 
@@ -1065,7 +1158,7 @@
   <entry>
     <title type="html"><![CDATA[Learning AngularJS II : Filtering / Ordering]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering/"/>
-    <updated>2013-06-19T20:38:00+00:00</updated>
+    <updated>2013-06-19T20:38:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering</id>
     <content type="html"><![CDATA[<p>Last time I wrote about some basic AngularJS functionality for interacting with a RESTful API. We&#8217;re going to continue where with left off with our food inventory app to add some filtering/sorting . <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Check out the first post</a> if you missed it, as we will be depending heavily on what is covered there.</p>
 
@@ -1168,7 +1261,7 @@
   <entry>
     <title type="html"><![CDATA[Note to self: escape LiquidTags with Jekyll raw tag plugin]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin/"/>
-    <updated>2013-06-05T21:57:00+00:00</updated>
+    <updated>2013-06-05T21:57:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin</id>
     <content type="html"><![CDATA[<p>When reviewing <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">my recent AngularJS post</a>, I noticed that none of my template display bindings were showing up. LiquidTags use the same {{  }} style bindings as AngularJS (and was trying to render my Angular expressions as LiquidTags). Luckily, there is a <a href="https://gist.github.com/phaer/1020852">jekyll plugin called &#8216;raw tag&#8217;</a> for rendering data that you do not want interpreted as a LiquidTag / etc. Simply place this raw content between {% raw %} and {% endraw %}</p>
 
@@ -1179,7 +1272,7 @@
   <entry>
     <title type="html"><![CDATA[Learning AngularJS]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/06/04/learning-angularjs/"/>
-    <updated>2013-06-04T21:39:00+00:00</updated>
+    <updated>2013-06-04T21:39:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/06/04/learning-angularjs</id>
     <content type="html"><![CDATA[<p>I have recently been playing around with some of the client-side MV_ frameworks. I have avoided Angular for quite some time because I was not a fan of using ng-click (etc.) HTML attributes to fire off js events. The more I&#8217;ve used the framework, however, the less of an issue that has been to me.</p>
 
@@ -1457,7 +1550,7 @@
   <entry>
     <title type="html"><![CDATA[Less alt+tab with SublimeText]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/"/>
-    <updated>2013-05-09T20:40:00+00:00</updated>
+    <updated>2013-05-09T20:40:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/05/09/less-alt-plus-tab-with-sublimetext</id>
     <content type="html"><![CDATA[<p><a href="http://ryanlanciaux.github.io/blog/2013/04/13/sublime-text-on-ubuntu/">Back in April</a>, I jokingly lamented not having the ability to run a console from directly within SublimeText &#8211; apparently I did not do quite enough searching. There is a plug-in called <a href="https://github.com/wuub/SublimeREPL">SublimeREPL</a> that lets you run ruby, node and a whole slew of other environments from within SublimeText.</p>
 
@@ -1489,7 +1582,7 @@
   <entry>
     <title type="html"><![CDATA[Tig: Great git command line tool]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/05/07/tig-great-git-command-line-tool/"/>
-    <updated>2013-05-07T20:28:00+00:00</updated>
+    <updated>2013-05-07T20:28:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/05/07/tig-great-git-command-line-tool</id>
     <content type="html"><![CDATA[<p>I have been using git on most of my hobby projects for quite some time. I prefer the command line when possible, however, it is nice to visualize certain operations. <a href="http://sourcetreeapp.com/">SourceTree</a> and Github&#8217;s <a href="http://windows.github.com">Windows</a> and <a href="http://mac.github.com">Mac</a> apps are very nice but I&#8217;m mostly on Ubuntu when using git. <a href="https://www.kernel.org/pub/software/scm/git/docs/gitk.html">Gitk</a> is a decent option but sometimes tools such as this and the aforementioned GUI tools can be a bit over-the-top for a command line junkie such as myself. Something between the command line and full blown windowed GUI applications would be great; this seems to be where <a href="http://jonas.nitro.dk/tig/">tig</a> comes in.</p>
 
@@ -1502,7 +1595,7 @@
   <entry>
     <title type="html"><![CDATA[Ikea Standing Desk]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/05/03/ikea-standing-desk/"/>
-    <updated>2013-05-03T21:02:00+00:00</updated>
+    <updated>2013-05-03T21:02:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/05/03/ikea-standing-desk</id>
     <content type="html"><![CDATA[<p>Over the past several years, I have grown quite accustomed to using a standing desk at home (I have an adjustable Ergotron that I absolutely love). I decided it was about time to make the switch at work, however, I didn&#8217;t want to spend a lot of money on a desk. Thankfully, I had come across a <a href="http://iamnotaprogrammer.com/Ikea-Standing-desk-for-22-dollars.html">blog post by Colin Nederkoorn</a> on a standing desk he and a coworker built for $22. I like the design, however, I wanted more room for monitors. One of the comments on the blog led me to <a href="http://www.jinyoungkim.com/blog/2012/07/standing-desk/">Jinyoung Kim&#8217;s modification of the Ikea desk</a> which used a wider table than Colin&#8217;s design. I ultimately based my desk plans off Jinyoung&#8217;s design, since it allowed for multiple monitors, laptops and other gadgets.</p>
 
@@ -1518,21 +1611,6 @@
 <p><img src="http://ryanlanciaux.github.com/files/desk-setup.jpg" alt="" /></p>
 
 <p>As noted on Jinyoung&#8217;s site, the shelf needs to be sawed down a bit to fit the dimensions of the coffee table. I like the brackets I used since it hides the rougher side of the shelf that was cut down. I would also echo his sentiment about using bolts to hold up the shelf as  they are sturdier than screws. Finally, as someone who has used standing desks for a couple years now I would HIGHLY recommend having a gel kitchen mat to stand on; especially if you&#8217;re over hardwood or concrete flooring.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Goodreads status widget available on github]]></title>
-    <link href="http://ryanlanciaux.github.com/blog/2013/05/02/goodreads-status-widget-available-on-github/"/>
-    <updated>2013-05-02T19:49:00+00:00</updated>
-    <id>http://ryanlanciaux.github.com/blog/2013/05/02/goodreads-status-widget-available-on-github</id>
-    <content type="html"><![CDATA[<p><a href="http://www.goodreads.com">Goodreads</a> is currently one of my favorite sites; I love that I can see what my friends are reading and find new books to read based on their recommendations. Noticing that many other blog platforms have sidebar widgets (asides), I decided to create one for Octopress. The first thing I did was make sure I was not duplicating effort. Goodreads has some great <a href="http://www.goodreads.com/user/edit?tab=widgets">sidebar widgets</a>, however, I preferred to generate the aside in the standard <code>rake generate</code> process (as well as keep the same look-and-feel of the other asides).</p>
-
-<p>The Goodreads API is pretty robust but I was a little concerned about the possibility of a user&#8217;s API key getting checked into github. Thankfully, Goodreads also provides an RSS feed for status updates &#8211; which seemed a bit safer to use for publicly available code (and with the RSS feed it&#8217;s not necessary to obtain an API key). I assumed that if someone didn&#8217;t want their status updates public via RSS, they probably wouldn&#8217;t be installing an aside to display their status.</p>
-
-<p>I created an aside and a subsequent <a href="https://github.com/Shopify/liquid/wiki">liquid tags</a> plugin that grabbed and formatted the RSS data. I used REXML to process the xml because it wouldn&#8217;t require users to install additional gems. One thing I still need to figure out is how to pass data from the config.yml into the plugin via the aside. I realize I have access to the config properties via site.whatever  variables but I&#8217;m not entirely sure how to pass that info along to the tag plugin. Currently, the aside needs to be modified with the user&#8217;s Goodreads unique id and the max number of results to display. I noticed some others on the <a href="https://github.com/imathis/octopress/wiki/3rd-party-plugins">3rd party plugins list on the Octopress wiki</a> are doing the same thing, however, I would prefer to use the config file for the config data :P</p>
-
-<p>All-in-all, it was pretty fun creating the plugin. If you use Octopress and would like to install the Goodreads plugin, <a href="https://github.com/ryanlanciaux/octo-goodreads-status">take a look at the github repo</a>.</p>
 ]]></content>
   </entry>
   

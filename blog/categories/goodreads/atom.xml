@@ -4,7 +4,7 @@
   <title><![CDATA[Category: goodreads | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/goodreads/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2014-11-18T16:26:23+00:00</updated>
+  <updated>2016-11-18T01:45:17-05:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Goodreads status widget available on github]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/05/02/goodreads-status-widget-available-on-github/"/>
-    <updated>2013-05-02T19:49:00+00:00</updated>
+    <updated>2013-05-02T19:49:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/05/02/goodreads-status-widget-available-on-github</id>
     <content type="html"><![CDATA[<p><a href="http://www.goodreads.com">Goodreads</a> is currently one of my favorite sites; I love that I can see what my friends are reading and find new books to read based on their recommendations. Noticing that many other blog platforms have sidebar widgets (asides), I decided to create one for Octopress. The first thing I did was make sure I was not duplicating effort. Goodreads has some great <a href="http://www.goodreads.com/user/edit?tab=widgets">sidebar widgets</a>, however, I preferred to generate the aside in the standard <code>rake generate</code> process (as well as keep the same look-and-feel of the other asides).</p>
 

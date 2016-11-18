@@ -4,7 +4,7 @@
   <title><![CDATA[Category: links | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/links/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2014-11-18T16:26:23+00:00</updated>
+  <updated>2016-11-18T01:45:17-05:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Tig: Great git command line tool]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/05/07/tig-great-git-command-line-tool/"/>
-    <updated>2013-05-07T20:28:00+00:00</updated>
+    <updated>2013-05-07T20:28:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/05/07/tig-great-git-command-line-tool</id>
     <content type="html"><![CDATA[<p>I have been using git on most of my hobby projects for quite some time. I prefer the command line when possible, however, it is nice to visualize certain operations. <a href="http://sourcetreeapp.com/">SourceTree</a> and Github's <a href="http://windows.github.com">Windows</a> and <a href="http://mac.github.com">Mac</a> apps are very nice but I'm mostly on Ubuntu when using git. <a href="https://www.kernel.org/pub/software/scm/git/docs/gitk.html">Gitk</a> is a decent option but sometimes tools such as this and the aforementioned GUI tools can be a bit over-the-top for a command line junkie such as myself. Something between the command line and full blown windowed GUI applications would be great; this seems to be where <a href="http://jonas.nitro.dk/tig/">tig</a> comes in.</p>
 

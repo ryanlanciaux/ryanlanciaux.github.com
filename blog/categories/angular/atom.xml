@@ -4,7 +4,7 @@
   <title><![CDATA[Category: angular | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/angular/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2014-11-18T16:26:23+00:00</updated>
+  <updated>2016-11-18T01:45:17-05:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Fake popovers for Angular-xeditable]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/10/16/fake-popovers-for-angular-xeditable/"/>
-    <updated>2013-10-16T21:58:00+00:00</updated>
+    <updated>2013-10-16T21:58:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/10/16/fake-popovers-for-angular-xeditable</id>
     <content type="html"><![CDATA[<p>I was recently working on a project with <a href="http://www.angularjs.org">AngularJS</a> and <a href="http://vitalets.github.io/x-editable/">xeditable</a> (if you're not familiar, xeditable is an awesome library for inline editing). There is an <a href="http://vitalets.github.io/angular-xeditable/">Angular version of xeditable</a> but the popover editing functionality is not implemented yet (it's in the roadmap). Instead of using the original version of xeditable and implementing custom directives or try to add the popover functionality to the project, I decided to see if I could make the popover using just CSS -- this happened to be more inline with my timeframe.</p>
 
@@ -112,7 +112,7 @@ left:101px;
   <entry>
     <title type="html"><![CDATA[Learning AngularJS III: Routes]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes/"/>
-    <updated>2013-08-17T19:47:00+00:00</updated>
+    <updated>2013-08-17T19:47:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/08/17/learning-angularjs-iii-routes</id>
     <content type="html"><![CDATA[<p>So far we've covered the basics of <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">using AngularJS to interact with RESTful services</a> and <a href="http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/">Filtering / Ordering views in AngularJS</a>. Using <a href="http://docs.angularjs.org/tutorial/step_07">AngularJS Routes</a>, we are going to add a bit of structure to this example app.</p>
 
@@ -213,7 +213,7 @@ In this method we are adding our food item or updating an existing food item. We
   <entry>
     <title type="html"><![CDATA[Learning AngularJS II : Filtering / Ordering]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering/"/>
-    <updated>2013-06-19T20:38:00+00:00</updated>
+    <updated>2013-06-19T20:38:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/06/19/angularjs-filtering-slash-ordering</id>
     <content type="html"><![CDATA[<p>Last time I wrote about some basic AngularJS functionality for interacting with a RESTful API. We're going to continue where with left off with our food inventory app to add some filtering/sorting . <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">Check out the first post</a> if you missed it, as we will be depending heavily on what is covered there.</p>
 
@@ -296,9 +296,9 @@ $scope.reverse = false;
   <entry>
     <title type="html"><![CDATA[Note to self: escape LiquidTags with Jekyll raw tag plugin]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin/"/>
-    <updated>2013-06-05T21:57:00+00:00</updated>
+    <updated>2013-06-05T21:57:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/06/05/note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin</id>
-    <content type="html"><![CDATA[<p>When reviewing <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">my recent AngularJS post</a>, I noticed that none of my template display bindings were showing up. LiquidTags use the same {% raw %}{{  }}{% endraw %} style bindings as AngularJS (and was trying to render my Angular expressions as LiquidTags). Luckily, there is a <a href="https://gist.github.com/phaer/1020852">jekyll plugin called 'raw tag'</a> for rendering data that you do not want interpreted as a LiquidTag / etc. Simply place this raw content between {{ "{% raw " }}%} and {{ "{% endraw " }}%}</p>
+    <content type="html"><![CDATA[<p>When reviewing <a href="http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/">my recent AngularJS post</a>, I noticed that none of my template display bindings were showing up. LiquidTags use the same {{  }} style bindings as AngularJS (and was trying to render my Angular expressions as LiquidTags). Luckily, there is a <a href="https://gist.github.com/phaer/1020852">jekyll plugin called 'raw tag'</a> for rendering data that you do not want interpreted as a LiquidTag / etc. Simply place this raw content between {% raw %} and {% endraw %}</p>
 
 <p>For more information <a href="http://stackoverflow.com/questions/3426182/how-to-escape-liquid-template-tags">check out this Stackoverflow Post</a></p>
 ]]></content>
@@ -307,7 +307,7 @@ $scope.reverse = false;
   <entry>
     <title type="html"><![CDATA[Learning AngularJS]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/06/04/learning-angularjs/"/>
-    <updated>2013-06-04T21:39:00+00:00</updated>
+    <updated>2013-06-04T21:39:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/06/04/learning-angularjs</id>
     <content type="html"><![CDATA[<p>I have recently been playing around with some of the client-side MV_ frameworks. I have avoided Angular for quite some time because I was not a fan of using ng-click (etc.) HTML attributes to fire off js events. The more I've used the framework, however, the less of an issue that has been to me.</p>
 
@@ -443,11 +443,11 @@ $scope.editableFood = new Food();
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr class="row" ng-repeat="f in food"&gt;
-        &lt;td&gt;{% raw %}{{f.name}}{% endraw %}&lt;/td&gt;
-        &lt;td&gt;{% raw %}{{f.type}}{% endraw %}&lt;/td&gt;
-        &lt;td&gt;{% raw %}{{f.expiration}}{% endraw %}&lt;/td&gt;
-        &lt;td&gt;{% raw %}{{f.quantity}}{% endraw %}&lt;/td&gt;
-        &lt;td class="progress"&gt;&lt;div class="bar" style="width: {% raw %}{{f.percentRemaining}}%{% endraw %}"&lt;/td&gt;
+        &lt;td&gt;{{f.name}}&lt;/td&gt;
+        &lt;td&gt;{{f.type}}&lt;/td&gt;
+        &lt;td&gt;{{f.expiration}}&lt;/td&gt;
+        &lt;td&gt;{{f.quantity}}&lt;/td&gt;
+        &lt;td class="progress"&gt;&lt;div class="bar" style="width: {{f.percentRemaining}}%"&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;

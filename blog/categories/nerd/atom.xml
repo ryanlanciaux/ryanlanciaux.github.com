@@ -4,7 +4,7 @@
   <title><![CDATA[Category: nerd | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/nerd/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2014-11-18T16:26:23+00:00</updated>
+  <updated>2016-11-18T01:45:17-05:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Moving to Octopress]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/04/06/moving-to-octopress/"/>
-    <updated>2013-04-06T14:11:00+00:00</updated>
+    <updated>2013-04-06T14:11:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/04/06/moving-to-octopress</id>
     <content type="html"><![CDATA[<p>Recently, it seems that the only time I've spent with my blog has been moving it to other platforms. Hopefully, that will change with the move to Octopress. Since this is mainly a programming / technical blog, I thought it would be great to host the blog with <a href="http://pages.github.com/">Github pages</a>.</p>
 

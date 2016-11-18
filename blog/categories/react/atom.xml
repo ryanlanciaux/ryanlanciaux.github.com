@@ -4,7 +4,7 @@
   <title><![CDATA[Category: react | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/react/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2014-11-18T16:26:23+00:00</updated>
+  <updated>2016-11-18T01:45:17-05:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Miscellaneous Jest Issues/Workarouds II]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii/"/>
-    <updated>2014-11-17T02:15:00+00:00</updated>
+    <updated>2014-11-17T02:15:00-05:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii</id>
     <content type="html"><![CDATA[<p>My brother recently installed Jest on his Windows machine and alerted me that there were some problems that he encountered when using Visual Studio 2013 Express to compile some of the requirements. <a href="http://joellanciaux.github.io/blog/2014/11/14/react-plus-jest-testing-on-windows-2-dot-5/">Check out his full post</a> on what he did to resolve (tldr: Install Express 2012 and update the GYP_MSVS_VERSION environment variable).</p>
 
@@ -27,7 +27,7 @@
   <entry>
     <title type="html"><![CDATA[Miscellaneous Jest Issues/Workarounds]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds/"/>
-    <updated>2014-10-28T20:44:00+00:00</updated>
+    <updated>2014-10-28T20:44:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds</id>
     <content type="html"><![CDATA[<p>I've been using Jest a bit lately and wanted to document some issues I've run into for future reference.</p>
 
@@ -50,7 +50,7 @@
   <entry>
     <title type="html"><![CDATA[React + Jest Testing on Windows II]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/10/28/react-plus-jest-testing-on-windows-ii/"/>
-    <updated>2014-10-28T03:14:00+00:00</updated>
+    <updated>2014-10-28T03:14:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/10/28/react-plus-jest-testing-on-windows-ii</id>
     <content type="html"><![CDATA[<p>Last time I wrote about running <a href="http://ryanlanciaux.github.io/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/">Jest on Windows</a> there was one thing I left out. The test output would show if the tests pass or fail but no data is displayed regarding why they fail. This is due to an <a href="https://github.com/joyent/node/issues/3584">issue with stdio in Windows</a>, however, there appears to be <a href="https://github.com/facebook/jest/pull/111">a fix in the works</a>.</p>
 
@@ -69,7 +69,7 @@ process.on('exit', function(){
   <entry>
     <title type="html"><![CDATA[Test React Components Using Jest (on Windows)]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/"/>
-    <updated>2014-08-02T12:37:00+00:00</updated>
+    <updated>2014-08-02T12:37:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/08/02/using-jest-for-testing-react-components-on-windows</id>
     <content type="html"><![CDATA[<p>I'm currently going through the process creating unit tests for <a href="http://dynamictyped.github.io/Griddle">Griddle</a> and thought it would be good to document the steps I took to get Jest up and running. I did not find it as simple as typing <code>npm install -g jest-cli</code>, however it was not too bad.</p>
 
@@ -98,7 +98,7 @@ process.on('exit', function(){
   <entry>
     <title type="html"><![CDATA[Introducing Griddle: A React.js grid]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/07/08/introducing-griddle-a-react-dot-js-grid/"/>
-    <updated>2014-07-08T01:01:00+00:00</updated>
+    <updated>2014-07-08T01:01:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/07/08/introducing-griddle-a-react-dot-js-grid</id>
     <content type="html"><![CDATA[<p>Many of the websites I have worked on have required a grid component. As I had been exploring <a href="http://facebook.github.io/react/">React.js</a> more it was made apparent that I was going to need a grid component for it to be a viable my projects. There are many great solutions for displaying grid data with React but many seem to rely  on writing wrappers for components using jQuery or other libraries. While these solutions work well, I was hoping to render entirely with React. Additionally, I wanted to avoid a dependency on libraries like jQuery / Angular if I could help it.</p>
 

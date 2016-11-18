@@ -4,7 +4,7 @@
   <title><![CDATA[Category: deployment | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/deployment/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2014-11-18T16:26:23+00:00</updated>
+  <updated>2016-11-18T01:45:17-05:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Azure Active Directory authentication in existing project]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/10/18/azure-active-directory-authentication-in-existing-project/"/>
-    <updated>2014-10-18T04:28:00+00:00</updated>
+    <updated>2014-10-18T04:28:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/10/18/azure-active-directory-authentication-in-existing-project</id>
     <content type="html"><![CDATA[<p>Recently, I needed to add Azure Active directory authentication to an existing web project. There was an automated tool for Visual Studio 2012 but there does not seem to be a similar component for 2013. A lot of the advice I found suggested creating a new project and importing a bit of the code / config from the other application -- that's what I did here. What follows is not a how-to but rather a log of the steps I took to use AAD authentication (mostly for <a href="http://xkcd.com/1421/">future reference</a>).</p>
 

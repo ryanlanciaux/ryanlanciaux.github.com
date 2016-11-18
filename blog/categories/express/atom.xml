@@ -4,7 +4,7 @@
   <title><![CDATA[Category: express | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/express/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2014-11-18T16:26:23+00:00</updated>
+  <updated>2016-11-18T01:45:17-05:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Debugging Express Applications]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/05/25/debugging-express-applications/"/>
-    <updated>2014-05-25T16:18:00+00:00</updated>
+    <updated>2014-05-25T16:18:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/05/25/debugging-express-applications</id>
     <content type="html"><![CDATA[<p>Coming from the .NET world, I've grown accustomed to great debugging tools. My initial Node setup didn't have a very good way to debug an application (outside of using <code>DEBUG=express:* node .bin/www</code>) and I wanted to resolve that. I had heard about <a href="https://github.com/node-inspector/node-inspector">node-inspector</a> in several places and decided to give that a shot.</p>
 
