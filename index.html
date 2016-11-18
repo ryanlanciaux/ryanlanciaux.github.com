@@ -9,7 +9,7 @@
   <meta name="author" content="Ryan Lanciaux">
 
   
-  <meta name="description" content="My brother recently installed Jest on his Windows machine and alerted me that there were some problems that he encountered when using Visual Studio &hellip;">
+  <meta name="description" content="Inspired by some recent conversations on Twitter, I&#8217;ve decided to give Bash on Windows another shot. This post contains the steps I&#8217;ve &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,126 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/">Setup Bash on Windows: My Environment Configuration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-11-17T23:32:00-05:00" pubdate data-updated="true">Nov 17<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Inspired by some recent conversations on Twitter, I&#8217;ve decided to give Bash on Windows another shot. This post contains the steps I&#8217;ve taken to install and configure Bash on Windows to closely resemble my Linux / Mac settings for JavaScript and node development (with some extra steps I&#8217;ve taken for Ruby, etc at the end).</p>
+
+<h2>1. Enable Bash on Windows</h2>
+
+<p>Bash on Windows requires the Anniversary update of Windows 10. Please make sure you have that before continuing. To determine what version of Windows you are running, open a command prompt window and type <code>winver</code>. If you see Version 1607, you should be good to proceed (thanks Josh Pollard).</p>
+
+<p><img src="/files/winver.png" alt="Windows Version dialog" /></p>
+
+<p>Once that&#8217;s all set go to <code>Settings -&gt; Update &amp; Security -&gt; For Developers</code> and enable <code>Developer mode</code>. Finally, go to <code>Windows Features</code> and enable <code>Windows Subsystem for Linux</code>. Your computer should restart and you should be able to run Bash for Windows at this point.</p>
+
+<p><img src="/files/windows_features.png" alt="Windows features dialog" /></p>
+
+<p>See <a href="http://www.hanselman.com/blog/DevelopersCanRunBashShellAndUsermodeUbuntuLinuxBinariesOnWindows10.aspx">Scott Hanselman&#8217;s blog</a> or <a href="https://blogs.technet.microsoft.com/heyscriptingguy/2016/09/28/part-1-install-bash-on-windows-10-omi-cim-server-and-dsc-for-linux/">Stefan Roth&#8217;s post on TechNet</a> for more on this.</p>
+
+<h2>2. Update apt-get</h2>
+
+<p>We are going to be installing some things and it would be good to make sure we&#8217;re up-to-date here. Launch bash by pressing the Windows key and typing <code>bash</code>. From there, <code>apt-get update</code> should obtain the latest package information. If you are running into issues with IPv6 vs IPv4 checkout this post on <a href="http://askubuntu.com/questions/759524/problem-with-ipv6-sudo-apt-get-update-upgrade">Ask Ubuntu</a> or here on <a href="https://bruteforce.gr/make-apt-get-use-ipv4-instead-ipv6.html">BruteForce labs</a>.</p>
+
+<h2>3. Install nvm</h2>
+
+<p>nvm stands for Node version manager and is an essential part of my development environment. Using nvm allows you to switch what version of node you&#8217;re using on a project by project basis. To install nvm, run <code>curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash</code> (from <a href="https://github.com/creationix/nvm">the nvm documentation</a>) followed by <code>Source .bashrc</code></p>
+
+<h2>4. Install git</h2>
+
+<p>Take the following steps to install git on Bash for Windows and be ready to work with projects on GitHub.</p>
+
+<ol>
+<li><code>apt-get install git</code> (see <a href="https://help.github.com/articles/set-up-git/#platform-linux">GitHub&#8217;s guides for more on this</a>)</li>
+<li>Generate <a href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/">an access token</a> or <a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#platform-linux">a SSH key</a> (and associate the key to your GitHub account)</li>
+</ol>
+
+
+<h2>5. Setup bash git prompt</h2>
+
+<p><a href="https://github.com/magicmonty/bash-git-prompt">bash-git-prompt</a> is, as the project describes, &#8220;An informative and fancy bash prompt for Git users&#8221; &#8211; that is, it shows git information for the current repository when navigating to project folder.</p>
+
+<p>To install bash-git-prompt:</p>
+
+<ol>
+<li><code>cd ~</code></li>
+<li><code>git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt --depth=1</code></li>
+<li>Add <code>GIT_PROMPT_ONLY_IN_REPO=1</code> to .bashrc</li>
+</ol>
+
+
+<p><a href="https://github.com/magicmonty/bash-git-prompt">Read through the documentation</a> as there is a bit of configuration and themeing that&#8217;s possible. That said, I&#8217;m running with the default for now.</p>
+
+<h2>6. Make Visual Studio Code use Bash</h2>
+
+<p>It&#8217;s possible to toggle a terminal inside Visual Studio Code &#8211; by default, this appears to be the standard command prompt. Thankfully, <a href="http://pjdecarlo.com/2016/06/bash-on-windows-as-integrated-terminal-in-visual-studio-code.html">Paul DeCarlo created a blog post</a> explaining that you can add <code>"terminal.integrated.shell.windows": "C:\\Windows\\sysnative\\bash.exe"</code> to your user settings to use Bash as the default instead.</p>
+
+<p>It should look like this if everything is working correctly:</p>
+
+<p><img src="/files/git_with_changes.png" alt="Visual Studio code window" /></p>
+
+<h2>Extras</h2>
+
+<h3>Install tmux</h3>
+
+<p>tmux is a terminal multiplexer that lets you run multiple programs in one terminal (it does a lot more than that but <a href="https://tmux.github.io/">read the docs for more info</a>). I frequently use tmux to run tests while running webpack server, <a href="https://getstorybook.io/">React Storybook</a>, or something else along those lines.</p>
+
+<p>You can install tmux by running <code>apt-get install tmux</code>. Once tmux is installed on the system you can press <code>ctrl + b + c</code> to create a new window and <code>ctrl + b + w</code> to list the windows. <a href="https://gist.github.com/MohamedAlaa/2961058">See this tmux cheatsheet for more</a></p>
+
+<h3>Install Ruby and Rails</h3>
+
+<p>I do a bit of Ruby work and highly recommend rbenv for multiple ruby versions. <a href="https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-14-04">Digital Ocean&#8217;s guide to installing ruby / rbenv</a> is great AND it works on Bash for Windows.</p>
+
+<h3>Setup vim and Vundle</h3>
+
+<p>I use <a href="http://www.vim.org/">Vim</a> quite a lot and <a href="https://github.com/VundleVim/Vundle.vim">Vundle</a> for managing vim plugins.</p>
+
+<ol>
+<li><code>git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim</code></li>
+<li>Setup your .vimrc (here&#8217;s <a href="https://github.com/ryanlanciaux/dotfiles/blob/master/.vimrc">my .vimrc</a> for example)</li>
+<li>Run vim and type <code>:PluginInstall</code></li>
+</ol>
+
+
+<h3>Install cmder</h3>
+
+<p><a href="http://cmder.net/">Cmder</a> is a nice console emulator for Windows. You can run bash in cmder by typing <code>bash</code> from the prompt. You may have to type <code>cd ~</code>from there to get back to your standard bash home directory.</p>
+
+<h2>The End</h2>
+
+<p>Please feel free to let me know of any questions or feel free to <a href="https://github.com/ryanlanciaux/ryanlanciaux.github.com">submit a PR or issue</a> on anything that&#8217;s mistaken here :)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii/">Miscellaneous Jest Issues/Workarouds II</a></h1>
     
     
@@ -87,7 +207,7 @@
   
 
 
-<time datetime="2014-11-17T02:15:00+00:00" pubdate data-updated="true">Nov 17<span>th</span>, 2014</time>
+<time datetime="2014-11-17T02:15:00-05:00" pubdate data-updated="true">Nov 17<span>th</span>, 2014</time>
         
       </p>
     
@@ -125,7 +245,7 @@
   
 
 
-<time datetime="2014-10-28T20:44:00+00:00" pubdate data-updated="true">Oct 28<span>th</span>, 2014</time>
+<time datetime="2014-10-28T20:44:00-04:00" pubdate data-updated="true">Oct 28<span>th</span>, 2014</time>
         
       </p>
     
@@ -175,7 +295,7 @@
   
 
 
-<time datetime="2014-10-28T03:14:00+00:00" pubdate data-updated="true">Oct 28<span>th</span>, 2014</time>
+<time datetime="2014-10-28T03:14:00-04:00" pubdate data-updated="true">Oct 28<span>th</span>, 2014</time>
         
       </p>
     
@@ -223,7 +343,7 @@
   
 
 
-<time datetime="2014-10-18T04:28:00+00:00" pubdate data-updated="true">Oct 18<span>th</span>, 2014</time>
+<time datetime="2014-10-18T04:28:00-04:00" pubdate data-updated="true">Oct 18<span>th</span>, 2014</time>
         
       </p>
     
@@ -312,7 +432,7 @@
   
 
 
-<time datetime="2014-08-02T12:37:00+00:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2014</time>
+<time datetime="2014-08-02T12:37:00-04:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2014</time>
         
       </p>
     
@@ -368,7 +488,7 @@
   
 
 
-<time datetime="2014-07-08T01:01:00+00:00" pubdate data-updated="true">Jul 8<span>th</span>, 2014</time>
+<time datetime="2014-07-08T01:01:00-04:00" pubdate data-updated="true">Jul 8<span>th</span>, 2014</time>
         
       </p>
     
@@ -428,7 +548,7 @@
   
 
 
-<time datetime="2014-05-26T18:29:00+00:00" pubdate data-updated="true">May 26<span>th</span>, 2014</time>
+<time datetime="2014-05-26T18:29:00-04:00" pubdate data-updated="true">May 26<span>th</span>, 2014</time>
         
       </p>
     
@@ -803,7 +923,7 @@
   
 
 
-<time datetime="2014-05-25T16:18:00+00:00" pubdate data-updated="true">May 25<span>th</span>, 2014</time>
+<time datetime="2014-05-25T16:18:00-04:00" pubdate data-updated="true">May 25<span>th</span>, 2014</time>
         
       </p>
     
@@ -855,7 +975,7 @@
   
 
 
-<time datetime="2014-05-15T03:41:00+00:00" pubdate data-updated="true">May 15<span>th</span>, 2014</time>
+<time datetime="2014-05-15T03:41:00-04:00" pubdate data-updated="true">May 15<span>th</span>, 2014</time>
         
       </p>
     
@@ -896,201 +1016,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/13/vagrantfile-for-octopress/">Vagrantfile for Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-13T03:59:00+00:00" pubdate data-updated="true">May 13<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve recently started using <a href="http://www.vagrantup.com">Vagrant</a> for managing lightweight virtual machines for various projects. Vagrant is awesome because it allows you to:</p>
-
-<ol>
-<li><strong>Configure an environment for a specific project / application</strong> &#8211; For instance, if you want to install Ruby / Rails and a mongo database, you can set up an environment specifically for your project. You don&#8217;t need to worry about messing up another project&#8217;s requirements because each project can have it&#8217;s own!</li>
-<li><strong>Save system resources</strong> &#8211; Vagrant starts Virtual Machines in headless mode (no UI) &#8211; the VM I&#8217;m using for my blog (which we&#8217;ll see more in a second) is only using 512megs of RAM and it runs without any hiccups. Additionally, these VMs take virtually no hard-drive space when you are not using them. When you&#8217;re done using a machine, you can remove it, keeping only the Vagrantfile and provision scripts. Your scripts can be run later on and your environment will be setup exactly as it was the last time it was configured.</li>
-<li><strong>Edit all your code from your host machine</strong> &#8211; Often times with development VMs, I would treat the machine as if it was a standalone computer (installing vim / sublime, etc. etc). Using Vagrant, however, you can edit the code on the host machine and simply run/serve the application with the VM (it should be noted you definitely could do this with standard VMs &#8211; it&#8217;s just a bit easier with Vagrant). As a developer who is pretty OCD about IDE configuration, this is a fantastic feature.</li>
-<li><strong>Easily share machines with other developers</strong> &#8211; Vagrant cuts down on the need for sharing giant virtual machines between different computers / developers. You can simply share your Vagrantfile and provision scripts and you have the same environment on any machine (assuming that machine can run Vagrant, etc.).</li>
-</ol>
-
-
-<h2>Vagrant File</h2>
-
-<p>We are going to walk through the Vagrantfile and provisioning script I&#8217;m using for my blog. First off, the <a href="https://docs.vagrantup.com/v2/vagrantfile/index.html">Vagrantfile</a>:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>VAGRANTFILE_API_VERSION = "2"
-</span><span class='line'>
-</span><span class='line'>Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-</span><span class='line'>  config.vm.box = "precise64"
-</span><span class='line'>  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-</span><span class='line'>
-</span><span class='line'>  config.vm.provision :shell, :path =&gt; "bootstrap.sh"
-</span><span class='line'>  config.vm.network :private_network, ip: '10.0.33.36'
-</span><span class='line'>  config.ssh.forward_agent = true
-</span><span class='line'>
-</span><span class='line'>  config.vm.synced_folder "../octopress", "/home/vagrant/octopress", create: false
-</span><span class='line'>
-</span><span class='line'>  config.vm.provider :virtualbox do |vb|
-</span><span class='line'>    vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
-</span><span class='line'>    vb.customize ["modifyvm", :id, "--memory", "512"]
-</span><span class='line'>  end
-</span><span class='line'>end
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Vagrant files are written in Ruby, however, you don&#8217;t need to know Ruby to use Vagrant &#8211; the configuration code is nothing too crazy. Lets walk through some of the more interesting parts of the Vagrantfile&#8230;</p>
-
-<h4>Box settings</h4>
-
-<p>The first thing we are doing in the configuration block is defining the type of machine to use. Precise64 is a 64bit Ubuntu 12.04 machine. I generally use this one but there are <a href="https://vagrantcloud.com/discover/featured">quite a few to choose from</a> in the <a href="https://vagrantcloud.com/">Vagrant Cloud</a>. With <code>box_url</code> we are describing where this box can be downloaded if it is not currently available on the host machine.</p>
-
-<h4>Provision settings</h4>
-
-<p>Next, we are telling Vagrant to run this <code>bootstrap.sh</code> as part of it&#8217;s <a href="https://docs.vagrantup.com/v2/provisioning/index.html">provisioning</a> process. Provisioning is where we will define what the environment should look like so it&#8217;s not just a base Ubuntu machine. You can provision a Vagrant box with Chef, Puppet, etc. but for this post I&#8217;m just using a shell script (still learning Chef). We will take a look at this shell script in a little bit.</p>
-
-<h4>Network / Sync settings</h4>
-
-<p>Following the vm configuration, we are setting up the networking and folder options for our box. The <code>vm.network</code> property is stating that when there is a webserver running on this machine, we can access it on our host browser at &#8216;10.0.33.36&#8217;. The <code>synced_folder</code> property is stating that the folder <code>octopress</code> living in a sibling folder to the folder that the Vagrantfile is contained in should be accessible within the virtual machine as <code>~/octopress</code>. The octopress directory already exists (and has it&#8217;s own github repo) so we do not want to recreate it.</p>
-
-<h4>Additional settings</h4>
-
-<p>Finally, in the provider block toward the bottom of this script we are adjusting the memory used and setting a property that allows us to use symbolic links.</p>
-
-<h2>Provisioning Script</h2>
-
-<p>As we talked about earlier, the provisioning script is what differentiates our box from a base Ubuntu machine. In the case of this example it&#8217;s basically just a shell script.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#!/usr/bin/env bash
-</span><span class='line'>HOME="/home/vagrant"
-</span><span class='line'>PROV_FILE=.vagrant_provision.lock
-</span><span class='line'>
-</span><span class='line'>#inspired by https://github.com/junwatu/nodejs-vagrant 
-</span><span class='line'>if [ -f $PROV_FILE ];
-</span><span class='line'>then
-</span><span class='line'>    echo "Already Provisioned"
-</span><span class='line'>else
-</span><span class='line'>    touch $PROV_FILE
-</span><span class='line'>
-</span><span class='line'>    sudo apt-get install -y git make
-</span><span class='line'>
-</span><span class='line'>    git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
-</span><span class='line'>
-</span><span class='line'>    # Install ruby-build
-</span><span class='line'>    git clone https://github.com/sstephenson/ruby-build.git $HOME/.rbenv/plugins/ruby-build
-</span><span class='line'>
-</span><span class='line'>    $HOME/.rbenv/bin/rbenv install 1.9.3-p194
-</span><span class='line'>    $HOME/.rbenv/bin/rbenv global 1.9.3-p194
-</span><span class='line'>
-</span><span class='line'>    #Add rbenv to PATH
-</span><span class='line'>    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' &gt;&gt; $HOME/.profile
-</span><span class='line'>    echo 'eval "$(rbenv init -)"' &gt;&gt; $HOME/.profile
-</span><span class='line'>
-</span><span class='line'>    #own rbenv as the vagrant user
-</span><span class='line'>    sudo chown -Rf vagrant $HOME/.rbenv
-</span><span class='line'>
-</span><span class='line'>    #don't like doing this
-</span><span class='line'>    sudo su - vagrant -c "rbenv rehash && cd /home/vagrant/octopress/ && gem install bundler"
-</span><span class='line'>    sudo su - vagrant -c "cd /home/vagrant/octopress/ && bundle install"
-</span><span class='line'>fi</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I&#8217;m not going to spend as much time on this as it&#8217;s not too interesting if you know shell scripting (and there is probably a better way to do a lot of this).</p>
-
-<ol>
-<li>Check to see if the provision lock exists. If it does it means our box is already setup and we shouldn&#8217;t configure our environment again.</li>
-<li>If the lock file does not exist we are create it</li>
-<li>Get git and make</li>
-<li>Install rbenv and Ruby <code>1.9.3-p194</code> (that was the version I was using when my blog was on an actual machine so I&#8217;ll stick with that for now)</li>
-<li>modify the path so it contains the Ruby defined in rbenv</li>
-<li>Change the ownership of the .rbenv file from the privileged user (sudo) to vagrant &#8211; if you don&#8217;t do this, you will not be able to use the gem files when you ssh into the box later on.</li>
-<li>Rehash rbenv so it uses the right Ruby version and install the bundler gem as the vagrant user</li>
-<li>Install the files required to run octopress (as it says in the comment, I really don&#8217;t like the sudo su - vagrant commands)</li>
-</ol>
-
-
-<h2>Running the machine</h2>
-
-<p>Once everything is setup, you can simply say <code>vagrant up</code>. Vagrant will then run through the Vagrantfile and the script to configure the environment. Once the configuration is complete, you can say <code>vagrant ssh</code>. Once you are ssh&#8217;d into the box, you can <code>cd octopress</code>, <code>rake generate</code>, <code>rake preview</code>, etc (see <a href="http://octopress.org/docs/blogging/">Octopress docs</a> for more information). When finished, <code>vagrant halt</code> will shut down the VM. If you need to destroy the box, you simply can type <code>vagrant destroy</code>. Removing the machine does not remove the code in the synced folders or the Vagrant scripts. Running <code>vagrant up</code> will configure the machine all over again and your code will still be intact where you left off.</p>
-
-<h2>Finishing up</h2>
-
-<p>I have tossed this <a href="https://github.com/ryanlanciaux/octopress-vagrant">Octopress Vagrantfile and provision script on github</a>. For more information on Vagrant, check out the <a href="http://www.vagrantup.com">Vagrant site</a>. Of further note, I referenced <a href="https://github.com/junwatu/nodejs-vagrant">junwatu&#8217;s Vagrant script</a> when writing the Octopress script. Please feel free to <a href="https://github.com/ryanlanciaux/ryanlanciaux.github.com">submit pull requests</a> for any corrections that you may have to this content.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1104,6 +1029,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/">Setup Bash on Windows: My environment configuration</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii/">Miscellaneous Jest Issues/Workarouds II</a>
@@ -1121,22 +1050,18 @@
         <a href="/blog/2014/10/18/azure-active-directory-authentication-in-existing-project/">Azure Active Directory authentication in existing project</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/">Test React Components Using Jest (on Windows)</a>
-      </li>
-    
   </ul>
 </section>
 <section class='goodreads-aside'>
   <h1><a href="http://www.goodreads.com" target="_blank">Status on Goodreads</a></h1>
   <ul>
     <li>
-            <a href='http://www.goodreads.com/user_status/show/47285993' target='blank'>Ryan is 46% done with Getting Started with </a>
-            <span class='tiny'>(2014-08-02)</span></li><li>
-            <a href='http://www.goodreads.com/user_status/show/47285988' target='blank'>Ryan is finished with Tuck</a>
-            <span class='tiny'>(2014-08-02)</span></li><li>
-            <a href='http://www.goodreads.com/user_status/show/46065249' target='blank'>Ryan is on page 103 of 452 of Tuck</a>
-            <span class='tiny'>(2014-07-07)</span></li>
+            <a href='http://www.goodreads.com/user_status/show/89405590' target='blank'>Ryan is 97% done with Remote</a>
+            <span class='tiny'>(2016-02-25)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/87891925' target='blank'>Ryan is 47% done with Clojure for the Brave and</a>
+            <span class='tiny'>(2016-02-09)</span></li><li>
+            <a href='http://www.goodreads.com/user_status/show/76508112' target='blank'>Ryan is finished with Practical Object-Oriented</a>
+            <span class='tiny'>(2015-09-22)</span></li>
   </ul>
 </section>
 <section>
@@ -1178,7 +1103,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Ryan Lanciaux -
+  Copyright &copy; 2016 - Ryan Lanciaux -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

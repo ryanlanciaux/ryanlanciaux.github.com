@@ -4,7 +4,7 @@
   <title><![CDATA[Category: sails | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/sails/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2014-11-18T16:26:23+00:00</updated>
+  <updated>2016-11-18T01:45:17-05:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Learning AngularJS]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/06/04/learning-angularjs/"/>
-    <updated>2013-06-04T21:39:00+00:00</updated>
+    <updated>2013-06-04T21:39:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/06/04/learning-angularjs</id>
     <content type="html"><![CDATA[<p>I have recently been playing around with some of the client-side MV_ frameworks. I have avoided Angular for quite some time because I was not a fan of using ng-click (etc.) HTML attributes to fire off js events. The more I've used the framework, however, the less of an issue that has been to me.</p>
 
@@ -152,11 +152,11 @@ $scope.editableFood = new Food();
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr class="row" ng-repeat="f in food"&gt;
-        &lt;td&gt;{% raw %}{{f.name}}{% endraw %}&lt;/td&gt;
-        &lt;td&gt;{% raw %}{{f.type}}{% endraw %}&lt;/td&gt;
-        &lt;td&gt;{% raw %}{{f.expiration}}{% endraw %}&lt;/td&gt;
-        &lt;td&gt;{% raw %}{{f.quantity}}{% endraw %}&lt;/td&gt;
-        &lt;td class="progress"&gt;&lt;div class="bar" style="width: {% raw %}{{f.percentRemaining}}%{% endraw %}"&lt;/td&gt;
+        &lt;td&gt;{{f.name}}&lt;/td&gt;
+        &lt;td&gt;{{f.type}}&lt;/td&gt;
+        &lt;td&gt;{{f.expiration}}&lt;/td&gt;
+        &lt;td&gt;{{f.quantity}}&lt;/td&gt;
+        &lt;td class="progress"&gt;&lt;div class="bar" style="width: {{f.percentRemaining}}%"&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;

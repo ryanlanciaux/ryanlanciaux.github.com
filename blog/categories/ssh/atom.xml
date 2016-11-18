@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ssh | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/ssh/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2014-11-18T16:26:23+00:00</updated>
+  <updated>2016-11-18T01:45:17-05:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Running ssh-agent on Windows]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2014/05/15/running-ssh-agent-on-windows/"/>
-    <updated>2014-05-15T03:41:00+00:00</updated>
+    <updated>2014-05-15T03:41:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2014/05/15/running-ssh-agent-on-windows</id>
     <content type="html"><![CDATA[<p>There was one thing I didn't mention in my <a href="http://ryanlanciaux.github.io/blog/2014/05/13/vagrantfile-for-octopress/">previous post about running Octopress on a Vagrant machine</a> -- in the machine's current state (with Windows as a host machine), we cannot deploy the site with a <code>rake deploy</code> command. The reason for this is we don't have an ssh key available to the Vagrant box.</p>
 

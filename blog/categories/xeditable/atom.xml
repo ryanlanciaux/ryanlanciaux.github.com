@@ -4,7 +4,7 @@
   <title><![CDATA[Category: xeditable | Ryan Lanciaux]]></title>
   <link href="http://ryanlanciaux.github.com/blog/categories/xeditable/atom.xml" rel="self"/>
   <link href="http://ryanlanciaux.github.com/"/>
-  <updated>2014-11-18T16:26:23+00:00</updated>
+  <updated>2016-11-18T01:45:17-05:00</updated>
   <id>http://ryanlanciaux.github.com/</id>
   <author>
     <name><![CDATA[Ryan Lanciaux]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Fake popovers for Angular-xeditable]]></title>
     <link href="http://ryanlanciaux.github.com/blog/2013/10/16/fake-popovers-for-angular-xeditable/"/>
-    <updated>2013-10-16T21:58:00+00:00</updated>
+    <updated>2013-10-16T21:58:00-04:00</updated>
     <id>http://ryanlanciaux.github.com/blog/2013/10/16/fake-popovers-for-angular-xeditable</id>
     <content type="html"><![CDATA[<p>I was recently working on a project with <a href="http://www.angularjs.org">AngularJS</a> and <a href="http://vitalets.github.io/x-editable/">xeditable</a> (if you're not familiar, xeditable is an awesome library for inline editing). There is an <a href="http://vitalets.github.io/angular-xeditable/">Angular version of xeditable</a> but the popover editing functionality is not implemented yet (it's in the roadmap). Instead of using the original version of xeditable and implementing custom directives or try to add the popover functionality to the project, I decided to see if I could make the popover using just CSS -- this happened to be more inline with my timeframe.</p>
 
