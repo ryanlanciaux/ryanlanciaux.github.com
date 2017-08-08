@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://ryanlanciaux.github.com/sitemap.xml 
