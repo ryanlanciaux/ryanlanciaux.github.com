@@ -1,0 +1,2 @@
+webpackJsonp([0x7e421c934251780],{"./node_modules/json-loader/index.js!./.cache/json/blog-2013-05-03-ikea-standing-desk.json":function(e,n){e.exports={pathContext:{path:"/blog/2013/05/03/ikea-standing-desk/"}}}});
+//# sourceMappingURL=path---blog-2013-05-03-ikea-standing-desk-e86cebde38bc72e45b69.js.map

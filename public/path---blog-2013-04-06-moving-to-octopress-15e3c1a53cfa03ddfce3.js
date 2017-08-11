@@ -1,0 +1,2 @@
+webpackJsonp([0x950ff0cdc52d3000],{"./node_modules/json-loader/index.js!./.cache/json/blog-2013-04-06-moving-to-octopress.json":function(o,n){o.exports={pathContext:{path:"/blog/2013/04/06/moving-to-octopress/"}}}});
+//# sourceMappingURL=path---blog-2013-04-06-moving-to-octopress-15e3c1a53cfa03ddfce3.js.map
