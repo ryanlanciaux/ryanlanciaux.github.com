@@ -1,384 +1,92 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>Setup Bash on Windows: My environment configuration - Ryan Lanciaux</title>
-  <meta name="author" content="Ryan Lanciaux">
-
-  
-  <meta name="description" content="Inspired by some recent conversations on Twitter, I&#8217;ve decided to give Bash on Windows another shot. This post contains the steps I&#8217;ve &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Ryan Lanciaux" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-
-</head>
-
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Ryan Lanciaux</a></h1>
-  
-    <h2>Random programming blog.</h2>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:ryanlanciaux.github.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">Setup Bash on Windows: My Environment Configuration</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-11-17T23:32:00-05:00" pubdate data-updated="true">Nov 17<span>th</span>, 2016</time>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>Inspired by some recent conversations on Twitter, I&#8217;ve decided to give Bash on Windows another shot. This post contains the steps I&#8217;ve taken to install and configure Bash on Windows to closely resemble my Linux / Mac settings for JavaScript and node development (with some extra steps I&#8217;ve taken for Ruby, etc at the end).</p>
-
+ <html><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><link rel="preload" href="/page-component---src-templates-blog-post-js-a54cf1c9183dd3f3a77a.js" as="script"/><link rel="preload" href="/path---blog-2016-11-17-setup-bash-on-windows-my-environment-configuration-807a0bc1e0e86880fb83.js" as="script"/><link rel="preload" href="/layout-component---index-201a925b3d4f82acbb85.js" as="script"/><link rel="preload" href="/app-6cde730e62b459afd731.js" as="script"/><link rel="preload" href="/commons-60d88a0456a32cce74df.js" as="script"/><script id="webpack-manifest">
+            //<![CDATA[
+            window.webpackManifest = {"15178676390636814000":"app-6cde730e62b459afd731.js","8321446950128396000":"page-component---node-modules-gatsby-plugin-offline-app-shell-js-4f0dddda43ae15168f16.js","5567064509904683000":"page-component---src-templates-blog-post-js-a54cf1c9183dd3f3a77a.js","4016850265702045000":"page-component---src-pages-index-js-d4473898e8ca76dccbd3.js","13784418321228782000":"path---offline-plugin-app-shell-fallback-586c7e095e534a3909ec.js","10741068402868957000":"path---blog-2013-04-06-moving-to-octopress-75bf3c7ccf0259a3e769.js","6946007640211004000":"path---blog-2013-04-13-sublime-text-on-ubuntu-d4c0085337157ac3bbb7.js","2822438185354293000":"path---blog-2013-05-02-goodreads-status-widget-available-on-github-55c4b119d0f9b3f67117.js","4796258270452209000":"path---blog-2013-05-09-less-alt-plus-tab-with-sublimetext-ebf122600ab10be201ad.js","568616601002514300":"path---blog-2013-05-03-ikea-standing-desk-470bb5591adcf8aa7ff9.js","13002607974846102000":"path---blog-2013-05-07-tig-great-git-command-line-tool-40cd76efee09f990025d.js","18223483459083878000":"path---blog-2013-06-04-learning-angularjs-b68bfc62d2de3d107f94.js","10539275642218723000":"path---blog-2013-06-19-angularjs-filtering-slash-ordering-58cd9051c77527d3d8d8.js","1111215879529874200":"path---blog-2013-08-17-learning-angularjs-iii-routes-13d41875c8f81430fd0a.js","5664951391689570000":"path---blog-2013-06-05-note-to-self-escape-liquidtags-with-jekyll-raw-tag-plugin-0e7cdb42bc655119f420.js","6758177695741122000":"path---blog-2013-10-16-fake-popovers-for-angular-xeditable-b2b99cb2b3f5c1bf3083.js","7371827001821672000":"path---blog-2014-05-13-vagrantfile-for-octopress-4f03abe4d47c70f4ba46.js","3073607785499908600":"path---blog-2014-03-06-thoughts-on-microsoft-surface-62574372d85bc94934c3.js","4111147505420821500":"path---blog-2014-05-15-running-ssh-agent-on-windows-a31662639cfeb8225dc3.js","7269251007086064000":"path---blog-2014-05-25-debugging-express-applications-a91de9e98dcea40065b3.js","3464437463519828500":"path---blog-2014-05-26-trying-out-reactjs-with-the-marvel-api-59affb384ec3694d9c7f.js","15885044413189140000":"path---blog-2014-08-02-using-jest-for-testing-react-components-on-windows-cdc77e514b2fb0e4b820.js","9045495470691301000":"path---blog-2014-10-18-azure-active-directory-authentication-in-existing-project-6262cab84591f9d6f888.js","16797677232560878000":"path---blog-2014-07-08-introducing-griddle-a-react-dot-js-grid-1a6427589a0038ce9abe.js","15030022458035816000":"path---blog-2014-10-28-miscellaneous-jest-issues-slash-workarounds-db7d166c3015b1d4964e.js","8530296423920297000":"path---blog-2014-11-17-miscellaneous-jest-issues-slash-workarouds-ii-402545f777abf85af841.js","778246002010407600":"path---blog-2014-10-28-react-plus-jest-testing-on-windows-ii-0d9c5262db8633738dfd.js","3608198898925882400":"path---blog-2016-11-17-setup-bash-on-windows-my-environment-configuration-807a0bc1e0e86880fb83.js","9347362237655822000":"path---index-5bd96486778acff66461.js","17241999800008180000":"layout-component---index-201a925b3d4f82acbb85.js"}
+            //]]>
+            </script><title data-react-helmet="true">Setup Bash on Windows: My environment configuration | Software Development Notes</title><style id="typography.js">html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block}audio:not([controls]){display:none;height:0}progress{vertical-align:baseline}[hidden],template{display:none}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit;font-weight:bolder}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}svg:not(:root){overflow:hidden}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}button,input,optgroup,select,textarea{font:inherit;margin:0}optgroup{font-weight:700}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-input-placeholder{color:inherit;opacity:.54}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}html{font:100%/1.45em 'georgia','serif';box-sizing:border-box;overflow-y:scroll;}*{box-sizing:inherit;}*:before{box-sizing:inherit;}*:after{box-sizing:inherit;}body{color:hsla(0,0%,0%,0.8);font-family:'georgia','serif';font-weight:normal;word-wrap:break-word;font-kerning:normal;-moz-font-feature-settings:"kern", "liga", "clig", "calt";-ms-font-feature-settings:"kern", "liga", "clig", "calt";-webkit-font-feature-settings:"kern", "liga", "clig", "calt";font-feature-settings:"kern", "liga", "clig", "calt";}img{max-width:100%;margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;}h1{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;color:inherit;font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue','sans-serif';font-weight:bold;text-rendering:optimizeLegibility;font-size:2rem;line-height:1.1;}h2{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;color:inherit;font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue','sans-serif';font-weight:bold;text-rendering:optimizeLegibility;font-size:1.51572rem;line-height:1.1;}h3{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;color:inherit;font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue','sans-serif';font-weight:bold;text-rendering:optimizeLegibility;font-size:1.31951rem;line-height:1.1;}h4{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;color:inherit;font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue','sans-serif';font-weight:bold;text-rendering:optimizeLegibility;font-size:1rem;line-height:1.1;}h5{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;color:inherit;font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue','sans-serif';font-weight:bold;text-rendering:optimizeLegibility;font-size:0.87055rem;line-height:1.1;}h6{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;color:inherit;font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue','sans-serif';font-weight:bold;text-rendering:optimizeLegibility;font-size:0.81225rem;line-height:1.1;}hgroup{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;}ul{margin-left:1.45rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;list-style-position:outside;list-style-image:none;}ol{margin-left:1.45rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;list-style-position:outside;list-style-image:none;}dl{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;}dd{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;}p{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;}figure{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;}pre{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;font-size:0.85rem;line-height:1.45rem;}table{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;font-size:1rem;line-height:1.45rem;border-collapse:collapse;width:100%;}fieldset{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;}blockquote{margin-left:1.45rem;margin-right:1.45rem;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;}form{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;}noscript{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;}iframe{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;}hr{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:calc(1.45rem - 1px);background:hsla(0,0%,0%,0.2);border:none;height:1px;}address{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.45rem;}b{font-weight:bold;}strong{font-weight:bold;}dt{font-weight:bold;}th{font-weight:bold;}li{margin-bottom:calc(1.45rem / 2);}ol li{padding-left:0;}ul li{padding-left:0;}li > ol{margin-left:1.45rem;margin-bottom:calc(1.45rem / 2);margin-top:calc(1.45rem / 2);}li > ul{margin-left:1.45rem;margin-bottom:calc(1.45rem / 2);margin-top:calc(1.45rem / 2);}blockquote *:last-child{margin-bottom:0;}li *:last-child{margin-bottom:0;}p *:last-child{margin-bottom:0;}li > p{margin-bottom:calc(1.45rem / 2);}code{font-size:0.85rem;line-height:1.45rem;}kbd{font-size:0.85rem;line-height:1.45rem;}samp{font-size:0.85rem;line-height:1.45rem;}abbr{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}acronym{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}abbr[title]{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;text-decoration:none;}thead{text-align:left;}td,th{text-align:left;border-bottom:1px solid hsla(0,0%,0%,0.12);font-feature-settings:"tnum";-moz-font-feature-settings:"tnum";-ms-font-feature-settings:"tnum";-webkit-font-feature-settings:"tnum";padding-left:0.96667rem;padding-right:0.96667rem;padding-top:0.725rem;padding-bottom:calc(0.725rem - 1px);}th:first-child,td:first-child{padding-left:0;}th:last-child,td:last-child{padding-right:0;}</style><script>
+  !function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",[
+  "/commons-60d88a0456a32cce74df.js","/app-6cde730e62b459afd731.js","/layout-component---index-201a925b3d4f82acbb85.js","/path---blog-2016-11-17-setup-bash-on-windows-my-environment-configuration-807a0bc1e0e86880fb83.js","/page-component---src-templates-blog-post-js-a54cf1c9183dd3f3a77a.js"
+])
+  </script><style id="gatsby-inlined-css">@font-face{font-family:Montserrat;font-style:italic;font-weight:100;src:url(/static/montserrat-latin-100italic.911dffc5.eot);src:local("Montserrat Thin italic"),local("Montserrat-Thinitalic"),url(/static/montserrat-latin-100italic.911dffc5.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-100italic.68f2c9aa.woff2) format("woff2"),url(/static/montserrat-latin-100italic.03e19243.woff) format("woff"),url(/static/montserrat-latin-100italic.c62abb67.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:normal;font-weight:200;src:url(/static/montserrat-latin-200.da732a67.eot);src:local("Montserrat Extra Light "),local("Montserrat-Extra Light"),url(/static/montserrat-latin-200.da732a67.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-200.4343d3d9.woff2) format("woff2"),url(/static/montserrat-latin-200.f2022ecd.woff) format("woff"),url(/static/montserrat-latin-200.300ee5f8.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:italic;font-weight:300;src:url(/static/montserrat-latin-300italic.19ebf9fd.eot);src:local("Montserrat Light italic"),local("Montserrat-Lightitalic"),url(/static/montserrat-latin-300italic.19ebf9fd.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-300italic.f6b6bf24.woff2) format("woff2"),url(/static/montserrat-latin-300italic.16521668.woff) format("woff"),url(/static/montserrat-latin-300italic.26aacd28.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:normal;font-weight:600;src:url(/static/montserrat-latin-600.e1158760.eot);src:local("Montserrat SemiBold "),local("Montserrat-SemiBold"),url(/static/montserrat-latin-600.e1158760.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-600.d5615136.woff2) format("woff2"),url(/static/montserrat-latin-600.f300da4f.woff) format("woff"),url(/static/montserrat-latin-600.e1915706.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:normal;font-weight:100;src:url(/static/montserrat-latin-100.76da3d41.eot);src:local("Montserrat Thin "),local("Montserrat-Thin"),url(/static/montserrat-latin-100.76da3d41.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-100.50d27986.woff2) format("woff2"),url(/static/montserrat-latin-100.5e334eff.woff) format("woff"),url(/static/montserrat-latin-100.2e95991f.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:normal;font-weight:300;src:url(/static/montserrat-latin-300.ffe5c79b.eot);src:local("Montserrat Light "),local("Montserrat-Light"),url(/static/montserrat-latin-300.ffe5c79b.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-300.d2ad295b.woff2) format("woff2"),url(/static/montserrat-latin-300.3a371ee0.woff) format("woff"),url(/static/montserrat-latin-300.b45e2b2f.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:normal;font-weight:400;src:url(/static/montserrat-latin-400.c9bfcdf2.eot);src:local("Montserrat Regular "),local("Montserrat-Regular"),url(/static/montserrat-latin-400.c9bfcdf2.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-400.240a8444.woff2) format("woff2"),url(/static/montserrat-latin-400.b20cc131.woff) format("woff"),url(/static/montserrat-latin-400.8ebd6e27.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:italic;font-weight:200;src:url(/static/montserrat-latin-200italic.de702667.eot);src:local("Montserrat Extra Light italic"),local("Montserrat-Extra Lightitalic"),url(/static/montserrat-latin-200italic.de702667.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-200italic.116c4c4b.woff2) format("woff2"),url(/static/montserrat-latin-200italic.89614a60.woff) format("woff"),url(/static/montserrat-latin-200italic.3a2afc11.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:italic;font-weight:400;src:url(/static/montserrat-latin-400italic.3917e9d9.eot);src:local("Montserrat Regular italic"),local("Montserrat-Regularitalic"),url(/static/montserrat-latin-400italic.3917e9d9.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-400italic.86172bb8.woff2) format("woff2"),url(/static/montserrat-latin-400italic.9405e787.woff) format("woff"),url(/static/montserrat-latin-400italic.08e99a9b.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:normal;font-weight:700;src:url(/static/montserrat-latin-700.d9e11714.eot);src:local("Montserrat Bold "),local("Montserrat-Bold"),url(/static/montserrat-latin-700.d9e11714.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-700.7d77e1f0.woff2) format("woff2"),url(/static/montserrat-latin-700.81826529.woff) format("woff"),url(/static/montserrat-latin-700.21c945de.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:normal;font-weight:500;src:url(/static/montserrat-latin-500.be5cfaf6.eot);src:local("Montserrat Medium "),local("Montserrat-Medium"),url(/static/montserrat-latin-500.be5cfaf6.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-500.fb8d6b71.woff2) format("woff2"),url(/static/montserrat-latin-500.50825d47.woff) format("woff"),url(/static/montserrat-latin-500.d5c1d1ca.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:italic;font-weight:500;src:url(/static/montserrat-latin-500italic.fbf51e5e.eot);src:local("Montserrat Medium italic"),local("Montserrat-Mediumitalic"),url(/static/montserrat-latin-500italic.fbf51e5e.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-500italic.c0a555a4.woff2) format("woff2"),url(/static/montserrat-latin-500italic.635de59c.woff) format("woff"),url(/static/montserrat-latin-500italic.feb99428.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:italic;font-weight:700;src:url(/static/montserrat-latin-700italic.6ef7418c.eot);src:local("Montserrat Bold italic"),local("Montserrat-Bolditalic"),url(/static/montserrat-latin-700italic.6ef7418c.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-700italic.1dd2b53f.woff2) format("woff2"),url(/static/montserrat-latin-700italic.c162d257.woff) format("woff"),url(/static/montserrat-latin-700italic.321eced1.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:normal;font-weight:800;src:url(/static/montserrat-latin-800.3ba80327.eot);src:local("Montserrat ExtraBold "),local("Montserrat-ExtraBold"),url(/static/montserrat-latin-800.3ba80327.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-800.d4e7bf86.woff2) format("woff2"),url(/static/montserrat-latin-800.895aadbf.woff) format("woff"),url(/static/montserrat-latin-800.6cbef7b3.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:italic;font-weight:600;src:url(/static/montserrat-latin-600italic.d2f4cde6.eot);src:local("Montserrat SemiBold italic"),local("Montserrat-SemiBolditalic"),url(/static/montserrat-latin-600italic.d2f4cde6.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-600italic.10f29d13.woff2) format("woff2"),url(/static/montserrat-latin-600italic.2bc37d86.woff) format("woff"),url(/static/montserrat-latin-600italic.996d2512.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:italic;font-weight:800;src:url(/static/montserrat-latin-800italic.bc7fdc5d.eot);src:local("Montserrat ExtraBold italic"),local("Montserrat-ExtraBolditalic"),url(/static/montserrat-latin-800italic.bc7fdc5d.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-800italic.fc0cbe44.woff2) format("woff2"),url(/static/montserrat-latin-800italic.b3362875.woff) format("woff"),url(/static/montserrat-latin-800italic.93173b4f.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:normal;font-weight:900;src:url(/static/montserrat-latin-900.b125be9d.eot);src:local("Montserrat Black "),local("Montserrat-Black"),url(/static/montserrat-latin-900.b125be9d.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-900.c8bdd772.woff2) format("woff2"),url(/static/montserrat-latin-900.1b99ef78.woff) format("woff"),url(/static/montserrat-latin-900.8431076a.svg#montserrat) format("svg")}@font-face{font-family:Montserrat;font-style:italic;font-weight:900;src:url(/static/montserrat-latin-900italic.b301c4cd.eot);src:local("Montserrat Black italic"),local("Montserrat-Blackitalic"),url(/static/montserrat-latin-900italic.b301c4cd.eot?#iefix) format("embedded-opentype"),url(/static/montserrat-latin-900italic.cb72c1f9.woff2) format("woff2"),url(/static/montserrat-latin-900italic.b78bb9f8.woff) format("woff"),url(/static/montserrat-latin-900italic.7be6a85f.svg#montserrat) format("svg")}@font-face{font-family:Merriweather;font-style:normal;font-weight:300;src:url(/static/merriweather-latin-300.9d7c2080.eot);src:local("Merriweather Light "),local("Merriweather-Light"),url(/static/merriweather-latin-300.9d7c2080.eot?#iefix) format("embedded-opentype"),url(/static/merriweather-latin-300.a8258cd1.woff2) format("woff2"),url(/static/merriweather-latin-300.f5838312.woff) format("woff"),url(/static/merriweather-latin-300.8bc99638.svg#merriweather) format("svg")}@font-face{font-family:Merriweather;font-style:italic;font-weight:300;src:url(/static/merriweather-latin-300italic.d70d9def.eot);src:local("Merriweather Light italic"),local("Merriweather-Lightitalic"),url(/static/merriweather-latin-300italic.d70d9def.eot?#iefix) format("embedded-opentype"),url(/static/merriweather-latin-300italic.ff744a72.woff2) format("woff2"),url(/static/merriweather-latin-300italic.ebb3c5bd.woff) format("woff"),url(/static/merriweather-latin-300italic.5c534e5b.svg#merriweather) format("svg")}@font-face{font-family:Merriweather;font-style:normal;font-weight:400;src:url(/static/merriweather-latin-400.1b56fb95.eot);src:local("Merriweather Regular "),local("Merriweather-Regular"),url(/static/merriweather-latin-400.1b56fb95.eot?#iefix) format("embedded-opentype"),url(/static/merriweather-latin-400.41389797.woff2) format("woff2"),url(/static/merriweather-latin-400.fc0d5525.woff) format("woff"),url(/static/merriweather-latin-400.ea7b9924.svg#merriweather) format("svg")}@font-face{font-family:Merriweather;font-style:italic;font-weight:400;src:url(/static/merriweather-latin-400italic.d0b26d05.eot);src:local("Merriweather Regular italic"),local("Merriweather-Regularitalic"),url(/static/merriweather-latin-400italic.d0b26d05.eot?#iefix) format("embedded-opentype"),url(/static/merriweather-latin-400italic.e6bb2aaf.woff2) format("woff2"),url(/static/merriweather-latin-400italic.8df98251.woff) format("woff"),url(/static/merriweather-latin-400italic.dbddc136.svg#merriweather) format("svg")}@font-face{font-family:Merriweather;font-style:normal;font-weight:700;src:url(/static/merriweather-latin-700.4a28506d.eot);src:local("Merriweather Bold "),local("Merriweather-Bold"),url(/static/merriweather-latin-700.4a28506d.eot?#iefix) format("embedded-opentype"),url(/static/merriweather-latin-700.7c4720f5.woff2) format("woff2"),url(/static/merriweather-latin-700.8081d883.woff) format("woff"),url(/static/merriweather-latin-700.8746e11e.svg#merriweather) format("svg")}@font-face{font-family:Merriweather;font-style:italic;font-weight:700;src:url(/static/merriweather-latin-700italic.cfb4d8bd.eot);src:local("Merriweather Bold italic"),local("Merriweather-Bolditalic"),url(/static/merriweather-latin-700italic.cfb4d8bd.eot?#iefix) format("embedded-opentype"),url(/static/merriweather-latin-700italic.af53e7c6.woff2) format("woff2"),url(/static/merriweather-latin-700italic.c9addd1f.woff) format("woff"),url(/static/merriweather-latin-700italic.7b385f6c.svg#merriweather) format("svg")}@font-face{font-family:Merriweather;font-style:normal;font-weight:900;src:url(/static/merriweather-latin-900.fc80496d.eot);src:local("Merriweather Black "),local("Merriweather-Black"),url(/static/merriweather-latin-900.fc80496d.eot?#iefix) format("embedded-opentype"),url(/static/merriweather-latin-900.b64d6d00.woff2) format("woff2"),url(/static/merriweather-latin-900.3ca953c0.woff) format("woff"),url(/static/merriweather-latin-900.d03c968f.svg#merriweather) format("svg")}@font-face{font-family:Merriweather;font-style:italic;font-weight:900;src:url(/static/merriweather-latin-900italic.1405eb72.eot);src:local("Merriweather Black italic"),local("Merriweather-Blackitalic"),url(/static/merriweather-latin-900italic.1405eb72.eot?#iefix) format("embedded-opentype"),url(/static/merriweather-latin-900italic.566e2de4.woff2) format("woff2"),url(/static/merriweather-latin-900italic.5156ebd3.woff) format("woff"),url(/static/merriweather-latin-900italic.337ab160.svg#merriweather) format("svg")}code[class*=language-],pre[class*=language-]{color:#f8f8f2;background:none;text-shadow:0 1px rgba(0,0,0,.3);font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em}:not(pre)>code[class*=language-],pre[class*=language-]{background:#272822}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#708090}.token.punctuation{color:#f8f8f2}.namespace{opacity:.7}.token.constant,.token.deleted,.token.property,.token.symbol,.token.tag{color:#f92672}.token.boolean,.token.number{color:#ae81ff}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#a6e22e}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url,.token.variable{color:#f8f8f2}.token.atrule,.token.attr-value,.token.function{color:#e6db74}.token.keyword{color:#66d9ef}.token.important,.token.regex{color:#fd971f}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}</style></head><body><div id="___gatsby"><div style="max-width:1024px;margin-left:auto;margin-right:auto;padding:2.625rem 1.3125rem;" data-reactroot="" data-reactid="1" data-react-checksum="880187791"><h3 style="font-family:Montserrat, sans-serif;margin-top:0;margin-bottom:-1.75rem;" data-reactid="2"><a style="box-shadow:none;text-decoration:none;color:inherit;" href="/" data-reactid="3">Software development notes - Ryan Lanciaux</a></h3><div data-reactid="4"><!-- react-empty: 5 --><h1 data-reactid="6">Setup Bash on Windows: My environment configuration</h1><p style="font-size:0.83255rem;line-height:1.75rem;display:block;margin-bottom:1.75rem;margin-top:-1.75rem;" data-reactid="7">November 17, 2016</p><div data-reactid="8"><p>Inspired by some recent conversations on Twitter, I’ve decided to give Bash on Windows another shot. This post contains the steps I’ve taken to install and configure Bash on Windows to closely resemble my Linux / Mac settings for JavaScript and node development (with some extra steps I’ve taken for Ruby, etc at the end).</p>
 <h2>1. Enable Bash on Windows</h2>
-
 <p>Bash on Windows requires the Anniversary update of Windows 10. Please make sure you have that before continuing. To determine what version of Windows you are running, open a command prompt window and type <code>winver</code>. If you see Version 1607, you should be good to proceed (thanks Josh Pollard).</p>
-
-<p><img src="/files/winver.png" alt="Windows Version dialog" /></p>
-
-<p>Once that&#8217;s all set go to <code>Settings -&gt; Update &amp; Security -&gt; For Developers</code> and enable <code>Developer mode</code>. Finally, go to <code>Windows Features</code> and enable <code>Windows Subsystem for Linux</code>. Your computer should restart and you should be able to run Bash for Windows at this point.</p>
-
-<p><img src="/files/windows_features.png" alt="Windows features dialog" /></p>
-
-<p>See <a href="http://www.hanselman.com/blog/DevelopersCanRunBashShellAndUsermodeUbuntuLinuxBinariesOnWindows10.aspx">Scott Hanselman&#8217;s blog</a> or <a href="https://blogs.technet.microsoft.com/heyscriptingguy/2016/09/28/part-1-install-bash-on-windows-10-omi-cim-server-and-dsc-for-linux/">Stefan Roth&#8217;s post on TechNet</a> for more on this.</p>
-
+<html><head></head><body>
+  <span class="gatsby-resp-image-wrapper" style="position: relative; z-index: -1; display: block; ">
+    <span class="gatsby-resp-image-background-image" style="padding-bottom: 38.02612481857764%;position: relative; width: 100%; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAIAAAB2/0i6AAAACXBIWXMAABYlAAAWJQFJUiTwAAABNklEQVQY042PTU7DMBBGcw0OwmXYcArEBTgBN2ABRZQdbFiwgIrftiRtEWoSNYlbN04d27HjxGkRQkxKgBWIp5H1eaxnjy1CCKU0QtEc4+Vq9fZvtNaWUqooCl3oqizeXysoY8yyqquCWue6ZZr8vS3L0hJCgJ+rvOPR7dZ4c38wmrLHCXUi5sc8TrPhlIWJYJnEVMCRE6UoqRXA4pzLNUePs429nrVz1wvocRef9HG7h0/7+OB+dvFMWt1Zu4+vxsnZIAb/U2lkuOZhQnfPJ1uHY3fOuwGFx2/9RcdNrt2FHaWXL6TjLrw5H6AUBvmRsyxjjAnOA5zcuDFJRakVlIE1lyaXhZJGS8i5qnMuJSiNDN9GCEVhGPjeFIUkjukX4nfAb8b2Pc+xbcd+AobDke9Do0b+yQcnEK+VIyhpMAAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;">
+      <img class="gatsby-resp-image-image" style="width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;" alt="Windows Version dialog" title="" src="/static/153016ba91c9b78028043a1b97110ea8-a408b.png" srcset="/static/153016ba91c9b78028043a1b97110ea8-4eabf.png 148w,
+/static/153016ba91c9b78028043a1b97110ea8-5a375.png 295w,
+/static/153016ba91c9b78028043a1b97110ea8-a408b.png 590w,
+/static/153016ba91c9b78028043a1b97110ea8-cef86.png 689w" sizes="(max-width: 590px) 100vw, 590px">
+    </span>
+  </span>
+  </body></html>
+<p>Once that’s all set go to <code>Settings -> Update &#x26; Security -> For Developers</code> and enable <code>Developer mode</code>. Finally, go to <code>Windows Features</code> and enable <code>Windows Subsystem for Linux</code>. Your computer should restart and you should be able to run Bash for Windows at this point.</p>
+<html><head></head><body>
+  <span class="gatsby-resp-image-wrapper" style="position: relative; z-index: -1; display: block; ">
+    <span class="gatsby-resp-image-background-image" style="padding-bottom: 49.85590778097983%;position: relative; width: 100%; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAIAAAA7N+mxAAAACXBIWXMAABYlAAAWJQFJUiTwAAABKElEQVQoz52Q2U7DMBBF/f+fw2cgVGgprfcljh0nblKTLgoIqdz0hQeKKnEkj7zM+N4Z4n2IMdZ1nVIKIZTy/vU30zQhllIQD4cDGcfx9C/yfiQ+tCsaXml42dTLbb1mYbH2ax6pbIRJSwovt3l4qkhde6WVtYYyaqzFXisppESUShujscR8IeccSq21jDGllPeeuMrhyhjDOZcokFIIobQWV7gQyOaCa61/i5OUWozq2HOIWOti02B43lfO2evGH0+nj1vgleCDpmk+RxEjxt50XYcj4jD0Xd6h/Hw+X24x20Zx3/fTfoPG0J6voGmGfbncA+2QnDNs7zqPA5w45+C1baH8Q+4H5hKzUVSpim28MtuGbLlHHsqbDo/LLbNB+YSxLp4XKP4G4ComgWTLVPAAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;">
+      <img class="gatsby-resp-image-image" style="width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;" alt="Windows features dialog" title="" src="/static/752b652c0dd44800edf7d7d2fb2bb2d9-a408b.png" srcset="/static/752b652c0dd44800edf7d7d2fb2bb2d9-4eabf.png 148w,
+/static/752b652c0dd44800edf7d7d2fb2bb2d9-5a375.png 295w,
+/static/752b652c0dd44800edf7d7d2fb2bb2d9-a408b.png 590w,
+/static/752b652c0dd44800edf7d7d2fb2bb2d9-79067.png 694w" sizes="(max-width: 590px) 100vw, 590px">
+    </span>
+  </span>
+  </body></html>
+<p>See <a href="http://www.hanselman.com/blog/DevelopersCanRunBashShellAndUsermodeUbuntuLinuxBinariesOnWindows10.aspx">Scott Hanselman’s blog</a> or <a href="https://blogs.technet.microsoft.com/heyscriptingguy/2016/09/28/part-1-install-bash-on-windows-10-omi-cim-server-and-dsc-for-linux/">Stefan Roth’s post on TechNet</a> for more on this.</p>
 <h2>2. Update apt-get</h2>
-
-<p>We are going to be installing some things and it would be good to make sure we&#8217;re up-to-date here. Launch bash by pressing the Windows key and typing <code>bash</code>. From there, <code>apt-get update</code> should obtain the latest package information. If you are running into issues with IPv6 vs IPv4 checkout this post on <a href="http://askubuntu.com/questions/759524/problem-with-ipv6-sudo-apt-get-update-upgrade">Ask Ubuntu</a> or here on <a href="https://bruteforce.gr/make-apt-get-use-ipv4-instead-ipv6.html">BruteForce labs</a>.</p>
-
+<p>We are going to be installing some things and it would be good to make sure we’re up-to-date here. Launch bash by pressing the Windows key and typing <code>bash</code>. From there, <code>apt-get update</code> should obtain the latest package information. If you are running into issues with IPv6 vs IPv4 checkout this post on <a href="http://askubuntu.com/questions/759524/problem-with-ipv6-sudo-apt-get-update-upgrade">Ask Ubuntu</a> or here on <a href="https://bruteforce.gr/make-apt-get-use-ipv4-instead-ipv6.html">BruteForce labs</a>.</p>
 <h2>3. Install nvm</h2>
-
-<p>nvm stands for Node version manager and is an essential part of my development environment. Using nvm allows you to switch what version of node you&#8217;re using on a project by project basis. To install nvm, run <code>curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash</code> (from <a href="https://github.com/creationix/nvm">the nvm documentation</a>) followed by <code>Source .bashrc</code></p>
-
+<p>nvm stands for Node version manager and is an essential part of my development environment. Using nvm allows you to switch what version of node you’re using on a project by project basis. To install nvm, run <code>curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash</code> (from <a href="https://github.com/creationix/nvm">the nvm documentation</a>) followed by <code>Source .bashrc</code></p>
 <h2>4. Install git</h2>
-
 <p>Take the following steps to install git on Bash for Windows and be ready to work with projects on GitHub.</p>
-
 <ol>
-<li><code>apt-get install git</code> (see <a href="https://help.github.com/articles/set-up-git/#platform-linux">GitHub&#8217;s guides for more on this</a>)</li>
+<li><code>apt-get install git</code> (see <a href="https://help.github.com/articles/set-up-git/#platform-linux">GitHub’s guides for more on this</a>)</li>
 <li>Generate <a href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/">an access token</a> or <a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#platform-linux">a SSH key</a> (and associate the key to your GitHub account)</li>
 </ol>
-
-
 <h2>5. Setup bash git prompt</h2>
-
-<p><a href="https://github.com/magicmonty/bash-git-prompt">bash-git-prompt</a> is, as the project describes, &#8220;An informative and fancy bash prompt for Git users&#8221; &#8211; that is, it shows git information for the current repository when navigating to project folder.</p>
-
+<p><a href="https://github.com/magicmonty/bash-git-prompt">bash-git-prompt</a> is, as the project describes, “An informative and fancy bash prompt for Git users” — that is, it shows git information for the current repository when navigating to project folder.</p>
 <p>To install bash-git-prompt:</p>
-
 <ol>
 <li><code>cd ~</code></li>
 <li><code>git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt --depth=1</code></li>
 <li>Add <code>GIT_PROMPT_ONLY_IN_REPO=1</code> to .bashrc</li>
 </ol>
-
-
-<p><a href="https://github.com/magicmonty/bash-git-prompt">Read through the documentation</a> as there is a bit of configuration and themeing that&#8217;s possible. That said, I&#8217;m running with the default for now.</p>
-
+<p><a href="https://github.com/magicmonty/bash-git-prompt">Read through the documentation</a> as there is a bit of configuration and themeing that’s possible. That said, I’m running with the default for now.</p>
 <h2>6. Make Visual Studio Code use Bash</h2>
-
-<p>It&#8217;s possible to toggle a terminal inside Visual Studio Code &#8211; by default, this appears to be the standard command prompt. Thankfully, <a href="http://pjdecarlo.com/2016/06/bash-on-windows-as-integrated-terminal-in-visual-studio-code.html">Paul DeCarlo created a blog post</a> explaining that you can add <code>"terminal.integrated.shell.windows": "C:\\Windows\\sysnative\\bash.exe"</code> to your user settings to use Bash as the default instead.</p>
-
+<p>It’s possible to toggle a terminal inside Visual Studio Code — by default, this appears to be the standard command prompt. Thankfully, <a href="http://pjdecarlo.com/2016/06/bash-on-windows-as-integrated-terminal-in-visual-studio-code.html">Paul DeCarlo created a blog post</a> explaining that you can add <code>"terminal.integrated.shell.windows": "C:\\Windows\\sysnative\\bash.exe"</code> to your user settings to use Bash as the default instead.</p>
 <p>It should look like this if everything is working correctly:</p>
-
-<p><img src="/files/git_with_changes.png" alt="Visual Studio code window" /></p>
-
+<html><head></head><body>
+  <span class="gatsby-resp-image-wrapper" style="position: relative; z-index: -1; display: block; ">
+    <span class="gatsby-resp-image-background-image" style="padding-bottom: 34.52958292919496%;position: relative; width: 100%; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAIAAACHqfpvAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAz0lEQVQY03WQTa7DIAyEc5HEgMGQBMhfpTy9Kl3k/ofqBKpu2n6LEWDPYGhUQVt5FI7jgJ7nue/7/f8vBhmGoftBAyc7IlI551SYpimlCMVJHMcgbhAXHDvnvpi1VnDDtm3bsizwQNd1nef5WszTbV1yitjGiLQRndAQQlPHhtkyiwjima9LgLUW6r1477GpVfBue5k1W9Km1qoZHTAjtP3BNbYxBk3sxEjIhb7v8XwMmWJCEF0o+kbD1qK1DN7Wa7qurWvqCPFQUhrlz99+AgmsPT1hrKJqAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;">
+      <img class="gatsby-resp-image-image" style="width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;" alt="Visual Studio code window" title="" src="/static/8da13b2474d1c279a25387942db4ae27-a408b.png" srcset="/static/8da13b2474d1c279a25387942db4ae27-4eabf.png 148w,
+/static/8da13b2474d1c279a25387942db4ae27-5a375.png 295w,
+/static/8da13b2474d1c279a25387942db4ae27-a408b.png 590w,
+/static/8da13b2474d1c279a25387942db4ae27-9a0cc.png 885w,
+/static/8da13b2474d1c279a25387942db4ae27-a9527.png 1031w" sizes="(max-width: 590px) 100vw, 590px">
+    </span>
+  </span>
+  </body></html>
 <h2>Extras</h2>
-
 <h3>Install tmux</h3>
-
 <p>tmux is a terminal multiplexer that lets you run multiple programs in one terminal (it does a lot more than that but <a href="https://tmux.github.io/">read the docs for more info</a>). I frequently use tmux to run tests while running webpack server, <a href="https://getstorybook.io/">React Storybook</a>, or something else along those lines.</p>
-
 <p>You can install tmux by running <code>apt-get install tmux</code>. Once tmux is installed on the system you can press <code>ctrl + b + c</code> to create a new window and <code>ctrl + b + w</code> to list the windows. <a href="https://gist.github.com/MohamedAlaa/2961058">See this tmux cheatsheet for more</a></p>
-
 <h3>Install Ruby and Rails</h3>
-
-<p>I do a bit of Ruby work and highly recommend rbenv for multiple ruby versions. <a href="https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-14-04">Digital Ocean&#8217;s guide to installing ruby / rbenv</a> is great AND it works on Bash for Windows.</p>
-
+<p>I do a bit of Ruby work and highly recommend rbenv for multiple ruby versions. <a href="https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-14-04">Digital Ocean’s guide to installing ruby / rbenv</a> is great AND it works on Bash for Windows.</p>
 <h3>Setup vim and Vundle</h3>
-
 <p>I use <a href="http://www.vim.org/">Vim</a> quite a lot and <a href="https://github.com/VundleVim/Vundle.vim">Vundle</a> for managing vim plugins.</p>
-
 <ol>
 <li><code>git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim</code></li>
-<li>Setup your .vimrc (here&#8217;s <a href="https://github.com/ryanlanciaux/dotfiles/blob/master/.vimrc">my .vimrc</a> for example)</li>
+<li>Setup your .vimrc (here’s <a href="https://github.com/ryanlanciaux/dotfiles/blob/master/.vimrc">my .vimrc</a> for example)</li>
 <li>Run vim and type <code>:PluginInstall</code></li>
 </ol>
-
-
 <h3>Install cmder</h3>
-
 <p><a href="http://cmder.net/">Cmder</a> is a nice console emulator for Windows. You can run bash in cmder by typing <code>bash</code> from the prompt. You may have to type <code>cd ~</code>from there to get back to your standard bash home directory.</p>
-
 <h2>The End</h2>
+<p>Please feel free to let me know of any questions or feel free to <a href="https://github.com/ryanlanciaux/ryanlanciaux.github.com">submit a PR or issue</a> on anything that’s mistaken here :)</p></div><hr style="margin-bottom:1.75rem;" data-reactid="9"/><div data-reactid="10"><p style="margin-bottom:0;" data-reactid="11"><img src="/static/profile-pic.399f6eb6.jpg" alt="Ryan Lanciaux" style="float:left;margin-right:0.4375rem;margin-bottom:0;width:3.5rem;height:3.5rem;" data-reactid="12"/><!-- react-text: 13 -->Written by <!-- /react-text --><strong data-reactid="14">Ryan Lanciaux</strong><!-- react-text: 15 -->. Ryan is a developer based out of Ann Arbor who programs in many languages. He is the author of <!-- /react-text --><a href="http://griddlegriddle.github.io/Griddle" data-reactid="16">Griddle (react data-grid)</a><!-- react-text: 17 --> and other various open source projects.<!-- /react-text --></p><p style="margin-bottom:1.75rem;text-align:right;" data-reactid="18"><a href="https://twitter.com/ryanlanciaux" data-reactid="19">Follow him on twitter.</a></p></div></div><span style="display:block;clear:both;" data-reactid="20"> </span></div></div><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-<p>Please feel free to let me know of any questions or feel free to <a href="https://github.com/ryanlanciaux/ryanlanciaux.github.com">submit a PR or issue</a> on anything that&#8217;s mistaken here :)</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Ryan Lanciaux</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-11-17T23:32:00-05:00" pubdate data-updated="true">Nov 17<span>th</span>, 2016</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/bash/'>bash</a>, <a class='category' href='/blog/categories/development/'>development</a>, <a class='category' href='/blog/categories/js/'>js</a>, <a class='category' href='/blog/categories/node/'>node</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>, <a class='category' href='/blog/categories/windows/'>windows</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/" data-via="ryanlanciaux" data-counturl="http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/" >Tweet</a>
-  
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii/" title="Previous Post: Miscellaneous Jest Issues/Workarouds II">&laquo; Miscellaneous Jest Issues/Workarouds II</a>
-      
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/">Setup Bash on Windows: My environment configuration</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/11/17/miscellaneous-jest-issues-slash-workarouds-ii/">Miscellaneous Jest Issues/Workarouds II</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds/">Miscellaneous Jest Issues/Workarounds</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/28/react-plus-jest-testing-on-windows-ii/">React + Jest Testing on Windows II</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/18/azure-active-directory-authentication-in-existing-project/">Azure Active Directory authentication in existing project</a>
-      </li>
-    
-  </ul>
-</section>
-<section class='goodreads-aside'>
-  <h1><a href="http://www.goodreads.com" target="_blank">Status on Goodreads</a></h1>
-  <ul>
-    <li>
-            <a href='http://www.goodreads.com/user_status/show/89405590' target='blank'>Ryan is 97% done with Remote</a>
-            <span class='tiny'>(2016-02-25)</span></li><li>
-            <a href='http://www.goodreads.com/user_status/show/87891925' target='blank'>Ryan is 47% done with Clojure for the Brave and</a>
-            <span class='tiny'>(2016-02-09)</span></li><li>
-            <a href='http://www.goodreads.com/user_status/show/76508112' target='blank'>Ryan is finished with Practical Object-Oriented</a>
-            <span class='tiny'>(2015-09-22)</span></li>
-  </ul>
-</section>
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/ryanlanciaux">@ryanlanciaux</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'ryanlanciaux',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-
-
-
-  
-</aside>
-
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Ryan Lanciaux -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
-</footer>
-  
-
-<script type="text/javascript">
-      var disqus_shortname = 'ryanlanciaux';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/';
-        var disqus_url = 'http://ryanlanciaux.github.com/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id; js.async = true;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
-</html>
+  ga('create', 'undefined', 'auto');
+  ga('send', 'pageview');
+      </script></body></html>
