@@ -10,11 +10,11 @@ Inspired by some recent conversations on Twitter, I've decided to give Bash on W
 
 Bash on Windows requires the Anniversary update of Windows 10. Please make sure you have that before continuing. To determine what version of Windows you are running, open a command prompt window and type `winver`. If you see Version 1607, you should be good to proceed (thanks Josh Pollard).
 
-<img src="/files/winver.png" alt="Windows Version dialog" />
+<img src="./winver.png" alt="Windows Version dialog" />
 
 Once that's all set go to `Settings -> Update & Security -> For Developers` and enable `Developer mode`. Finally, go to `Windows Features` and enable `Windows Subsystem for Linux`. Your computer should restart and you should be able to run Bash for Windows at this point.
 
-<img src="/files/windows_features.png" alt="Windows features dialog" />
+<img src="./windows_features.png" alt="Windows features dialog" />
 
 See [Scott Hanselman's blog](http://www.hanselman.com/blog/DevelopersCanRunBashShellAndUsermodeUbuntuLinuxBinariesOnWindows10.aspx) or [Stefan Roth's post on TechNet](https://blogs.technet.microsoft.com/heyscriptingguy/2016/09/28/part-1-install-bash-on-windows-10-omi-cim-server-and-dsc-for-linux/) for more on this.
 
@@ -51,7 +51,7 @@ It's possible to toggle a terminal inside Visual Studio Code -- by default, this
 
 It should look like this if everything is working correctly:
 
-<img src="/files/git_with_changes.png" alt="Visual Studio code window" />
+<img src="./git_with_changes.png" alt="Visual Studio code window" />
 
 ## Extras ##
 

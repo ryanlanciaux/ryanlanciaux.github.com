@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: "Random Development",
+    title: "Software Development Notes",
     author: "Ryan Lanciaux",
   },
   plugins: [
@@ -19,6 +19,7 @@ module.exports = {
             resolve: `gatsby-remark-images`,
             options: {
               maxWidth: 590,
+              linkImagesToOriginal: false
             },
           },
           {

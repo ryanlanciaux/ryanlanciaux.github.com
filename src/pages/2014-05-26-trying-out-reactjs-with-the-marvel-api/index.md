@@ -15,7 +15,7 @@ The application should let a user search through the Marvel characters API and a
 
 >**Disclaimer**: This was my first _quick_ foray into using React. There is likely a better way to do some of the things I will be walking through here. Additionally, I know almost nothing about comic books so please don't laugh that you can build a "Hero Team" out of heroes and villains, etc. ([worst example ever](http://en.wikipedia.org/wiki/Comic_Book_Guy)).
 
-<img src="/files/reactMockupFull.png" />
+<img src="./reactMockupFull.png" />
 
 ##Setup
 Before we really get going, we need to perform some initial, setup tasks. As a side note, if you want to skip all this and head right to the code -- it's available [here](https://github.com/ryanlanciaux/react-test). 
@@ -26,12 +26,12 @@ Before we really get going, we need to perform some initial, setup tasks. As a s
 4. Add your public key as a JavaScript field named key. Something like `window.key = "___________"; //this is your public key`
 5. Create an HTML page and load the required scripts/styles
 
-```
-&lt;link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"&gt;
-&lt;link href="styles/site.css" rel="stylesheet"&gt;
-&lt;script src="http://fb.me/react-0.10.0.js"&gt;&lt;/script&gt;
-&lt;script src="http://fb.me/JSXTransformer-0.10.0.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"&gt;&lt;/script&gt;
+```html
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="styles/site.css" rel="stylesheet">
+<script src="http://fb.me/react-0.10.0.js"></script>
+<script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 ```
 
 Notice we are including the React files. Also of note, for this example we're simply loading everything from the CDN's without a local fallback.
@@ -40,11 +40,11 @@ Notice we are including the React files. Also of note, for this example we're si
 Taking a look at the wire-frame included above, we want to come up with what React components we will need. Each component should be responsible for it's own content so there should ideally be little overlap. Additionally, as mentioned above, we are using a one-way data flow -- we want to design our components as children of a main component. 
 
 - **HeroBox**: HeroBox is the container for everything we will be creating with React (the Search / Search Results / Current team). If we take a look at our wire-frame, it consists of pretty much everything but the header section.  
-- **Hero**: This is the individual Hero item. <br /><img src="/files/hero.png" /><br />
+- **Hero**: This is the individual Hero item. <br /><div style="width: 300px;"><img src="./hero.png" /></div><br />
 - **HeroList**: A list of the possible HeroItems (this is the left side of the HeroBox).
-- **HeroForm**: The search form. <br /><img src="/files/heroForm.png" /><br />
-- **CurrentTeam**: The container for all of the Heroes / Villains in our current team. <br /><img src="/files/currentTeam.png" /><br />
-- **CurrentTeamItem**: An individual Hero/Villain partial that will be displayed in our CurrentTeam container. <br /><img src="/files/currentTeamItem.png" /><br />
+- **HeroForm**: The search form. <br /><div style="width: 300px"><img src="./heroForm.png" /></div><br />
+- **CurrentTeam**: The container for all of the Heroes / Villains in our current team. <br /><div style="width:300px;"><img src="./currentTeam.png" /></div><br />
+- **CurrentTeamItem**: An individual Hero/Villain partial that will be displayed in our CurrentTeam container. <br /><div style="width: 300px"><img src="./currentTeamItem.png" /></div><br />
 
  Since HeroBox is the parent of all the other components, it will be the component that owns the state of our application. That is, everything will get its data from HeroBox and will write back to HeroBox if it needs to change the data. 
 
@@ -52,21 +52,22 @@ Taking a look at the wire-frame included above, we want to come up with what Rea
 
 We will need to start out by creating an intial React Component. To do that we can simply say `var someComponent = React.createClass({ ... });`. This React class, can contain custom methods / properties or override some of the [default React methods](http://facebook.github.io/react/docs/component-specs.html). One of these default methods is the **render()** method which will build the DOM elements for the component. In our example we will be using [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) as the output of our Render method. JSX is simply a JavaScript XML syntax transform -- what that means for us is that we can practically write HTML as the output of a render method. For example:  
 
-```
+```javascript
 var someComponent = React.createClass({
   render: function(){
 	return(
-		&lt;h1&gt;Hello&lt;/h1&gt;
+		<h1>Hello</h1>
 	)
   }
 });
 ```
+
 When *someComponent* is rendered it would *unsurprisingly* write out `<h1>Hello</h1>` to the document. This is a bit basic for our example but the concept is necessary. 
 
 ##HeroBox
 The HeroBox will be the first component we create because all of the other components will obtain it's data through it. We will be spending the most time on this component because most of the React-specific *stuff* is occuring here (the code for this component is posted in its entirety while we will just highlight the interesting parts of the other components). 
 
-```
+```javascript
 var HeroBox = React.createClass({
 	loadHeroes: function(){
 		getCharacters().then(function(data){
@@ -97,10 +98,10 @@ var HeroBox = React.createClass({
 		return(
 			<div className="heroBox row">
 				<div className="col-md-8">
-					<HeroForm onSearchSubmit={this.loadHeroByName} onCancel={this.loadHeroes}/> 
-					<HeroList data={this.state.data} addToTeam={this.addToTeam} /> 
+					<HeroForm onSearchSubmit={this.loadHeroByName} onCancel={this.loadHeroes}/>
+					<HeroList data={this.state.data} addToTeam={this.addToTeam} />
 				</div>
-				<div className="col-md-4 teamWrapper">				
+				<div className="col-md-4 teamWrapper">			
 					<CurrentTeam data={this.state.currentTeam} delete={this.delete} />
 				</div>
 			</div>
@@ -120,7 +121,7 @@ var HeroBox = React.createClass({
 ##HeroList
 With this component we want to parse through the list of data from HeroBox and create a Hero component for each item. Additionally, this component should serve as the middle man between events on the HeroComponent and the HeroBox component. 
 
-```
+```javascript
 var HeroList = React.createClass({
 	addToTeam: function(item){
 		//basically a passthru
@@ -142,7 +143,7 @@ In this component we are using `this.props.____` to access properties that were 
 ##Hero
 As we saw above, the parent component of this item defines what properties we have available. Since the Hero item is rendered as `<Hero key={index} name={hero.name} thumbnail={hero.thumbnail} description={hero.description} addToTeam={that.addToTeam}></Hero>`, we have key, name, thumbnail, description and an addToTeam method available on the object's `props`. The Hero component is mostly just rendering out the properties, however, it is also handling button clicks. 
 
-```
+```javascript
 var Hero = React.createClass({
 	...
 	handleClick: function(){
@@ -167,7 +168,7 @@ What's happening when a user clicks on the "Add to Team" button is the onClick m
 
 Similar to Hero, we're mostly calling functions back on the HeroBox from this Component. We will call loadHeroByName (which is what is performing our search against the API) when the user submits the form and loadHeroes when the user presses cancel (for the sake of example -- there is not a lot of the standard logic that should go on in reseting form states, etc). 
 
-```
+```javascript
 var HeroForm = React.createClass({
 	handleSubmit: function(){
 		var name = this.refs.name.getDOMNode().value.trim();
@@ -182,9 +183,7 @@ var HeroForm = React.createClass({
 		return (
 			<form className="searchForm row form-inline" onSubmit={this.handleSubmit}>
 					<input type="text" className="form-control" placeholder="Enter a Hero name" ref="name" />
-
 					<input type="submit" value="Search" className="btn btn-primary" />
-
 					<button type="button" className="btn" onClick={this.handleCancel}>Clear Results</button>
 			</form>
 		);
@@ -201,16 +200,18 @@ We are not going to go into detail on the Team Components -- they are simply usi
 Now that the components are created we need to write out our HeroBox component to the page. 
 
 index.html
-```
+
+```html
 <body>
 	...
-	<div id="content" class="container-fluid"></content>
-	<script type="text/jsx" src="scripts/heroes.js"></script>
+	<div id="content" class="container-fluid"</content>
+	<script type="text/jsx" src="scripts/heroes.js"</script>
 </body>
 ```
 
 heroes.js
-```
+
+```javascript
 React.renderComponent(
 	<HeroBox />, document.getElementById('content')
 );

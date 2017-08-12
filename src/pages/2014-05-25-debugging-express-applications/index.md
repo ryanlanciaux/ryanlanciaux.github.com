@@ -8,7 +8,7 @@ Coming from the .NET world, I've grown accustomed to great debugging tools. My i
 
 Node-inspector is a visual interface for the Node debugger that looks like just Chrome Developer Tools for Chrome / Opera. I use the Developer Tools quite frequently for debugging front-end code so it is a natural fit for my work-flow.
 
-<img src="/files/node-inspector.png" />
+<img src="./node-inspector.png" />
 
 ##Setup
 

@@ -3,7 +3,7 @@ import Link from 'gatsby-link'
 import { Container } from 'react-responsive-grid'
 
 import { rhythm, scale } from '../utils/typography'
-
+require('prismjs/themes/prism-okaidia.css');
 class Template extends React.Component {
   render() {
     const { location, children } = this.props
@@ -25,7 +25,7 @@ class Template extends React.Component {
             }}
             to={'/'}
           >
-            Random Development Notes
+            Software development notes
           </Link>
         </h1>
       )
@@ -46,7 +46,7 @@ class Template extends React.Component {
             }}
             to={'/'}
           >
-            Random Development Notes
+            Software development notes - Ryan Lanciaux
           </Link>
         </h3>
       )

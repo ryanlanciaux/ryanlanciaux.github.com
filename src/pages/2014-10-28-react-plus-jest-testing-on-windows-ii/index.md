@@ -8,7 +8,7 @@ Last time I wrote about running [Jest on Windows](http://ryanlanciaux.github.io/
 
 Until that fix makes its way into a released version of Jest, you can simply copy bin/jest.js from [Connor Malone's branch on GitHub](https://github.com/malonecj/jest) as a workaround. If using the file outright doesn't sound desirable, any line that has `process.exit(0)` can be wrapped in a `process.on('exit')` block:
 
-```
+```javascript
 process.on('exit', function(){
   process.exit(0);
 });

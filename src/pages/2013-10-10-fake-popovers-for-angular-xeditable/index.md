@@ -8,7 +8,9 @@ I was recently working on a project with [AngularJS](http://www.angularjs.org) a
 
 Take a look at the original (non-angular) popover:
 
-![original xeditable](original_xeditable.png)
+<div style="width: 300px">
+  <img src="./original_xeditable.png" />
+</div>
 
 Starting out, I noticed that clicking on the link of an xeditable element was showing an input element (and buttons) in a form and hiding the link. To mimic the popover, the link and the form should both be visible when the form was activated, however, the form should be positioned a bit higher than the link. Working with a forked version of [vitalets' jsfiddle](http://jsfiddle.net/NfPcH/3/) example, I wrapped the initial links in `<span class='item-wrapper'></span>` -- from there, I edited the link and the form's CSS as follows
 
@@ -40,15 +42,21 @@ Starting out, I noticed that clicking on the link of an xeditable element was sh
 }
 ```
 
-<img src="/static/files/xeditable_popover_1.png" />
+<div style="width: 300px">
+  <img src="./xeditable_popover_1.png" />
+</div>
 
 It's a step in the right direction, however, doesn't really look exactly like we want. To get the triangle to show up below the pop-up, I thought it would be good to use the [technique for creating a triangle on css-tricks](http://css-tricks.com/snippets/css/css-triangle/) as an :after filter (please [check the link](http://css-tricks.com/snippets/css/css-triangle/) for more info on that because how it works is a bit outside the scope of this post).
 
-<img src="/static/public/files/xeditable_popover_2.png" />
+<div style="width: 300px">
+  <img src="./xeditable_popover_2.png" />
+</div>
 
  This works but it looks funny because the popover has a border but the triangle is just a solid color. Additionally, we cannot just toss a border on the :after filter since we're using the border to create the triangle. What I ended up doing is using a :before filter with a width of 10px and a background color the same as the border color followed by an :after filter 1px narrower and the same background color as the popover.
 
- <img src="/files/xeditable_popover_3.png" />
+<div style="width: 300px">
+ <img src="./xeditable_popover_3.png" />
+</div>
 
 ```css
 .item-wrapper form:before{
