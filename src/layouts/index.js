@@ -4,6 +4,7 @@ import { Container } from 'react-responsive-grid'
 
 import { rhythm, scale } from '../utils/typography'
 require('prismjs/themes/prism-okaidia.css');
+require('../css/overrides.css');
 class Template extends React.Component {
   render() {
     const { location, children } = this.props

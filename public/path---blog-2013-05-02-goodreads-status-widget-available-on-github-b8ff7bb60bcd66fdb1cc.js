@@ -1,2 +1,0 @@
-webpackJsonp([0x272b50935e8a7000],{"./node_modules/json-loader/index.js!./.cache/json/blog-2013-05-02-goodreads-status-widget-available-on-github.json":function(o,a){o.exports={pathContext:{path:"/blog/2013/05/02/goodreads-status-widget-available-on-github/"}}}});
-//# sourceMappingURL=path---blog-2013-05-02-goodreads-status-widget-available-on-github-b8ff7bb60bcd66fdb1cc.js.map

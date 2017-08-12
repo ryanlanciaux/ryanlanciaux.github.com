@@ -1,2 +1,0 @@
-webpackJsonp([0x81b8806e42603000],{"./node_modules/json-loader/index.js!./.cache/json/index.json":function(t,e){t.exports={data:{site:{siteMetadata:{title:"Gatsby Starter Blog"}},allMarkdownRemark:{edges:[{node:{frontmatter:{path:"/blog/2013/04/13/sublime-text-on-ubuntu/",title:"Sublime text on Ubuntu"}}},{node:{frontmatter:{path:"/blog/2013/04/06/moving-to-octopress/",title:"Moving to Octopress"}}}]}},pathContext:{}}}});
-//# sourceMappingURL=path---index-6df238ea12c607bee04e.js.map
