@@ -72,6 +72,10 @@
       "path---blog-2014-05-13-vagrantfile-for-octopress-4f03abe4d47c70f4ba46.js",
       "path---blog-2014-05-13-vagrantfile-for-octopress-4f03abe4d47c70f4ba46.js.map"
     ],
+    "path---blog-2017-08-20-releasing-node-packages": [
+      "path---blog-2017-08-20-releasing-node-packages-5b99a7d56df989353df6.js",
+      "path---blog-2017-08-20-releasing-node-packages-5b99a7d56df989353df6.js.map"
+    ],
     "page-component---node-modules-gatsby-plugin-offline-app-shell-js": [
       "page-component---node-modules-gatsby-plugin-offline-app-shell-js-4f0dddda43ae15168f16.js",
       "page-component---node-modules-gatsby-plugin-offline-app-shell-js-4f0dddda43ae15168f16.js.map"
@@ -85,8 +89,8 @@
       "path---blog-2014-10-18-azure-active-directory-authentication-in-existing-project-6262cab84591f9d6f888.js.map"
     ],
     "path---index": [
-      "path---index-71c45fb31453027e3641.js",
-      "path---index-71c45fb31453027e3641.js.map"
+      "path---index-20fa1319f792db3e43f0.js",
+      "path---index-20fa1319f792db3e43f0.js.map"
     ],
     "path---blog-2013-06-19-angularjs-filtering-slash-ordering": [
       "path---blog-2013-06-19-angularjs-filtering-slash-ordering-58cd9051c77527d3d8d8.js",
@@ -113,8 +117,8 @@
       "path---blog-2014-10-28-miscellaneous-jest-issues-slash-workarounds-db7d166c3015b1d4964e.js.map"
     ],
     "app": [
-      "app-0a4c38e856052a2c7dee.js",
-      "app-0a4c38e856052a2c7dee.js.map"
+      "app-d8016865dd2a5fc84e76.js",
+      "app-d8016865dd2a5fc84e76.js.map"
     ],
     "path---blog-2017-08-12-blogging-with-gatsby": [
       "path---blog-2017-08-12-blogging-with-gatsby-211714d644c5379c53f4.js",
