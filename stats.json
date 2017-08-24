@@ -89,8 +89,8 @@
       "path---blog-2014-10-18-azure-active-directory-authentication-in-existing-project-6262cab84591f9d6f888.js.map"
     ],
     "path---index": [
-      "path---index-20fa1319f792db3e43f0.js",
-      "path---index-20fa1319f792db3e43f0.js.map"
+      "path---index-d63e4c63555468de2a4c.js",
+      "path---index-d63e4c63555468de2a4c.js.map"
     ],
     "path---blog-2013-06-19-angularjs-filtering-slash-ordering": [
       "path---blog-2013-06-19-angularjs-filtering-slash-ordering-58cd9051c77527d3d8d8.js",
@@ -99,6 +99,10 @@
     "path---blog-2013-04-06-moving-to-octopress": [
       "path---blog-2013-04-06-moving-to-octopress-75bf3c7ccf0259a3e769.js",
       "path---blog-2013-04-06-moving-to-octopress-75bf3c7ccf0259a3e769.js.map"
+    ],
+    "path---blog-2017-08-20-a-feature-based-approach-to-react-development": [
+      "path---blog-2017-08-20-a-feature-based-approach-to-react-development-8809084f1d08c017a2aa.js",
+      "path---blog-2017-08-20-a-feature-based-approach-to-react-development-8809084f1d08c017a2aa.js.map"
     ],
     "commons": [
       "commons-60d88a0456a32cce74df.js",
@@ -117,8 +121,8 @@
       "path---blog-2014-10-28-miscellaneous-jest-issues-slash-workarounds-db7d166c3015b1d4964e.js.map"
     ],
     "app": [
-      "app-d8016865dd2a5fc84e76.js",
-      "app-d8016865dd2a5fc84e76.js.map"
+      "app-640d90cdcba34e998cb5.js",
+      "app-640d90cdcba34e998cb5.js.map"
     ],
     "path---blog-2017-08-12-blogging-with-gatsby": [
       "path---blog-2017-08-12-blogging-with-gatsby-211714d644c5379c53f4.js",
