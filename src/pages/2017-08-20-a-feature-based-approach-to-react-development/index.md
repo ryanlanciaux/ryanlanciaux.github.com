@@ -36,8 +36,8 @@ In React, we are used to structuring our application as a series of components. 
 ![Perfect slide](./perfect-slide.png)
 
 </div>
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">A slide so perfect I wish I made it :)<br>From <a href="https://t.co/VXvUNsh3wb">https://t.co/VXvUNsh3wb</a> by <a href="https://twitter.com/areaweb">@areaweb</a> <a href="https://t.co/TQKvI5SGpT">pic.twitter.com/TQKvI5SGpT</a></p>&mdash; Michele Bertoli (@MicheleBertoli) <a href="https://twitter.com/MicheleBertoli/status/868078729662279680">May 26, 2017</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+[from Cristiano Rastelli's "Let There Be Peace on CSS" talk](https://speakerdeck.com/didoo/let-there-be-peace-on-css)
 
 What's interesting about this vision of separation of concerns is that it also reminiscent of the "Vertical Slices" terminology that is commonly used in some agile development circles (and also used as an argument for using feature folders). Instead of thinking of a system as a series of Actions, Reducers, Selectors, Components, an application can be imagined as a series of features. Features, at this point, can almost be seen as "components" of application structure.
 
