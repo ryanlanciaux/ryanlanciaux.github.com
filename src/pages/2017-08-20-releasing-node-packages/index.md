@@ -1,7 +1,7 @@
 ---
-title: "Releasing node modules"
+title: "Releasing node packages"
 date: "2017-08-20T05:52:03.284Z"
-path: "/blog/2017/08/20/releasing-node-modules/"
+path: "/blog/2017/08/20/releasing-node-packages/"
 ---
 
 When releasing a new version of an open source project, it's important to make sure a series of things happen in the same order for every release. I've attempted to make a "script" I follow for releasing [Griddle](http://griddlegriddle.github.io/Griddle) to npm that helps promote consistent releases and (as much as possible) illuminates any issues before they impact others using the package.
