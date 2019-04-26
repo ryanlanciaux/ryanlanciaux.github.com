@@ -49,7 +49,7 @@ exports.createPages = ({ graphql, actions }) => {
     })
 
     // Create blog post list pages
-    const postsPerPage = 2
+    const postsPerPage = 10
     const numPages = Math.ceil(posts.length / postsPerPage)
 
     Array.from({ length: numPages }).forEach((_, i) => {
@@ -71,7 +71,9 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
+    const value =
+      node.frontmatter.path || "/blog" + createFilePath({ node, getNode })
+    console.log("VALUE", value, node.frontmatter.path)
     createNodeField({
       name: `slug`,
       node,
