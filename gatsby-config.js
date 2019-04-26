@@ -1,11 +1,11 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
-    author: `Kyle Mathews`,
-    description: `A starter blog demonstrating what Gatsby can do.`,
+    title: `Ryan Lanciaux`,
+    author: `Ryan Lanciaux`,
+    description: `The personal blog of ryanlanciaux`,
     siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `ryanlanciaux`,
     },
   },
   plugins: [
@@ -23,6 +23,15 @@ module.exports = {
         name: `assets`,
       },
     },
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /\.inline\.svg$/,
+        },
+      },
+    },
+
     {
       resolve: `gatsby-transformer-remark`,
       options: {
@@ -50,7 +59,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        //trackingId: `ADD YOUR TRACKING ID HERE`,
+        trackingId: "UA-104511675-1",
       },
     },
     `gatsby-plugin-feed`,
@@ -74,5 +83,6 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
+    `gatsby-plugin-styled-components`,
   ],
 }
