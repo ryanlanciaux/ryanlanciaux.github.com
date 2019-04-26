@@ -5,7 +5,16 @@ import SEO from "../components/seo"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import { rhythm } from "../utils/typography"
+import styled from "styled-components"
 
+const PageLink = styled(Link)`
+  padding: ${props => props.padding};
+  text-decoration: none;
+  color: ${({ index, currentPage, theme }) =>
+    index + 1 === currentPage ? theme.colors.primary : theme.colors.white};
+  border: ${({ index, currentPage, theme }) =>
+    index + 1 === currentPage ? "1px solid" : "unset"};
+`
 class BlogIndex extends React.Component {
   render() {
     const { data } = this.props
@@ -27,7 +36,12 @@ class BlogIndex extends React.Component {
           title={siteTitle}
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}
         />
-        <Bio large={currentPage === 1} />
+        {currentPage === 1 && <Bio large={currentPage === 1} />}
+        {currentPage === 1 ? (
+          <h2>Articles</h2>
+        ) : (
+          <h2>Articles - Page {currentPage}</h2>
+        )}
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug
           return (
@@ -68,17 +82,14 @@ class BlogIndex extends React.Component {
                 margin: 0,
               }}
             >
-              <Link
+              <PageLink
+                currentPage={currentPage}
+                index={i}
+                padding={rhythm(1 / 4)}
                 to={`/${i === 0 ? "" : i + 1}`}
-                style={{
-                  padding: rhythm(1 / 4),
-                  textDecoration: "none",
-                  color: i + 1 === currentPage ? "#ffffff" : "",
-                  background: i + 1 === currentPage ? "#007acc" : "",
-                }}
               >
                 {i + 1}
-              </Link>
+              </PageLink>
             </li>
           ))}
           {!isLast && (
