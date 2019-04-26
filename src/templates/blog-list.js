@@ -26,6 +26,47 @@ class BlogIndex extends React.Component {
     const prevPage = currentPage - 1 === 1 ? "/" : (currentPage - 1).toString()
     const nextPage = (currentPage + 1).toString()
 
+    const pagination = (
+      <ul
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          alignItems: "center",
+          listStyle: "none",
+          padding: 0,
+        }}
+      >
+        {!isFirst && (
+          <Link to={prevPage} rel="prev">
+            ← Previous Page
+          </Link>
+        )}
+        {Array.from({ length: numPages }, (_, i) => (
+          <li
+            key={`pagination-number${i + 1}`}
+            style={{
+              margin: 0,
+            }}
+          >
+            <PageLink
+              currentPage={currentPage}
+              index={i}
+              padding={rhythm(1 / 4)}
+              to={`/${i === 0 ? "" : i + 1}`}
+            >
+              {i + 1}
+            </PageLink>
+          </li>
+        ))}
+        {!isLast && (
+          <Link to={nextPage} rel="next">
+            Next Page →
+          </Link>
+        )}
+      </ul>
+    )
+
     return (
       <Layout
         location={this.props.location}
@@ -60,44 +101,7 @@ class BlogIndex extends React.Component {
             </div>
           )
         })}
-        <ul
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-            alignItems: "center",
-            listStyle: "none",
-            padding: 0,
-          }}
-        >
-          {!isFirst && (
-            <Link to={prevPage} rel="prev">
-              ← Previous Page
-            </Link>
-          )}
-          {Array.from({ length: numPages }, (_, i) => (
-            <li
-              key={`pagination-number${i + 1}`}
-              style={{
-                margin: 0,
-              }}
-            >
-              <PageLink
-                currentPage={currentPage}
-                index={i}
-                padding={rhythm(1 / 4)}
-                to={`/${i === 0 ? "" : i + 1}`}
-              >
-                {i + 1}
-              </PageLink>
-            </li>
-          ))}
-          {!isLast && (
-            <Link to={nextPage} rel="next">
-              Next Page →
-            </Link>
-          )}
-        </ul>
+        {pagination}
       </Layout>
     )
   }
