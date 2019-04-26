@@ -13,12 +13,12 @@ class BlogIndex extends React.Component {
     const posts = data.allMarkdownRemark.edges
 
     return (
-      <Layout location={this.props.location} title={siteTitle}>
+      <Layout location={this.props.location} title={siteTitle} hideHeader>
         <SEO
           title="All posts"
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}
         />
-        <Bio />
+        <Bio large={true} />
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug
           return (
@@ -41,7 +41,7 @@ class BlogIndex extends React.Component {
             </div>
           )
         })}
-      </Layout>
+      </Layout >
     )
   }
 }
