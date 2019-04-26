@@ -29,6 +29,11 @@ const Container = styled.div`
   & p {
     margin-bottom: ${({ large }) => (large === true ? rhythm(1) : rhythm(0.5))};
   }
+
+  @media (max-width: 768px) {
+    font-size: ${({ large }) => (large === true ? "2rem" : "1rem")};
+    line-height: ${({ large }) => (large === true ? "2.2rem" : "1.43rem")};
+  }
 `
 
 function Bio({ large }) {

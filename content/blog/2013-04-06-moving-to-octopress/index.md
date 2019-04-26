@@ -2,6 +2,7 @@
 title: "Moving to Octopress"
 date: "2013-04-06T14:11:03.284Z"
 path: "/blog/2013/04/06/moving-to-octopress/"
+description: This post is about moving my site to Octopress (I have since moved to Gatsby)
 ---
 
 Recently, it seems that the only time I've spent with my blog has been moving it to other platforms. Hopefully, that will change with the move to Octopress. Since this is mainly a programming / technical blog, I thought it would be great to host the blog with [Github pages](http://pages.github.com/). 
