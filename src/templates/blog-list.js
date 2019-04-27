@@ -7,6 +7,10 @@ import Layout from "../components/layout"
 import { rhythm } from "../utils/typography"
 import styled from "styled-components"
 
+const NextLink = styled(Link)`
+  color: ${({ theme }) => theme.colors.secondaryLight};
+`
+
 const PageLink = styled(Link)`
   padding: ${props => props.padding};
   text-decoration: none;
@@ -15,6 +19,7 @@ const PageLink = styled(Link)`
   border: ${({ index, currentPage, theme }) =>
     index + 1 === currentPage ? "1px solid" : "unset"};
 `
+
 class BlogIndex extends React.Component {
   render() {
     const { data } = this.props
@@ -38,9 +43,11 @@ class BlogIndex extends React.Component {
         }}
       >
         {!isFirst && (
-          <Link to={prevPage} rel="prev">
-            ← Previous Page
-          </Link>
+          <li>
+            <NextLink to={prevPage} rel="prev">
+              ← Previous Page
+            </NextLink>
+          </li>
         )}
         {Array.from({ length: numPages }, (_, i) => (
           <li
@@ -60,9 +67,11 @@ class BlogIndex extends React.Component {
           </li>
         ))}
         {!isLast && (
-          <Link to={nextPage} rel="next">
-            Next Page →
-          </Link>
+          <li>
+            <NextLink to={nextPage} rel="next">
+              Next Page →
+            </NextLink>
+          </li>
         )}
       </ul>
     )

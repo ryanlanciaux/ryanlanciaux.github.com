@@ -31,7 +31,22 @@ const GlobalStyle = createGlobalStyle`
 const Heading = createGlobalStyle`
 `
 
-const Layout = ({ children, hero, hideHeader }) => (
+const LayoutWrapper = styled.div`
+  margin: 0 auto;
+  max-width: 960px;
+  padding: ${props => (props.padMain ? "0px 1.0875rem 1.45rem" : "0")};
+  padding-top: 0;
+`
+
+const Footer = styled.footer`
+  margin: 0px 1.0875rem 1.45rem;
+
+  & a {
+    color: ${({ theme }) => theme.colors.secondaryLight};
+  }
+`
+
+const Layout = ({ children, hero, hideHeader, padMain = true }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -53,21 +68,14 @@ const Layout = ({ children, hero, hideHeader }) => (
           <Heading />
 
           {!hideHeader && <Header siteTitle={data.site.siteMetadata.title} />}
-          <div
-            style={{
-              margin: `0 auto`,
-              maxWidth: 960,
-              padding: `0px 1.0875rem 1.45rem`,
-              paddingTop: 0,
-            }}
-          >
+          <LayoutWrapper padMain={padMain}>
             <main>{children}</main>
-            <footer>
+            <Footer>
               © {new Date().getFullYear()}, Built with
               {` `}
               <a href="https://www.gatsbyjs.org">Gatsby</a>
-            </footer>
-          </div>
+            </Footer>
+          </LayoutWrapper>
         </>
       </ThemeProvider>
     )}

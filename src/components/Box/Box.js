@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Box as BassBox } from "@rebass/grid"
 
 const Box = styled(BassBox)`
-  background-color: ${({ theme }) => theme.colors.mainLight};
+  background-color: ${({ theme }) => theme.colors.white};
   border-top: 2px solid ${({ theme }) => theme.colors.secondary};
 
   color: ${({ theme }) => theme.colors.main};
@@ -14,6 +14,10 @@ const Box = styled(BassBox)`
   & h5,
   & h6 {
     color: ${({ theme }) => theme.colors.secondary};
+  }
+
+  & a {
+    color: ${({ theme }) => theme.colors.secondaryDark};
   }
 
   @media (max-width: 768px) {

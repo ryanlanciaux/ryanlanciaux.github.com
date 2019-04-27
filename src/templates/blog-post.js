@@ -5,8 +5,13 @@ import Bio from "../components/bio"
 import SEO from "../components/seo"
 import Box from "../components/Box"
 import { rhythm, scale } from "../utils/typography"
+import styled from "styled-components"
 
 import SpaceLayout from "../components/layout"
+
+const NextLink = styled(Link)`
+  color: ${({ theme }) => theme.colors.secondaryLight};
+`
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -15,7 +20,7 @@ class BlogPostTemplate extends React.Component {
     const { previous, next } = this.props.pageContext
 
     return (
-      <SpaceLayout>
+      <SpaceLayout padMain={false}>
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
@@ -52,16 +57,16 @@ class BlogPostTemplate extends React.Component {
         >
           <li>
             {previous && (
-              <Link to={previous.fields.slug} rel="prev">
+              <NextLink to={previous.fields.slug} rel="prev">
                 ← {previous.frontmatter.title}
-              </Link>
+              </NextLink>
             )}
           </li>
           <li>
             {next && (
-              <Link to={next.fields.slug} rel="next">
+              <NextLink to={next.fields.slug} rel="next">
                 {next.frontmatter.title} →
-              </Link>
+              </NextLink>
             )}
           </li>
         </ul>

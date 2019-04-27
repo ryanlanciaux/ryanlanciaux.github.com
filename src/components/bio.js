@@ -30,6 +30,11 @@ const Container = styled.div`
     margin-bottom: ${({ large }) => (large === true ? rhythm(1) : rhythm(0.5))};
   }
 
+  & a {
+    color: ${({ large, theme }) =>
+      large === true ? theme.colors.secondary : theme.colors.secondaryLight};
+  }
+
   @media (max-width: 768px) {
     font-size: ${({ large }) => (large === true ? "2rem" : "1rem")};
     line-height: ${({ large }) => (large === true ? "2.2rem" : "1.43rem")};

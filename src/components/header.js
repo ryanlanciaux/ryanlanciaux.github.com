@@ -2,10 +2,21 @@ import { Link as GatsbyLink } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 import styled from "styled-components"
-import Image from "./lanciaux.inline.svg"
+import OriginalImage from "./lanciaux.inline.svg"
 
 const HeaderElement = styled.header`
   background: ${({ theme }) => theme.colors.main};
+`
+
+const HeaderContainer = styled.div`
+  display: flex;
+  max-width: 960px;
+  margin: 0 1rem;
+  padding: 0;
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
 `
 
 const Link = styled(GatsbyLink)`
@@ -17,21 +28,26 @@ const Link = styled(GatsbyLink)`
   }
 `
 
+const Image = styled(OriginalImage)`
+  max-width: 400px;
+
+  @media (max-width: 400px) {
+    display: flex;
+    align-self: center;
+    width: 90%;
+    max-width: 90%;
+  }
+`
+
 const Header = ({ siteTitle }) => (
   <HeaderElement>
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `0`,
-      }}
-    >
+    <HeaderContainer>
       <h1 style={{ margin: 0 }}>
         <Link to="/">
           <Image style={{ maxWidth: 400 }} />
         </Link>
       </h1>
-    </div>
+    </HeaderContainer>
   </HeaderElement>
 )
 
