@@ -67,8 +67,8 @@ const Layout = ({ children, hero, hideHeader, padMain = true }) => (
 
           <Heading />
 
-          {!hideHeader && <Header siteTitle={data.site.siteMetadata.title} />}
           <LayoutWrapper padMain={padMain}>
+            {!hideHeader && <Header siteTitle={data.site.siteMetadata.title} />}
             <main>{children}</main>
             <Footer>
               © {new Date().getFullYear()}, Built with
