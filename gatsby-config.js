@@ -66,11 +66,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Ryan Lanciaux's Blog`,
+        short_name: `Ryan Lanciaux`,
         start_url: `/`,
-        background_color: `#ffffff`,
-        theme_color: `#663399`,
+        background_color: `#faf8fb`,
+        theme_color: `#230f2a`,
         display: `minimal-ui`,
         icon: `content/assets/planet.png`,
       },
