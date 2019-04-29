@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react"
 import { StaticQuery, graphql } from "gatsby"
 import styled from "styled-components"
 
-import Image from "./space-background.inline.svg"
+import imageSrc from "./space-background.png"
 
 const SpaceContainer = styled.div`
   height: 600px;
@@ -53,10 +53,10 @@ const Hero = styled.div`
   }
 `
 
-const NewImage = styled(Image)`
+const NewImage = styled.img`
   opacity: 0.2;
   width: 100%;
-  height: 100%;
+  height: auto;
 
   @media (max-width: 1000px) {
     height: 100%;
@@ -77,7 +77,7 @@ export const SpaceBackground = ({ children }) => {
   return (
     <SpaceContainer mobileHeight={height}>
       <div>
-        <NewImage />
+        <NewImage src={imageSrc} alt="" />
       </div>
       <Hero ref={ref}>{children}</Hero>
     </SpaceContainer>
