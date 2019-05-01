@@ -1,4 +1,78 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryan Lanciaux]]></title><description><![CDATA[The personal blog of ryanlanciaux]]></description><link>https://gatsby-starter-blog-demo.netlify.com/</link><generator>RSS for Node</generator><lastBuildDate>Mon, 29 Apr 2019 06:29:50 GMT</lastBuildDate><item><title><![CDATA[Amazon Echo Costume]]></title><description><![CDATA[My daughter is super ecstatic about Amazon Echo. When it came time to pick a Halloween Costume, she quickly decided an Amazon Echo is what…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//blog/2017/10/26/amazon-echo-costume/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//blog/2017/10/26/amazon-echo-costume/</guid><pubDate>Thu, 26 Oct 2017 06:37:03 GMT</pubDate><content:encoded>&lt;p&gt;My daughter is super ecstatic about Amazon Echo. When it came time to pick a Halloween Costume, she quickly decided an Amazon Echo is what she wanted to be. I was more than happy to help her see this interest come to fruition!&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryan Lanciaux]]></title><description><![CDATA[The personal blog of ryanlanciaux]]></description><link>https://gatsby-starter-blog-demo.netlify.com/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 01 May 2019 16:01:45 GMT</lastBuildDate><item><title><![CDATA[NeoVim for Software Development]]></title><description><![CDATA[I’ve recently been interested in
+using the tried-and-true vim editor again. For those unfamiliar, vim is an
+editor that was first released…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//blog/2017/10/26/neovim-for-software-development/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//blog/2017/10/26/neovim-for-software-development/</guid><pubDate>Wed, 01 May 2019 07:15:03 GMT</pubDate><content:encoded>&lt;p&gt;I’ve recently been interested in
+using the tried-and-true vim editor again. For those unfamiliar, vim is an
+editor that was first released in 1991. Vim boasts a large community of users,
+plugins, and add-ons. Most vim users configure
+their editor quite heavily. This customization is one of the nicest things about
+vim. That said, it’s also one of the more challenging things to get right.&lt;/p&gt;
+&lt;p&gt;In order to consider my vim configuration a success, I wanted to have some
+IDE like features available. Things like “find in project”, “jump to file”, and
+linting / TypeScript support are necessary. This article is a high-level overview of how I setup NeoVim (nvim) to achieve these results.&lt;/p&gt;
+&lt;h2&gt;1) Install nvim&lt;/h2&gt;
+&lt;p&gt;I am using NeoVim (nvim) instead of the standard vim. NeoVim is a “vim-based”
+text editor. It’s fairly compatible with standard vim but it adds some
+features around what types of things plugins can do (as well as some other things).&lt;/p&gt;
+&lt;p&gt;It’s good to &lt;a href=&quot;https://github.com/neovim/neovim/wiki/Installing-Neovim&quot;&gt;follow the documentation for installing
+nvim&lt;/a&gt;. On my Mac, I ran&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;brew install --HEAD neovim&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;2) Install VimPlug&lt;/h2&gt;
+&lt;p&gt;VimPlug is what I’m using to manage my plugins. &lt;a href=&quot;https://github.com/junegunn/vim-plug&quot;&gt;Take a look at the installation
+documentation&lt;/a&gt;. For my setup, I ran the
+following:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;3) Set up the config files&lt;/h2&gt;
+&lt;p&gt;nvim’s configuration, by default, is controlled from
+&lt;code class=&quot;language-text&quot;&gt;.config/nvim/init.vim&lt;/code&gt;. This file could contain all of the configuration
+options for nvim. As time goes on, placing our configuration in one file could get unwieldy over time. Thankfully, you can &lt;a href=&quot;https://afnan.io/2018-04-12/my-neovim-development-setup/#split-up-your-initvim&quot;&gt;split
+your vim
+configuration files&lt;/a&gt; to
+make it easier to manage. Following &lt;a href=&quot;https://afnan.io/2018-04-12/my-neovim-development-setup/#split-up-your-initvim&quot;&gt;that
+guide&lt;/a&gt;,
+&lt;code class=&quot;language-text&quot;&gt;init.vim&lt;/code&gt;, loads configuration from other config files. I have the following
+files but any number / name of configuration files could be used.&lt;/p&gt;
+&lt;h3&gt;01.plugins.vim&lt;/h3&gt;
+&lt;p&gt;This is where I place all my plugin installation information.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;call plug#begin(&amp;#39;~/.vim/plugged&amp;#39;)
+  &amp;quot; Plugins go here
+call plug#end()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;02.settings.vim&lt;/h3&gt;
+&lt;p&gt;This settings.vim contains all of my standard nvim configuration.&lt;/p&gt;
+&lt;h3&gt;03.plugin-settings.vim&lt;/h3&gt;
+&lt;p&gt;Plugin configuration goes in this file. I wanted to keep this separate from the
+plugin installation but it could technically be placed along side the
+installation configuration file.&lt;/p&gt;
+&lt;h2&gt;4) Configure default vim settings&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/ryanlanciaux/nvim-config/blob/master/config/02.settings.vim&quot;&gt;My vim settings are available
+here&lt;/a&gt; to see how I set this up. These settings are mostly personal preference. &lt;a href=&quot;https://www.linode.com/docs/tools-reference/tools/introduction-to-vim-customization/&quot;&gt;Take a look at this guide on configuring vim for more info&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;5) Install Plugins&lt;/h2&gt;
+&lt;p&gt;With this structure in place, everything should be in a good place to begin
+installing and configuring plugins. Plugins can be installed using VimPlug by
+placing statements &lt;code class=&quot;language-text&quot;&gt;Plug&lt;/code&gt; statements between the opening and closing plug
+functions. For example&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Plug &amp;#39;bling/vim-bufferline&amp;#39;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After configuring the plugins, run &lt;code class=&quot;language-text&quot;&gt;:PlugInstall&lt;/code&gt; to install the plugins.&lt;/p&gt;
+&lt;p&gt;A couple of plugins that I’m using are:&lt;/p&gt;
+&lt;h3&gt;&lt;a href=&quot;https://github.com/ctrlpvim/ctrlp.vim&quot;&gt;ctrlp.vim&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;ctrlp is described as a “Full path fuzzy file, buffer, mru, tag, … finder for
+Vim.” I use this similarly to how I use Command+P in VS Code to quickly jump to
+another file.&lt;/p&gt;
+&lt;h3&gt;&lt;a href=&quot;https://github.com/dyng/ctrlsf.vim&quot;&gt;ctrlsf&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This plugin makes it very easy to quickly search a codebase and edit files
+in the search results view.&lt;/p&gt;
+&lt;h3&gt;&lt;a href=&quot;https://github.com/neoclide/coc.nvim&quot;&gt;Conquer of Completion&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This plugin is what I use to get intellisense information like VS Code. The
+autocompletion is surprisingly good. The documentation boasts that it has the
+same language protocol support that powers VS Code.&lt;/p&gt;
+&lt;p&gt;Conquer of completion has completion sources for TypeScript and other programming languages that
+may need to be installed separately. &lt;a href=&quot;https://github.com/neoclide/coc.nvim#extensions&quot;&gt;See the docs for more on this&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;&lt;a href=&quot;https://github.com/w0rp/ale&quot;&gt;Ale&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Ale stands for “Asynchronous Lint Engine.” Ale lives up to the name and is great at linting my JavaScript codebases.&lt;/p&gt;
+&lt;h2&gt;Wrapping up&lt;/h2&gt;
+&lt;p&gt;While vim may not be for everyone and might not even be my primary editor, it
+can be a nice way to edit code. &lt;a href=&quot;https://github.com/ryanlanciaux/nvim-config&quot;&gt;My configuration files are available on
+github&lt;/a&gt;.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Amazon Echo Costume]]></title><description><![CDATA[My daughter is super ecstatic about Amazon Echo. When it came time to pick a Halloween Costume, she quickly decided an Amazon Echo is what…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//blog/2017/10/26/amazon-echo-costume/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//blog/2017/10/26/amazon-echo-costume/</guid><pubDate>Thu, 26 Oct 2017 06:37:03 GMT</pubDate><content:encoded>&lt;p&gt;My daughter is super ecstatic about Amazon Echo. When it came time to pick a Halloween Costume, she quickly decided an Amazon Echo is what she wanted to be. I was more than happy to help her see this interest come to fruition!&lt;/p&gt;
 &lt;p&gt;I initially started down the path of building a &lt;a href=&quot;https://github.com/alexa/alexa-avs-sample-app&quot;&gt;Raspberry Pi with AVS&lt;/a&gt;. I soon realized that the Echo Dot would serve the same purpose and wouldn’t have the same potential debugging issues that I may run into building one on another computer :)&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://twitter.com/ryanlanciaux/status/922524085858590722&quot;&gt;See tweet with the finished costume&lt;/a&gt; &lt;br /&gt;
 &lt;a href=&quot;https://twitter.com/ryanlanciaux/status/922524085858590722&quot;&gt;And tweet with a video of the costume in action&lt;/a&gt;&lt;/p&gt;
