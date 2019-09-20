@@ -424,14 +424,16 @@ fieldset {
   margin-bottom: 1.45rem;
 }
 blockquote {
-  margin-left: 1.45rem;
-  margin-right: 1.45rem;
+  margin: 1.45rem;
   margin-top: 0;
   padding-bottom: 0;
   padding-left: 0;
   padding-right: 0;
   padding-top: 0;
-  margin-bottom: 1.45rem;
+}
+
+blockquote > p {
+  padding-left: 20px;
 }
 form {
   margin-left: 0;
@@ -612,9 +614,25 @@ pre tt:after {
   }
 }
 
-h1, h2 h3 h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif;
+h1,
+h2 h3 h4,
+h5,
+h6 {
+  font-family: "Montserrat", sans-serif;
 }
 *:focus {
   outline: 2px solid #e72a53;
+}
+
+.quoteCite {
+  text-align: right;
+  width: 100%;
+  margin-top: -1.45rem;
+  margin-bottom: 1.45rem;
+  padding-right: 60px;
+}
+
+.center {
+  width: 100%;
+  text-align: center;
 }
