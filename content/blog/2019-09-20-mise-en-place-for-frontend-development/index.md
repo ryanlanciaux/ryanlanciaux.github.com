@@ -32,11 +32,11 @@ Many frontend technologies have the concept of components. Components are buildi
 
 [Brad Frost has an excellent book called Atomic Design](http://atomicdesign.bradfrost.com/) about building great design systems. In this book, ([and related article](http://bradfrost.com/blog/post/atomic-web-design/)) he defines a design system (or component library) as a series of levels. In this methodology, base level components are atoms, atoms compose into molecules, which compose into organisms and so on (I highly recommend Brad's [post](http://bradfrost.com/blog/post/atomic-web-design/) / [book](http://atomicdesign.bradfrost.com/) to really see this mindset in action). While I generally do not use the same terminology, I appreciate the concept of base level components and compound components for building reusable front-end applications.
 
-You may be noticing that some of these concepts may apply to the mise en place mindset we're discussing. We can build our components before creating a single screen / page in our application.
+You may notice that some of these concepts apply to the mise en place mindset we're discussing. We can build our components before creating a single screen / page in our application.
 
 ## How can we apply a mise en place philosophy to our codebase?
 
-If you're on board with this mindset, you may find it helpful to work on components in isolation, outside of the standard placement in application. At the most simple level, we could create test pages for each component. This can introduce some challenges ensuring that the pages don't get deployed, that other developers know where to find them and other things of this nature.
+If you're on board with this mindset, you may find it helpful to work on components in isolation, outside of the standard placement in an application. At the most simple level, we could create test pages for each component. This can introduce some challenges ensuring that the pages don't get deployed, that other developers know where to find them and other things of this nature.
 
 Thankfully, there are many tools for working with components in isolation. [Storybook](https://storybook.js.org/) is the one I use most.
 
@@ -91,7 +91,7 @@ You'll notice that while this ListItem is a resuable component, it consists of o
 
 ## Wrapping up
 
-While there are thousands of opinions on great ways to develop applications, I've found applying a mise en place philosophy to be very helpful increase quality, consitency, and ultimately productivity while building frontend applications.
+While there are thousands of opinions on great ways to develop applications, I've found that applying a mise en place philosophy increases quality, consitency, and ultimately productivity while building frontend applications.
 
 > I think if we just became a little bit more organized, used a little bit more mise-en-place, understood what we really need and only do what we really need, I think we'll have more time
 
