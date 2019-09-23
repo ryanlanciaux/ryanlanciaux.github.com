@@ -1,5 +1,5 @@
 ---
-title: "The magic of a mise en place mindset for frontend development"
+title: "Better frontend development with inspiration from the culinary world"
 date: "2019-09-20T07:15:03.284Z"
 path: "/blog/2019/09/20/the-magic-of-a-mise-en-place-mindset-for-frontend-development/"
 ---
