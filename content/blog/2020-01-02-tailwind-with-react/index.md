@@ -4,7 +4,7 @@ date: "2020-01-02T07:15:03.284Z"
 path: "/blog/2020/01/02/tailwind-with-react/"
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/FfEe8uJaOt8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kl-flSYLkhc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Tailwind is a CSS library in a similar space to things like Bootstrap or Bulma. Tailwind is different that instead of providing CSS for full components, it provides low-level utility classes. What this means is that instead of using class=“button” or “card” or something else, you’ll define your own button by composing Tailwind’s utility classes.
 
