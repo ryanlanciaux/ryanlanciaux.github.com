@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryan Lanciaux]]></title><description><![CDATA[The personal blog of ryanlanciaux]]></description><link>https://gatsby-starter-blog-demo.netlify.com/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 09 Jan 2020 19:14:51 GMT</lastBuildDate><item><title><![CDATA[An introduction to Styled Components]]></title><description><![CDATA[In this article, we are going to take a quick look at styled components, a styling library for use with React. While there are many ways to…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/09/an-introduction-to-styled-components/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/09/an-introduction-to-styled-components/</guid><pubDate>Thu, 09 Jan 2020 07:15:03 GMT</pubDate><content:encoded>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryan Lanciaux]]></title><description><![CDATA[The personal blog of ryanlanciaux]]></description><link>https://gatsby-starter-blog-demo.netlify.com/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 09 Jan 2020 19:25:44 GMT</lastBuildDate><item><title><![CDATA[An introduction to Styled Components]]></title><description><![CDATA[In this article, we are going to take a quick look at styled components, a styling library for use with React. While there are many ways to…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/09/an-introduction-to-styled-components/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/09/an-introduction-to-styled-components/</guid><pubDate>Thu, 09 Jan 2020 07:15:03 GMT</pubDate><content:encoded>
           &lt;div
             class=&quot;gatsby-resp-iframe-wrapper&quot;
             style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
@@ -70,8 +70,21 @@
     &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;div&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;img src=&quot;./highlight_card.png&quot; alt=&quot;&quot; /&gt;
-&lt;br /&gt;
+
+  &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/73ad23f9108d060e737d5ecc68cd9d0d/5ca85/hightlight_card.png&quot; style=&quot;display: block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+  
+  &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 21.019108280254777%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAAsSAAALEgHS3X78AAAAjUlEQVQY032N2wrCMBBE8//fJ1IQTaqFtrkrTRMLybjNk2j04bDL7GGW5ZyRSyFyk0K3mCKR6v7Lqx3UxbxzULOEluqLPXfGoucC4sLr/s+1dGfbY0UKEWmhucQ3VmwhwSmDeRihJwmvbM1a7t7x9AHsLm2VzaQ+oI+zxo336A5HnLsTBnGtWcvXhB81XkTBMYTtftS8AAAAAElFTkSuQmCC&amp;apos;); background-size: cover; display: block;&quot;&gt;
+      &lt;img class=&quot;gatsby-resp-image-image&quot; style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot; alt=&quot;hightlight card&quot; title src=&quot;/static/73ad23f9108d060e737d5ecc68cd9d0d/b9e4f/hightlight_card.png&quot; srcset=&quot;/static/73ad23f9108d060e737d5ecc68cd9d0d/cf440/hightlight_card.png 148w,
+/static/73ad23f9108d060e737d5ecc68cd9d0d/d2d38/hightlight_card.png 295w,
+/static/73ad23f9108d060e737d5ecc68cd9d0d/b9e4f/hightlight_card.png 590w,
+/static/73ad23f9108d060e737d5ecc68cd9d0d/5ca85/hightlight_card.png 785w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot;&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    
+&lt;br&gt;
 &lt;h2&gt;Themes&lt;/h2&gt;
 &lt;p&gt;So far, we’ve been providing our colors, font-sizes etc, directly in our styled components. What if we had a &lt;code class=&quot;language-text&quot;&gt;Text&lt;/code&gt; component where we wanted to use the same highlight color? In our trivial example it would be relatively easy to duplicate the colors in each style definition. In a larger application, however, this could become a bit unwieldy to manage. This is where a theme is extremely useful.&lt;/p&gt;
 &lt;p&gt;A &lt;a href=&quot;https://www.styled-components.com/docs/advanced&quot;&gt;theme&lt;/a&gt;, is a javascript object where we can specify properties that we can use in our styled components. We could create a theme object that contains our colors.&lt;/p&gt;
