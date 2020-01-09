@@ -1,4 +1,117 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryan Lanciaux]]></title><description><![CDATA[The personal blog of ryanlanciaux]]></description><link>https://gatsby-starter-blog-demo.netlify.com/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 02 Jan 2020 14:02:34 GMT</lastBuildDate><item><title><![CDATA[Tailwind with React]]></title><description><![CDATA[Tailwind is a CSS library in a similar space to things like Bootstrap or Bulma. Tailwind is different that instead of providing CSS for full…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/02/tailwind-with-react/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/02/tailwind-with-react/</guid><pubDate>Thu, 02 Jan 2020 07:15:03 GMT</pubDate><content:encoded>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryan Lanciaux]]></title><description><![CDATA[The personal blog of ryanlanciaux]]></description><link>https://gatsby-starter-blog-demo.netlify.com/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 09 Jan 2020 19:14:51 GMT</lastBuildDate><item><title><![CDATA[An introduction to Styled Components]]></title><description><![CDATA[In this article, we are going to take a quick look at styled components, a styling library for use with React. While there are many ways to…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/09/an-introduction-to-styled-components/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/09/an-introduction-to-styled-components/</guid><pubDate>Thu, 09 Jan 2020 07:15:03 GMT</pubDate><content:encoded>
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
+          &gt;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/FjHPo1E9HK8&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          
+&lt;p&gt;In this article, we are going to take a quick look at styled components, a styling library for use with React. While there are many ways to style React applications, styled components stands out as an excellent way style our applications as a series of components using familiar CSS syntax.&lt;/p&gt;
+&lt;p&gt;We will start by adding styled-components to our application through yarn or npm.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&amp;gt; yarn add styled-components&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;From our default React application, we’ll jump over to &lt;code class=&quot;language-text&quot;&gt;App.js&lt;/code&gt; and import styled from &lt;code class=&quot;language-text&quot;&gt;styled-components&lt;/code&gt;. We’re ready to create our first styled component that we’ll call Card by typing &lt;code class=&quot;language-text&quot;&gt;const card = styled.div&lt;/code&gt; - noting that our &lt;code class=&quot;language-text&quot;&gt;Card&lt;/code&gt; component will render as a &lt;code class=&quot;language-text&quot;&gt;div&lt;/code&gt;. We’ll add a template literal directly after div and provide some CSS that defines a border, shadow, and padding — as well as a couple other properties. We should end up with something like this:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; styled &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;styled-components&apos;&lt;/span&gt;
+&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; Card &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; styled&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;div&lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token string&quot;&gt;`
+  border: 1px solid #ededed;
+  box-shadow: 0 8px 6px -6px;
+  padding: 16px;
+  border-radius: 5px;
+  background-color: #fafafa;
+  margin: 20px 0px;
+`&lt;/span&gt;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;div className&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;App&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+      &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Card&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;Hello&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;Card&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;div&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+  &lt;a class=&quot;gatsby-resp-image-link&quot; href=&quot;/static/10a767afbf36aba1a0e21a7d6e232940/73d01/hello.png&quot; style=&quot;display: block&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;
+  
+  &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 9.923664122137405%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAACCAYAAABYBvyLAAAACXBIWXMAAAsSAAALEgHS3X78AAAAQklEQVQI132MSwpAMQgDe/9bFtz4AcW1kofdltfAQAhDVlWhu3+ZZCYi4vSXO1/L3cHMEJGL2VUVRIS99+kv18zwAUsXmZ1cmCEGAAAAAElFTkSuQmCC&amp;apos;); background-size: cover; display: block;&quot;&gt;
+      &lt;img class=&quot;gatsby-resp-image-image&quot; style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot; alt=&quot;hello&quot; title src=&quot;/static/10a767afbf36aba1a0e21a7d6e232940/b9e4f/hello.png&quot; srcset=&quot;/static/10a767afbf36aba1a0e21a7d6e232940/cf440/hello.png 148w,
+/static/10a767afbf36aba1a0e21a7d6e232940/d2d38/hello.png 295w,
+/static/10a767afbf36aba1a0e21a7d6e232940/b9e4f/hello.png 590w,
+/static/10a767afbf36aba1a0e21a7d6e232940/73d01/hello.png 786w&quot; sizes=&quot;(max-width: 590px) 100vw, 590px&quot;&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    
+&lt;br&gt;
+&lt;h2&gt;Passing props to styled components&lt;/h2&gt;
+&lt;p&gt;Now we can reuse this card component just like any other React component but what if we wanted to specify variations to this component? Maybe we want to have a version of the card that was highlighted a bit more.&lt;/p&gt;
+&lt;p&gt;Thankfully, since this is a component, we can pass props to it and interact with them in our styled definition through an interpolation. We’ll add a &lt;code class=&quot;language-text&quot;&gt;shouldHighlight&lt;/code&gt; prop to our App component specifying that &lt;code class=&quot;language-text&quot;&gt;shouldHighlight = true&lt;/code&gt;. After this, we’ll add a string interpolation arrow function. This function will use props and will return either our default grey color or a highlight color.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; Card &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; styled&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;div&lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token string&quot;&gt;`
+  border: 1px solid &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;props&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;props&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;shouldHighlight &lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;#F09&quot;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;#EDEDED&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;;
+  box-shadow: 0 8px 6px -6px;
+  padding: 16px;
+  border-radius: 5px;
+  background-color: #fafafa;
+  margin: 20px 0px;
+`&lt;/span&gt;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;App&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;div className&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;App&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+      &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Card&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;Hello&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;Card&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+
+      &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Card shouldHighlight&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;Highlighted Card&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;Card&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;div&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;img src=&quot;./highlight_card.png&quot; alt=&quot;&quot; /&gt;
+&lt;br /&gt;
+&lt;h2&gt;Themes&lt;/h2&gt;
+&lt;p&gt;So far, we’ve been providing our colors, font-sizes etc, directly in our styled components. What if we had a &lt;code class=&quot;language-text&quot;&gt;Text&lt;/code&gt; component where we wanted to use the same highlight color? In our trivial example it would be relatively easy to duplicate the colors in each style definition. In a larger application, however, this could become a bit unwieldy to manage. This is where a theme is extremely useful.&lt;/p&gt;
+&lt;p&gt;A &lt;a href=&quot;https://www.styled-components.com/docs/advanced&quot;&gt;theme&lt;/a&gt;, is a javascript object where we can specify properties that we can use in our styled components. We could create a theme object that contains our colors.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; theme &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  colors&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    highlight&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;#F09&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    grey&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;#EDEDED&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Once we have this theme object, we’ll place, we’ll want to utilize a &lt;code class=&quot;language-text&quot;&gt;ThemeProvider&lt;/code&gt; and pass our newly created theme to this provider as the &lt;code class=&quot;language-text&quot;&gt;theme&lt;/code&gt; prop.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;export default function App() {
+  return (
+    &amp;lt;ThemeProvider theme={theme}&amp;gt;
+      &amp;lt;div className=&amp;quot;App&amp;quot;&amp;gt;
+        &amp;lt;Card&amp;gt;Hello!&amp;lt;/Card&amp;gt;
+
+        &amp;lt;Card shouldHighlight&amp;gt;Highlighted Card&amp;lt;/Card&amp;gt;
+        &amp;lt;Text&amp;gt;Some text&amp;lt;/Text&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/ThemeProvider&amp;gt;
+  );
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now any component that is rendered under this provider has access to our theme. We can update our components to utilize the theme prop:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const Card = styled.div`
+  border: 1px solid
+    ${props =&amp;gt;
+      props.shouldHighlight
+        ? props.theme.colors.highlight
+        : props.theme.colors.grey};
+  box-shadow: 0 8px 6px -6px;
+  padding: 16px;
+  border-radius: 5px;
+  background-color: #fafafa;
+  margin: 20px 0px;
+`;
+
+const Text = styled.span`
+  color: ${props =&amp;gt; props.theme.colors.highlight};
+`;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I’ve found styled components to be an excellent way to style applications built with React (for teams that are on-board with a css-in-js based mindset). I would love to know your thoughts or of any ways you’ve found useful to style your applications. &lt;a href=&quot;https://twitter.com/ryanlanciaux&quot;&gt;Please let me know what you think on Twitter&lt;/a&gt;. You can &lt;a href=&quot;https://codesandbox.io/s/exciting-mestorf-foph3&quot;&gt;take a look at the finished example on CodeSandbox&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Tailwind with React]]></title><description><![CDATA[Tailwind is a CSS library in a similar space to things like Bootstrap or Bulma. Tailwind is different that instead of providing CSS for full…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/02/tailwind-with-react/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/02/tailwind-with-react/</guid><pubDate>Thu, 02 Jan 2020 07:15:03 GMT</pubDate><content:encoded>
           &lt;div
             class=&quot;gatsby-resp-iframe-wrapper&quot;
             style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
