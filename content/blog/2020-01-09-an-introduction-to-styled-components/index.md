@@ -67,7 +67,7 @@ export default function App() {
 }
 ```
 
-<img src="./highlight_card.png" alt="" />
+<img src="./hightlight_card.png" alt="" />
 <br />
 
 ## Themes
