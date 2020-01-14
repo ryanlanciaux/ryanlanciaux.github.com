@@ -6,7 +6,7 @@ path: "/blog/2020/01/14/snowpack-with-react/"
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/pUUAil_9yIw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-In this article, we're going to build a React application using Snowpack. Snowpack is one of the technologies I'm most excited about right now. It's a little bit like bundler in that it's responsible for preparing an application's third-party dependencies for use on the web but it has enough differences to make it a compelling tool to explore. Instead of building every time you save your code, Snowpack can do it's work after you install a dependency. Lets take a look.
+In this article, we're going to build a React application using [Snowpack](https://www.snowpack.dev/). [Snowpack](https://www.snowpack.dev/) is one of the technologies I'm most excited about right now. It's a little bit like bundler in that it's responsible for preparing an application's third-party dependencies for use on the web but it has enough differences to make it a compelling tool to explore. Instead of building every time you save your code, [Snowpack](https://www.snowpack.dev/) can do it's work after you install a dependency. Lets take a look. ([The demo application we'll be building in this article is available here](https://github.com/ryanlanciaux/snowpack-demo))
 
 ## Getting started
 
@@ -162,5 +162,7 @@ $ npx snowpack
 ```
 
 Notice that Snowpack command that occured after yarn finished including the dependency. We can continue to [Use Storybook like we would outside of an application configured with Snowpack](http://ryanlanciaux.com/blog/2020/01/09/an-introduction-to-styled-components/)
+
+[Check out the demo application from this article here](https://github.com/ryanlanciaux/snowpack-demo).
 
 I'm very excited about the developer experience, and performance benefits that Snowpack could unlock. I'd love to hear about any of the strategies you're using to bundle your applications or of any thoughts you have on this article. Please [find me on Twitter at @ryanlanciaux](https://twitter.com/ryanlanciaux)
