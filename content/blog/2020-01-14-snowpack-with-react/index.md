@@ -161,7 +161,7 @@ $ npx snowpack
 ✨  Done in 3.73s.
 ```
 
-Notice that Snowpack command that occured after yarn finished including the dependency. We can continue to [Use Storybook like we would outside of an application configured with Snowpack](http://ryanlanciaux.com/blog/2020/01/09/an-introduction-to-styled-components/)
+Notice that Snowpack command that occured after yarn finished including the dependency. We can continue to [Use styled components like we would outside of an application configured with Snowpack](http://ryanlanciaux.com/blog/2020/01/09/an-introduction-to-styled-components/)
 
 [Check out the demo application from this article here](https://github.com/ryanlanciaux/snowpack-demo).
 
