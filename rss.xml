@@ -1,4 +1,60 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryan Lanciaux]]></title><description><![CDATA[The personal blog of ryanlanciaux]]></description><link>https://gatsby-starter-blog-demo.netlify.com/</link><generator>RSS for Node</generator><lastBuildDate>Tue, 14 Jan 2020 15:46:52 GMT</lastBuildDate><item><title><![CDATA[Snowpack with React]]></title><description><![CDATA[In this article, we’re going to build a React application using  Snowpack .  Snowpack  is one of the technologies I’m most excited about…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/14/snowpack-with-react/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/14/snowpack-with-react/</guid><pubDate>Tue, 14 Jan 2020 07:15:03 GMT</pubDate><content:encoded>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryan Lanciaux]]></title><description><![CDATA[The personal blog of ryanlanciaux]]></description><link>https://gatsby-starter-blog-demo.netlify.com/</link><generator>RSS for Node</generator><lastBuildDate>Wed, 22 Jan 2020 19:48:00 GMT</lastBuildDate><item><title><![CDATA[Nullish Coalescing in JavaScript]]></title><description><![CDATA[Nullish Coalescing is a language feature of JavaScript that was recently promoted to Stage 4 by TC39, the group that maintains the…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/22/nullish-coalescing-in-javascript/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/22/nullish-coalescing-in-javascript/</guid><pubDate>Wed, 22 Jan 2020 07:15:03 GMT</pubDate><content:encoded>
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
+          &gt;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/CJWFr6VJ_A4&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          
+&lt;p&gt;Nullish Coalescing is a language feature of JavaScript that was recently promoted to Stage 4 by TC39, the group that maintains the definition of JavaScript. This means that this language feature is valid JavaScript as of ES2020.&lt;/p&gt;
+&lt;p&gt;With any language feature, it’s good to understand how it helps us. Nullish Coalescing helps us eliminate a certain class of code that primarily consists of checking if something is null or undefined.&lt;/p&gt;
+&lt;p&gt;Lets take an example where we’re we want to display a Star Wars character’s first and last name. When the last name is undefined, we should show “Not Specified”, but if the last name is &quot;&quot; we should treat it like the character doesn’t have a last name. (noting that if this was not example code we would probably want to implement different logic for this)&lt;/p&gt;
+&lt;p&gt;For instance, if we had the following character definitions:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const hanSolo = {
+  first: &amp;#39;Han&amp;#39;,
+  last: &amp;quot;Solo&amp;quot;
+};
+
+const chewbacca = {
+  first: &amp;quot;Chewbacca&amp;quot;,
+  last: &amp;quot;&amp;quot;
+}
+
+const rey = {
+  first: &amp;quot;Rey&amp;quot;,
+  lastName: undefined
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Lets assume that we had a function, &lt;code class=&quot;language-text&quot;&gt;displayName&lt;/code&gt; that was responsible for obtaining the character’s full name for display.&lt;/p&gt;
+&lt;p&gt;We may be tempted to reach for a logical OR operator like follows.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;function displayName(character) {
+  const lastName = character.last || &amp;quot;Not specified&amp;quot;
+
+  log(character.first, lastName)
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This would work well for &lt;code class=&quot;language-text&quot;&gt;hanSolo&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;rey&lt;/code&gt; but would fall short for Chewbacca, since we’re specifying that his last name is &quot;&quot; (meaning he has no last name for our simple example). The &lt;code class=&quot;language-text&quot;&gt;&amp;quot;&amp;quot;&lt;/code&gt; is evaluated as falsy, so the logical OR operator would evaluate to “Not specified” in this case. This fails to meet our requirements because a lastname of &quot;&quot; should not cause the &lt;code class=&quot;language-text&quot;&gt;displayName&lt;/code&gt; function to append “Not specified”&lt;/p&gt;
+&lt;p&gt;Without the null coalescing operator, we’d generally have to check for lastName being null or undefined since an empty string is evaluated as falsy.&lt;/p&gt;
+&lt;p&gt;If we change our function to the following, everything works as expected, however it’s a bit more code.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;function displayName(character) {
+ const lastName = character.last === null || character.last === undefined
+  ? &amp;#39;Not Specified&amp;#39;
+  : character.last;
+
+  log(character.first, lastName)
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Using the nullish coalescing operator is a lot more focused:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;function displayName(character) {
+  const lastName = character.last ?? &amp;quot;Not specified&amp;quot;
+
+  log(character.first, lastName)
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This is very similar to the function using the logical OR ”||” except we’re using two question marks instead ”??”&lt;/p&gt;
+&lt;p&gt;Please &lt;a href=&quot;https://twitter.com/ryanlanciaux&quot;&gt;find me on Twitter at @ryanlanciaux&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Snowpack with React]]></title><description><![CDATA[In this article, we’re going to build a React application using  Snowpack .  Snowpack  is one of the technologies I’m most excited about…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/14/snowpack-with-react/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//blog/2020/01/14/snowpack-with-react/</guid><pubDate>Tue, 14 Jan 2020 07:15:03 GMT</pubDate><content:encoded>
           &lt;div
             class=&quot;gatsby-resp-iframe-wrapper&quot;
             style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
