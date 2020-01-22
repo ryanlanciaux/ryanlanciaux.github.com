@@ -10,7 +10,7 @@ Nullish Coalescing is a language feature of JavaScript that was recently promote
 
 With any language feature, it's good to understand how it helps us. Nullish Coalescing helps us eliminate a certain class of code that primarily consists of checking if something is null or undefined.
 
-Lets take an example where we're we want to display a Star Wars character's first and last name. When the last name is undefined, we should show "Not Specified", but if the last name is "" we should treat it like the character doesn't have a last name. (noting that if this was not example code we would probably want to implement different logic for this)
+[Lets take an example where we want to display a Star Wars character's first and last name](https://codepen.io/ryanlanciaux/pen/YzPdbLv?editors=0010). When the last name is undefined, we should show "Not Specified", but if the last name is "" we should treat it like the character doesn't have a last name. (noting that if this was not example code we would probably want to implement different logic for this)
 
 For instance, if we had the following character definitions:
 
@@ -69,6 +69,6 @@ function displayName(character) {
 }
 ```
 
-This is very similar to the function using the logical OR "||" except we're using two question marks instead "??"
+This is very similar to the function using the logical OR "||" except we're using two question marks instead "??" [View the accompanying example for this article on CodePen](https://codepen.io/ryanlanciaux/pen/YzPdbLv?editors=0010).
 
 Please [find me on Twitter at @ryanlanciaux](https://twitter.com/ryanlanciaux)
