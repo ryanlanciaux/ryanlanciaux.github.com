@@ -127,6 +127,7 @@ export const pageQuery = graphql`
     }
     allMarkdownRemark(
       sort: { fields: [frontmatter___date], order: DESC }
+      filter: { frontmatter: { page: { ne: true } } }
       limit: $limit
       skip: $skip
     ) {
