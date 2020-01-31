@@ -1,4 +1,62 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryan Lanciaux]]></title><description><![CDATA[The personal blog of ryanlanciaux]]></description><link>https://ryanlanciaux.com/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 30 Jan 2020 15:48:18 GMT</lastBuildDate><item><title><![CDATA[Nullish Coalescing in JavaScript]]></title><description><![CDATA[Nullish Coalescing is a language feature of JavaScript that was recently promoted to Stage 4 by TC39, the group that maintains the…]]></description><link>https://ryanlanciaux.com//blog/2020/01/22/nullish-coalescing-in-javascript/</link><guid isPermaLink="false">https://ryanlanciaux.com//blog/2020/01/22/nullish-coalescing-in-javascript/</guid><pubDate>Wed, 22 Jan 2020 07:15:03 GMT</pubDate><content:encoded>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryan Lanciaux]]></title><description><![CDATA[The personal blog of ryanlanciaux]]></description><link>https://ryanlanciaux.com/</link><generator>RSS for Node</generator><lastBuildDate>Fri, 31 Jan 2020 18:40:43 GMT</lastBuildDate><item><title><![CDATA[Optional Chaining in JavaScript]]></title><description><![CDATA[In this article, we’re going to take a quick look at the new, Optional Chaining operator in JavaScript. This language feature is valid…]]></description><link>https://ryanlanciaux.com//blog/2020/01/31/optional-chaining-in-javascript/</link><guid isPermaLink="false">https://ryanlanciaux.com//blog/2020/01/31/optional-chaining-in-javascript/</guid><pubDate>Fri, 31 Jan 2020 07:15:03 GMT</pubDate><content:encoded>
+          &lt;div
+            class=&quot;gatsby-resp-iframe-wrapper&quot;
+            style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
+          &gt;
+            &lt;iframe src=&quot;https://www.youtube.com/embed/u90I9BuOcmE&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen style=&quot;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          &quot;&gt;&lt;/iframe&gt;
+          &lt;/div&gt;
+          
+&lt;p&gt;In this article, we’re going to take a quick look at the new, Optional Chaining operator in JavaScript. This language feature is valid JavaScript as of ES 2020 (the official definition of the language).&lt;/p&gt;
+&lt;p&gt;To take a look at why I think this feature is compelling, let’s assume we have an object that represents a menu for a conference meal plan. Each object represents a different day for the conference and each day can have &lt;code class=&quot;language-text&quot;&gt;breakfast&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;lunch&lt;/code&gt;, and &lt;code class=&quot;language-text&quot;&gt;dinner&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const monday = {
+  menuItems: {
+    breakfast: {
+      items: [&amp;#39;Eggs&amp;#39;, &amp;#39;Oatmeal&amp;#39;, &amp;#39;Cereal&amp;#39;]
+    },
+    lunch: {
+      items: [&amp;#39;Sandwich&amp;#39;]
+    },
+    dinner: {
+      items: [&amp;#39;Cheeseburger&amp;#39;, &amp;#39;Salads&amp;#39;, &amp;#39;Tempeh Sandwich&amp;#39;]
+    }
+  }
+};
+
+const tuesday = {
+  menuItems: {
+    breakfast: {
+      items: [&amp;#39;Cereal&amp;#39;, &amp;#39;Bagel&amp;#39;]
+    },
+    dinner: {
+      items: [&amp;#39;Tacos&amp;#39;]
+    }
+  }
+};&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;For our example, we’d like to &lt;code class=&quot;language-text&quot;&gt;console.log&lt;/code&gt; the first element of the lunch object. We’ll display “No lunch on this day” for any day where lunch is not specified (and therefore not provided). We’ll start with the following code.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;function logLunch(day) {
+  const lunchItem = day.menuItems.lunch.items[0];
+
+  console.log(lunchItem || &amp;quot;No lunch on this day&amp;quot;);
+}
+
+
+logLunch(monday);
+logLunch(tuesday);&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This function works well for Monday, but fails for the Tuesday object since it only specifies a &lt;code class=&quot;language-text&quot;&gt;breakfast&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;dinner.&lt;/code&gt; Typically we could solve that by ensuring our properties exist before interacting with them. In this case, our expression could look something like this:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const lunchItem = day &amp;amp;&amp;amp; day.menuItems &amp;amp;&amp;amp; day.menuItems.lunch &amp;amp;&amp;amp; day.menuItems.lunch.items &amp;amp;&amp;amp; day.menuItems.lunch.items[0]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It’s not very pleasant to guard each property like this!&lt;/p&gt;
+&lt;h2&gt;Optional Chaining&lt;/h2&gt;
+&lt;p&gt;Thankfully, we can rewrite this line with Optional Chaining to the following:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const lunchItem = day?.menuItems?.lunch?.items[0];&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We’re using the &lt;code class=&quot;language-text&quot;&gt;?.&lt;/code&gt; instead of a &lt;code class=&quot;language-text&quot;&gt;.&lt;/code&gt; between properties. This &lt;code class=&quot;language-text&quot;&gt;?.&lt;/code&gt; is the &lt;code class=&quot;language-text&quot;&gt;optional chaining&lt;/code&gt; operator. This entire expression will be evaluated as undefined if any of the properties are null or undefined. Instead of checking these properties, we can express the desired intent much more cleanly with this new operator.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://codepen.io/ryanlanciaux/pen/KKwLBYp?editors=0012&quot;&gt;Check out the example for this article on Codepen&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I’d love to know of any thoughts you have. You can &lt;a href=&quot;https://twitter.com/ryanlanciaux&quot;&gt;find me on Twitter here&lt;/a&gt;!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Nullish Coalescing in JavaScript]]></title><description><![CDATA[Nullish Coalescing is a language feature of JavaScript that was recently promoted to Stage 4 by TC39, the group that maintains the…]]></description><link>https://ryanlanciaux.com//blog/2020/01/22/nullish-coalescing-in-javascript/</link><guid isPermaLink="false">https://ryanlanciaux.com//blog/2020/01/22/nullish-coalescing-in-javascript/</guid><pubDate>Wed, 22 Jan 2020 07:15:03 GMT</pubDate><content:encoded>
           &lt;div
             class=&quot;gatsby-resp-iframe-wrapper&quot;
             style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
