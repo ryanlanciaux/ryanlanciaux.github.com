@@ -8,15 +8,18 @@ published: false
 
 # Hi, I'm Ryan Lanciaux
 
-I'm a software developer focusing on front-end applications. I've been using React in production for over 5 years and have used React Native since shortly after its release. While my primary focus is on frontend applications, I also have experience with node, Ruby on Rails, and .NET.
+I'm a software developer focusing on frontend applications. I help smart software teams and organizations build incredible applications with less development effort. With over ten years of experience, I love helping companies of all sizes -- from startups to organizations in the top 10 of the Fortune 500.
 
-## Component Libraries / Design Systems
+## Background
+I've been using React in production for over five years and have used React Native since shortly after its release. While my primary focus is on frontend applications, I also have experience with node, Ruby on Rails, and .NET (and others to a lesser extent). 
 
-Lately, I've been helping organizations build awesome component libraries that help them communicate more effectively, share code in a manageable way, ensure the quality of each part of an application, and ship code much faster. If you're interested in learning more about this, please see my post on [Better Frontend Development With Inspiration From the Culinary World](http://ryanlanciaux.com/blog/2019/09/20/the-magic-of-a-mise-en-place-mindset-for-frontend-development/) or [reach out (contact form)](https://spaceship.studio).
+Building fast and efficient web applications, Design Systems/Component libraries, TypeScript, GraphQL, and complex architectural problems are some things I enjoy. I appreciate helping teams build processes that help them ship better code faster.  
 
-## Training
+## Articles
+I have many articles on this site, but a couple of highlights are available here:
 
-Helping others ramp up on these technologies is something I'm passionate about. Professionally, I work with teams to help them learn these technologies or apply some strategies and techniques that I've found to be useful. In my freetime, I give conference / meetup talks and try to share with the larger developer community through videos and articles.
+- [Better frontend development with inspiration from the culinary world](http://ryanlanciaux.com/blog/2019/09/20/the-magic-of-a-mise-en-place-mindset-for-frontend-development/)
+- [A feature based approach to React development](http://ryanlanciaux.com/blog/2017/08/20/a-feature-based-approach-to-react-development/)
 
 ## Reach out
 
