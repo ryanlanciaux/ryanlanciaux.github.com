@@ -1,7 +1,7 @@
 ---
 title: "Quick GitHub profile visit counter"
 date: "2020-07-13T07:15:03.284Z"
-path: "/blog/2020/07/13//"
+path: "/blog/2020/07/13/quick-github-profile-visit-counter/"
 ---
 
 GitHub profiles are a great addition to the platform. These profiles allow you to highlight your experience/interests and supply a little bit of personality to what people see when they visit your profile. There are quite a few guides on creating a profile, but for those who may not have jumped into that just yet, you can add your profile by creating a new repository that matches your GitHub username. Any edits to the index.md file will show up when people vist github.com/{your_user_name}
