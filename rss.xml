@@ -1,4 +1,150 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryan Lanciaux]]></title><description><![CDATA[The personal blog of ryanlanciaux]]></description><link>https://ryanlanciaux.com/</link><generator>RSS for Node</generator><lastBuildDate>Mon, 30 Mar 2020 14:16:43 GMT</lastBuildDate><item><title><![CDATA[Better testing with Storybook]]></title><description><![CDATA[In this article, we will discuss strategy that I like to help keep  Storybook  stories up-to-date. For those that are unfamiliar,  Storybook…]]></description><link>https://ryanlanciaux.com//blog/2020/02/14/better-testing-with-storybook/</link><guid isPermaLink="false">https://ryanlanciaux.com//blog/2020/02/14/better-testing-with-storybook/</guid><pubDate>Fri, 14 Feb 2020 07:15:03 GMT</pubDate><content:encoded>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ryan Lanciaux]]></title><description><![CDATA[The personal blog of ryanlanciaux]]></description><link>https://ryanlanciaux.com/</link><generator>RSS for Node</generator><lastBuildDate>Mon, 13 Jul 2020 12:30:57 GMT</lastBuildDate><item><title><![CDATA[Quick GitHub profile visit counter]]></title><description><![CDATA[GitHub profiles are a great addition to the platform. These profiles allow you to highlight your experience/interests and supply a little…]]></description><link>https://ryanlanciaux.com//blog/2020/07/13//</link><guid isPermaLink="false">https://ryanlanciaux.com//blog/2020/07/13//</guid><pubDate>Mon, 13 Jul 2020 07:15:03 GMT</pubDate><content:encoded>&lt;p&gt;GitHub profiles are a great addition to the platform. These profiles allow you to highlight your experience/interests and supply a little bit of personality to what people see when they visit your profile. There are quite a few guides on creating a profile, but for those who may not have jumped into that just yet, you can add your profile by creating a new repository that matches your GitHub username. Any edits to the index.md file will show up when people vist github.com/{your&lt;em&gt;user&lt;/em&gt;name}&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/11a9651cbdf9790c1b00219178e50e39/2a182/github_profile.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 29.545454545454547%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAAsSAAALEgHS3X78AAABHUlEQVQY043NbUuDUBTAcb//V+llBEEUBIs9aDbnHqDVoLbc9Oqdc+q8m/rvaiN6sRedw49zOHDOMdI0I89y/sY+TRGRRMYJ8S6hLCtOVd1qom6yvsyQUch8OkEIyWbtcywUn+sYZ/bBdL7CC/bEadUSW4VMFOerFxnpMSM8BEiVaDv2VUZQZPiaUBmyVERloWvRzsNjzgFFrh3Omj7TXV4XGF4ZceW84Kbv2NsJA+HyHI0ZBA5PK6vVWZqahS3H2OEQMxhihQ7d9ZC+72A2O3r3TS0xvkrB9atNL3C5Gd9zO3vkbt7hYdGlL0a/evqBqQ9a2iAc6eq2c1M/t+Mpk+OCReVh7OoUSYxfR3gnwUbXTfVD6Pn/bNu9sI75Bqagwnp4HfIhAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Create GitHub profile&quot;
+        title=&quot;&quot;
+        src=&quot;/static/11a9651cbdf9790c1b00219178e50e39/b9e4f/github_profile.png&quot;
+        srcset=&quot;/static/11a9651cbdf9790c1b00219178e50e39/cf440/github_profile.png 148w,
+/static/11a9651cbdf9790c1b00219178e50e39/d2d38/github_profile.png 295w,
+/static/11a9651cbdf9790c1b00219178e50e39/b9e4f/github_profile.png 590w,
+/static/11a9651cbdf9790c1b00219178e50e39/2a182/github_profile.png 660w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;h2&gt;Website Counter&lt;/h2&gt;
+&lt;p&gt;I wanted to see if I could make my profile look a little bit like a website from the 1990s. A big part of any 90s personal website is the visitor counter. We can create a fun (and not necessarily accurate) counter pretty quickly using node and express. I ended up using Glitch for mine, but this concept should work on any platform that supports node. &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/0d9392dd50c111c153c4b1486b5f8572/b395b/counter.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 368px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 27.717391304347828%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAAsSAAALEgHS3X78AAABKUlEQVQY05WRy0rDQBSG8yAKXhYKmraLggupddfiW7hSSkFootaKqNAH8NHUrU1rWmxq0qbNvWCSz0kQN9KFZ/j4Z/5zOMyZkRzXJVouCcOQpdAoinINhQZBIAhzLxB53w9+vIAkSf6QpinS88srmtZH6w/QhyOGgp44v/W03Bu864wNg4+xgT4a5WT+qpBWJVKxAjfAc3xc28V3fbyF96uLmYOzcHHmGWIvauIkRjIti0/TxDQtrOkUXR8ys234gvppDbkqs364RrlWZru6xX5lj1K9yObRBoWKTOFYZvdgh9JJEXfuIdn2HMOYYEwmZM2HYqSssbgg3acuym2L88sz2g/XNG+atDot1HuVRruB0lFQ7hQuri5QH1VC8d4rR47jmP9GIj7lG129ojGlR4YzAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Counter example&quot;
+        title=&quot;&quot;
+        src=&quot;/static/0d9392dd50c111c153c4b1486b5f8572/b395b/counter.png&quot;
+        srcset=&quot;/static/0d9392dd50c111c153c4b1486b5f8572/cf440/counter.png 148w,
+/static/0d9392dd50c111c153c4b1486b5f8572/d2d38/counter.png 295w,
+/static/0d9392dd50c111c153c4b1486b5f8572/b395b/counter.png 368w&quot;
+        sizes=&quot;(max-width: 368px) 100vw, 368px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/ryanlanciaux&quot;&gt;Take a look at my GitHub profile to see this in action&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Node / Express project&lt;/h2&gt;
+&lt;p&gt;The entire code for this project is posted below (or in &lt;a href=&quot;https://gist.github.com/ryanlanciaux/3e29e75bd32efee9681c2ab85b99cc6f&quot;&gt;this GitHub gist&lt;/a&gt;, or where it’s running &lt;a href=&quot;https://glitch.com/edit/#!/ryan-lanciaux-counter?path=server.js%3A1%3A0&quot;&gt;on Glitch&lt;/a&gt;). There are a lot of practices that we’d either want to avoid or clean up if it was for more of a production application. The key here is something that could be accomplished quickly for fun.&lt;/p&gt;
+&lt;h2&gt;Tracking visits&lt;/h2&gt;
+&lt;p&gt;From a high level, this application has a variable that records visit counts, an endpoint that responds to count.svg and updates the visit counts. Additionally, the count.svg endpoint should generate and respond with an image based on the count.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;const express = require(&amp;#39;express&amp;#39;)
+const app = express()
+
+const PLACES = 7;
+
+// no db - so global var to keep track of count
+let counter = 0
+
+function getCountImage(count) {
+   ...
+}
+
+// get the image
+app.get(&amp;#39;/count.svg&amp;#39;, (req, res) =&amp;gt; {
+  counter++;
+  
+  // This helps with GitHub&amp;#39;s image cache 
+  //   see more: https://rushter.com/counter.svg
+  res.set({
+  &amp;#39;content-type&amp;#39;: &amp;#39;image/svg+xml&amp;#39;,
+  &amp;#39;cache-control&amp;#39;: &amp;#39;max-age=0, no-cache, no-store, must-revalidate&amp;#39;
+  })
+  
+  // Send the generated SVG as the result
+  res.send(getCountImage(counter));
+})
+
+const listener = app.listen(process.env.PORT, () =&amp;gt; {
+  console.log(&amp;#39;Your app is listening on port &amp;#39; + listener.address().port)
+})&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Tracking visit count&lt;/h2&gt;
+&lt;p&gt;We’re using the global counter variable to keep track of visits. When a request comes in to count.svg, we update the global counter variable and generate an image. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;// set up the counter variable
+let counter = 0;
+
+...
+app.get(&amp;#39;/count.svg&amp;#39;, (req, res) =&amp;gt; {
+  // update the counter on any image request
+  counter++;
+  ...
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Generating an image&lt;/h2&gt;
+&lt;p&gt;I created an image in Sketch and copied the results as SVG and pasted it into the &lt;code class=&quot;language-text&quot;&gt;getCountImage&lt;/code&gt; method. The image was dissected a bit and rebuilt using our count value.&lt;/p&gt;
+&lt;p&gt;You’ll notice in this function, we’re switching the count to a padded string, and then into an array. This allows us to show the zeros before the count with the specified number of PLACES. &lt;code class=&quot;language-text&quot;&gt;const countArray = count.toString().padStart(PLACES, &amp;#39;0&amp;#39;).split(&amp;#39;&amp;#39;);&lt;/code&gt; From there, we build the count squares part of the image by reducing the array into a single string, and then referencing that in the svg.&lt;/p&gt;
+&lt;p&gt;Reduce can be a bit tricky to follow at times, and could often be replaced by a more standard loop construct. In this case, we’re saying, iterate through all the array elements and append this new svg section with what came before. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;function getCountImage(count) {
+  // This is not the greatest way for generating an SVG but it&amp;#39;ll do for now
+  const countArray = count.toString().padStart(PLACES, &amp;#39;0&amp;#39;).split(&amp;#39;&amp;#39;);
+
+  const parts = countArray.reduce((acc, next, index) =&amp;gt; `
+        ${acc}
+        &amp;lt;rect id=&amp;quot;Rectangle&amp;quot; fill=&amp;quot;#000000&amp;quot; x=&amp;quot;${index * 32}&amp;quot; y=&amp;quot;0.5&amp;quot; width=&amp;quot;29&amp;quot; height=&amp;quot;29&amp;quot;&amp;gt;&amp;lt;/rect&amp;gt;
+        &amp;lt;text id=&amp;quot;0&amp;quot; font-family=&amp;quot;Courier&amp;quot; font-size=&amp;quot;24&amp;quot; font-weight=&amp;quot;normal&amp;quot; fill=&amp;quot;#00FF13&amp;quot;&amp;gt;
+            &amp;lt;tspan x=&amp;quot;${index * 32 + 7}&amp;quot; y=&amp;quot;22&amp;quot;&amp;gt;${next}&amp;lt;/tspan&amp;gt;
+        &amp;lt;/text&amp;gt;
+`, &amp;#39;&amp;#39;);
+  
+  return `&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
+&amp;lt;svg width=&amp;quot;${PLACES * 32}px&amp;quot; height=&amp;quot;30px&amp;quot; version=&amp;quot;1.1&amp;quot; xmlns=&amp;quot;http://www.w3.org/2000/svg&amp;quot; xmlns:xlink=&amp;quot;http://www.w3.org/1999/xlink&amp;quot;&amp;gt;
+    &amp;lt;title&amp;gt;Count&amp;lt;/title&amp;gt;
+    &amp;lt;g id=&amp;quot;Page-1&amp;quot; stroke=&amp;quot;none&amp;quot; stroke-width=&amp;quot;1&amp;quot; fill=&amp;quot;none&amp;quot; fill-rule=&amp;quot;evenodd&amp;quot;&amp;gt;
+      ${parts}
+    &amp;lt;/g&amp;gt;
+&amp;lt;/svg&amp;gt;
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Wrapping up&lt;/h2&gt;
+&lt;p&gt;Ideally, we would want to persist our count to ensure that if the server restarts, the count values picks back up where we left off.
+This could be something like a database record, or simply writing to a file. For this example, I don’t care too much if I lose the count as it’s mostly to achieve the 90s design aesthetics :D &lt;/p&gt;
+&lt;p&gt;The full code is available in &lt;a href=&quot;https://gist.github.com/ryanlanciaux/3e29e75bd32efee9681c2ab85b99cc6f&quot;&gt;this GitHub gist&lt;/a&gt;, or where it’s running &lt;a href=&quot;https://glitch.com/edit/#!/ryan-lanciaux-counter?path=server.js%3A1%3A0&quot;&gt;on Glitch&lt;/a&gt;. &lt;/p&gt;
+&lt;h2&gt;Additional references:&lt;/h2&gt;
+&lt;p&gt;I started off referencing &lt;a href=&quot;https://flaviocopes.com/count-visits-static-site/&quot;&gt;an analytics example by Flavio Copes&lt;/a&gt; available here. In this example, Flavio created an svg that would collect website visit counts as a simple alternative to Google Analytics.  &lt;/p&gt;
+&lt;p&gt;This &lt;a href=&quot;https://rushter.com/blog/github-profile-markdown/&quot;&gt;article on the same topic by Artem Golubin&lt;/a&gt; was really helpful in determining how to adjust the HTTP headers to work with GitHub’s image caching. &lt;a href=&quot;https://docs.github.com/en/github/authenticating-to-github/about-anonymized-image-urls&quot;&gt;GitHub has an excellent feature that anonymizes browser details from images to help prevent tracking called Camo&lt;/a&gt;. Without adjusting the HTTP headers, the image would not update upon new visits.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Better testing with Storybook]]></title><description><![CDATA[In this article, we will discuss strategy that I like to help keep  Storybook  stories up-to-date. For those that are unfamiliar,  Storybook…]]></description><link>https://ryanlanciaux.com//blog/2020/02/14/better-testing-with-storybook/</link><guid isPermaLink="false">https://ryanlanciaux.com//blog/2020/02/14/better-testing-with-storybook/</guid><pubDate>Fri, 14 Feb 2020 07:15:03 GMT</pubDate><content:encoded>
           &lt;div
             class=&quot;gatsby-resp-iframe-wrapper&quot;
             style=&quot;padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden;margin-bottom: 1.0725rem&quot;
