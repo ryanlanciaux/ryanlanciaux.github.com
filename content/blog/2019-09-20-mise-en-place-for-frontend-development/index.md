@@ -22,7 +22,7 @@ Or stated a different way
 
 > Mise en place refers to all of these various components that are prepared ahead of time and you have in place for that moment when you get the order and you put the dish together.
 
-<div class="quoteCite"><a href="https://www.amazon.com/Every-Tools-Hammer-Life-What/dp/1982113472">Adam Savage, Every Tool's a Hammer</a></div>
+<div class="quoteCite"><a href="https://www.amazon.com/Every-Tools-Hammer-Life-What/dp/1982113472">from Every Tool's a Hammer (by Adam Savage)</a></div>
 
 Mise en place is the organization and mindset that goes into preparing a meal. It's something that may seem like more work ahead of time but can help ensure productivity, consistency, and quality.
 
