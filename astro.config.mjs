@@ -11,6 +11,17 @@ export default defineConfig({
   site: "https://ryanlanciaux.com",
   trailingSlash: "always",
   integrations: [react(), sitemap()],
+  // Vite 6+ rejects unknown Host headers. Tailscale MagicDNS is
+  // http://omarchy:4321/ — `true` allows every host (dev only).
+  server: {
+    host: true,
+    allowedHosts: true,
+  },
+  vite: {
+    server: {
+      allowedHosts: true,
+    },
+  },
   markdown: {
     processor: satteri({
       // Runs before Astro's own collect-images plugin, so the images it
