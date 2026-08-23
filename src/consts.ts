@@ -48,3 +48,22 @@ export const SOCIAL_LINKS = [
   SOCIAL.linkedin,
   SOCIAL.soundcloud,
 ]
+
+/**
+ * Sections on /links/, in display order. Adding a section means adding a row
+ * here and setting `group:` to its key in an entry's frontmatter. An entry
+ * whose group isn't listed still renders — it just falls to the bottom under
+ * its own key — so a typo never silently hides a link.
+ */
+export const LINK_GROUPS = [
+  {
+    key: "projects",
+    label: "Projects",
+    blurb: "Things I've built. Most are free to try.",
+  },
+  {
+    key: "elsewhere",
+    label: "Elsewhere",
+    blurb: "Where to find me.",
+  },
+] as const

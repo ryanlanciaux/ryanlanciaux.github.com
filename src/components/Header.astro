@@ -22,6 +22,11 @@ const isHome = path === "/" || /^\/\d+\/$/.test(path)
         <li>
           <a href="/" aria-current={isHome ? "page" : undefined}>Writing</a>
         </li>
+        <li>
+          <a href="/links/" aria-current={path === "/links/" ? "page" : undefined}>
+            Links
+          </a>
+        </li>
         <li><a href="/rss.xml">Feed</a></li>
       </ul>
       <ThemeToggle />

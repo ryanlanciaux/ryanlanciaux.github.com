@@ -1,0 +1,135 @@
+---
+import { getCollection, render } from "astro:content"
+import BaseLayout from "../layouts/BaseLayout.astro"
+import LinkCard from "../components/LinkCard.astro"
+import { LINK_GROUPS } from "../consts"
+
+const entries = await getCollection("links", ({ data }) =>
+  import.meta.env.PROD ? !data.draft : true
+)
+
+const byOrder = (a: (typeof entries)[number], b: (typeof entries)[number]) =>
+  a.data.order - b.data.order || a.data.title.localeCompare(b.data.title)
+
+// Known sections first, in the order they're declared. Anything with an
+// unrecognised group still renders, under its own heading at the bottom, so a
+// typo in frontmatter never quietly drops a link off the page.
+const known = LINK_GROUPS.map((g) => g.key) as readonly string[]
+const extraKeys = [
+  ...new Set(entries.map((e) => e.data.group).filter((g) => !known.includes(g))),
+].sort()
+
+const sections = [
+  ...LINK_GROUPS.map((g) => ({ ...g, blurb: g.blurb as string | undefined })),
+  ...extraKeys.map((key) => ({ key, label: key, blurb: undefined })),
+]
+  .map((section) => ({
+    ...section,
+    items: entries.filter((e) => e.data.group === section.key).sort(byOrder),
+  }))
+  .filter((section) => section.items.length > 0)
+
+// Pre-render body copy; most entries have none.
+const bodies = new Map(
+  await Promise.all(
+    entries.map(
+      async (e) => [e.id, (await render(e)).Content] as const
+    )
+  )
+)
+---
+
+<BaseLayout
+  title="Links"
+  description="Things Ryan Lanciaux has built, and where to find him online."
+>
+  <div class="head">
+    <h1 class="label">Links</h1>
+    <span class="label count">{entries.length} links</span>
+  </div>
+
+  {
+    sections.map((section) => (
+      <section class="group">
+        <div class="group-head">
+          <h2 class="label">{section.label}</h2>
+          {section.blurb && <p class="blurb">{section.blurb}</p>}
+        </div>
+
+        <div class="list">
+          {section.items.map((item, i) => {
+            const Body = bodies.get(item.id)!
+            return (
+              <LinkCard
+                title={item.data.title}
+                icon={item.data.icon}
+                tagline={item.data.tagline}
+                summary={item.data.summary}
+                url={item.data.url}
+                linkText={item.data.linkText}
+                index={i}
+              >
+                <div class="prose extra">
+                  <Body />
+                </div>
+              </LinkCard>
+            )
+          })}
+        </div>
+      </section>
+    ))
+  }
+</BaseLayout>
+
+<style>
+  .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+    padding-block-end: var(--space-m);
+    border-block-end: 1px solid var(--line);
+  }
+
+  .head h1 {
+    font-size: var(--step--2);
+    color: var(--accent);
+  }
+
+  .group + .group {
+    margin-block-start: var(--space-2xl);
+  }
+
+  .group-head {
+    margin-block: var(--space-xl) var(--space-s);
+  }
+
+  .group + .group .group-head {
+    margin-block-start: 0;
+  }
+
+  .group-head h2 {
+    font-size: var(--step--2);
+    color: var(--text);
+  }
+
+  .blurb {
+    max-width: var(--measure);
+    margin-block-start: var(--space-3xs);
+    color: var(--text-faint);
+    font-size: var(--step--1);
+  }
+
+  .list {
+    border-block-start: 1px solid var(--line);
+  }
+
+  .list :global(.extra:empty) {
+    display: none;
+  }
+
+  .list :global(.extra) {
+    margin-block-start: var(--space-s);
+    font-size: var(--step--1);
+  }
+</style>

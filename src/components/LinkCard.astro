@@ -1,0 +1,161 @@
+---
+import BrandMark from "./BrandMark.astro"
+
+interface Props {
+  title: string
+  icon?: "x" | "github" | "linkedin"
+  tagline?: string
+  summary: string
+  url: string
+  linkText: string
+  index: number
+}
+
+const { title, icon, tagline, summary, url, linkText, index } = Astro.props
+const ordinal = String(index + 1).padStart(2, "0")
+const host = new URL(url).host.replace(/^www\./, "")
+---
+
+<article class="card">
+  <div class="rail">
+    <span class="label num">{ordinal}</span>
+  </div>
+
+  <div class="body">
+    <h2 class="title">
+      {
+        icon ? (
+          <>
+            <BrandMark name={icon} class="mark" />
+            {/* the mark carries no text, so keep the name for screen readers */}
+            <span class="sr-only">{title}</span>
+          </>
+        ) : (
+          title
+        )
+      }
+    </h2>
+    {tagline && <p class="label tagline">{tagline}</p>}
+    <p class="summary">{summary}</p>
+
+    <slot />
+
+    <a class="cta" href={url} rel="noopener">
+      <span>{linkText}</span>
+      <svg
+        viewBox="0 0 24 24"
+        width="15"
+        height="15"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M5 12h13M12 5l7 7-7 7"></path>
+      </svg>
+    </a>
+
+    <p class="host label">{host}</p>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: var(--space-s);
+    padding-block: var(--space-l);
+    border-block-end: 1px solid var(--line);
+  }
+
+  .rail {
+    padding-block-start: 0.35rem;
+  }
+
+  .num {
+    color: var(--accent-dim);
+  }
+
+  .card:hover .num {
+    color: var(--accent);
+  }
+
+  .title :global(.mark) {
+    width: 1.05em;
+    height: 1.05em;
+    /* sits on the text baseline rather than floating above it */
+    margin-block: 0.12em 0.06em;
+  }
+
+  .title {
+    font-size: var(--step-2);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .tagline {
+    margin-block-start: var(--space-3xs);
+    color: var(--accent);
+  }
+
+  .summary {
+    max-width: var(--measure);
+    margin-block-start: var(--space-s);
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* The call to action is the point of the page, so it is a real button
+     rather than an inline link buried in the paragraph. */
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-block-start: var(--space-m);
+    padding: 0.6em 1em;
+    border: 1px solid var(--accent-dim);
+    border-radius: var(--radius);
+    background: var(--accent-wash);
+    color: var(--accent-text);
+    font-family: var(--font-display);
+    font-size: var(--step--1);
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .cta svg {
+    flex: 0 0 auto;
+    transition: transform 0.15s ease;
+  }
+
+  .cta:hover {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    border-color: var(--accent);
+    color: var(--text);
+  }
+
+  .cta:hover svg {
+    transform: translateX(3px);
+  }
+
+  .host {
+    margin-block-start: var(--space-2xs);
+  }
+
+  @media (max-width: 34rem) {
+    .card {
+      grid-template-columns: 1.75rem 1fr;
+      gap: var(--space-2xs);
+    }
+    .cta {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+</style>
