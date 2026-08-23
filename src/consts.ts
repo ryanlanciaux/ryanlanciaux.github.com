@@ -11,17 +11,28 @@ export const SOCIAL = {
    * The `twitter:*` meta tags keep their names — that is still what X's card
    * parser reads — but every human-facing link and label says X.
    *
-   * `key` selects the brand mark in FollowLine.
+   * `key` selects the brand mark in FollowLine. `chipLabel` is what the follow
+   * buttons show: those already carry the brand mark, so repeating "X" next to
+   * the X logo was redundant — the handle is more useful there. `label` stays
+   * the plain network name for list contexts like the footer.
    */
-  x: { key: "x", label: "X", href: `https://x.com/${HANDLE}`, handle: HANDLE },
+  x: {
+    key: "x",
+    label: "X",
+    chipLabel: `@${HANDLE}`,
+    href: `https://x.com/${HANDLE}`,
+    handle: HANDLE,
+  },
   github: {
     key: "github",
     label: "GitHub",
+    chipLabel: "GitHub",
     href: `https://github.com/${HANDLE}`,
   },
   linkedin: {
     key: "linkedin",
     label: "LinkedIn",
+    chipLabel: "LinkedIn",
     href: "https://linkedin.com/in/lanciaux",
   },
   soundcloud: {
