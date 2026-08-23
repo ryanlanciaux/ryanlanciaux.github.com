@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro"
+---
+
+<BaseLayout title="Not found" description="That page doesn't exist.">
+  <div class="notfound">
+    <p class="label code">Error 404 &middot; no route</p>
+    <h1>Signal lost.</h1>
+    <p class="body">
+      That link is broken or the page moved. Try the <a href="/">index</a> or the
+      <a href="/rss.xml">feed</a>.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .notfound {
+    max-width: var(--measure);
+    padding-block: var(--space-2xl);
+    border-left: 2px solid var(--accent);
+    padding-left: var(--space-m);
+  }
+
+  .code {
+    color: var(--accent);
+  }
+
+  h1 {
+    margin-block: var(--space-2xs) var(--space-s);
+    font-size: var(--step-3);
+  }
+
+  .body {
+    color: var(--text-muted);
+  }
+</style>

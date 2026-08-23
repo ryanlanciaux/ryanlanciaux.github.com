@@ -1,0 +1,110 @@
+---
+interface Props {
+  current: number
+  total: number
+}
+
+const { current, total } = Astro.props
+
+const hrefFor = (n: number) => (n === 1 ? "/" : `/${n}/`)
+const pages = Array.from({ length: total }, (_, i) => i + 1)
+
+const newer = current > 1 ? hrefFor(current - 1) : null
+const older = current < total ? hrefFor(current + 1) : null
+---
+
+{
+  total > 1 && (
+    <nav class="pagination" aria-label="Pagination">
+      <div class="step">
+        {newer && (
+          <a class="label" href={newer} rel="prev">
+            ← Newer
+          </a>
+        )}
+      </div>
+
+      <ol>
+        {pages.map((n) => (
+          <li>
+            <a
+              class="label"
+              href={hrefFor(n)}
+              aria-current={n === current ? "page" : undefined}
+              aria-label={`Page ${n}`}
+            >
+              {String(n).padStart(2, "0")}
+            </a>
+          </li>
+        ))}
+      </ol>
+
+      <div class="step right">
+        {older && (
+          <a class="label" href={older} rel="next">
+            Older →
+          </a>
+        )}
+      </div>
+    </nav>
+  )
+}
+
+<style>
+  .pagination {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--space-s);
+    margin-block-start: var(--space-xl);
+    padding-block-start: var(--space-m);
+    border-block-start: 1px solid var(--line);
+  }
+
+  .step.right {
+    text-align: right;
+  }
+
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3xs);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--accent);
+  }
+
+  ol a {
+    display: grid;
+    place-items: center;
+    min-width: 2.1rem;
+    height: 2.1rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+  }
+
+  ol a[aria-current="page"] {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+    background: var(--accent-wash);
+  }
+
+  @media (max-width: 34rem) {
+    .pagination {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+    .step.right {
+      text-align: center;
+    }
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+import { Image } from "astro:assets"
+import avatar from "../assets/profile-pic.jpg"
+import FollowLine from "./FollowLine.astro"
+---
+
+<aside class="bio">
+  <Image
+    src={avatar}
+    alt="Ryan Lanciaux"
+    width={56}
+    height={56}
+    class="avatar"
+    loading="lazy"
+  />
+  <div>
+    <p>
+      Written by <strong>Ryan Lanciaux</strong>, who runs <a
+        href="https://www.spaceship.studio">Spaceship Studio</a
+      >, a consultancy building fast, dynamic web and native mobile
+      applications.
+    </p>
+    <FollowLine class="bio-follow" />
+  </div>
+</aside>
+
+<style>
+  .bio {
+    display: flex;
+    gap: var(--space-s);
+    align-items: flex-start;
+    max-width: var(--measure);
+    margin-block-start: var(--space-xl);
+    padding: var(--space-m);
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-size: var(--step--1);
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+
+  .avatar {
+    flex: 0 0 auto;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line-strong);
+    filter: grayscale(1) contrast(1.05);
+    transition: filter 0.2s ease;
+  }
+
+  .bio:hover .avatar {
+    filter: none;
+  }
+
+  .bio strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .bio :global(.bio-follow) {
+    margin-block-start: var(--space-s);
+    font-size: var(--step--1);
+  }
+
+  @media (max-width: 30rem) {
+    .bio {
+      flex-direction: column;
+    }
+  }
+</style>

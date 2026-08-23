@@ -1,0 +1,163 @@
+---
+import BaseLayout from "./BaseLayout.astro"
+import FormattedDate from "../components/FormattedDate.astro"
+import Bio from "../components/Bio.astro"
+
+interface Props {
+  title: string
+  date?: Date
+  description?: string
+  prev?: { href: string; title: string } | null
+  next?: { href: string; title: string } | null
+}
+
+const { title, date, description, prev = null, next = null } = Astro.props
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  publishedAt={date}
+>
+  <article class="post">
+    <header class="post-head">
+      <a class="back" href="/">
+        <span class="arrow" aria-hidden="true">←</span>
+        <span class="label">Index</span>
+      </a>
+      {
+        date && (
+          <p class="label datestamp">
+            <FormattedDate date={date} />
+          </p>
+        )
+      }
+      <h1>{title}</h1>
+    </header>
+
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+
+  <Bio />
+
+  {
+    (prev || next) && (
+      <nav class="post-nav" aria-label="More posts">
+        <div>
+          {prev && (
+            <a href={prev.href} rel="prev">
+              <span class="label">← Previous</span>
+              <strong>{prev.title}</strong>
+            </a>
+          )}
+        </div>
+        <div class="right">
+          {next && (
+            <a href={next.href} rel="next">
+              <span class="label">Next →</span>
+              <strong>{next.title}</strong>
+            </a>
+          )}
+        </div>
+      </nav>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .post {
+    max-width: var(--measure);
+  }
+
+  .post-head {
+    margin-block-end: var(--space-l);
+    padding-block-end: var(--space-m);
+    border-block-end: 1px solid var(--line);
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    margin-block-end: var(--space-m);
+    color: var(--text-faint);
+    text-decoration: none;
+  }
+
+  /* the arrow sits outside .label so the uppercase tracking doesn't
+     open a gap between the glyph and the word */
+  .back .arrow {
+    font-size: var(--step--1);
+    line-height: 1;
+    transition: transform 0.15s ease;
+  }
+
+  .back:hover .arrow {
+    transform: translateX(-3px);
+  }
+
+  .back:hover {
+    color: var(--accent);
+  }
+
+  /* Scoped styles only reach elements this component renders, so the wrapper
+     is ours and <FormattedDate> just inherits from it. Targeting the child's
+     <time> directly silently does nothing. */
+  .datestamp {
+    margin-block-start: var(--space-s);
+    color: var(--accent);
+  }
+
+  .post-head h1 {
+    margin-block-start: var(--space-2xs);
+    font-size: var(--step-3);
+  }
+
+  .post-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-m);
+    max-width: var(--measure);
+    margin-block-start: var(--space-xl);
+    padding-block-start: var(--space-m);
+    border-block-start: 1px solid var(--line);
+  }
+
+  .post-nav .right {
+    text-align: right;
+  }
+
+  .post-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+  }
+
+  .post-nav span {
+    display: block;
+  }
+
+  .post-nav strong {
+    display: block;
+    margin-block-start: var(--space-3xs);
+    font-size: var(--step--1);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .post-nav a:hover strong {
+    color: var(--accent-text);
+  }
+
+  @media (max-width: 34rem) {
+    .post-nav {
+      grid-template-columns: 1fr;
+    }
+    .post-nav .right {
+      text-align: left;
+    }
+  }
+</style>

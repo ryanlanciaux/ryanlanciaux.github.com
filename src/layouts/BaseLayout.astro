@@ -1,0 +1,44 @@
+---
+import { ClientRouter } from "astro:transitions"
+import BaseHead from "../components/BaseHead.astro"
+import Header from "../components/Header.astro"
+import Footer from "../components/Footer.astro"
+
+interface Props {
+  title?: string
+  description?: string
+  type?: "website" | "article"
+  publishedAt?: Date
+  /** Full-bleed pages (the home hero) opt out of the centred content wrap. */
+  bleed?: boolean
+}
+
+const { title, description, type, publishedAt, bleed = false } = Astro.props
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      type={type}
+      publishedAt={publishedAt}
+    />
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main" class={bleed ? "" : "wrap main-pad"}>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .main-pad {
+    padding-block: var(--space-xl);
+  }
+</style>

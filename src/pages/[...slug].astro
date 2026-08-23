@@ -1,0 +1,48 @@
+---
+import type { GetStaticPaths } from "astro"
+import { render } from "astro:content"
+import PostLayout from "../layouts/PostLayout.astro"
+import { getSortedPosts, postHref, excerpt, type Post } from "../utils/posts"
+
+/**
+ * Routes come from each post's `path` frontmatter, not its filename, so every
+ * permalink minted by Octopress and then Gatsby keeps working.
+ */
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getSortedPosts()
+
+  return posts.map((post, i) => {
+    // `posts` is newest-first: i+1 is older, i-1 is newer.
+    const older = posts[i + 1]
+    const newer = posts[i - 1]
+
+    return {
+      params: { slug: postHref(post).replace(/^\/|\/$/g, "") },
+      props: {
+        post,
+        prev: older ? { href: postHref(older), title: older.data.title } : null,
+        next: newer ? { href: postHref(newer), title: newer.data.title } : null,
+      },
+    }
+  })
+}
+
+interface Props {
+  post: Post
+  prev: { href: string; title: string } | null
+  next: { href: string; title: string } | null
+}
+
+const { post, prev, next } = Astro.props
+const { Content } = await render(post)
+---
+
+<PostLayout
+  title={post.data.title}
+  date={post.data.date}
+  description={post.data.description ?? excerpt(post.body, 160)}
+  prev={prev}
+  next={next}
+>
+  <Content />
+</PostLayout>

@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro"
+import Hero from "../components/Hero.astro"
+import PostList from "../components/PostList.astro"
+import Pagination from "../components/Pagination.astro"
+import { getSortedPosts } from "../utils/posts"
+import { POSTS_PER_PAGE, SITE_DESCRIPTION } from "../consts"
+
+const posts = await getSortedPosts()
+const totalPages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE))
+const page = posts.slice(0, POSTS_PER_PAGE)
+---
+
+<BaseLayout description={SITE_DESCRIPTION} bleed>
+  <Hero />
+
+  <div class="wrap archive">
+    <div class="archive-head">
+      <h2 class="label">Writing</h2>
+      <span class="label count">{posts.length} posts</span>
+    </div>
+    <PostList posts={page} />
+    <Pagination current={1} total={totalPages} />
+  </div>
+</BaseLayout>
+
+<style>
+  .archive {
+    padding-block: var(--space-xl) var(--space-2xl);
+  }
+
+  .archive-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+    margin-block-end: var(--space-s);
+  }
+
+  .archive-head h2 {
+    font-size: var(--step--2);
+    color: var(--accent);
+  }
+</style>

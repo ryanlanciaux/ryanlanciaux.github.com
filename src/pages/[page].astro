@@ -1,0 +1,67 @@
+---
+import type { GetStaticPaths } from "astro"
+import BaseLayout from "../layouts/BaseLayout.astro"
+import PostList from "../components/PostList.astro"
+import Pagination from "../components/Pagination.astro"
+import { getSortedPosts, type Post } from "../utils/posts"
+import { POSTS_PER_PAGE } from "../consts"
+
+/**
+ * Page 1 lives at `/` (index.astro) so this route only emits 2..N, matching
+ * the URLs the Gatsby site published.
+ */
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getSortedPosts()
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE)
+
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => {
+    const pageNumber = i + 2
+    return {
+      params: { page: String(pageNumber) },
+      props: {
+        posts: posts.slice(
+          (pageNumber - 1) * POSTS_PER_PAGE,
+          pageNumber * POSTS_PER_PAGE
+        ),
+        current: pageNumber,
+        total: totalPages,
+      },
+    }
+  })
+}
+
+interface Props {
+  posts: Post[]
+  current: number
+  total: number
+}
+
+const { posts, current, total } = Astro.props
+---
+
+<BaseLayout
+  title={`Writing — page ${current}`}
+  description={`Articles by Ryan Lanciaux, page ${current} of ${total}.`}
+>
+  <div class="archive-head">
+    <h1 class="label">Writing</h1>
+    <span class="label count">Page {current} / {total}</span>
+  </div>
+  <PostList posts={posts} offset={(current - 1) * POSTS_PER_PAGE} />
+  <Pagination current={current} total={total} />
+</BaseLayout>
+
+<style>
+  .archive-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+    margin-block-end: var(--space-s);
+  }
+
+  .archive-head h1 {
+    font-size: var(--step--2);
+    color: var(--accent);
+  }
+</style>

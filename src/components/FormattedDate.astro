@@ -1,0 +1,17 @@
+---
+interface Props {
+  date: Date
+}
+
+const { date } = Astro.props
+
+// UTC so the rendered day matches the frontmatter regardless of build machine.
+const formatted = date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+})
+---
+
+<time datetime={date.toISOString()}>{formatted}</time>

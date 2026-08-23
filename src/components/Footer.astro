@@ -1,0 +1,61 @@
+---
+import { SOCIAL_LINKS, SITE_AUTHOR } from "../consts"
+
+const year = new Date().getFullYear()
+
+const elsewhere = [...SOCIAL_LINKS, { href: "/rss.xml", label: "RSS" }]
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p class="label">
+      &copy; {year} {SITE_AUTHOR} &middot; built with <a href="https://astro.build"
+        >Astro</a
+      >
+    </p>
+    <ul>
+      {
+        elsewhere.map(({ href, label }) => (
+          <li>
+            <a class="label" href={href}>
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-block-start: auto;
+    padding-block: var(--space-l);
+    border-block-start: 1px solid var(--line);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--accent);
+  }
+</style>

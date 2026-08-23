@@ -1,0 +1,97 @@
+---
+import FormattedDate from "./FormattedDate.astro"
+
+interface Props {
+  href: string
+  title: string
+  date: Date
+  summary: string
+  index: number
+}
+
+const { href, title, date, summary, index } = Astro.props
+const ordinal = String(index + 1).padStart(2, "0")
+---
+
+<article class="card">
+  <div class="rail">
+    <span class="label num">{ordinal}</span>
+  </div>
+
+  <div class="body">
+    <p class="label datestamp">
+      <FormattedDate date={date} />
+    </p>
+    <h2 class="title"><a href={href}>{title}</a></h2>
+    <p class="summary">{summary}</p>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: var(--space-s);
+    padding-block: var(--space-m);
+    border-block-end: 1px solid var(--line);
+    transition: background-color 0.15s ease;
+  }
+
+  .card:hover {
+    background: color-mix(in srgb, var(--surface) 60%, transparent);
+  }
+
+  .rail {
+    padding-block-start: 0.15rem;
+  }
+
+  .num {
+    color: var(--accent-dim);
+  }
+
+  .card:hover .num {
+    color: var(--accent);
+  }
+
+  .datestamp {
+    color: var(--text-faint);
+  }
+
+  .title {
+    margin-block-start: var(--space-3xs);
+    font-size: var(--step-1);
+    font-weight: 600;
+  }
+
+  .title a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  /* whole row is the hit target */
+  .title a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .card:hover .title a {
+    color: var(--accent-text);
+  }
+
+  .summary {
+    margin-block-start: var(--space-2xs);
+    max-width: var(--measure);
+    color: var(--text-faint);
+    font-size: var(--step--1);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 34rem) {
+    .card {
+      grid-template-columns: 1.75rem 1fr;
+      gap: var(--space-2xs);
+    }
+  }
+</style>

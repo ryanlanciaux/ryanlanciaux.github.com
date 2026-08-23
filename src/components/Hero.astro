@@ -1,0 +1,211 @@
+---
+import ParticleOrb from "./ParticleOrb.tsx"
+import FollowLine from "./FollowLine.astro"
+---
+
+<section class="hero">
+  <div class="orb-layer">
+    <ParticleOrb client:idle />
+  </div>
+
+  <div class="wrap hero-inner">
+    <div class="card">
+      <p class="label eyebrow">Software Engineer</p>
+
+      <h1>Ryan Lanciaux</h1>
+
+      <p class="lede">
+        I run <a href="https://www.spaceship.studio">Spaceship&nbsp;Studio</a>,
+        a consultancy building fast, dynamic web and native mobile
+        applications.
+      </p>
+
+      <FollowLine class="hero-follow" />
+
+      <p class="meta label">
+        <span>React</span><span>React&nbsp;Native</span><span>TypeScript</span
+        ><span>Design&nbsp;Systems</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="scanline" aria-hidden="true"></div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: grid;
+    align-items: center;
+    /* Tall enough on a phone that the orb has room; noticeably shorter on
+       desktop so the post list is in view without scrolling. The camera's FOV
+       is vertical, so a shorter hero scales the cloud down rather than
+       clipping it. */
+    min-height: min(74vh, 36rem);
+    padding-block: var(--space-2xl);
+    background: radial-gradient(
+        120% 90% at 50% 12%,
+        color-mix(in srgb, var(--accent) 7%, transparent) 0%,
+        transparent 62%
+      ),
+      var(--bg-deep);
+    border-block-end: 1px solid var(--line);
+  }
+
+  .orb-layer {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+
+  .orb-layer :global(.orb-canvas) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .orb-layer :global(canvas) {
+    opacity: 0.8;
+  }
+
+  .scanline {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0 3px,
+      color-mix(in srgb, var(--ink-950) 22%, transparent) 3px 4px
+    );
+    mix-blend-mode: multiply;
+    opacity: 0.5;
+  }
+
+  :global([data-theme="light"]) .scanline {
+    display: none;
+  }
+
+  .hero-inner {
+    position: relative;
+  }
+
+  /* Glass panel. It carries legibility on its own, so there's no radial scrim
+     behind the text any more — the orb stays visible, blurred, through it. */
+  .card {
+    padding: var(--space-l);
+    border: 1px solid color-mix(in srgb, var(--ink-050) 12%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--bg-deep) 58%, transparent);
+    backdrop-filter: blur(16px) saturate(130%);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
+    box-shadow: 0 24px 60px -40px rgb(0 0 0 / 0.9);
+    text-align: left;
+  }
+
+  :global([data-theme="light"]) .card {
+    border-color: color-mix(in srgb, var(--ink-900) 12%, transparent);
+    background: color-mix(in srgb, #ffffff 62%, transparent);
+  }
+
+  /* No backdrop-filter (older Firefox): fall back to a solid-enough panel. */
+  @supports not (backdrop-filter: blur(1px)) {
+    .card {
+      background: color-mix(in srgb, var(--bg-deep) 88%, transparent);
+    }
+    :global([data-theme="light"]) .card {
+      background: color-mix(in srgb, #ffffff 92%, transparent);
+    }
+  }
+
+  .eyebrow {
+    color: var(--accent);
+  }
+
+  h1 {
+    margin-block-start: var(--space-xs);
+    font-size: var(--step-4);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    /* long single word: shrink rather than break */
+    overflow-wrap: normal;
+    hyphens: none;
+  }
+
+  .lede {
+    max-width: 42rem;
+    margin-block-start: var(--space-m);
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  .lede a {
+    color: var(--text);
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+  }
+
+  .lede a:hover {
+    color: var(--accent-text);
+  }
+
+  .hero :global(.hero-follow) {
+    margin-block-start: var(--space-m);
+    font-size: var(--step-0);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-m);
+    margin-block-start: var(--space-l);
+    padding-block-start: var(--space-m);
+    border-block-start: 1px solid color-mix(in srgb, var(--ink-050) 10%, transparent);
+    color: var(--text-muted);
+  }
+
+  :global([data-theme="light"]) .meta {
+    border-block-start-color: color-mix(in srgb, var(--ink-900) 12%, transparent);
+  }
+
+  .meta span {
+    position: relative;
+  }
+
+  .meta span + span::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--space-m) / -2);
+    top: 50%;
+    width: 3px;
+    height: 3px;
+    background: var(--accent-dim);
+    transform: translateY(-50%);
+  }
+
+  @media (min-width: 48rem) {
+    .hero {
+      min-height: min(56vh, 30rem);
+      padding-block: var(--space-xl);
+    }
+
+    .card {
+      padding: var(--space-xl);
+    }
+
+    h1 {
+      font-size: var(--step-5);
+    }
+  }
+
+  @media (max-width: 26rem) {
+    .card {
+      padding: var(--space-m);
+    }
+    h1 {
+      font-size: var(--step-3);
+    }
+  }
+</style>
