@@ -1,9 +1,13 @@
 ---
 import { SOCIAL_LINKS, SITE_AUTHOR } from "../consts"
+import BrandMark from "./BrandMark.astro"
 
 const year = new Date().getFullYear()
 
-const elsewhere = [...SOCIAL_LINKS, { href: "/rss.xml", label: "RSS" }]
+const elsewhere = [
+  ...SOCIAL_LINKS,
+  { href: "/rss.xml", label: "RSS", key: undefined },
+]
 ---
 
 <footer class="site-footer">
@@ -15,10 +19,23 @@ const elsewhere = [...SOCIAL_LINKS, { href: "/rss.xml", label: "RSS" }]
     </p>
     <ul>
       {
-        elsewhere.map(({ href, label }) => (
+        elsewhere.map(({ href, label, key }) => (
           <li>
-            <a class="label" href={href}>
+            {/* X reads as "@handle on <logo>": the network name is a mark, not
+                a word, so it goes in as one. aria-label keeps the accessible
+                name intact since the mark carries no text. */}
+            <a
+              class="label"
+              href={href}
+              aria-label={key === "x" ? `${label} on X` : undefined}
+            >
               {label}
+              {key === "x" && (
+                <>
+                  <span class="on"> on </span>
+                  <BrandMark name="x" class="mark" />
+                </>
+              )}
             </a>
           </li>
         ))
@@ -52,7 +69,20 @@ const elsewhere = [...SOCIAL_LINKS, { href: "/rss.xml", label: "RSS" }]
   }
 
   a {
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
+  }
+
+  .on {
+    /* .label tracks at 0.14em, which swallows the spaces around a short word */
+    letter-spacing: normal;
+    padding-inline: 0.5em 0.55em;
+  }
+
+  a :global(.mark) {
+    width: 0.95em;
+    height: 0.95em;
   }
 
   a:hover {

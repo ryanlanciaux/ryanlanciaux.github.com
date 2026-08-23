@@ -17,10 +17,10 @@ const links = [SOCIAL.x, SOCIAL.github, SOCIAL.linkedin]
 
   <span class="buttons">
     {
-      links.map(({ href, chipLabel, key }) => (
+      links.map(({ href, label, key }) => (
         <a href={href} rel="me" class:list={["chip", key]}>
           <BrandMark name={key} />
-          <span>{chipLabel}</span>
+          <span>{label}</span>
         </a>
       ))
     }

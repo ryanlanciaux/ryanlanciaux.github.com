@@ -11,43 +11,28 @@ export const SOCIAL = {
    * The `twitter:*` meta tags keep their names — that is still what X's card
    * parser reads — but every human-facing link and label says X.
    *
-   * `key` selects the brand mark in FollowLine. `chipLabel` is what the follow
-   * buttons show: those already carry the brand mark, so repeating "X" next to
-   * the X logo was redundant — the handle is more useful there. `label` stays
-   * the plain network name for list contexts like the footer.
+   * `key` selects the brand mark. X uses the handle as its label everywhere:
+   * a bare "X" is both an awkward click target and easy to misread.
    */
   x: {
     key: "x",
-    label: "X",
-    chipLabel: `@${HANDLE}`,
+    label: `@${HANDLE}`,
     href: `https://x.com/${HANDLE}`,
     handle: HANDLE,
   },
   github: {
     key: "github",
     label: "GitHub",
-    chipLabel: "GitHub",
     href: `https://github.com/${HANDLE}`,
   },
   linkedin: {
     key: "linkedin",
     label: "LinkedIn",
-    chipLabel: "LinkedIn",
     href: "https://linkedin.com/in/lanciaux",
-  },
-  soundcloud: {
-    key: "soundcloud",
-    label: "SoundCloud",
-    href: `https://soundcloud.com/${HANDLE}/`,
   },
 } as const
 
-export const SOCIAL_LINKS = [
-  SOCIAL.x,
-  SOCIAL.github,
-  SOCIAL.linkedin,
-  SOCIAL.soundcloud,
-]
+export const SOCIAL_LINKS = [SOCIAL.x, SOCIAL.github, SOCIAL.linkedin]
 
 /**
  * Sections on /links/, in display order. Adding a section means adding a row
@@ -59,7 +44,7 @@ export const LINK_GROUPS = [
   {
     key: "projects",
     label: "Projects",
-    blurb: "Things I've built. Most are free to try.",
+    blurb: "Things I've built.",
   },
   {
     key: "elsewhere",
