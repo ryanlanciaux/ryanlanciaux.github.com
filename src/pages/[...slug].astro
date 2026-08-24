@@ -3,6 +3,7 @@ import type { GetStaticPaths } from "astro"
 import { render } from "astro:content"
 import PostLayout from "../layouts/PostLayout.astro"
 import { getSortedPosts, postHref, excerpt, type Post } from "../utils/posts"
+import { headerImageSrc } from "../utils/header-image"
 
 /**
  * Routes come from each post's `path` frontmatter, not its filename, so every
@@ -35,12 +36,14 @@ interface Props {
 
 const { post, prev, next } = Astro.props
 const { Content } = await render(post)
+const image = await headerImageSrc(post)
 ---
 
 <PostLayout
   title={post.data.title}
   date={post.data.date}
   description={post.data.description ?? excerpt(post.body, 160)}
+  image={image}
   prev={prev}
   next={next}
 >

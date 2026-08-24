@@ -7,16 +7,19 @@ interface Props {
   title: string
   date?: Date
   description?: string
+  image?: string
   prev?: { href: string; title: string } | null
   next?: { href: string; title: string } | null
 }
 
-const { title, date, description, prev = null, next = null } = Astro.props
+const { title, date, description, image, prev = null, next = null } =
+  Astro.props
 ---
 
 <BaseLayout
   title={title}
   description={description}
+  image={image}
   type="article"
   publishedAt={date}
 >

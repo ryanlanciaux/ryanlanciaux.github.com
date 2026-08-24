@@ -7,13 +7,15 @@ import Footer from "../components/Footer.astro"
 interface Props {
   title?: string
   description?: string
+  image?: string
   type?: "website" | "article"
   publishedAt?: Date
   /** Full-bleed pages (the home hero) opt out of the centred content wrap. */
   bleed?: boolean
 }
 
-const { title, description, type, publishedAt, bleed = false } = Astro.props
+const { title, description, image, type, publishedAt, bleed = false } =
+  Astro.props
 ---
 
 <!doctype html>
@@ -22,6 +24,7 @@ const { title, description, type, publishedAt, bleed = false } = Astro.props
     <BaseHead
       title={title}
       description={description}
+      image={image}
       type={type}
       publishedAt={publishedAt}
     />
