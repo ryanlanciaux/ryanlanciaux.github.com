@@ -17,3 +17,6 @@ pnpm-debug.log*
 
 # macOS
 .DS_Store
+
+# local drafts, not published
+drafts/
