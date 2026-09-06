@@ -3,9 +3,8 @@ title: "You don't need better agents, you need a better agent strategy"
 date: "2026-09-06T15:56:00.000Z"
 path: "/blog/2026/09/06/you-dont-need-better-agents-you-need-a-better-agent-strategy/"
 description: "Escoffier's kitchens didn't necessarily have better cooks. Structure did the work. Same with agents: brigade beats prompting and hoping."
+ogImage: "./herdr-panes.png"
 ---
-
-![Herdr panes: a watcher tab coordinating other agent panes](./herdr-panes.png)
 
 AI assisted development is awesome BUT there's a huge problem, it's not deterministic. Sometimes you get an amazing result that matches what you asked for. Other times you get complete garbage where it's clear the agent went off the rails.
 
@@ -39,7 +38,7 @@ Lint, types, tests, e2e. If the check is mechanical, don't spend a model call on
 
 As you're starting this process, you probably only need a few different agent types. Find what doesn't work and add on from there.
 
-- Too many stations is orchestration theater.
+- Too many agents in a workflow is orchestration theater. It feels productive to build these massive workflows but it's important to make sure you're getting something in return for the time investment and architectural overhead.
 - An orchestrator that writes code can miss out on giving instructions to other agents / firing off other work.
 - Agents copy existing patterns. Remove code that doesn't fit the pattern you want other agents to copy. This is like a chef having bad recipes in the kitchen.
 
@@ -47,20 +46,16 @@ As you're starting this process, you probably only need a few different agent ty
 
 In a brigade, nothing leaves without going through the pass. "Prompt and hope" skips all that.
 
-In addition to mechanical checks, give agents the ability to [verify correctness before they call something complete](https://x.com/ryanlanciaux/status/2071939559081042257):
+In addition to mechanical checks, give agents the ability to [verify correctness before they call something complete](https://x.com/ryanlanciaux/status/2071939559081042257). For instance, I often build [blunders.ai](https://blunders.ai) with this kind of prompt:
 
-- An easy way to check its work. A screen or component playground so it can verify things in isolation, for example. Not "log into prod and click around."
-
-I often build [blunders.ai](https://blunders.ai) with this kind of prompt:
-
-"Build this feature. Review it and verify that it works. Give me screenshots to prove that the feature is in place." I'll generally give the agent tools to ensure that the work is complete, like [Validity](https://validity.ai) or saying "Log in and prove it."
+"Build this feature. Review it and verify that it works. Give me screenshots to prove that the feature is in place." I'll generally give the agent tools to ensure that the work is complete.
 
 ## The simplest process that's currently working for me
 
 I've made my own workflow tools, used ultracode, and installed sub-agent plugins BUT what I like the best is telling one agent to coordinate other agents as Herdr panes.
 
-- A watcher tab or orchestrator (this maps to the aboyeur). I start a Herdr tab and then an agent. I make sure the agent knows it's using Herdr and then tell it to use other panes and tabs with agents to achieve a goal.
-- Panes are like distinct stations. Individual panes have agents working on a smaller subset of a larger goal, much like kitchen stations focusing on a distinct part of the menu.
+- A watcher tab or orchestrator. I start a Herdr tab and then an agent. I make sure the agent knows it's using Herdr and then tell it to use other panes and tabs with agents to achieve a goal.
+- Individual panes have agents working on a smaller subset of a larger goal, much like kitchen stations focusing on a distinct part of the menu.
 
 ![Herdr panes: a watcher tab coordinating other agent panes](./herdr-panes.png)
 

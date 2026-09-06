@@ -7,9 +7,14 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   { eager: true },
 )
 
-/** First-line `![alt](./cover.jpg)` — the convention the 2026 posts already use. */
+/**
+ * OG image: frontmatter `ogImage` if set, otherwise the first-line
+ * `![alt](./cover.jpg)` convention the 2026 posts already use.
+ */
 export async function headerImageSrc(post: Post): Promise<string | undefined> {
-  const src = post.body?.trim().match(/^!\[[^\]]*]\(([^)\s]+)/)?.[1]
+  const src =
+    post.data.ogImage ??
+    post.body?.trim().match(/^!\[[^\]]*]\(([^)\s]+)/)?.[1]
   if (!src || src.startsWith("http") || src.startsWith("/")) return
   const dir = post.filePath?.replace(/\/[^/]+$/, "")
   if (!dir) return
