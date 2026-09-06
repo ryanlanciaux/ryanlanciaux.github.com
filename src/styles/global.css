@@ -434,6 +434,19 @@ pre {
   background: var(--bg-deep);
 }
 
+/* X embeds hydrate into iframes; don't force the YouTube 16:9 box. */
+.prose .twitter-tweet {
+  margin-inline: auto;
+}
+
+.prose .twitter-tweet iframe {
+  aspect-ratio: auto;
+  width: min(550px, 100%);
+  height: auto;
+  border: 0;
+  background: transparent;
+}
+
 /* helper classes used inside the older posts */
 .prose .center {
   width: 100%;

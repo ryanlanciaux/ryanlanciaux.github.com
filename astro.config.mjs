@@ -6,20 +6,32 @@ import { satteri } from "@astrojs/markdown-satteri"
 
 import { htmlImagesToMdast } from "./src/plugins/html-images-to-mdast.ts"
 
+/** Optional, gitignored. See astro.config.local.mjs.example. */
+const localDev = await import("./astro.config.local.mjs")
+  .then((mod) => mod.default ?? {})
+  .catch((err) => {
+    if (err?.code === "ERR_MODULE_NOT_FOUND") return {}
+    throw err
+  })
+
+const allowedHosts = localDev.allowedHosts ?? true
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://ryanlanciaux.com",
   trailingSlash: "always",
   integrations: [react(), sitemap()],
-  // Vite 6+ rejects unknown Host headers. Tailscale MagicDNS is
-  // http://omarchy:4321/ — `true` allows every host (dev only).
   server: {
     host: true,
-    allowedHosts: true,
+    allowedHosts,
+  },
+  preview: {
+    host: true,
+    allowedHosts,
   },
   vite: {
     server: {
-      allowedHosts: true,
+      allowedHosts,
     },
   },
   markdown: {

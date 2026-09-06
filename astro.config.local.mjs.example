@@ -1,0 +1,4 @@
+/** Copy to astro.config.local.mjs (gitignored) to allow extra Host headers. */
+export default {
+  allowedHosts: ["your-machine-hostname"],
+}
