@@ -42,7 +42,13 @@ I even set this up on my dashboard kiosk.
 
 ## Set it up on your bot
 
-If you want to try either skill, here are prompts you can hand to your bot. Both assume it can run commands on the machine where your coding agents live.
+If you want to try it, here's how.
+
+1. Make sure Grok Bot is on the system where you want it to control your other coding agents.
+2. Set up agent orchestration with herdr-orchestrate.
+3. Give the bot ways to tell you status. As I mentioned, I use a few different ways, but agent-kanban may be helpful.
+
+Here are prompts you can hand to your bot for both skills. Both assume it can run commands on the machine where your coding agents live.
 
 **herdr-orchestrate**
 
