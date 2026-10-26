@@ -2,6 +2,9 @@
 title: "Running Jest on Linux"
 date: "2017-08-17T16:44:03.284Z"
 path: "/blog/2017/08/17/running-jest-on-linux/"
+tags:
+  - testing
+  - linux
 ---
 
 I frequently switch between devices and operating systems and recently ran into a strange bug when running unit tests in Linux. Jest would run just fine on macOS and Windows, but when I ran my tests on Linux I would receive an error message mentioning `ENOSPC`. This error traditionally means the hard drive is out of space.

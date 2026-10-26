@@ -2,6 +2,8 @@
 title: "Azure Active Directory authentication in existing project"
 date: "2014-10-18T04:28:03.284Z"
 path: "/blog/2014/10/18/azure-active-directory-authentication-in-existing-project/"
+tags:
+  - windows
 ---
 
 Recently, I needed to add Azure Active directory authentication to an existing web project. There was an automated tool for Visual Studio 2012 but there does not seem to be a similar component for 2013. A lot of the advice I found suggested creating a new project and importing a bit of the code / config from the other application -- that's what I did here. What follows is not a how-to but rather a log of the steps I took to use AAD authentication (mostly for [future reference](http://xkcd.com/1421/)).

@@ -2,6 +2,9 @@
 title: "Learning AngularJS II : Filtering / Ordering"
 date: "2013-06-19T20:38:03.284Z"
 path: "/blog/2013/06/19/angularjs-filtering-slash-ordering/"
+tags:
+  - angularjs
+  - javascript
 ---
 
 Last time I wrote about some basic AngularJS functionality for interacting with a RESTful API. We're going to continue where with left off with our food inventory app to add some filtering/sorting . [Check out the first post](http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/) if you missed it, as we will be depending heavily on what is covered there.

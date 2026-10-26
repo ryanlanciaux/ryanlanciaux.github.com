@@ -2,6 +2,9 @@
 title: "Trying out ReactJS with the Marvel API"
 date: "2014-05-26T18:29:03.284Z"
 path: "/blog/2014/05/26/trying-out-reactjs-with-the-marvel-api/"
+tags:
+  - react
+  - javascript
 ---
 
 I've recently started looking into [ReactJS](http://facebook.github.io/react) (Facebook's front-end JavaScript library) for building web UIs. React has an interesting philosophy about how the UI should function and be defined. First off, while many frameworks have an entire system for interacting with the server, routing, etc, React is just the View portion (in a MV* application). Second, React does not employ 2-way data binding. Instead, it uses a one-way data flow where data is maintained in the parent items and is manually shared to its child components. Finally, React uses a Virtual DOM which they say helps with performance (I cannot speak to this first-hand but it seems logical -- [see here for more on React's performance](http://www.forbes.com/sites/quora/2013/06/18/how-is-facebooks-react-javascript-library/) from someone who can speak more authoritatively on this). 

@@ -2,6 +2,8 @@
 title: "Optional Chaining in JavaScript"
 date: "2020-01-31T07:15:03.284Z"
 path: "/blog/2020/01/31/optional-chaining-in-javascript/"
+tags:
+  - javascript
 ---
 
 In this article, we're going to take a quick look at the new, Optional Chaining operator in JavaScript. This language feature is valid JavaScript as of ES 2020 (the official definition of the language).

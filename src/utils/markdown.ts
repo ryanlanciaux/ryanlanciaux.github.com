@@ -34,13 +34,14 @@ async function absoluteImages(post: Post, body: string): Promise<string> {
 }
 
 export async function postMarkdown(post: Post): Promise<string> {
-  const { title, date, description } = post.data
+  const { title, date, description, tags } = post.data
   const frontmatter = [
     `title: ${JSON.stringify(title)}`,
     `date: ${JSON.stringify(date.toISOString())}`,
     description && `description: ${JSON.stringify(description)}`,
     `url: ${JSON.stringify(new URL(postHref(post), SITE_URL).href)}`,
     `author: ${JSON.stringify(SITE_AUTHOR)}`,
+    tags.length > 0 && `tags: ${JSON.stringify(tags)}`,
   ].filter(Boolean)
 
   const body = await absoluteImages(post, (post.body ?? "").trim())

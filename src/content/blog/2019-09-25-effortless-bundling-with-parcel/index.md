@@ -2,6 +2,9 @@
 title: "Effortless Application bundling: React + Parcel in under 2 minutes"
 date: "2019-09-25T07:15:03.284Z"
 path: "/blog/2019/09/25/effortless-application-bundling-react-parcel/"
+tags:
+  - react
+  - tooling
 ---
 
 ## Bundle Web Applications effortlessly

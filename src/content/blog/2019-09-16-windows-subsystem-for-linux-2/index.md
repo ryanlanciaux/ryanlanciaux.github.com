@@ -2,6 +2,9 @@
 title: "Windows Subsystem for Linux for JavaScript development"
 date: "2019-09-16T07:15:03.284Z"
 path: "/blog/2019/09/16/windows-subsystem-for-linux-2/"
+tags:
+  - windows
+  - linux
 ---
 
 My beloved MacBook Pro is currently with Apple Care for some repairs. Unfortunately, I have a lot to do this week and no other computers that are really set up for development. While my computer is in the shop, I'm going to do my normal development work on a Windows desktop I have with [Windows Subsystem for Linux v2](https://docs.microsoft.com/en-us/windows/wsl/wsl2-index).

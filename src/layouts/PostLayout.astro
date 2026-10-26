@@ -3,6 +3,7 @@ import BaseLayout from "./BaseLayout.astro"
 import FormattedDate from "../components/FormattedDate.astro"
 import Bio from "../components/Bio.astro"
 import { SITE_AUTHOR } from "../consts"
+import { tagHref } from "../utils/posts"
 
 interface Props {
   title: string
@@ -13,6 +14,8 @@ interface Props {
   next?: { href: string; title: string } | null
   jsonLd?: Record<string, unknown>
   markdownHref?: string
+  tags?: string[]
+  related?: { href: string; title: string; date: Date }[]
 }
 
 const {
@@ -24,6 +27,8 @@ const {
   next = null,
   jsonLd,
   markdownHref,
+  tags = [],
+  related = [],
 } = Astro.props
 ---
 
@@ -78,6 +83,19 @@ const {
         }
       </p>
       <h1>{title}</h1>
+      {
+        tags.length > 0 && (
+          <ul class="tags" aria-label="Tags">
+            {tags.map((tag) => (
+              <li>
+                <a class="label tag" href={tagHref(tag)}>
+                  {tag}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
     </header>
 
     <div class="prose">
@@ -86,6 +104,28 @@ const {
   </article>
 
   <Bio />
+
+  {
+    related.length > 0 && (
+      <nav class="related" aria-labelledby="related-heading">
+        <h2 id="related-heading" class="label">
+          Related
+        </h2>
+        <ul>
+          {related.map((item) => (
+            <li>
+              <a href={item.href}>
+                <span class="label">
+                  <FormattedDate date={item.date} />
+                </span>
+                <strong>{item.title}</strong>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )
+  }
 
   {
     (prev || next) && (
@@ -175,6 +215,70 @@ const {
     font-size: var(--step-3);
   }
 
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin-block-start: var(--space-s);
+    padding: 0;
+    list-style: none;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: var(--space-3xs) var(--space-2xs);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    text-decoration: none;
+  }
+
+  .tag:hover {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+  }
+
+  .related {
+    max-width: var(--measure);
+    margin-block-start: var(--space-xl);
+    padding-block-start: var(--space-m);
+    border-block-start: 1px solid var(--line);
+  }
+
+  .related h2 {
+    color: var(--accent);
+  }
+
+  .related ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-m);
+    margin-block-start: var(--space-s);
+    padding: 0;
+    list-style: none;
+  }
+
+  .related a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-muted);
+  }
+
+  .related span {
+    display: block;
+  }
+
+  .related strong {
+    display: block;
+    margin-block-start: var(--space-3xs);
+    font-size: var(--step--1);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .related a:hover strong {
+    color: var(--accent-text);
+  }
+
   .post-nav {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -212,6 +316,9 @@ const {
   }
 
   @media (max-width: 34rem) {
+    .related ul {
+      grid-template-columns: 1fr;
+    }
     .post-nav {
       grid-template-columns: 1fr;
     }

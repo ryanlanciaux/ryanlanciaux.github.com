@@ -2,6 +2,9 @@
 title: "Sublime text on Ubuntu"
 date: "2013-04-13T18:42:03.284Z"
 path: "/blog/2013/04/13/sublime-text-on-ubuntu/"
+tags:
+  - tooling
+  - linux
 ---
 
 Recently, I have switched from Windows 8 to Ubuntu on my laptop. Since the primary function of my laptop is development I have spent some time tweaking the software installed to fit my workflow.

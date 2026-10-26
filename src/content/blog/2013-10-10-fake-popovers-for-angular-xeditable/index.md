@@ -2,6 +2,9 @@
 title: "Fake popovers for Angular-xeditable"
 date: "2013-10-16T21:58:03.284Z"
 path: "/blog/2013/10/16/fake-popovers-for-angular-xeditable/"
+tags:
+  - angularjs
+  - css
 ---
 
 I was recently working on a project with [AngularJS](http://www.angularjs.org) and [xeditable](http://vitalets.github.io/x-editable/) (if you're not familiar, xeditable is an awesome library for inline editing). There is an [Angular version of xeditable](http://vitalets.github.io/angular-xeditable/) but the popover editing functionality is not implemented yet (it's in the roadmap). Instead of using the original version of xeditable and implementing custom directives or try to add the popover functionality to the project, I decided to see if I could make the popover using just CSS -- this happened to be more inline with my timeframe.

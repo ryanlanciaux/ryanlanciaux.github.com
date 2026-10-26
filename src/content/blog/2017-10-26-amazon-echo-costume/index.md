@@ -2,6 +2,8 @@
 title: "Amazon Echo Costume"
 date: "2017-10-26T06:37:03.284Z"
 path: "/blog/2017/10/26/amazon-echo-costume/"
+tags:
+  - hardware
 ---
 
 My daughter is super ecstatic about Amazon Echo. When it came time to pick a Halloween Costume, she quickly decided an Amazon Echo is what she wanted to be. I was more than happy to help her see this interest come to fruition!

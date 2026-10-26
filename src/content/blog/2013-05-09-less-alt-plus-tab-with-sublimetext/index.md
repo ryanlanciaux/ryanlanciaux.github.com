@@ -2,6 +2,8 @@
 title: "Less alt+tab with SublimeText"
 date: "2013-05-09T20:40:03.284Z"
 path: "/blog/2013/05/09/less-alt-plus-tab-with-sublimetext/"
+tags:
+  - tooling
 ---
 
 [Back in April](http://ryanlanciaux.github.io/blog/2013/04/13/sublime-text-on-ubuntu/), I jokingly lamented not having the ability to run a console from directly within SublimeText -- apparently I did not do quite enough searching. There is a plug-in called [SublimeREPL](https://github.com/wuub/SublimeREPL) that lets you run ruby, node and a whole slew of other environments from within SublimeText.

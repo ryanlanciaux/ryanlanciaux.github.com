@@ -1,0 +1,58 @@
+---
+import type { GetStaticPaths } from "astro"
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import PostList from "../../components/PostList.astro"
+import { getSortedPosts, tagCounts, type Post } from "../../utils/posts"
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getSortedPosts()
+  return tagCounts(posts).map(({ tag }) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts.filter((post) => post.data.tags.includes(tag)),
+    },
+  }))
+}
+
+interface Props {
+  tag: string
+  posts: Post[]
+}
+
+const { tag, posts } = Astro.props
+---
+
+<BaseLayout
+  title={`Posts tagged ${tag}`}
+  description={`Articles by Ryan Lanciaux tagged ${tag}.`}
+>
+  <div class="archive-head">
+    <h1 class="label">Tagged {tag}</h1>
+    <a class="label count" href="/tags/">All tags</a>
+  </div>
+  <PostList posts={posts} />
+</BaseLayout>
+
+<style>
+  .archive-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+    margin-block-end: var(--space-s);
+  }
+
+  .archive-head h1 {
+    font-size: var(--step--2);
+    color: var(--accent);
+  }
+
+  .archive-head a {
+    text-decoration: none;
+  }
+
+  .archive-head a:hover {
+    color: var(--accent);
+  }
+</style>

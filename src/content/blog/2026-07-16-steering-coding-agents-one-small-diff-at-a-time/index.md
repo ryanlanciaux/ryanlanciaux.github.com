@@ -3,6 +3,9 @@ title: "Steering coding agents, one small diff at a time"
 date: "2026-07-16T12:01:01.000Z"
 path: "/blog/2026/07/16/steering-coding-agents-one-small-diff-at-a-time/"
 description: "Want more control over the code an agent is writing? A Hunk-based workflow for reviewing small diffs before they become a large one."
+tags:
+  - ai-agents
+  - tooling
 ---
 
 ![First-person view from a car driving toward a neon-lit city at night](./cover.jpg)

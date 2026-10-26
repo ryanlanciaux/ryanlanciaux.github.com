@@ -2,6 +2,9 @@
 title: "A feature based approach to React development"
 date: "2017-08-24T06:37:03.284Z"
 path: "/blog/2017/08/20/a-feature-based-approach-to-react-development/"
+tags:
+  - react
+  - architecture
 ---
 
 There are a lot of opinions around how to arrange a React project. In this post, I want to talk about feature folders and why I think they are a great choice for React application structure.

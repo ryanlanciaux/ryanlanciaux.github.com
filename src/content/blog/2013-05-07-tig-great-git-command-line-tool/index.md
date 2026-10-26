@@ -2,6 +2,9 @@
 title: "Tig: Great git command line tool"
 date: "2013-05-07T20:28:03.284Z"
 path: "/blog/2013/05/07/tig-great-git-command-line-tool/"
+tags:
+  - git
+  - tooling
 ---
 
 I have been using git on most of my hobby projects for quite some time. I prefer the command line when possible, however, it is nice to visualize certain operations. [SourceTree](http://sourcetreeapp.com/) and Github's [Windows](http://windows.github.com) and [Mac](http://mac.github.com) apps are very nice but I'm mostly on Ubuntu when using git. [Gitk](https://www.kernel.org/pub/software/scm/git/docs/gitk.html) is a decent option but sometimes tools such as this and the aforementioned GUI tools can be a bit over-the-top for a command line junkie such as myself. Something between the command line and full blown windowed GUI applications would be great; this seems to be where [tig](http://jonas.nitro.dk/tig/) comes in.

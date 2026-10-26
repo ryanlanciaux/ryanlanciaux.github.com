@@ -2,6 +2,9 @@
 title: "Running ssh-agent on Windows"
 date: "2014-05-15T03:41:03.284Z"
 path: "/blog/2014/05/15/running-ssh-agent-on-windows/"
+tags:
+  - windows
+  - tooling
 ---
 
 There was one thing I didn't mention in my [previous post about running Octopress on a Vagrant machine](http://ryanlanciaux.github.io/blog/2014/05/13/vagrantfile-for-octopress/) -- in the machine's current state (with Windows as a host machine), we cannot deploy the site with a `rake deploy` command. The reason for this is we don't have an ssh key available to the Vagrant box. 

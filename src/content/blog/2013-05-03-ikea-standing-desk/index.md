@@ -2,6 +2,8 @@
 title: "Ikea Standing Desk"
 date: "2013-05-03T21:02:03.284Z"
 path: "/blog/2013/05/03/ikea-standing-desk/"
+tags:
+  - hardware
 ---
 
 Over the past several years, I have grown quite accustomed to using a standing desk at home (I have an adjustable Ergotron that I absolutely love). I decided it was about time to make the switch at work, however, I didn't want to spend a lot of money on a desk. Thankfully, I had come across a [blog post by Colin Nederkoorn](http://iamnotaprogrammer.com/Ikea-Standing-desk-for-22-dollars.html) on a standing desk he and a coworker built for $22. I like the design, however, I wanted more room for monitors. One of the comments on the blog led me to [Jinyoung Kim's modification of the Ikea desk](http://www.jinyoungkim.com/blog/2012/07/standing-desk/) which used a wider table than Colin's design. I ultimately based my desk plans off Jinyoung's design, since it allowed for multiple monitors, laptops and other gadgets.

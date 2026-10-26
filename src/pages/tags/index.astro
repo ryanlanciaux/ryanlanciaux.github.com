@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import { getSortedPosts, tagCounts, tagHref } from "../../utils/posts"
+
+const tags = tagCounts(await getSortedPosts())
+---
+
+<BaseLayout
+  title="Tags"
+  description="Articles by Ryan Lanciaux, grouped by tag."
+>
+  <div class="archive-head">
+    <h1 class="label">Tags</h1>
+    <span class="label count">{tags.length} tags</span>
+  </div>
+  <ul class="tag-list">
+    {
+      tags.map(({ tag, count }) => (
+        <li>
+          <a href={tagHref(tag)}>
+            <span class="name">{tag}</span>
+            <span class="label">{count} {count === 1 ? "post" : "posts"}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
+
+<style>
+  .archive-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+    margin-block-end: var(--space-s);
+  }
+
+  .archive-head h1 {
+    font-size: var(--step--2);
+    color: var(--accent);
+  }
+
+  .tag-list {
+    padding: 0;
+    list-style: none;
+    border-block-start: 1px solid var(--line);
+  }
+
+  .tag-list a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+    padding-block: var(--space-s);
+    border-block-end: 1px solid var(--line);
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .name {
+    font-size: var(--step-1);
+    font-weight: 600;
+  }
+
+  .tag-list a:hover .name {
+    color: var(--accent-text);
+  }
+</style>

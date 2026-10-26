@@ -2,6 +2,9 @@
 title: "Introducing Griddle: A React.js grid"
 date: "2014-07-08T01:01:03.284Z"
 path: "/blog/2014/07/08/introducing-griddle-a-react-dot-js-grid/"
+tags:
+  - react
+  - javascript
 ---
 
 Many of the websites I have worked on have required a grid component. As I had been exploring [React.js](http://facebook.github.io/react/) more it was made apparent that I was going to need a grid component for it to be a viable my projects. There are many great solutions for displaying grid data with React but many seem to rely  on writing wrappers for components using jQuery or other libraries. While these solutions work well, I was hoping to render entirely with React. Additionally, I wanted to avoid a dependency on libraries like jQuery / Angular if I could help it. 

@@ -2,6 +2,9 @@
 title: "Thoughts on Microsoft Surface"
 date: "2014-03-06T20:15:03.284Z"
 path: "/blog/2014/03/06/-thoughts-on-microsoft-surface/"
+tags:
+  - hardware
+  - windows
 ---
 
 Last fall, I won a Microsoft Surface 2 as part of the [Surface Remix Project contest](http://www.surfaceremixproject.com). I always love to win gadgets but this was a bit more exciting to me as I am a hobby music producer ([shameless link to some of my music](http://www.soundcloud.com/ryanlanciaux)). I was initially planning on using the device for the music app/remix blade, however, after I had used the device a little over a week, I realized that there was a lot more to the Surface than just another device trying to make waves in the tablet market. I have since purchased a Surface Pro (1) and am really liking it. 

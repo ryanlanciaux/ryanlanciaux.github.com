@@ -2,6 +2,8 @@
 title: "Nullish Coalescing in JavaScript"
 date: "2020-01-22T07:15:03.284Z"
 path: "/blog/2020/01/22/nullish-coalescing-in-javascript/"
+tags:
+  - javascript
 ---
 
 Nullish Coalescing is a language feature of JavaScript that was recently promoted to Stage 4 by TC39, the group that maintains the definition of JavaScript. This means that this language feature is valid JavaScript as of ES2020.

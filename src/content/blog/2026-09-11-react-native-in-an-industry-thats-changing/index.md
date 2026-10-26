@@ -4,6 +4,9 @@ date: "2026-09-11T00:00:00.000Z"
 path: "/blog/2026/09/11/react-native-in-an-industry-thats-changing/"
 ogImage: "./og-image.png"
 draft: false
+tags:
+  - react-native
+  - ai-agents
 ---
 
 Shopify is moving from React Native to Swift / Kotlin. [The article](https://shopify.engineering/back-to-native) was interesting, and I highly recommend reading it. My takeaway is that agents change the dynamics around building software. Although React Native was a huge success for them, it's no longer how they want to build their mobile apps in 2026.

@@ -25,6 +25,9 @@ title: "A title in quotes"
 date: "2026-08-22T09:00:00.000Z"
 path: "/blog/2026/08/22/a-title-in-quotes/"
 description: "Optional. Used for the excerpt, meta description and RSS."
+tags:
+  - react
+  - testing
 ---
 
 Body goes here.

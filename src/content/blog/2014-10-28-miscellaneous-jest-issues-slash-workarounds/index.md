@@ -2,6 +2,9 @@
 title: "Miscellaneous Jest Issues/Workarounds"
 date: "2014-10-28T20:44:03.284Z"
 path: "/blog/2014/10/28/miscellaneous-jest-issues-slash-workarounds/"
+tags:
+  - testing
+  - react
 ---
 
 I've been using Jest a bit lately and wanted to document some issues I've run into for future reference. 

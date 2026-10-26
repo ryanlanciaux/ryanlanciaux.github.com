@@ -3,6 +3,8 @@ title: "Make your AI earn its keep: A grocery system that covers the subscriptio
 date: "2026-08-11T13:49:57.000Z"
 path: "/blog/2026/08/11/make-your-ai-earn-its-keep/"
 description: "A file-based meal and grocery system for LLMs. No code, no database — just markdown files, store circulars, and a weekly plan that can cover the subscription cost."
+tags:
+  - ai-agents
 ---
 
 ![Illustrated kitchen counter with a basket of produce, pantry staples, and groceries](./cover.jpg)

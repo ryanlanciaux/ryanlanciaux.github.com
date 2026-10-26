@@ -4,6 +4,9 @@ date: "2026-09-16T12:00:00.000Z"
 path: "/blog/2026/09/16/native-surface-react-native-browser-iteration/"
 ogImage: "./og-image.png"
 draft: false
+tags:
+  - react-native
+  - react
 ---
 
 Native-Surface is a library that lets you preview React Native screens and components in a browser using a canvas renderer. I like having ways to quickly visualize what I'm building, and I was happy to send AI on a side quest to make that happen.

@@ -3,6 +3,9 @@ title: "Pi: Learn once, keep your tools"
 date: "2026-08-18T12:52:35.000Z"
 path: "/blog/2026/08/18/pi-learn-once-keep-your-tools/"
 description: "Trying Pi as a daily driver so I'm not locked into any model, and I have more control over the tools I use every day."
+tags:
+  - ai-agents
+  - tooling
 ---
 
 ![Pi context-view usage map, with a disk-defrag-style grid of context categories](./cover.jpg)

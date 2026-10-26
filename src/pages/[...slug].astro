@@ -6,6 +6,7 @@ import {
   getSortedPosts,
   postHref,
   postMarkdownHref,
+  relatedPosts,
   excerpt,
   type Post,
 } from "../utils/posts"
@@ -30,6 +31,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
         post,
         prev: older ? { href: postHref(older), title: older.data.title } : null,
         next: newer ? { href: postHref(newer), title: newer.data.title } : null,
+        related: relatedPosts(post, posts).map((other) => ({
+          href: postHref(other),
+          title: other.data.title,
+          date: other.data.date,
+        })),
       },
     }
   })
@@ -39,9 +45,10 @@ interface Props {
   post: Post
   prev: { href: string; title: string } | null
   next: { href: string; title: string } | null
+  related: { href: string; title: string; date: Date }[]
 }
 
-const { post, prev, next } = Astro.props
+const { post, prev, next, related } = Astro.props
 const { Content } = await render(post)
 const image = await headerImageSrc(post)
 const description = post.data.description ?? excerpt(post.body, 160)
@@ -52,6 +59,7 @@ const jsonLd = blogPostingJsonLd({
   updated: post.data.updated,
   path: postHref(post),
   image,
+  tags: post.data.tags,
 })
 ---
 
@@ -64,6 +72,8 @@ const jsonLd = blogPostingJsonLd({
   next={next}
   jsonLd={jsonLd}
   markdownHref={postMarkdownHref(post)}
+  tags={post.data.tags}
+  related={related}
 >
   <Content />
 </PostLayout>

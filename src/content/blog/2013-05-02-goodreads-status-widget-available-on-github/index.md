@@ -2,6 +2,8 @@
 title: "Goodreads status widget available on github"
 date: "2013-05-02T19:49:03.284Z"
 path: "/blog/2013/05/02/goodreads-status-widget-available-on-github/"
+tags:
+  - blogging
 ---
 
 [Goodreads](http://www.goodreads.com) is currently one of my favorite sites; I love that I can see what my friends are reading and find new books to read based on their recommendations. Noticing that many other blog platforms have sidebar widgets (asides), I decided to create one for Octopress. The first thing I did was make sure I was not duplicating effort. Goodreads has some great [sidebar widgets](http://www.goodreads.com/user/edit?tab=widgets), however, I preferred to generate the aside in the standard `rake generate` process (as well as keep the same look-and-feel of the other asides).

@@ -2,6 +2,10 @@
 title: "Test React Components Using Jest (on Windows)"
 date: "2014-08-02T12:37:03.284Z"
 path: "/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/"
+tags:
+  - testing
+  - react
+  - windows
 ---
 
 I'm currently going through the process creating unit tests for [Griddle](http://dynamictyped.github.io/Griddle) and thought it would be good to document the steps I took to get Jest up and running. I did not find it as simple as typing `npm install -g jest-cli`, however it was not too bad.

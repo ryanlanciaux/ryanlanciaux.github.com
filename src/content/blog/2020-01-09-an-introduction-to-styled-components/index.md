@@ -2,6 +2,9 @@
 title: "An introduction to Styled Components"
 date: "2020-01-09T07:15:03.284Z"
 path: "/blog/2020/01/09/an-introduction-to-styled-components/"
+tags:
+  - css
+  - react
 ---
 
 In this article, we are going to take a quick look at styled components, a styling library for use with React. While there are many ways to style React applications, styled components stands out as an excellent way style our applications as a series of components using familiar CSS syntax.

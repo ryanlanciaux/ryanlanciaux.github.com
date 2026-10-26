@@ -2,6 +2,9 @@
 title: "Better testing with Storybook"
 date: "2020-02-14T07:15:03.284Z"
 path: "/blog/2020/02/14/better-testing-with-storybook/"
+tags:
+  - testing
+  - react
 ---
 
 In this article, we will discuss strategy that I like to help keep [Storybook](https://storybook.js.org/) stories up-to-date. For those that are unfamiliar, [Storybook](https://storybook.js.org/) is a UI component workspace that I find helpful in building front-end applications.

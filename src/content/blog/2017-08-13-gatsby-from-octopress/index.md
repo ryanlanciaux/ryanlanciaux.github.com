@@ -2,6 +2,8 @@
 title: "Migrating to Gatsby from Octopress"
 date: "2017-08-13T05:54:03.284Z"
 path: "/blog/2017/08/13/migrating-to-gatsby-from-octopress/"
+tags:
+  - blogging
 ---
 
 Octopress is an awesome blogging platform that has served me well for quite some time but recently I've migrated to Gatsby ([since it is built with a tech stack I frequently use](/blog/2017/08/12/blogging-with-gatsby/)). The steps I've taken to do this are as follows: 

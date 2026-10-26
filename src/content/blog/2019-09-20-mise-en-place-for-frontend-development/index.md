@@ -2,6 +2,9 @@
 title: "Better frontend development with inspiration from the culinary world"
 date: "2019-09-20T07:15:03.284Z"
 path: "/blog/2019/09/20/the-magic-of-a-mise-en-place-mindset-for-frontend-development/"
+tags:
+  - architecture
+  - react
 ---
 
 Software development, as an industry, has a constant struggle with shipping quality code. While many developers have metrics for what quality means, there's a challenge in ensuring these metrics are met especially as a codebase grows over time.

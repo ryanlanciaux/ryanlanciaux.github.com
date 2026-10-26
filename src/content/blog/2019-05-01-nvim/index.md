@@ -2,6 +2,8 @@
 title: "NeoVim for Software Development"
 date: "2019-05-01T07:15:03.284Z"
 path: "/blog/2017/10/26/neovim-for-software-development/"
+tags:
+  - tooling
 ---
 
 I've recently been interested in

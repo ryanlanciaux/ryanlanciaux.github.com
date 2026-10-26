@@ -7,6 +7,7 @@ export interface BlogPostingInput {
   updated?: Date
   path: string
   image?: string
+  tags?: string[]
 }
 
 export function blogPostingJsonLd(input: BlogPostingInput) {
@@ -28,5 +29,6 @@ export function blogPostingJsonLd(input: BlogPostingInput) {
     url,
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     ...(input.image && { image: new URL(input.image, SITE_URL).href }),
+    ...(input.tags?.length ? { keywords: input.tags } : {}),
   }
 }

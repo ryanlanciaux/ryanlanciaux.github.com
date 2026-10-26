@@ -2,6 +2,9 @@
 title: "Use a Provider component in Storybook"
 date: "2019-08-20T07:15:03.284Z"
 path: "/blog/2019/08/20/use-provider-in-storybook/"
+tags:
+  - react
+  - css
 ---
 
 ## Storybook is awesome for building components

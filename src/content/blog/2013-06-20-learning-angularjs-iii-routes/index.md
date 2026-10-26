@@ -2,6 +2,9 @@
 title: "Learning AngularJS III: Routes"
 date: "2013-08-17T19:47:03.284Z"
 path: "/blog/2013/08/17/learning-angularjs-iii-routes/"
+tags:
+  - angularjs
+  - javascript
 ---
 
 So far we've covered the basics of [using AngularJS to interact with RESTful services](http://ryanlanciaux.github.io/blog/2013/06/04/learning-angularjs/) and [Filtering / Ordering views in AngularJS](http://ryanlanciaux.github.io/blog/2013/06/19/angularjs-filtering-slash-ordering/). Using [AngularJS Routes](http://docs.angularjs.org/tutorial/step_07), we are going to add a bit of structure to this example app.

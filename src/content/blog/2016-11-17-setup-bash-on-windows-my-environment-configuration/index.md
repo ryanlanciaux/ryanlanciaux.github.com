@@ -2,6 +2,10 @@
 title: "Setup Bash on Windows: My environment configuration"
 date: "2016-11-17T23:32:03.284Z"
 path: "/blog/2016/11/17/setup-bash-on-windows-my-environment-configuration/"
+tags:
+  - windows
+  - linux
+  - tooling
 ---
 
 Inspired by some recent conversations on Twitter, I've decided to give Bash on Windows another shot. This post contains the steps I've taken to install and configure Bash on Windows to closely resemble my Linux / Mac settings for JavaScript and node development (with some extra steps I've taken for Ruby, etc at the end).

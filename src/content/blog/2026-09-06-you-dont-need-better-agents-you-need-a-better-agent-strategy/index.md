@@ -4,6 +4,9 @@ date: "2026-09-06T15:56:00.000Z"
 path: "/blog/2026/09/06/you-dont-need-better-agents-you-need-a-better-agent-strategy/"
 description: "Escoffier's kitchens didn't necessarily have better cooks. Structure did the work. Same with agents: brigade beats prompting and hoping."
 ogImage: "./herdr-panes.png"
+tags:
+  - ai-agents
+  - architecture
 ---
 
 AI assisted development is awesome BUT there's a huge problem, it's not deterministic. Sometimes you get an amazing result that matches what you asked for. Other times you get complete garbage where it's clear the agent went off the rails.

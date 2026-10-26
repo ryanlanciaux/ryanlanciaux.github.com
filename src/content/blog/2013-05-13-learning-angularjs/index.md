@@ -2,6 +2,9 @@
 title: "Learning AngularJS"
 date: "2013-06-04T21:39:03.284Z"
 path: "/blog/2013/06/04/learning-angularjs/"
+tags:
+  - angularjs
+  - javascript
 ---
 
 I have recently been playing around with some of the client-side MV_ frameworks. I have avoided Angular for quite some time because I was not a fan of using ng-click (etc.) HTML attributes to fire off js events. The more I've used the framework, however, the less of an issue that has been to me.

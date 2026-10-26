@@ -2,6 +2,9 @@
 title: "Snowpack with React"
 date: "2020-01-14T07:15:03.284Z"
 path: "/blog/2020/01/14/snowpack-with-react/"
+tags:
+  - react
+  - tooling
 ---
 
 In this article, we're going to build a React application using [Snowpack](https://www.snowpack.dev/). [Snowpack](https://www.snowpack.dev/) is one of the technologies I'm most excited about right now. It's a little bit like bundler in that it's responsible for preparing an application's third-party dependencies for use on the web but it has enough differences to make it a compelling tool to explore. Instead of building every time you save your code, [Snowpack](https://www.snowpack.dev/) can do it's work after you install a dependency. Lets take a look. ([The demo application we'll be building in this article is available here](https://github.com/ryanlanciaux/snowpack-demo))

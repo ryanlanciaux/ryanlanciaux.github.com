@@ -4,6 +4,9 @@ date: "2026-10-18T12:00:00.000Z"
 path: "/blog/2026/10/18/grok-bot-away-from-my-desk/"
 description: "How I use Grok Bot as the go-between for my coding agents, so I can start work, check progress, and steer my side projects from anywhere."
 ogImage: "./agent-kanban.png"
+tags:
+  - ai-agents
+  - tooling
 ---
 
 It's been a dream to make progress on projects without being stuck at a computer. I have too many ideas and not enough time, and even in the age of agentic development that hasn't changed. BUT how that work happens, at least on my side projects, is changing. Projects still take some work, focused planning, and experimentation, but my time directly at a computer can come in bursts instead of a sustained hustle with my laptop open. I currently outsource a lot of the communication to Grok Bot to help me manage the work and stay in the loop while I'm away from my desk.

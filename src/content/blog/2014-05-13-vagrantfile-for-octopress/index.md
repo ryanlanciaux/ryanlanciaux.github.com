@@ -2,6 +2,9 @@
 title: "Vagrantfile for Octopress"
 date: "2014-05-13T03:59:03.284Z"
 path: "/blog/2014/05/13/vagrantfile-for-octopress/"
+tags:
+  - tooling
+  - blogging
 ---
 
 I've recently started using [Vagrant](http://www.vagrantup.com) for managing lightweight virtual machines for various projects. Vagrant is awesome because it allows you to:

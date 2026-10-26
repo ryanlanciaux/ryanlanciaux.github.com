@@ -2,6 +2,9 @@
 title: "Ignoring files in git"
 date: "2019-08-19T07:15:03.284Z"
 path: "/blog/2019/08/19/ignoring-files-in-git/"
+tags:
+  - git
+  - tooling
 ---
 
 ## No, this isn't a post about .gitignore

@@ -2,6 +2,9 @@
 title: "Blogging with gatsby"
 date: "2017-08-12T12:03:03.284Z"
 path: "/blog/2017/08/12/blogging-with-gatsby/"
+tags:
+  - blogging
+  - react
 ---
 
 I've been using [Gatsby](https://www.gatsbyjs.org/) for quite some time on the [Griddle](http://griddlegriddle.github.io/Griddle) documentation and really like it. I wanted to start writing more and thought a fresh start to the blogging system I am using was in order.

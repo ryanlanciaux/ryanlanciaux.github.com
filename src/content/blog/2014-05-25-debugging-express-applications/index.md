@@ -2,6 +2,9 @@
 title: "Debugging Express Applications"
 date: "2014-05-25T16:18:03.284Z"
 path: "/blog/2014/05/25/debugging-express-applications/"
+tags:
+  - javascript
+  - tooling
 ---
 
 Coming from the .NET world, I've grown accustomed to great debugging tools. My initial Node setup didn't have a very good way to debug an application (outside of using `DEBUG=express:* node .bin/www`) and I wanted to resolve that. I had heard about [node-inspector](https://github.com/node-inspector/node-inspector) in several places and decided to give that a shot. 

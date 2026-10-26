@@ -20,6 +20,39 @@ export function postMarkdownHref(post: Post): string {
   return `${postHref(post).replace(/\/$/, "")}.md`
 }
 
+export function tagHref(tag: string): string {
+  return `/tags/${tag}/`
+}
+
+export function tagCounts(posts: Post[]): { tag: string; count: number }[] {
+  const counts = new Map<string, number>()
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      counts.set(tag, (counts.get(tag) ?? 0) + 1)
+    }
+  }
+  return [...counts]
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag))
+}
+
+export function relatedPosts(post: Post, posts: Post[], count = 3): Post[] {
+  const tags = new Set(post.data.tags)
+  return posts
+    .filter((other) => other.id !== post.id)
+    .map((other) => ({
+      other,
+      shared: other.data.tags.filter((tag) => tags.has(tag)).length,
+    }))
+    .sort(
+      (a, b) =>
+        b.shared - a.shared ||
+        b.other.data.date.valueOf() - a.other.data.date.valueOf()
+    )
+    .slice(0, count)
+    .map(({ other }) => other)
+}
+
 /**
  * Gatsby gave us `excerpt` for free. This is the equivalent: strip the markdown
  * down to prose and cut it at a word boundary.

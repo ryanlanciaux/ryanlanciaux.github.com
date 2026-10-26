@@ -18,6 +18,7 @@ const blog = defineCollection({
     description: z.string().optional(),
     /** Relative to the post folder. Used for og:image; not shown as a cover. */
     ogImage: z.string().optional(),
+    tags: z.array(z.string()).default([]),
     draft: z.boolean().optional().default(false),
   }),
 })

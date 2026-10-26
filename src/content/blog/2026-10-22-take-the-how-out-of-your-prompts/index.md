@@ -4,6 +4,9 @@ date: "2026-10-22T12:00:00.000Z"
 path: "/blog/2026/10/22/take-the-how-out-of-your-prompts/"
 description: "Your prompt can't carry the burden of correctness alone. Strict types, lint rules, a design system, and deterministic checks do work a longer prompt never could."
 ogImage: "./og-image.png"
+tags:
+  - ai-agents
+  - architecture
 ---
 
 I used to think a better prompt would fix a bad agent run. What started out as "Wow, look at all the things I'm not doing" quickly turned into "Why won't this thing follow instructions?" and "Why is it claiming it's done when it's not?"
