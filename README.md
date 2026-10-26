@@ -66,3 +66,19 @@ public/        copied verbatim: CNAME, robots.txt, icons, sw.js
 Push to `main`. `.github/workflows/deploy.yml` builds and publishes to GitHub
 Pages. Pages must be set to the **GitHub Actions** source (Settings → Pages).
 
+### IndexNow
+
+After a successful deploy, the workflow runs `scripts/indexnow.mjs` to tell
+IndexNow (Bing, Yandex and friends) which URLs changed. On a push it submits
+every post added or modified in that push, plus its `.md` copy, the home page
+and `/llms.txt`. A manual run submits every post. The key lives in
+`public/<key>.txt`, and that file is the only place it is defined. A failed
+ping never fails the deploy.
+
+`--dry-run` prints the payload without sending it. `--all` reads
+`dist/sitemap-0.xml` when a build is present.
+
+```bash
+npm run indexnow -- --since HEAD~1 --dry-run
+npm run indexnow -- --all --dry-run
+```

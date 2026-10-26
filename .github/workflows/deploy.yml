@@ -52,3 +52,27 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Checkout
+        continue-on-error: true
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        continue-on-error: true
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Ping IndexNow
+        continue-on-error: true
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          if [ "$EVENT_NAME" = "push" ] && [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            node scripts/indexnow.mjs --since "$BEFORE"
+          else
+            node scripts/indexnow.mjs --all
+          fi
