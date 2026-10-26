@@ -28,6 +28,7 @@ const { title, description, image, type, publishedAt, bleed = false } =
       type={type}
       publishedAt={publishedAt}
     />
+    <slot name="head" />
     <ClientRouter />
   </head>
   <body>

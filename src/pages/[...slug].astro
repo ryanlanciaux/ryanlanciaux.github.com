@@ -4,6 +4,7 @@ import { render } from "astro:content"
 import PostLayout from "../layouts/PostLayout.astro"
 import { getSortedPosts, postHref, excerpt, type Post } from "../utils/posts"
 import { headerImageSrc } from "../utils/header-image"
+import { blogPostingJsonLd } from "../utils/json-ld"
 
 /**
  * Routes come from each post's `path` frontmatter, not its filename, so every
@@ -37,15 +38,25 @@ interface Props {
 const { post, prev, next } = Astro.props
 const { Content } = await render(post)
 const image = await headerImageSrc(post)
+const description = post.data.description ?? excerpt(post.body, 160)
+const jsonLd = blogPostingJsonLd({
+  title: post.data.title,
+  description,
+  date: post.data.date,
+  updated: post.data.updated,
+  path: postHref(post),
+  image,
+})
 ---
 
 <PostLayout
   title={post.data.title}
   date={post.data.date}
-  description={post.data.description ?? excerpt(post.body, 160)}
+  description={description}
   image={image}
   prev={prev}
   next={next}
+  jsonLd={jsonLd}
 >
   <Content />
 </PostLayout>

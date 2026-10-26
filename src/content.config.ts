@@ -13,6 +13,7 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
+    updated: z.coerce.date().optional(),
     path: z.string(),
     description: z.string().optional(),
     /** Relative to the post folder. Used for og:image; not shown as a cover. */
