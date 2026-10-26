@@ -2,7 +2,13 @@
 import type { GetStaticPaths } from "astro"
 import { render } from "astro:content"
 import PostLayout from "../layouts/PostLayout.astro"
-import { getSortedPosts, postHref, excerpt, type Post } from "../utils/posts"
+import {
+  getSortedPosts,
+  postHref,
+  postMarkdownHref,
+  excerpt,
+  type Post,
+} from "../utils/posts"
 import { headerImageSrc } from "../utils/header-image"
 import { blogPostingJsonLd } from "../utils/json-ld"
 
@@ -57,6 +63,7 @@ const jsonLd = blogPostingJsonLd({
   prev={prev}
   next={next}
   jsonLd={jsonLd}
+  markdownHref={postMarkdownHref(post)}
 >
   <Content />
 </PostLayout>

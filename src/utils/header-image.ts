@@ -7,6 +7,15 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   { eager: true },
 )
 
+export function postImage(
+  post: Post,
+  src: string,
+): ImageMetadata | undefined {
+  const dir = post.filePath?.replace(/\/[^/]+$/, "")
+  if (!dir) return
+  return images[`/${dir}/${src.replace(/^\.\//, "")}`]?.default
+}
+
 /**
  * OG image: frontmatter `ogImage` if set, otherwise the first-line
  * `![alt](./cover.jpg)` convention the 2026 posts already use.
@@ -16,9 +25,7 @@ export async function headerImageSrc(post: Post): Promise<string | undefined> {
     post.data.ogImage ??
     post.body?.trim().match(/^!\[[^\]]*]\(([^)\s]+)/)?.[1]
   if (!src || src.startsWith("http") || src.startsWith("/")) return
-  const dir = post.filePath?.replace(/\/[^/]+$/, "")
-  if (!dir) return
-  const meta = images[`/${dir}/${src.replace(/^\.\//, "")}`]?.default
+  const meta = postImage(post, src)
   if (!meta) return
   // jpg: a few crawlers still refuse the webp the page itself uses
   return (await getImage({ src: meta, width: 1200, format: "jpg" })).src

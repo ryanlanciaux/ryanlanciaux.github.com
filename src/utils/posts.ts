@@ -16,6 +16,10 @@ export function postHref(post: Post): string {
   return `/${p.replace(/^\/+/, "").replace(/\/+$/, "")}/`
 }
 
+export function postMarkdownHref(post: Post): string {
+  return `${postHref(post).replace(/\/$/, "")}.md`
+}
+
 /**
  * Gatsby gave us `excerpt` for free. This is the equivalent: strip the markdown
  * down to prose and cut it at a word boundary.
