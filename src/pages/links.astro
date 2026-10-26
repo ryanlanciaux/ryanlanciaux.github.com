@@ -48,6 +48,14 @@ const bodies = new Map(
     <span class="label count">{entries.length} links</span>
   </div>
 
+  <section class="about">
+    <h2 class="label">About</h2>
+    <p>
+      I'm a software developer with 20+ years of experience building frontends,
+      native apps, and backends in Node, Rails, .NET and more. I wrote <a href="https://link.springer.com/book/10.1007/978-1-4842-6625-0">Modern Front-end Architecture</a> (Apress, 2021), a book on building frontends from reusable components.
+    </p>
+  </section>
+
   {
     sections.map((section) => (
       <section class="group">
@@ -94,6 +102,20 @@ const bodies = new Map(
   .head h1 {
     font-size: var(--step--2);
     color: var(--accent);
+  }
+
+  .about {
+    margin-block: var(--space-xl) var(--space-2xl);
+  }
+
+  .about h2 {
+    font-size: var(--step--2);
+    color: var(--text);
+  }
+
+  .about p {
+    max-width: var(--measure);
+    margin-block-start: var(--space-xs);
   }
 
   .group + .group {
