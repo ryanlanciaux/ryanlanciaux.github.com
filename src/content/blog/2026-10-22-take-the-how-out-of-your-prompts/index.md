@@ -2,7 +2,7 @@
 title: "Move the how out of your prompts and into your codebase"
 date: "2026-10-22T12:00:00.000Z"
 path: "/blog/2026/10/22/take-the-how-out-of-your-prompts/"
-description: "Spelling out every step in a prompt won't make an agent reliable. Here's how I put that effort into the codebase instead, with strictness, good examples, a design system, and deterministic checks."
+description: "Your prompt can't carry the burden of correctness alone. Strict types, lint rules, a design system, and deterministic checks do work a longer prompt never could."
 ogImage: "./og-image.png"
 ---
 
