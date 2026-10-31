@@ -4,8 +4,6 @@ date: "2020-01-09T07:15:03.284Z"
 path: "/blog/2020/01/09/an-introduction-to-styled-components/"
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/FjHPo1E9HK8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 In this article, we are going to take a quick look at styled components, a styling library for use with React. While there are many ways to style React applications, styled components stands out as an excellent way style our applications as a series of components using familiar CSS syntax.
 
 We will start by adding styled-components to our application through yarn or npm.

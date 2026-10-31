@@ -4,8 +4,6 @@ date: "2020-02-14T07:15:03.284Z"
 path: "/blog/2020/02/14/better-testing-with-storybook/"
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/C3UrkCVulaE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 In this article, we will discuss strategy that I like to help keep [Storybook](https://storybook.js.org/) stories up-to-date. For those that are unfamiliar, [Storybook](https://storybook.js.org/) is a UI component workspace that I find helpful in building front-end applications.
 
 It allows you to develop your components in isolation, interact with these components individually, and see quality issues at a much more granular level than the screen or page level. Additionally, this workspace serves as communication to other developers, noting the reusable components that exist in a system. [Learn more about Storybook here](https://storybook.js.org/).

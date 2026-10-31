@@ -4,8 +4,6 @@ date: "2020-01-22T07:15:03.284Z"
 path: "/blog/2020/01/22/nullish-coalescing-in-javascript/"
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/CJWFr6VJ_A4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 Nullish Coalescing is a language feature of JavaScript that was recently promoted to Stage 4 by TC39, the group that maintains the definition of JavaScript. This means that this language feature is valid JavaScript as of ES2020.
 
 With any language feature, it's good to understand how it helps us. Nullish Coalescing helps us eliminate a certain class of code that primarily consists of checking if something is null or undefined.

@@ -4,8 +4,6 @@ date: "2020-01-31T07:15:03.284Z"
 path: "/blog/2020/01/31/optional-chaining-in-javascript/"
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/u90I9BuOcmE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 In this article, we're going to take a quick look at the new, Optional Chaining operator in JavaScript. This language feature is valid JavaScript as of ES 2020 (the official definition of the language).
 
 To take a look at why I think this feature is compelling, let's assume we have an object that represents a menu for a conference meal plan. Each object represents a different day for the conference and each day can have `breakfast`, `lunch`, and `dinner`.

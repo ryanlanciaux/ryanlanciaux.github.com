@@ -4,8 +4,6 @@ date: "2019-09-25T07:15:03.284Z"
 path: "/blog/2019/09/25/effortless-application-bundling-react-parcel/"
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/59EFVPIxgDk" title="Effortless bundling with Parcel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 ## Bundle Web Applications effortlessly
 
 Bundlers are used to take our various source files (JavaScript, CSS, Sass, etc). and prepare them for use in the browser. This article assumes that you're already sold on using a bundler for your JavaScript applications. For more information on bundlers and how they work, [check out this post by Alberto Gimeno
