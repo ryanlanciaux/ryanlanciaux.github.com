@@ -24,7 +24,7 @@ From there, we need to create a project folder and initialize the project (with 
 
 ## A little code
 
-At this point, we should be good to start writing some code. We'll start by writing a "Hello world" type React component. In the video, I called this SayHello.js and created it in the root of the project folder. In a less contrived project, we might want a little bit more organization (e.g. we could place the JavaScript files under `/src/`).
+At this point, we should be good to start writing some code. We'll start by writing a "Hello world" type React component. In the video (since removed), I called this SayHello.js and created it in the root of the project folder. In a less contrived project, we might want a little bit more organization (e.g. we could place the JavaScript files under `/src/`).
 
 `SayHello.js`
 
